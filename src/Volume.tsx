@@ -5,7 +5,7 @@ import { showPlaybackInfo, showTracklistInfo } from './lib/mpc';
 import { onEnterKey } from './lib/keys';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
-type CoreListenerEvent = keyof Mopidy.core.CoreListener;
+// type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
 function Volume() {
   console.log(`[Volume]`);
@@ -14,7 +14,7 @@ function Volume() {
 
   const ws = useRef<Mopidy | null>(null);
 
-  useEffect(() => {
+  /*useEffect(() => {
     if (ws.current) {
       console.log(`ws.current:`, ws.current);
       return;
@@ -46,7 +46,7 @@ function Volume() {
       mopidy.off();
       mopidy.close();
     };
-  }, []);
+  }, []);*/
 
   function setMopidyVolume(newVolume: number) {
     // console.log(`[setMopidyVolume] newVolume = ${newVolume}`);
