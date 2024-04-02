@@ -6,7 +6,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 // import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
 import About from './About.tsx';
 import ErrorPage from './ErrorPage.tsx';
@@ -20,7 +20,7 @@ import Root from './Root.tsx';
   },
 }); */
 
-const router = createMemoryRouter(
+const router = createHashRouter(
   [
     {
       path: '/',
