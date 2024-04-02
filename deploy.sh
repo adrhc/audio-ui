@@ -1,2 +1,2 @@
-mkdir -p /fast-disk/audio-ui
-cp -rv dist/* /fast-disk/audio-ui/
+mkdir -p /fast-disk/apache-htdocs/audio-ui
+cp -rv dist/* /fast-disk/apache-htdocs/audio-ui/
