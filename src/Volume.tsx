@@ -17,13 +17,13 @@ function Volume() {
       return;
     }
 
-    const mopidy = (ws.current = new Mopidy());
+    const mopidy = (ws.current = new Mopidy({webSocketUrl: ''}));
     console.log(`opened mopidy:`, ws.current);
 
     mopidy.on('state:online', async () => {
       await showPlaybackInfo(mopidy);
       await showTracklistInfo(mopidy);
-      const serverVolume = await mopidy.mixer.getVolume();
+      const serverVolume = await mopidy.mixer?.getVolume();
       setVolume(typeof serverVolume === "number" ? serverVolume : null);
     });
 
@@ -42,8 +42,8 @@ function Volume() {
 
   function setMopidyVolume(newVolume: number) {
     // console.log(`[setMopidyVolume] newVolume = ${newVolume}`);
-    if (newVolume >= 0 && newVolume <= 100) {
-      ws.current.mixer.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
+    if (ws.current && newVolume >= 0 && newVolume <= 100) {
+      ws.current.mixer?.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
     }
   }
 
