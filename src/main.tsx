@@ -6,7 +6,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import { RouterProvider, createHashRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 
@@ -18,14 +18,14 @@ const theme = createTheme({
   },
 });
 
-const router = createHashRouter(
+const router = createBrowserRouter(
   [
     {
       path: '/',
       element: <Dashboard />,
     },
     {
-      path: '/volume',
+      path: 'volume',
       element: <Volume />,
     },
   ],
