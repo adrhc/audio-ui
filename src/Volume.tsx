@@ -1,10 +1,6 @@
 import {
   Button,
-  Divider,
-  IconButton,
   InputAdornment,
-  InputBase,
-  Paper,
   Slider,
   Stack,
   TextField,
@@ -13,9 +9,6 @@ import {
 import Mopidy from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
-import DirectionsIcon from '@mui/icons-material/Directions';
-import PercentIcon from '@mui/icons-material/Percent';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
 
