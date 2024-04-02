@@ -30,6 +30,7 @@ const router = createBrowserRouter([
 ]);
 
 function fallbackRender({ error }: FallbackProps) {
+  // https://www.npmjs.com/package/react-error-boundary
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
   console.log('error:', error);
   return (
