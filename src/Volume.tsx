@@ -5,7 +5,7 @@ import { useState } from 'react';
 function Volume() {
   const [volume, setVolume] = useState(10);
   const mopidy = new Mopidy();
-  
+
   return (
     <>
       <Typography variant="h6" textAlign="center">
