@@ -1,8 +1,22 @@
-import { Button, InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material';
+import {
+  Button,
+  Divider,
+  IconButton,
+  InputAdornment,
+  InputBase,
+  Paper,
+  Slider,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import Mopidy from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
 import DirectionsIcon from '@mui/icons-material/Directions';
+import PercentIcon from '@mui/icons-material/Percent';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import EqualizerIcon from '@mui/icons-material/Equalizer';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
@@ -65,7 +79,7 @@ function Volume() {
       <Typography variant="h4" textAlign="center">
         Mopidy Volume
       </Typography>
-      <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+      <Stack spacing={2} direction="row" sx={{ pt: 1 }} alignItems="center">
         <VolumeDown />
         <Slider
           aria-label="Volume"
@@ -74,7 +88,7 @@ function Volume() {
         />
         <VolumeUp />
       </Stack>
-      <Stack sx={{ pt: [2, 1] }}>
+      <Stack sx={{ mt: 2 }}>
         <Button
           variant="outlined"
           size="large"
@@ -94,21 +108,30 @@ function Volume() {
         >
           Down
         </Button>
+
         <TextField
           type="number"
-          label="set the exact volume"
-          sx={{ mt: [4, 2] }}
+          label="the exact volume"
+          sx={{ my: [4, 2] }}
           value={exactVolume}
           onChange={(e) => setExactVolume(+e.target.value)}
           onKeyUp={(e) => onEnterKey(() => setMopidyVolume(exactVolume), e)}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <DirectionsIcon />
+                <EqualizerIcon />
               </InputAdornment>
             ),
           }}
         />
+        <Button
+          variant="outlined"
+          size="large"
+          sx={{ py: [4, 2] }}
+          onClick={() => setMopidyVolume(exactVolume)}
+        >
+          Set the volume to {exactVolume}
+        </Button>
       </Stack>
     </>
   );
