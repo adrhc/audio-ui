@@ -5,6 +5,8 @@ import { showPlaybackInfo, showTracklistInfo } from './lib/mpc';
 import { onEnterKey } from './lib/keys';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
+type CoreListenerEvent = keyof Mopidy.core.CoreListener;
+
 function Volume() {
   const [volume, setVolume] = useState<number | null>();
   const [exactVolume, setExactVolume] = useState<number>(5);
@@ -27,7 +29,7 @@ function Volume() {
       setVolume(typeof serverVolume === "number" ? serverVolume : null);
     });
 
-    mopidy.on('state:volumeChanged', async ({ volume }: { volume: number }) => {
+    mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
       console.log(`state:volumeChanged volume = ${volume}`);
       setVolume(volume);
     });
