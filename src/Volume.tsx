@@ -23,12 +23,13 @@ function Volume() {
     mopidy.on('state:online', async () => {
       await showPlaybackInfo(mopidy);
       await showTracklistInfo(mopidy);
-      setVolume((await mopidy.mixer.getVolume()) || null);
+      const serverVolume = await mopidy.mixer.getVolume();
+      setVolume(typeof serverVolume === "number" ? serverVolume : null);
     });
 
     mopidy.on('state:volumeChanged', async ({ volume }: { volume: number }) => {
       console.log(`state:volumeChanged volume = ${volume}`);
-      setVolume(volume || null);
+      setVolume(volume);
     });
 
     return () => {
@@ -40,7 +41,8 @@ function Volume() {
   }, []);
 
   function setMopidyVolume(newVolume: number) {
-    if (newVolume >= 0 || newVolume <= 100) {
+    // console.log(`[setMopidyVolume] newVolume = ${newVolume}`);
+    if (newVolume >= 0 && newVolume <= 100) {
       ws.current.mixer.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
     }
   }
@@ -54,7 +56,7 @@ function Volume() {
   }
 
   function handleEnter() {
-    console.log(`[handleEnter] exactVolume = ${exactVolume}`);
+    // console.log(`[handleEnter] exactVolume = ${exactVolume}`);
     setMopidyVolume(exactVolume);
   }
 
