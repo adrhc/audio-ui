@@ -1,7 +1,7 @@
 import { Button, InputAdornment, Stack, TextField, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
-import { useEffect, useRef, useState } from 'react';
-import { showPlaybackInfo, showTracklistInfo } from './lib/mpc';
+import { useRef, useState } from 'react';
+// import { showPlaybackInfo, showTracklistInfo } from './lib/mpc';
 import { onEnterKey } from './lib/keys';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
