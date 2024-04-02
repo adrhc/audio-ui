@@ -13,13 +13,13 @@ export async function showPlaybackInfo(mopidy: Mopidy) {
     return;
   }
 
-  const artists = track?.artists.map((a) => a.name).join(', ');
-  console.log(`${artists} - ${track?.name}`);
+  const artists = track?.artists?.map((a) => a.name).join(', ');
+  console.log(`${artists || ""} - ${track?.name}`);
   console.log(`[${state}] ${renderTrackNumber(track)}   ` + `${renderPosition(track, timePosition)}`);
 }
 
 function renderTrackNumber(track: Mopidy.models.Track | null | undefined) {
-  return `#${track?.track_no}/${track?.album.num_tracks || "-"}`;
+  return `#${track?.track_no || "-"}/${track?.album?.num_tracks || "-"}`;
 }
 
 function renderPosition(track: Mopidy.models.Track | null | undefined, timePosition: number | null | undefined) {
