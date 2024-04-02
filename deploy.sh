@@ -1,2 +1,2 @@
-mkdir -p /fast-disk/apache-htdocs/autorizatii-de-construire-certificate-de-urbanism
-cp -rv dist/* /fast-disk/apache-htdocs/autorizatii-de-construire-certificate-de-urbanism/
+mkdir -p /fast-disk/audio-ui
+cp -rv dist/* /fast-disk/audio-ui/
