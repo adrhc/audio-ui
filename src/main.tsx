@@ -18,16 +18,19 @@ const theme = createTheme({
   },
 });
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Dashboard />,
-  },
-  {
-    path: '/volume',
-    element: <Volume />,
-  },
-]);
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <Dashboard />,
+    },
+    {
+      path: '/volume',
+      element: <Volume />,
+    },
+  ],
+  { basename: import.meta.env.BASE_URL }
+);
 
 function fallbackRender({ error }: FallbackProps) {
   // https://www.npmjs.com/package/react-error-boundary
