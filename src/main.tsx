@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
+import Dashboard from './Dashboard.tsx';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import { BrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Volume from './Volume.tsx';
 
 const theme = createTheme({
   palette: {
@@ -16,15 +17,24 @@ const theme = createTheme({
   },
 });
 
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Dashboard />,
+  },
+  {
+    path: '/volume',
+    element: <Volume />,
+  },
+]);
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <React.StrictMode>
-      <BrowserRouter>
-        <Container sx={{ pt: 1, pb: 1 }}>
-          <App />
-        </Container>
-      </BrowserRouter>
+      <Container sx={{ pt: 1, pb: 1 }}>
+        <RouterProvider router={router} />
+      </Container>
     </React.StrictMode>
   </ThemeProvider>
 );

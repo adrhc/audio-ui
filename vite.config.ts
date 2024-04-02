@@ -9,6 +9,11 @@ export default defineConfig({
         target: "https://adrhc.go.ro",
         changeOrigin: true,
       },
+      '/mopidy': {
+        target: "ws://192.168.1.31:6680",
+        changeOrigin: true,
+        ws: true,
+      },
     },
   },
   plugins: [react()],
