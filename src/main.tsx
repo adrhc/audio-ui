@@ -23,10 +23,6 @@ const router = createBrowserRouter([
     path: '/',
     element: <Dashboard />,
   },
-  {
-    path: '/volume',
-    element: <Volume />,
-  },
 ]);
 
 function fallbackRender({ error }: FallbackProps) {
