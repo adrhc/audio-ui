@@ -22,8 +22,8 @@ function Volume() {
     const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
     console.log(`opened mopidy:`, ws.current);
 
-    mopidy.on('websocket:error', async () => {
-      alert('Something went wrong with the Mopidy connection!');
+    mopidy.on('websocket:error', async (e: object | string | null | undefined) => {
+      alert(`Something went wrong with the Mopidy connection!\n${e}`);
     });
 
     mopidy.on('state:online', async () => {
