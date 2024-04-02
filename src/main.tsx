@@ -8,7 +8,6 @@ import '@fontsource/roboto/700.css';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
-import About from './About.tsx';
 import ErrorPage from './ErrorPage.tsx';
 import Root from './Root.tsx';
 
@@ -35,23 +34,17 @@ const router = createHashRouter(
           path: 'volume',
           element: <Volume />,
         },
-        {
-          path: 'about',
-          element: <About />,
-        },
       ],
     },
-  ],
+  ]
   // { basename: import.meta.env.BASE_URL }
 );
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <React.Fragment>
-        <CssBaseline />
-        <RouterProvider router={router} />
-      </React.Fragment>
+      <CssBaseline />
+      <RouterProvider router={router} />
     </ThemeProvider>
   </React.StrictMode>
 );
