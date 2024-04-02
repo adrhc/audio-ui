@@ -5,11 +5,12 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import About from './About.tsx';
+import ErrorPage from './ErrorPage.tsx';
+import Root from './Root.tsx';
 
 const theme = createTheme({
   palette: {
@@ -23,41 +24,33 @@ const router = createHashRouter(
   [
     {
       path: '/',
-      element: <Dashboard />,
-    },
-    {
-      path: '/volume',
-      element: <Volume />,
-    },
-    {
-      path: '/about',
-      element: <About />,
+      element: <Root />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          element: <Dashboard />,
+        },
+        {
+          path: '/volume',
+          element: <Volume />,
+        },
+        {
+          path: '/about',
+          element: <About />,
+        },
+      ],
     },
   ],
   { basename: import.meta.env.BASE_URL }
 );
 
-function fallbackRender({ error }: FallbackProps) {
-  // https://www.npmjs.com/package/react-error-boundary
-  // Call resetErrorBoundary() to reset the error boundary and retry the render.
-  console.log('error:', error);
-  return (
-    <div role="alert">
-      <p>Something went wrong:</p>
-      <pre style={{ color: 'red' }}>{error.message}</pre>
-    </div>
-  );
-}
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <ErrorBoundary fallbackRender={fallbackRender}>
-      <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <React.Fragment>
         <CssBaseline />
-        <Container sx={{ pt: 1, pb: 1 }}>
-          <RouterProvider router={router} />
-        </Container>
-      </ThemeProvider>
-    </ErrorBoundary>
+        <RouterProvider router={router} />
+      </React.Fragment>
+    </ThemeProvider>
   </React.StrictMode>
 );
