@@ -5,10 +5,19 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import About from './About.tsx';
+
+const theme = createTheme({
+  palette: {
+    background: {
+      default: '#fffaf0',
+    },
+  },
+});
 
 const router = createHashRouter(
   [
@@ -42,13 +51,13 @@ function fallbackRender({ error }: FallbackProps) {
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ErrorBoundary fallbackRender={fallbackRender}>
-    {/* <ThemeProvider theme={theme}> */}
-      {/* <CssBaseline /> */}
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <React.StrictMode>
-        {/* <Container sx={{ pt: 1, pb: 1 }}> */}
+        <Container sx={{ pt: 1, pb: 1 }}>
           <RouterProvider router={router} />
-        {/* </Container> */}
+        </Container>
       </React.StrictMode>
-    {/* </ThemeProvider> */}
+    </ThemeProvider>
   </ErrorBoundary>
 );
