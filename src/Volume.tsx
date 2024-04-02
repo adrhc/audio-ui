@@ -75,7 +75,7 @@ function Volume() {
   return (
     <>
       <Typography variant="h4" textAlign="center">
-        Volume
+        Mopidy Volume
       </Typography>
       <Stack sx={{ pt: [2, 1] }}>
         <Button variant="outlined" size="large" sx={{ py: [4, 2] }} onClick={() => handleVolumeChange(1)}>
