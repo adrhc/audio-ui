@@ -8,6 +8,7 @@ import DirectionsIcon from '@mui/icons-material/Directions';
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
 function Volume() {
+  console.log(`[Volume]`);
   const [volume, setVolume] = useState<number | null>();
   const [exactVolume, setExactVolume] = useState<number>(5);
 
@@ -19,6 +20,7 @@ function Volume() {
       return;
     }
 
+    console.log(`opening mopidy`);
     const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
     console.log(`opened mopidy:`, ws.current);
 
