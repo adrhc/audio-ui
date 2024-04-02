@@ -42,14 +42,14 @@ function fallbackRender({ error }: FallbackProps) {
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <React.StrictMode>
-      <Container sx={{ pt: 1, pb: 1 }}>
-        <ErrorBoundary fallbackRender={fallbackRender}>
+  <ErrorBoundary fallbackRender={fallbackRender}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <React.StrictMode>
+        <Container sx={{ pt: 1, pb: 1 }}>
           <RouterProvider router={router} />
-        </ErrorBoundary>
-      </Container>
-    </React.StrictMode>
-  </ThemeProvider>
+        </Container>
+      </React.StrictMode>
+    </ThemeProvider>
+  </ErrorBoundary>
 );
