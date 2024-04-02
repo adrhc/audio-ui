@@ -9,6 +9,7 @@ import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/materia
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
 import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import About from './About.tsx';
 
 const theme = createTheme({
   palette: {
@@ -27,6 +28,10 @@ const router = createHashRouter(
     {
       path: 'volume',
       element: <Volume />,
+    },
+    {
+      path: 'about',
+      element: <About />,
     },
   ],
   { basename: import.meta.env.BASE_URL }
