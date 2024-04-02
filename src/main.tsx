@@ -26,11 +26,11 @@ const router = createHashRouter(
       element: <Dashboard />,
     },
     {
-      path: 'volume',
+      path: '/volume',
       element: <Volume />,
     },
     {
-      path: 'about',
+      path: '/about',
       element: <About />,
     },
   ],
