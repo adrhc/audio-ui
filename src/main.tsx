@@ -8,6 +8,7 @@ import '@fontsource/roboto/700.css';
 import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 
 const theme = createTheme({
   palette: {
@@ -28,12 +29,25 @@ const router = createBrowserRouter([
   },
 ]);
 
+function fallbackRender({ error }: FallbackProps) {
+  // Call resetErrorBoundary() to reset the error boundary and retry the render.
+  console.log('error:', error);
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{ color: "red" }}>{error.message}</pre>
+    </div>
+  );
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <React.StrictMode>
       <Container sx={{ pt: 1, pb: 1 }}>
-        <RouterProvider router={router} />
+        <ErrorBoundary fallbackRender={fallbackRender}>
+          <RouterProvider router={router} />
+        </ErrorBoundary>
       </Container>
     </React.StrictMode>
   </ThemeProvider>
