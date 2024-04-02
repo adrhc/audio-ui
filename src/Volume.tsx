@@ -19,14 +19,18 @@ function Volume() {
       return;
     }
 
-    const mopidy = (ws.current = new Mopidy({webSocketUrl: ''}));
+    const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
     console.log(`opened mopidy:`, ws.current);
+
+    mopidy.on('websocket:error', async () => {
+      alert('Something went wrong with the Mopidy connection!');
+    });
 
     mopidy.on('state:online', async () => {
       await showPlaybackInfo(mopidy);
       await showTracklistInfo(mopidy);
       const serverVolume = await mopidy.mixer?.getVolume();
-      setVolume(typeof serverVolume === "number" ? serverVolume : null);
+      setVolume(typeof serverVolume === 'number' ? serverVolume : null);
     });
 
     mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
