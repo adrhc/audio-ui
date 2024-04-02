@@ -1,7 +1,6 @@
 import { Button, InputAdornment, Stack, TextField, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
-import { showPlaybackInfo, showTracklistInfo } from './lib/mpc';
 import { onEnterKey } from './lib/keys';
 import DirectionsIcon from '@mui/icons-material/Directions';
 
@@ -16,35 +15,40 @@ function Volume() {
 
   useEffect(() => {
     if (ws.current) {
-      console.log(`ws.current:`, ws.current);
+      // console.log(`ws.current:`, ws.current);
       return;
     }
 
-    console.log(`opening mopidy`);
+    // console.log(`opening mopidy`);
     const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
-    console.log(`opened mopidy:`, ws.current);
+    // console.log(`opened mopidy:`, ws.current);
+
+    function mopidyClose() {
+      ws.current = null;
+      mopidy.off();
+      mopidy.close();
+    }
 
     mopidy.on('websocket:error', async (e: object | string | null | undefined) => {
       alert(`Something went wrong with the Mopidy connection!\n${e}`);
+      mopidyClose();
     });
 
     mopidy.on('state:online', async () => {
-      await showPlaybackInfo(mopidy);
-      await showTracklistInfo(mopidy);
+      // await showPlaybackInfo(mopidy);
+      // await showTracklistInfo(mopidy);
       const serverVolume = await mopidy.mixer?.getVolume();
       setVolume(typeof serverVolume === 'number' ? serverVolume : null);
     });
 
     mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
-      console.log(`state:volumeChanged volume = ${volume}`);
+      // console.log(`state:volumeChanged volume = ${volume}`);
       setVolume(volume);
     });
 
     return () => {
-      console.log(`closing mopidy:`, mopidy);
-      ws.current = null;
-      mopidy.off();
-      mopidy.close();
+      // console.log(`closing mopidy:`, mopidy);
+      mopidyClose();
     };
   }, []);
 
