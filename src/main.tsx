@@ -8,6 +8,7 @@ import '@fontsource/roboto/700.css';
 import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import About from './About.tsx';
 
 const theme = createTheme({
@@ -36,7 +37,9 @@ const router = createHashRouter(
   { basename: import.meta.env.BASE_URL }
 );
 
-/*function fallbackRender({ error }: FallbackProps) {
+function fallbackRender({ error }: FallbackProps) {
+  // https://www.npmjs.com/package/react-error-boundary
+  // Call resetErrorBoundary() to reset the error boundary and retry the render.
   console.log('error:', error);
   return (
     <div role="alert">
@@ -44,19 +47,17 @@ const router = createHashRouter(
       <pre style={{ color: 'red' }}>{error.message}</pre>
     </div>
   );
-}*/
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    {/* <ErrorBoundary fallbackRender={fallbackRender}> */}
-    <ThemeProvider theme={theme}>
-      <>
+    <ErrorBoundary fallbackRender={fallbackRender}>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
         <Container sx={{ pt: 1, pb: 1 }}>
           <RouterProvider router={router} />
         </Container>
-      </>
-    </ThemeProvider>
-    {/* </ErrorBoundary> */}
+      </ThemeProvider>
+    </ErrorBoundary>
   </React.StrictMode>
 );
