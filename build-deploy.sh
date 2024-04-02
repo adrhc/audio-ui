@@ -1,1 +1,1 @@
-git pull; npm run build; ./deploy.sh
+git pull; npm i; npm run build; ./deploy.sh
