@@ -1,10 +1,40 @@
 import { Button, Stack, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { showPlaybackInfo, showTracklistInfo } from './lib/mpc';
 
 function Volume() {
-  const [volume, setVolume] = useState(10);
-  const mopidy = new Mopidy();
+  const [volume, setVolume] = useState<number | string>('unknown');
+
+  const ws = useRef<Mopidy | null>(null);
+
+  useEffect(() => {
+    if (ws.current) {
+        console.log(`ws.current:`, ws.current);
+        return;
+    }
+
+    const mopidy = (ws.current = new Mopidy());
+    console.log(`opened mopidy:`, ws.current);
+
+    mopidy.on('state:online', async () => {
+      await showPlaybackInfo(mopidy);
+      await showTracklistInfo(mopidy);
+      setVolume((await mopidy.mixer.getVolume()) || 'unknown');
+    });
+
+    mopidy.on('state:volumeChanged', async ({ volume }: { volume: number }) => {
+      console.log(`state:volumeChanged volume = ${volume}`);
+      setVolume(volume || 0);
+    });
+
+    return () => {
+      console.log(`closing mopidy:`, mopidy);
+      ws.current = null;
+      mopidy.off();
+      mopidy.close();
+    };
+  }, []);
 
   return (
     <>
