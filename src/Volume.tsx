@@ -4,9 +4,7 @@ import { useState } from 'react';
 
 function Volume() {
   const [volume, setVolume] = useState(10);
-  const mopidy = new Mopidy({
-    webSocketUrl: "/mopidy/ws",
-  });
+  const mopidy = new Mopidy();
   
   return (
     <>
