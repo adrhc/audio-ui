@@ -1,10 +1,13 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Button, InputAdornment, Stack, TextField, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
 import { showPlaybackInfo, showTracklistInfo } from './lib/mpc';
+import { onEnterKey } from './lib/keys';
+import DirectionsIcon from '@mui/icons-material/Directions';
 
 function Volume() {
-  const [volume, setVolume] = useState<number | string>('unknown');
+  const [volume, setVolume] = useState<number | null>();
+  const [exactVolume, setExactVolume] = useState<number>(5);
 
   const ws = useRef<Mopidy | null>(null);
 
@@ -20,12 +23,12 @@ function Volume() {
     mopidy.on('state:online', async () => {
       await showPlaybackInfo(mopidy);
       await showTracklistInfo(mopidy);
-      setVolume((await mopidy.mixer.getVolume()) || 'unknown');
+      setVolume((await mopidy.mixer.getVolume()) || null);
     });
 
     mopidy.on('state:volumeChanged', async ({ volume }: { volume: number }) => {
       console.log(`state:volumeChanged volume = ${volume}`);
-      setVolume(volume || 'unknown');
+      setVolume(volume || null);
     });
 
     return () => {
@@ -36,32 +39,55 @@ function Volume() {
     };
   }, []);
 
-  function handleVolumeChange(increment: number) {
-    let newVolume: number;
-    if (typeof volume == 'string') {
-      newVolume = Math.abs(increment);
-    } else {
-      newVolume = volume + increment;
-      newVolume = newVolume < 0 ? 0 : newVolume;
+  function setMopidyVolume(newVolume: number) {
+    if (newVolume >= 0 || newVolume <= 100) {
+      ws.current.mixer.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
     }
-    ws.current.mixer.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
+  }
+
+  function handleVolumeChange(increment: number) {
+    if (volume == null) {
+      setMopidyVolume(increment);
+    } else {
+      setMopidyVolume(volume + increment);
+    }
+  }
+
+  function handleEnter() {
+    console.log(`[handleEnter] exactVolume = ${exactVolume}`);
+    setMopidyVolume(exactVolume);
   }
 
   return (
     <>
-      <Typography variant="h6" textAlign="center">
+      <Typography variant="h4" textAlign="center">
         Volume
       </Typography>
-      <Stack>
-        <Button variant="outlined" size="large" sx={{ py: 2 }} onClick={() => handleVolumeChange(1)}>
+      <Stack sx={{ pt: [2, 1] }}>
+        <Button variant="outlined" size="large" sx={{ py: [4, 2] }} onClick={() => handleVolumeChange(1)}>
           Up
         </Button>
-        <Typography variant="h6" textAlign="center">
+        <Typography variant="h6" textAlign="center" sx={{ py: [2, 1] }}>
           {volume}
         </Typography>
-        <Button variant="outlined" size="large" sx={{ py: 2 }} onClick={() => handleVolumeChange(-1)}>
+        <Button variant="outlined" size="large" sx={{ py: [4, 2] }} onClick={() => handleVolumeChange(-1)}>
           Down
         </Button>
+        <TextField
+          type="number"
+          label="set the exact volume"
+          sx={{ mt: [4, 2] }}
+          value={exactVolume}
+          onChange={(e) => setExactVolume(+e.target.value)}
+          onKeyUp={(e) => onEnterKey(handleEnter, e)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <DirectionsIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
       </Stack>
     </>
   );
