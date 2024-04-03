@@ -1,11 +1,4 @@
-import {
-  Button,
-  InputAdornment,
-  Slider,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
@@ -37,8 +30,8 @@ function Volume() {
       mopidy.close();
     }
 
-    mopidy.on('websocket:error', async (e: object | string | null | undefined) => {
-      alert(`Something went wrong with the Mopidy connection!\n${e}`);
+    mopidy.on('websocket:error', async (e: object | string) => {
+      alert(`Something went wrong with the Mopidy connection!\n${e.toString()}`);
       mopidyClose();
     });
 
@@ -67,48 +60,21 @@ function Volume() {
     }
   }
 
+  const btnStyle = { py: [3, 2] };
+
   return (
     <>
-      <Typography variant="h4" textAlign="center">
+      {/* <Typography variant="h4" textAlign="center">
         Mopidy Volume
-      </Typography>
-      <Stack spacing={2} direction="row" sx={{ pt: 1 }} alignItems="center">
-        <VolumeDown />
-        <Slider
-          aria-label="Volume"
-          value={volume || 0}
-          onChange={(_e, newValue) => setMopidyVolume(newValue as number)}
-        />
-        <VolumeUp />
-      </Stack>
-      <Stack sx={{ mt: 2 }}>
-        <Button
-          variant="outlined"
-          size="large"
-          sx={{ py: [4, 2] }}
-          onClick={() => setMopidyVolume(volume + 1)}
-        >
-          Up
-        </Button>
-        <Typography variant="h6" textAlign="center" sx={{ py: [2, 1] }}>
-          {volume}
-        </Typography>
-        <Button
-          variant="outlined"
-          size="large"
-          sx={{ py: [4, 2] }}
-          onClick={() => setMopidyVolume(volume - 1)}
-        >
-          Down
-        </Button>
-
+      </Typography> */}
+      <Stack spacing={2} sx={{ mt: [2, 1] }}>
         <TextField
           type="number"
           label="the exact volume"
-          sx={{ my: [4, 2] }}
           value={exactVolume}
           onChange={(e) => setExactVolume(+e.target.value)}
           onKeyUp={(e) => onEnterKey(() => setMopidyVolume(exactVolume), e)}
+          inputProps={{ min: 0, max: 100 }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -117,13 +83,26 @@ function Volume() {
             ),
           }}
         />
-        <Button
-          variant="outlined"
-          size="large"
-          sx={{ py: [4, 2] }}
-          onClick={() => setMopidyVolume(exactVolume)}
-        >
+        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(exactVolume)}>
           Set the volume to {exactVolume}
+        </Button>
+        <Stack direction="row" spacing={2} alignItems="center">
+          <VolumeDown />
+          <Slider
+            aria-label="Volume"
+            value={volume || 0}
+            onChange={(_e, newValue) => setMopidyVolume(newValue as number)}
+          />
+          <VolumeUp />
+        </Stack>
+        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(volume + 1)}>
+          Up
+        </Button>
+        <Typography textAlign="center" sx={{ fontWeight: 'bold' }}>
+          {volume}
+        </Typography>
+        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(volume - 1)}>
+          Down
         </Button>
       </Stack>
     </>
