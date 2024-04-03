@@ -5,11 +5,10 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import { RouterProvider, createHashRouter } from 'react-router-dom';
+import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { Outlet, RouterProvider, createHashRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
 import ErrorPage from './ErrorPage.tsx';
-import Root from './Root.tsx';
 
 const theme = createTheme({
   palette: {
@@ -19,25 +18,27 @@ const theme = createTheme({
   },
 });
 
-const router = createHashRouter(
-  [
-    {
-      path: '/',
-      element: <Root />,
-      errorElement: <ErrorPage />,
-      children: [
-        {
-          path: '',
-          element: <Dashboard />,
-        },
-        {
-          path: 'volume',
-          element: <Volume />,
-        },
-      ],
-    },
-  ]
-);
+const router = createHashRouter([
+  {
+    path: '/',
+    element: (
+      <Container sx={{ pt: 1, pb: 1, height: '100%' }}>
+        <Outlet />
+      </Container>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: '',
+        element: <Dashboard />,
+      },
+      {
+        path: 'volume',
+        element: <Volume />,
+      },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
