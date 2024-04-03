@@ -67,7 +67,7 @@ function Volume() {
       {/* <Typography variant="h4" textAlign="center">
         Mopidy Volume
       </Typography> */}
-      <Stack spacing={2} sx={{ height: '100%', justifyContent: 'center' }}>
+      <Stack spacing={2} sx={{mt: 2}}>
         <TextField
           type="number"
           label="the exact volume"
