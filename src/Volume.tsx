@@ -1,4 +1,4 @@
-import { Button, InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material';
+import { Button, ButtonGroup, Chip, InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
@@ -165,27 +165,30 @@ function Volume() {
           />
           <VolumeUp />
         </Stack>
-        <Button
-          disabled={disabled}
-          variant="outlined"
-          size="large"
-          sx={btnStyle}
-          onClick={() => handleExactVolume(volume + 1)}
-        >
-          <AddCircleIcon />
-        </Button>
-        <Typography textAlign="center" sx={{ fontWeight: 'bold' }}>
+        <Typography textAlign="center" sx={{ fontWeight: 'bold', mt: '8px !important' }}>
           {volume}
         </Typography>
-        <Button
-          disabled={disabled}
-          variant="outlined"
-          size="large"
-          sx={btnStyle}
-          onClick={() => handleExactVolume(volume - 1)}
-        >
-          <RemoveCircleIcon />
-        </Button>
+        <ButtonGroup>
+          <Button
+            disabled={disabled}
+            variant="outlined"
+            size="large"
+            sx={{...btnStyle, flexGrow: 1}}
+            onClick={() => handleExactVolume(volume - 1)}
+          >
+            <RemoveCircleIcon />
+          </Button>
+          {/* <Chip label={volume} sx={{px: 0.5, mx: 1}}/> */}
+          <Button
+            disabled={disabled}
+            variant="outlined"
+            size="large"
+            sx={{...btnStyle, flexGrow: 1}}
+            onClick={() => handleExactVolume(volume + 1)}
+          >
+            <AddCircleIcon />
+          </Button>
+        </ButtonGroup>
       </Stack>
     </Stack>
   );
