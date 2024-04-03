@@ -25,22 +25,22 @@ function Volume() {
   // const location = useLocation();
   // const navigate = useNavigate();
 
-  const ws = useRef<Mopidy | null>(null);
+  const mopidyRef = useRef<Mopidy | null>(null);
 
   useEffect(() => {
     setExactVolume(DEFAULT_EXACT_VOLUME);
 
-    const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
+    const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
     // console.log(`[useEffect] rand = ${rand}, mopidy:`, mopidy);
 
     mopidy.on('websocket:close', async () => {
       // console.log(`[websocket:close] rand = ${rand}`, mopidy);
     });
 
-    mopidy.on('websocket:error', async (e: object | string) => {
+    /* mopidy.on('websocket:error', async (e: object | string) => {
       // console.log(`[websocket:error] rand = ${rand}`, mopidy);
       console.error('Something went wrong with the Mopidy connection!', e);
-    });
+    }); */
 
     mopidy.on('state:offline', async () => {
       // console.log(`[state:offline] rand = ${rand}`, mopidy);
@@ -52,7 +52,7 @@ function Volume() {
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
       setDisabled(false);
-      const serverVolume = await ws.current?.mixer?.getVolume();
+      const serverVolume = await mopidy.mixer?.getVolume();
       if (serverVolume != null) {
         setVolume(serverVolume);
       }
@@ -64,18 +64,18 @@ function Volume() {
     });
 
     return () => {
-      console.log(`[useEffect:destroy] rand = ${rand}`, mopidy);
-      ws.current = null;
+      // console.log(`[useEffect:destroy] rand = ${rand}`, mopidy);
+      mopidyRef.current = null;
       mopidy.close()?.then(() => mopidy.off());
     };
   }, [rand]);
 
   function setMopidyVolume(newVolume: number) {
     // console.log(`[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}`);
-    if (ws.current && newVolume >= 0 && newVolume <= 100) {
-      ws.current.mixer?.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
+    if (mopidyRef.current && newVolume >= 0 && newVolume <= 100) {
+      mopidyRef.current.mixer?.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
       // } else {
-      // alert(`newVolume = ${newVolume}, ws.current = ${!!ws.current}`);
+      // alert(`rand = ${rand}, newVolume = ${newVolume}, mopidyRef.current:`, mopidyRef.current);
     }
   }
 
