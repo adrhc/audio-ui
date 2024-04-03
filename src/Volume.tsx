@@ -73,7 +73,7 @@ function Volume() {
       {/* <Typography variant="h4" textAlign="center">
         Mopidy Volume
       </Typography> */}
-      <Stack spacing={2} sx={{ pb: [2, 0], justifyContent: ['flex-end', 'center'], height: '100%' }}>
+      <Stack spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
         <TextField
           disabled={disabled}
           type="number"
