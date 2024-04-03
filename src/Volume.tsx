@@ -1,12 +1,13 @@
 import { Button, InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
+import { debounce } from 'lodash';
 
 // type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 const DEFAULT_EXACT_VOLUME = 9;
@@ -15,6 +16,8 @@ function Volume() {
   // console.log(`[Volume]`);
 
   const [volume, setVolume] = useState(0);
+  const [sliderVolume, setSliderVolume] = useState(0);
+  const [debouncedSliderVolume, setDebouncedSliderVolume] = useState<number | null>();
   const [exactVolume, setExactVolume] = useState(DEFAULT_EXACT_VOLUME);
   const [disabled, setDisabled] = useState(true);
   const [rand, setRand] = useState(0);
@@ -55,6 +58,7 @@ function Volume() {
       const serverVolume = await mopidy.mixer?.getVolume();
       if (serverVolume != null) {
         setVolume(serverVolume);
+        setSliderVolume(serverVolume);
       }
     });
 
@@ -70,13 +74,44 @@ function Volume() {
     };
   }, [rand]);
 
+  const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 300), []);
+
+  useEffect(() => {
+    if (debouncedSliderVolume == null || mopidyRef.current == null) {
+      console.log(
+        `[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}, mopidyRef = ${!!mopidyRef.current}`
+      );
+      return;
+    }
+    setVolume(debouncedSliderVolume);
+    console.log(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}`);
+    mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume });
+  }, [debouncedSliderVolume]);
+
+  function slideVolume(newVolume: number) {
+    // console.log(`[slideVolume] rand = ${rand}, newVolume = ${newVolume}, mopidyRef = ${!!mopidyRef.current}`);
+    if (mopidyRef.current) {
+      setSliderVolume(newVolume);
+      setDebouncedSliderVolumeFn(newVolume);
+    } else {
+      console.error(
+        `[slideVolume] rand = ${rand}, newVolume = ${newVolume}, mopidyRef = ${!!mopidyRef.current}`
+      );
+    }
+  }
+
   function setMopidyVolume(newVolume: number) {
     // console.log(`[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}`);
     if (mopidyRef.current && newVolume >= 0 && newVolume <= 100) {
       setVolume(newVolume);
+      setSliderVolume(newVolume);
+      console.log(`[mopidy] rand = ${rand}, newVolume = ${newVolume}`);
       mopidyRef.current.mixer?.setVolume({ volume: newVolume });
-      // } else {
-      // alert(`rand = ${rand}, newVolume = ${newVolume}, mopidyRef.current:`, mopidyRef.current);
+      // .then((b) => console.log(`[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}, ok = ${b}`));
+    } else {
+      console.error(
+        `[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}, mopidyRef = ${!!mopidyRef.current}`
+      );
     }
   }
 
@@ -124,8 +159,8 @@ function Volume() {
           <Slider
             disabled={disabled}
             aria-label="Volume"
-            value={volume || 0}
-            onChange={(_e, newValue) => setMopidyVolume(newValue as number)}
+            value={sliderVolume || 0}
+            onChange={(_e, newValue) => slideVolume(newValue as number)}
           />
           <VolumeUp />
         </Stack>
