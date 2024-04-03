@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Chip, Divider, IconButton, InputBase, Slider, Stack } from '@mui/material';
+import { Box, Button, ButtonGroup, Chip, IconButton, InputBase, Slider, Stack } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
