@@ -16,6 +16,7 @@ function Volume() {
   const [volume, setVolume] = useState(0);
   const [exactVolume, setExactVolume] = useState(9);
   const [disabled, setDisabled] = useState(true);
+  console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
 
   const navigate = useNavigate();
 
@@ -76,6 +77,7 @@ function Volume() {
 
   function reloadPage() {
     navigate(0);
+    // navigate(location.pathname, {});
   }
 
   const btnStyle = { py: [3, 2] };
@@ -86,9 +88,11 @@ function Volume() {
         Mopidy Volume
       </Typography> */}
       <Stack spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
-        <Button variant="outlined" size="large" sx={btnStyle} onClick={reloadPage}>
-          <AutorenewIcon />
-        </Button>
+        {/* <Link to="." reloadDocument={true} state={{}}> */}
+          <Button variant="outlined" size="large" sx={btnStyle} onClick={reloadPage}>
+            <AutorenewIcon />
+          </Button>
+        {/* </Link> */}
         <TextField
           disabled={disabled}
           type="number"
