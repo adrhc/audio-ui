@@ -31,7 +31,7 @@ function Volume() {
     }
 
     mopidy.on('websocket:error', async (e: object | string) => {
-      alert(`Something went wrong with the Mopidy connection!\n${e.toString()}`);
+      alert(`Something went wrong with the Mopidy connection!\n${JSON.stringify(e)}`);
       mopidyClose();
     });
 
