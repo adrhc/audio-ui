@@ -7,18 +7,17 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
 function Volume() {
-  console.log(`[Volume]`);
+  // console.log(`[Volume]`);
   const [volume, setVolume] = useState(0);
   const [exactVolume, setExactVolume] = useState(9);
   const [disabled, setDisabled] = useState(true);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   const ws = useRef<Mopidy | null>(null);
 
@@ -76,7 +75,6 @@ function Volume() {
   }
 
   function reloadPage() {
-    navigate(location.pathname);
     navigate(0);
   }
 
