@@ -16,7 +16,7 @@ function Volume() {
   const [volume, setVolume] = useState(0);
   const [exactVolume, setExactVolume] = useState(9);
   const [disabled, setDisabled] = useState(true);
-  console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
+  // console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
 
   const navigate = useNavigate();
 
