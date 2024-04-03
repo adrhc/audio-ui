@@ -73,11 +73,8 @@ function Volume() {
   function setMopidyVolume(newVolume: number) {
     // console.log(`[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}`);
     if (mopidyRef.current && newVolume >= 0 && newVolume <= 100) {
-      mopidyRef.current.mixer?.setVolume({ volume: newVolume })
-      .then(() => {
-        alert(`[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}`);
-        setVolume(newVolume);
-      });
+      setVolume(newVolume);
+      mopidyRef.current.mixer?.setVolume({ volume: newVolume });
       // } else {
       // alert(`rand = ${rand}, newVolume = ${newVolume}, mopidyRef.current:`, mopidyRef.current);
     }
