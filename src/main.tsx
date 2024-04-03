@@ -9,6 +9,7 @@ import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/materia
 import { Outlet, RouterProvider, createHashRouter } from 'react-router-dom';
 import Volume from './Volume.tsx';
 import ErrorPage from './ErrorPage.tsx';
+import App from './App.tsx';
 
 const theme = createTheme({
   palette: {
@@ -21,11 +22,7 @@ const theme = createTheme({
 const router = createHashRouter([
   {
     path: '/',
-    element: (
-      <Container sx={{ pt: 1, pb: 1, height: '100%' }}>
-        <Outlet />
-      </Container>
-    ),
+    element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
