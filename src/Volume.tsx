@@ -76,9 +76,15 @@ function Volume() {
   }
 
   function reloadPage() {
+    alert(`reloadPage volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
     navigate(0);
     // navigate(location.pathname, {});
   }
+
+  /* function refresh() {
+    navigate(0);
+    // navigate(location.pathname, {});
+  } */
 
   const btnStyle = { py: [3, 2] };
 
