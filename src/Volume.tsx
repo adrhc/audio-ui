@@ -8,7 +8,6 @@ import {
   InputBase,
   Slider,
   Stack,
-  Typography,
 } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
