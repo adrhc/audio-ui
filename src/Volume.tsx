@@ -29,9 +29,7 @@ function Volume() {
 
   useEffect(() => {
     if (ws.current) {
-      console.log(
-        `[useEffect2] ws.current = ${!!ws.current}, mopidy = ${!!mopidy}, ws.current === mopidy is ${ws.current === mopidy}`
-      );
+      console.log(`[useEffect2] ws.current = ${!!ws.current}`);
       return;
     }
 
