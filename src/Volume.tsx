@@ -58,10 +58,10 @@ function Volume() {
       }
     });
 
-    mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
+    /* mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
       // console.log(`[state:volumeChanged] rand = ${rand}, volume = ${volume}`);
       setVolume(volume);
-    });
+    }); */
 
     return () => {
       // console.log(`[useEffect:destroy] rand = ${rand}`, mopidy);
