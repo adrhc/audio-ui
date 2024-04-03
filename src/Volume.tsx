@@ -8,7 +8,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
 
-type CoreListenerEvent = keyof Mopidy.core.CoreListener;
+// type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 const DEFAULT_EXACT_VOLUME = 9;
 
 function Volume() {
