@@ -28,42 +28,32 @@ function Volume() {
   const ws = useRef<Mopidy | null>(null);
 
   useEffect(() => {
-    if (ws.current) {
+    /* if (ws.current) {
       console.log(`[useEffect2] ws.current = ${!!ws.current}`);
       return;
-    }
-
-    // console.log(`[useEffect] rand = ${rand}`);
+    } */
 
     setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
-    console.log(
-      `[useEffect] ws.current = ${!!ws.current}, mopidy = ${!!mopidy}, ws.current === mopidy is ${ws.current === mopidy}`
-    );
-
-    function mopidyClose() {
-      console.log(`[mopidyClose] ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
-      ws.current = null;
-      mopidy.close()?.then(() => mopidy.off());
-    }
+    console.log(`[useEffect] rand = ${rand}, mopidy:`, mopidy);
 
     mopidy.on('websocket:close', async () => {
-      console.log(`websocket:close ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
+      console.log(`[websocket:close] rand = ${rand}`, mopidy);
     });
 
     mopidy.on('websocket:error', async (e: object | string) => {
-      console.log(`websocket:error ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
+      console.log(`[websocket:error] rand = ${rand}`, mopidy);
       console.error('Something went wrong with the Mopidy connection!', e);
     });
 
     mopidy.on('state:offline', async () => {
-      console.log(`state:offline ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
+      console.log(`[state:offline] rand = ${rand}`, mopidy);
       setDisabled(true);
     });
 
     mopidy.on('state:online', async () => {
-      console.log(`state:online ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
+      console.log(`[state:online] rand = ${rand}`, mopidy);
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
       setDisabled(false);
@@ -74,13 +64,14 @@ function Volume() {
     });
 
     mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
-      // console.log(`state:volumeChanged volume = ${volume}`);
+      // console.log(`state:volumeChanged rand = ${rand}, volume = ${volume}`);
       setVolume(volume);
     });
 
     return () => {
-      // console.log(`closing mopidy:`, mopidy);
-      mopidyClose();
+      console.log(`[useEffect:destroy] rand = ${rand}`, mopidy);
+      ws.current = null;
+      mopidy.close()?.then(() => mopidy.off());
     };
   }, [rand]);
 
