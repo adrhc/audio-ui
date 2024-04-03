@@ -74,43 +74,44 @@ function Volume() {
     };
   }, [rand]);
 
-  const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 300), []);
-
   useEffect(() => {
-    if (debouncedSliderVolume == null || mopidyRef.current == null) {
-      console.log(
-        `[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}, mopidyRef = ${!!mopidyRef.current}`
-      );
+    if (debouncedSliderVolume == null) {
+      console.warn(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}, mopidyRef = false`);
+      return;
+    } else if (mopidyRef.current == null) {
+      console.error(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}, mopidyRef = true`);
       return;
     }
     setVolume(debouncedSliderVolume);
-    console.log(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}`);
+    // console.log(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}`);
     mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume });
   }, [debouncedSliderVolume]);
 
-  function slideVolume(newVolume: number) {
-    // console.log(`[slideVolume] rand = ${rand}, newVolume = ${newVolume}, mopidyRef = ${!!mopidyRef.current}`);
+  const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 300), []);
+
+  function handleSliderVolume(newSliderVolume: number) {
+    // console.log(`[handleSliderVolume] newSliderVolume = ${newSliderVolume}`);
     if (mopidyRef.current) {
-      setSliderVolume(newVolume);
-      setDebouncedSliderVolumeFn(newVolume);
+      setSliderVolume(newSliderVolume);
+      setDebouncedSliderVolumeFn(newSliderVolume);
     } else {
       console.error(
-        `[slideVolume] rand = ${rand}, newVolume = ${newVolume}, mopidyRef = ${!!mopidyRef.current}`
+        `[handleSliderVolume] rand = ${rand}, newSliderVolume = ${newSliderVolume}, mopidyRef = ${!!mopidyRef.current}`
       );
     }
   }
 
-  function setMopidyVolume(newVolume: number) {
-    // console.log(`[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}`);
-    if (mopidyRef.current && newVolume >= 0 && newVolume <= 100) {
-      setVolume(newVolume);
-      setSliderVolume(newVolume);
-      console.log(`[mopidy] rand = ${rand}, newVolume = ${newVolume}`);
-      mopidyRef.current.mixer?.setVolume({ volume: newVolume });
-      // .then((b) => console.log(`[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}, ok = ${b}`));
+  function handleExactVolume(newExactVolume: number) {
+    // console.log(`[handleExactVolume] newExactVolume = ${newExactVolume}`);
+    if (mopidyRef.current && newExactVolume >= 0 && newExactVolume <= 100) {
+      setVolume(newExactVolume);
+      setSliderVolume(newExactVolume);
+      // console.log(`[mopidy] newExactVolume = ${newExactVolume}`);
+      mopidyRef.current.mixer?.setVolume({ volume: newExactVolume });
+      // .then((b) => console.log(`[handleExactVolume] rand = ${rand}, newExactVolume = ${newExactVolume}, ok = ${b}`));
     } else {
       console.error(
-        `[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}, mopidyRef = ${!!mopidyRef.current}`
+        `[handleExactVolume] rand = ${rand}, newExactVolume = ${newExactVolume}, mopidyRef = ${!!mopidyRef.current}`
       );
     }
   }
@@ -135,7 +136,7 @@ function Volume() {
           label="the exact volume"
           value={exactVolume}
           onChange={(e) => setExactVolume(+e.target.value)}
-          onKeyUp={(e) => onEnterKey(() => setMopidyVolume(exactVolume), e)}
+          onKeyUp={(e) => onEnterKey(() => handleExactVolume(exactVolume), e)}
           inputProps={{ min: 0, max: 100, style: { fontWeight: 'bold' } }}
           InputProps={{
             endAdornment: (
@@ -150,7 +151,7 @@ function Volume() {
           variant="outlined"
           size="large"
           sx={btnStyle}
-          onClick={() => setMopidyVolume(exactVolume)}
+          onClick={() => handleExactVolume(exactVolume)}
         >
           Set the volume to {exactVolume}
         </Button>
@@ -160,7 +161,7 @@ function Volume() {
             disabled={disabled}
             aria-label="Volume"
             value={sliderVolume || 0}
-            onChange={(_e, newValue) => slideVolume(newValue as number)}
+            onChange={(_e, newValue) => handleSliderVolume(newValue as number)}
           />
           <VolumeUp />
         </Stack>
@@ -169,7 +170,7 @@ function Volume() {
           variant="outlined"
           size="large"
           sx={btnStyle}
-          onClick={() => setMopidyVolume(volume + 1)}
+          onClick={() => handleExactVolume(volume + 1)}
         >
           <AddCircleIcon />
         </Button>
@@ -181,7 +182,7 @@ function Volume() {
           variant="outlined"
           size="large"
           sx={btnStyle}
-          onClick={() => setMopidyVolume(volume - 1)}
+          onClick={() => handleExactVolume(volume - 1)}
         >
           <RemoveCircleIcon />
         </Button>
