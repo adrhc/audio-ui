@@ -2,15 +2,11 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Chip,
   Divider,
   IconButton,
-  InputAdornment,
   InputBase,
-  Paper,
   Slider,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material';
 import Mopidy from 'mopidy';
@@ -19,7 +15,6 @@ import { onEnterKey } from './lib/keys';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import SearchIcon from '@mui/icons-material/Search';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
 import { debounce } from 'lodash';
