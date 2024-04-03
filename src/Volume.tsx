@@ -74,7 +74,7 @@ function Volume() {
           value={exactVolume}
           onChange={(e) => setExactVolume(+e.target.value)}
           onKeyUp={(e) => onEnterKey(() => setMopidyVolume(exactVolume), e)}
-          inputProps={{ min: 0, max: 100 }}
+          inputProps={{ min: 0, max: 100, style: { fontWeight: 'bold' } }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
