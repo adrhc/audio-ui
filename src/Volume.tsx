@@ -7,14 +7,18 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
 function Volume() {
-  // console.log(`[Volume]`);
+  console.log(`[Volume]`);
   const [volume, setVolume] = useState(0);
   const [exactVolume, setExactVolume] = useState(9);
   const [disabled, setDisabled] = useState(true);
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const ws = useRef<Mopidy | null>(null);
 
@@ -46,7 +50,10 @@ function Volume() {
     mopidy.on('state:online', async () => {
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
-      await reloadVolume();
+      const serverVolume = await ws.current?.mixer?.getVolume();
+      if (serverVolume != null) {
+        setVolume(serverVolume);
+      }
       setDisabled(false);
     });
 
@@ -61,18 +68,16 @@ function Volume() {
     };
   }, []);
 
-  async function reloadVolume() {
-    const serverVolume = await ws.current?.mixer?.getVolume();
-    if (serverVolume != null) {
-      setVolume(serverVolume);  
-    }
-  }
-
   function setMopidyVolume(newVolume: number) {
     // console.log(`[setMopidyVolume] newVolume = ${newVolume}`);
     if (ws.current && newVolume >= 0 && newVolume <= 100) {
       ws.current.mixer?.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
     }
+  }
+
+  function reloadPage() {
+    navigate(location.pathname);
+    navigate(0);
   }
 
   const btnStyle = { py: [3, 2] };
@@ -83,7 +88,7 @@ function Volume() {
         Mopidy Volume
       </Typography> */}
       <Stack spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
-        <Button variant="outlined" size="large" sx={btnStyle} onClick={reloadVolume}>
+        <Button variant="outlined" size="large" sx={btnStyle} onClick={reloadPage}>
           <AutorenewIcon />
         </Button>
         <TextField
