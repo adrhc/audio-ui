@@ -10,7 +10,8 @@ type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 function Volume() {
   // console.log(`[Volume]`);
   const [volume, setVolume] = useState(0);
-  const [exactVolume, setExactVolume] = useState<number>(5);
+  const [exactVolume, setExactVolume] = useState(5);
+  const [disabled, setDisabled] = useState(true);
 
   const ws = useRef<Mopidy | null>(null);
 
@@ -31,8 +32,12 @@ function Volume() {
     }
 
     mopidy.on('websocket:error', async (e: object | string) => {
-      alert(`Something went wrong with the Mopidy connection!\n${JSON.stringify(e)}`);
+      console.log('Something went wrong with the Mopidy connection!', e);
       mopidyClose();
+    });
+
+    mopidy.on('state:offline', async () => {
+      setDisabled(true);
     });
 
     mopidy.on('state:online', async () => {
@@ -40,6 +45,7 @@ function Volume() {
       // await showTracklistInfo(mopidy);
       const serverVolume = await mopidy.mixer?.getVolume();
       setVolume(typeof serverVolume === 'number' ? serverVolume : 0);
+      setDisabled(false);
     });
 
     mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
@@ -67,8 +73,9 @@ function Volume() {
       {/* <Typography variant="h4" textAlign="center">
         Mopidy Volume
       </Typography> */}
-      <Stack spacing={2} sx={{ justifyContent: ['flex-end', 'center'], height: '100%' }}>
+      <Stack spacing={2} sx={{ pb: [2, 0], justifyContent: ['flex-end', 'center'], height: '100%' }}>
         <TextField
+          disabled={disabled}
           type="number"
           label="the exact volume"
           value={exactVolume}
