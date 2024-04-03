@@ -115,19 +115,32 @@ function Volume() {
         <Stack direction="row" spacing={2} alignItems="center">
           <VolumeDown />
           <Slider
+            disabled={disabled}
             aria-label="Volume"
             value={volume || 0}
             onChange={(_e, newValue) => setMopidyVolume(newValue as number)}
           />
           <VolumeUp />
         </Stack>
-        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(volume + 1)}>
+        <Button
+          disabled={disabled}
+          variant="outlined"
+          size="large"
+          sx={btnStyle}
+          onClick={() => setMopidyVolume(volume + 1)}
+        >
           <AddCircleIcon />
         </Button>
         <Typography textAlign="center" sx={{ fontWeight: 'bold' }}>
           {volume}
         </Typography>
-        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(volume - 1)}>
+        <Button
+          disabled={disabled}
+          variant="outlined"
+          size="large"
+          sx={btnStyle}
+          onClick={() => setMopidyVolume(volume - 1)}
+        >
           <RemoveCircleIcon />
         </Button>
       </Stack>
