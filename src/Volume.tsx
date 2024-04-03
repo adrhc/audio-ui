@@ -1,14 +1,4 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Chip,
-  Divider,
-  IconButton,
-  InputBase,
-  Slider,
-  Stack,
-} from '@mui/material';
+import { Box, Button, ButtonGroup, Chip, Divider, IconButton, InputBase, Slider, Stack } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
@@ -156,12 +146,18 @@ function Volume() {
             value={exactVolume}
             onChange={(e) => setExactVolume(+e.target.value)}
             onKeyUp={(e) => onEnterKey(() => handleExactVolume(exactVolume), e)}
-            inputProps={{ min: 0, max: 100, style: { fontWeight: 'bold', paddingLeft: 14 } }}
+            sx={{ '& .MuiInputBase-input': { paddingLeft: btnStyle.py, fontWeight: 'bold' } }}
+            inputProps={{ min: 0, max: 100 }}
           />
-          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+          <IconButton
+            disabled={disabled}
+            type="button"
+            sx={{ p: btnStyle.py }}
+            onClick={() => handleExactVolume(exactVolume)}
+          >
             <EqualizerIcon />
           </IconButton>
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <Button
             disabled={disabled}
             variant="text"
@@ -170,7 +166,7 @@ function Volume() {
             onClick={() => handleExactVolume(exactVolume)}
           >
             Set
-          </Button>
+          </Button> */}
         </Box>
         <Stack direction="row" spacing={2} alignItems="center">
           <VolumeDown />
