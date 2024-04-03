@@ -18,7 +18,7 @@ function Volume() {
   const [exactVolume, setExactVolume] = useState(DEFAULT_EXACT_VOLUME);
   const [disabled, setDisabled] = useState(true);
   const [rand, setRand] = useState(0);
-  
+
   // console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
   // alert(`volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
 
@@ -29,7 +29,9 @@ function Volume() {
 
   useEffect(() => {
     if (ws.current) {
-      // console.log(`ws.current:`, ws.current);
+      console.log(
+        `[useEffect2] ws.current = ${!!ws.current}, mopidy = ${!!mopidy}, ws.current === mopidy is ${ws.current === mopidy}`
+      );
       return;
     }
 
@@ -38,31 +40,39 @@ function Volume() {
     setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
-    // console.log(`opened mopidy:`, ws.current);
+    console.log(
+      `[useEffect] ws.current = ${!!ws.current}, mopidy = ${!!mopidy}, ws.current === mopidy is ${ws.current === mopidy}`
+    );
 
     function mopidyClose() {
+      console.log(`[mopidyClose] ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
       ws.current = null;
-      mopidy.off();
-      mopidy.close();
+      mopidy.close()?.then(() => mopidy.off());
     }
 
+    mopidy.on('websocket:close', async () => {
+      console.log(`websocket:close ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
+    });
+
     mopidy.on('websocket:error', async (e: object | string) => {
+      console.log(`websocket:error ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
       console.error('Something went wrong with the Mopidy connection!', e);
-      mopidyClose();
     });
 
     mopidy.on('state:offline', async () => {
+      console.log(`state:offline ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
       setDisabled(true);
     });
 
     mopidy.on('state:online', async () => {
+      console.log(`state:online ws.current = ${!!ws.current}, mopidy = ${!!mopidy}`);
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
+      setDisabled(false);
       const serverVolume = await ws.current?.mixer?.getVolume();
       if (serverVolume != null) {
         setVolume(serverVolume);
       }
-      setDisabled(false);
     });
 
     mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
@@ -80,6 +90,8 @@ function Volume() {
     // console.log(`[setMopidyVolume] newVolume = ${newVolume}`);
     if (ws.current && newVolume >= 0 && newVolume <= 100) {
       ws.current.mixer?.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
+      // } else {
+      // alert(`newVolume = ${newVolume}, ws.current = ${!!ws.current}`);
     }
   }
 
@@ -93,9 +105,9 @@ function Volume() {
     <>
       <Stack spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
         {/* <Link to="." reloadDocument={true} state={{}}> */}
-          <Button variant="outlined" size="large" sx={btnStyle} onClick={refresh}>
-            <AutorenewIcon />
-          </Button>
+        <Button variant="outlined" size="large" sx={btnStyle} onClick={refresh}>
+          <AutorenewIcon />
+        </Button>
         {/* </Link> */}
         <TextField
           disabled={disabled}
