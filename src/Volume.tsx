@@ -3,7 +3,9 @@ import Mopidy from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
-import RefreshIcon from '@mui/icons-material/Refresh';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
@@ -11,7 +13,7 @@ type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 function Volume() {
   // console.log(`[Volume]`);
   const [volume, setVolume] = useState(0);
-  const [exactVolume, setExactVolume] = useState(5);
+  const [exactVolume, setExactVolume] = useState(9);
   const [disabled, setDisabled] = useState(true);
 
   const ws = useRef<Mopidy | null>(null);
@@ -30,11 +32,6 @@ function Volume() {
       ws.current = null;
       mopidy.off();
       mopidy.close();
-    }
-
-    async function reloadVolume() {
-      const serverVolume = await mopidy.mixer?.getVolume();
-      setVolume(typeof serverVolume === 'number' ? serverVolume : 0);
     }
 
     mopidy.on('websocket:error', async (e: object | string) => {
@@ -64,6 +61,13 @@ function Volume() {
     };
   }, []);
 
+  async function reloadVolume() {
+    const serverVolume = await ws.current?.mixer?.getVolume();
+    if (serverVolume != null) {
+      setVolume(serverVolume);  
+    }
+  }
+
   function setMopidyVolume(newVolume: number) {
     // console.log(`[setMopidyVolume] newVolume = ${newVolume}`);
     if (ws.current && newVolume >= 0 && newVolume <= 100) {
@@ -79,8 +83,8 @@ function Volume() {
         Mopidy Volume
       </Typography> */}
       <Stack spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
-        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(volume + 1)}>
-          <RefreshIcon />
+        <Button variant="outlined" size="large" sx={btnStyle} onClick={reloadVolume}>
+          <AutorenewIcon />
         </Button>
         <TextField
           disabled={disabled}
@@ -111,13 +115,13 @@ function Volume() {
           <VolumeUp />
         </Stack>
         <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(volume + 1)}>
-          Up
+          <AddCircleIcon />
         </Button>
         <Typography textAlign="center" sx={{ fontWeight: 'bold' }}>
           {volume}
         </Typography>
         <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(volume - 1)}>
-          Down
+          <RemoveCircleIcon />
         </Button>
       </Stack>
     </>
