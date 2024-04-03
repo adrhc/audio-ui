@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Chip,
   Divider,
   IconButton,
   InputBase,
@@ -182,9 +183,21 @@ function Volume() {
           />
           <VolumeUp />
         </Stack>
-        <Typography textAlign="center" sx={{ fontWeight: 'bold', mt: '8px !important' }}>
+        {/* <Typography textAlign="center" sx={{ fontWeight: 'bold', mt: '8px !important' }}>
           {volume}
-        </Typography>
+        </Typography> */}
+        <Chip
+          variant="outlined"
+          icon={<EqualizerIcon />}
+          label={volume}
+          sx={{
+            fontWeight: 'bold',
+            '& .MuiChip-label': {
+              lineHeight: 1,
+              paddingTop: 0.25,
+            },
+          }}
+        />
         <ButtonGroup>
           <Button
             disabled={disabled}
