@@ -28,32 +28,27 @@ function Volume() {
   const ws = useRef<Mopidy | null>(null);
 
   useEffect(() => {
-    /* if (ws.current) {
-      console.log(`[useEffect2] ws.current = ${!!ws.current}`);
-      return;
-    } */
-
     setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
-    console.log(`[useEffect] rand = ${rand}, mopidy:`, mopidy);
+    // console.log(`[useEffect] rand = ${rand}, mopidy:`, mopidy);
 
     mopidy.on('websocket:close', async () => {
-      console.log(`[websocket:close] rand = ${rand}`, mopidy);
+      // console.log(`[websocket:close] rand = ${rand}`, mopidy);
     });
 
     mopidy.on('websocket:error', async (e: object | string) => {
-      console.log(`[websocket:error] rand = ${rand}`, mopidy);
+      // console.log(`[websocket:error] rand = ${rand}`, mopidy);
       console.error('Something went wrong with the Mopidy connection!', e);
     });
 
     mopidy.on('state:offline', async () => {
-      console.log(`[state:offline] rand = ${rand}`, mopidy);
+      // console.log(`[state:offline] rand = ${rand}`, mopidy);
       setDisabled(true);
     });
 
     mopidy.on('state:online', async () => {
-      console.log(`[state:online] rand = ${rand}`, mopidy);
+      // console.log(`[state:online] rand = ${rand}`, mopidy);
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
       setDisabled(false);
@@ -64,7 +59,7 @@ function Volume() {
     });
 
     mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
-      // console.log(`state:volumeChanged rand = ${rand}, volume = ${volume}`);
+      // console.log(`[state:volumeChanged] rand = ${rand}, volume = ${volume}`);
       setVolume(volume);
     });
 
@@ -76,7 +71,7 @@ function Volume() {
   }, [rand]);
 
   function setMopidyVolume(newVolume: number) {
-    // console.log(`[setMopidyVolume] newVolume = ${newVolume}`);
+    // console.log(`[setMopidyVolume] rand = ${rand}, newVolume = ${newVolume}`);
     if (ws.current && newVolume >= 0 && newVolume <= 100) {
       ws.current.mixer?.setVolume({ volume: newVolume }).then(() => setVolume(newVolume));
       // } else {
