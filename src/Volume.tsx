@@ -7,19 +7,23 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
+const DEFAULT_EXACT_VOLUME = 9;
 
 function Volume() {
   // console.log(`[Volume]`);
-  const [volume, setVolume] = useState(0);
-  const [exactVolume, setExactVolume] = useState(9);
-  const [disabled, setDisabled] = useState(true);
-  // console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
-  alert(`volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
 
-  const navigate = useNavigate();
+  const [volume, setVolume] = useState(0);
+  const [exactVolume, setExactVolume] = useState(DEFAULT_EXACT_VOLUME);
+  const [disabled, setDisabled] = useState(true);
+  const [rand, setRand] = useState(0);
+  
+  // console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
+  // alert(`volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
+
+  // const location = useLocation();
+  // const navigate = useNavigate();
 
   const ws = useRef<Mopidy | null>(null);
 
@@ -29,7 +33,10 @@ function Volume() {
       return;
     }
 
-    // console.log(`opening mopidy`);
+    // console.log(`[useEffect] rand = ${rand}`);
+
+    setExactVolume(DEFAULT_EXACT_VOLUME);
+
     const mopidy = (ws.current = new Mopidy({ webSocketUrl: '' }));
     // console.log(`opened mopidy:`, ws.current);
 
@@ -40,7 +47,7 @@ function Volume() {
     }
 
     mopidy.on('websocket:error', async (e: object | string) => {
-      console.log('Something went wrong with the Mopidy connection!', e);
+      console.error('Something went wrong with the Mopidy connection!', e);
       mopidyClose();
     });
 
@@ -67,7 +74,7 @@ function Volume() {
       // console.log(`closing mopidy:`, mopidy);
       mopidyClose();
     };
-  }, []);
+  }, [rand]);
 
   function setMopidyVolume(newVolume: number) {
     // console.log(`[setMopidyVolume] newVolume = ${newVolume}`);
@@ -76,26 +83,17 @@ function Volume() {
     }
   }
 
-  function reloadPage() {
-    navigate(0);
-    // navigate(location.pathname, {});
+  function refresh() {
+    setRand(Math.random());
   }
-
-  /* function refresh() {
-    navigate(0);
-    // navigate(location.pathname, {});
-  } */
 
   const btnStyle = { py: [3, 2] };
 
   return (
     <>
-      {/* <Typography variant="h4" textAlign="center">
-        Mopidy Volume
-      </Typography> */}
       <Stack spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
         {/* <Link to="." reloadDocument={true} state={{}}> */}
-          <Button variant="outlined" size="large" sx={btnStyle} onClick={reloadPage}>
+          <Button variant="outlined" size="large" sx={btnStyle} onClick={refresh}>
             <AutorenewIcon />
           </Button>
         {/* </Link> */}
