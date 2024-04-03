@@ -3,6 +3,7 @@ import Mopidy from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
@@ -31,6 +32,11 @@ function Volume() {
       mopidy.close();
     }
 
+    async function reloadVolume() {
+      const serverVolume = await mopidy.mixer?.getVolume();
+      setVolume(typeof serverVolume === 'number' ? serverVolume : 0);
+    }
+
     mopidy.on('websocket:error', async (e: object | string) => {
       console.log('Something went wrong with the Mopidy connection!', e);
       mopidyClose();
@@ -43,8 +49,7 @@ function Volume() {
     mopidy.on('state:online', async () => {
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
-      const serverVolume = await mopidy.mixer?.getVolume();
-      setVolume(typeof serverVolume === 'number' ? serverVolume : 0);
+      await reloadVolume();
       setDisabled(false);
     });
 
@@ -74,6 +79,9 @@ function Volume() {
         Mopidy Volume
       </Typography> */}
       <Stack spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
+        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(volume + 1)}>
+          <RefreshIcon />
+        </Button>
         <TextField
           disabled={disabled}
           type="number"
