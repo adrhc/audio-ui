@@ -1,4 +1,4 @@
-import { Button, InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material';
+import { Button, InputAdornment, Paper, Slider, Stack, TextField, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
@@ -123,8 +123,8 @@ function Volume() {
   const btnStyle = { py: [3, 2] };
 
   return (
-    <>
-      <Stack spacing={2} sx={{ justifyContent: 'center', height: '100%' }}>
+    <Stack sx={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+      <Stack spacing={2} sx={{ height: '100%', justifyContent: 'center', width: '100%', maxWidth: '300px' }}>
         {/* <Link to="." reloadDocument={true} state={{}}> */}
         <Button variant="outlined" size="large" sx={btnStyle} onClick={refresh}>
           <AutorenewIcon />
@@ -187,7 +187,7 @@ function Volume() {
           <RemoveCircleIcon />
         </Button>
       </Stack>
-    </>
+    </Stack>
   );
 }
 
