@@ -1,10 +1,25 @@
-import { Button, ButtonGroup, Chip, InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Chip,
+  Divider,
+  IconButton,
+  InputAdornment,
+  InputBase,
+  Paper,
+  Slider,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
 import EqualizerIcon from '@mui/icons-material/Equalizer';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import SearchIcon from '@mui/icons-material/Search';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { VolumeDown, VolumeUp } from '@mui/icons-material';
 import { debounce } from 'lodash';
@@ -130,31 +145,38 @@ function Volume() {
           <AutorenewIcon />
         </Button>
         {/* </Link> */}
-        <TextField
-          disabled={disabled}
-          type="number"
-          label="the exact volume"
-          value={exactVolume}
-          onChange={(e) => setExactVolume(+e.target.value)}
-          onKeyUp={(e) => onEnterKey(() => handleExactVolume(exactVolume), e)}
-          inputProps={{ min: 0, max: 100, style: { fontWeight: 'bold' } }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <EqualizerIcon />
-              </InputAdornment>
-            ),
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            width: '100%',
+            border: 'solid thin rgba(0, 0, 0, 0.2)',
+            borderRadius: 1,
           }}
-        />
-        <Button
-          disabled={disabled}
-          variant="outlined"
-          size="large"
-          sx={btnStyle}
-          onClick={() => handleExactVolume(exactVolume)}
         >
-          Set the volume to {exactVolume}
-        </Button>
+          <InputBase
+            fullWidth
+            disabled={disabled}
+            type="number"
+            value={exactVolume}
+            onChange={(e) => setExactVolume(+e.target.value)}
+            onKeyUp={(e) => onEnterKey(() => handleExactVolume(exactVolume), e)}
+            inputProps={{ min: 0, max: 100, style: { fontWeight: 'bold', paddingLeft: 14 } }}
+          />
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+            <EqualizerIcon />
+          </IconButton>
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <Button
+            disabled={disabled}
+            variant="text"
+            size="large"
+            sx={btnStyle}
+            onClick={() => handleExactVolume(exactVolume)}
+          >
+            Set
+          </Button>
+        </Box>
         <Stack direction="row" spacing={2} alignItems="center">
           <VolumeDown />
           <Slider
@@ -173,7 +195,7 @@ function Volume() {
             disabled={disabled}
             variant="outlined"
             size="large"
-            sx={{...btnStyle, flexGrow: 1}}
+            sx={{ ...btnStyle, flexGrow: 1 }}
             onClick={() => handleExactVolume(volume - 1)}
           >
             <RemoveCircleIcon />
@@ -183,7 +205,7 @@ function Volume() {
             disabled={disabled}
             variant="outlined"
             size="large"
-            sx={{...btnStyle, flexGrow: 1}}
+            sx={{ ...btnStyle, flexGrow: 1 }}
             onClick={() => handleExactVolume(volume + 1)}
           >
             <AddCircleIcon />
