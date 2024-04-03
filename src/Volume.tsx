@@ -110,7 +110,13 @@ function Volume() {
             ),
           }}
         />
-        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setMopidyVolume(exactVolume)}>
+        <Button
+          disabled={disabled}
+          variant="outlined"
+          size="large"
+          sx={btnStyle}
+          onClick={() => setMopidyVolume(exactVolume)}
+        >
           Set the volume to {exactVolume}
         </Button>
         <Stack direction="row" spacing={2} alignItems="center">
