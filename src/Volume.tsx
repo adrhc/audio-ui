@@ -1,4 +1,4 @@
-import { Button, InputAdornment, Paper, Slider, Stack, TextField, Typography } from '@mui/material';
+import { Button, InputAdornment, Slider, Stack, TextField, Typography } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
