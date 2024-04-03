@@ -17,6 +17,7 @@ function Volume() {
   const [exactVolume, setExactVolume] = useState(9);
   const [disabled, setDisabled] = useState(true);
   // console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
+  alert(`volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
 
   const navigate = useNavigate();
 
@@ -76,7 +77,6 @@ function Volume() {
   }
 
   function reloadPage() {
-    alert(`reloadPage volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
     navigate(0);
     // navigate(location.pathname, {});
   }
