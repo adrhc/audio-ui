@@ -85,7 +85,7 @@ function Volume() {
     }
     setVolume(debouncedSliderVolume);
     // console.log(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}`);
-    mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume });
+    // mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume });
   }, [debouncedSliderVolume]);
 
   const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 400), []);
