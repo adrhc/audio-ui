@@ -1,7 +1,18 @@
-import { Typography } from '@mui/material';
+import { Slider, Typography } from '@mui/material';
+import { useState } from 'react';
 
 function Dashboard() {
-  return <Typography variant="h6">Dashboard</Typography>;
+  const [sliderVolume, setSliderVolume] = useState(0);
+
+  return (
+    <>
+      <Typography variant="h6">Dashboard</Typography>
+      <Slider
+        value={sliderVolume || 0}
+        onChange={(_e, newValue) => setSliderVolume(newValue as number)}
+      ></Slider>
+    </>
+  );
 }
 
 export default Dashboard;
