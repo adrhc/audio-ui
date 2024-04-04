@@ -85,10 +85,10 @@ function Volume() {
     }
     setVolume(debouncedSliderVolume);
     // console.log(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}`);
-    // mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume });
+    mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume });
   }, [debouncedSliderVolume]);
 
-  const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 400), []);
+  const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 300), []);
 
   function handleSliderVolume(newSliderVolume: number) {
     // console.log(`[handleSliderVolume] newSliderVolume = ${newSliderVolume}`);
@@ -96,9 +96,8 @@ function Volume() {
       setSliderVolume(newSliderVolume);
       setDebouncedSliderVolumeFn(newSliderVolume);
     } else {
-      console.error(
-        `[handleSliderVolume] rand = ${rand}, newSliderVolume = ${newSliderVolume}, mopidyRef = ${!!mopidyRef.current}`
-      );
+      // console.error(`[handleSliderVolume] rand = ${rand}, newSliderVolume = ${newSliderVolume}, mopidyRef = false`);
+      alert(`[handleSliderVolume] rand = ${rand}, newSliderVolume = ${newSliderVolume}, mopidyRef = false`);
     }
   }
 
