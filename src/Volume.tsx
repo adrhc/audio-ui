@@ -83,9 +83,14 @@ function Volume() {
       console.error(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}, mopidyRef = true`);
       return;
     }
-    setVolume(debouncedSliderVolume);
     // console.log(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}`);
-    mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume });
+    mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume }).then((b) => {
+      if (b) {
+        setVolume(debouncedSliderVolume);
+      } else {
+        alert(`Couldn't set the volume to ${debouncedSliderVolume}!`);
+      }
+    });
   }, [debouncedSliderVolume]);
 
   const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 300), []);
