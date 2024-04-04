@@ -8,7 +8,7 @@ function Dashboard() {
     <>
       <Typography variant="h6">Dashboard</Typography>
       <Slider
-        value={sliderVolume || 0}
+        value={sliderVolume}
         onChange={(_e, newValue) => setSliderVolume(newValue as number)}
       ></Slider>
     </>
