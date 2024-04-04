@@ -75,6 +75,7 @@ function Volume() {
     };
   }, [rand]);
 
+  // setVolume
   useEffect(() => {
     if (debouncedSliderVolume == null) {
       console.warn(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}, mopidyRef = false`);
@@ -95,6 +96,7 @@ function Volume() {
 
   const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 300), []);
 
+  // setSliderVolume
   function handleSliderVolume(newSliderVolume: number) {
     // console.log(`[handleSliderVolume] newSliderVolume = ${newSliderVolume}`);
     if (mopidyRef.current) {
@@ -109,10 +111,15 @@ function Volume() {
   function handleExactVolume(newExactVolume: number) {
     // console.log(`[handleExactVolume] newExactVolume = ${newExactVolume}`);
     if (mopidyRef.current && newExactVolume >= 0 && newExactVolume <= 100) {
-      setVolume(newExactVolume);
-      setSliderVolume(newExactVolume);
       // console.log(`[mopidy] newExactVolume = ${newExactVolume}`);
-      mopidyRef.current.mixer?.setVolume({ volume: newExactVolume });
+      mopidyRef.current.mixer?.setVolume({ volume: newExactVolume }).then((b) => {
+        if (b) {
+          setVolume(newExactVolume);
+          setSliderVolume(newExactVolume);
+        } else {
+          alert(`Couldn't set the volume to ${newExactVolume}!`);
+        }
+      });
       // .then((b) => console.log(`[handleExactVolume] rand = ${rand}, newExactVolume = ${newExactVolume}, ok = ${b}`));
     } else {
       console.error(
@@ -162,16 +169,6 @@ function Volume() {
           >
             <GraphicEqIcon />
           </IconButton>
-          {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <Button
-            disabled={disabled}
-            variant="text"
-            size="large"
-            sx={btnStyle}
-            onClick={() => handleExactVolume(exactVolume)}
-          >
-            Set
-          </Button> */}
         </Box>
         <Stack direction="row" spacing={2} alignItems="center">
           <VolumeDown />
@@ -186,18 +183,7 @@ function Volume() {
         {/* <Typography textAlign="center" sx={{ fontWeight: 'bold', mt: '8px !important' }}>
           {volume}
         </Typography> */}
-        <Chip
-          variant="outlined"
-          icon={<GraphicEqIcon />}
-          label={volume}
-          sx={{
-            fontWeight: 'bold',
-            /* '& .MuiChip-label': {
-              lineHeight: 1,
-              paddingTop: 0.25,
-            }, */
-          }}
-        />
+        <Chip variant="outlined" icon={<GraphicEqIcon />} label={volume} sx={{ fontWeight: 'bold' }} />
         <ButtonGroup>
           <Button
             disabled={disabled}
