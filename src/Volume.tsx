@@ -2,7 +2,8 @@ import { Box, Button, ButtonGroup, Chip, IconButton, InputBase, Slider, Stack } 
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { onEnterKey } from './lib/keys';
-import EqualizerIcon from '@mui/icons-material/Equalizer';
+// import EqualizerIcon from '@mui/icons-material/Equalizer';
+import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
@@ -152,10 +153,10 @@ function Volume() {
           <IconButton
             disabled={disabled}
             type="button"
-            sx={{ p: btnStyle.py }}
+            sx={{ p: btnStyle.py, color: '#1976d2' }}
             onClick={() => handleExactVolume(exactVolume)}
           >
-            <EqualizerIcon />
+            <GraphicEqIcon />
           </IconButton>
           {/* <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <Button
@@ -183,14 +184,14 @@ function Volume() {
         </Typography> */}
         <Chip
           variant="outlined"
-          icon={<EqualizerIcon />}
+          icon={<GraphicEqIcon />}
           label={volume}
           sx={{
             fontWeight: 'bold',
-            '& .MuiChip-label': {
+            /* '& .MuiChip-label': {
               lineHeight: 1,
               paddingTop: 0.25,
-            },
+            }, */
           }}
         />
         <ButtonGroup>
