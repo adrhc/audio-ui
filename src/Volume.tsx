@@ -104,7 +104,7 @@ function Volume() {
       setDebouncedSliderVolumeFn(newSliderVolume);
     } else {
       // console.error(`[handleSliderVolume] rand = ${rand}, newSliderVolume = ${newSliderVolume}, mopidyRef = false`);
-      alert(`[handleSliderVolume] rand = ${rand}, newSliderVolume = ${newSliderVolume}, mopidyRef = false`);
+      alert(`rand = ${rand}, newSliderVolume = ${newSliderVolume}, mopidyRef = false`);
     }
   }
 
@@ -122,9 +122,8 @@ function Volume() {
       });
       // .then((b) => console.log(`[handleExactVolume] rand = ${rand}, newExactVolume = ${newExactVolume}, ok = ${b}`));
     } else {
-      console.error(
-        `[handleExactVolume] rand = ${rand}, newExactVolume = ${newExactVolume}, mopidyRef = ${!!mopidyRef.current}`
-      );
+      // console.error(`[handleExactVolume] rand = ${rand}, newExactVolume = ${newExactVolume}, mopidyRef = false`);
+      alert(`rand = ${rand}, newExactVolume = ${newExactVolume}, mopidyRef = false`);
     }
   }
 
