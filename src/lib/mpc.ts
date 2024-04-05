@@ -1,35 +1,27 @@
 import Mopidy from 'mopidy';
 
 export function resume(mopidy?: Mopidy | null) {
-  return mopidy?.playback
-    ?.resume()
-    .catch((reason) => {
-      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+  return mopidy?.playback?.resume().catch((reason) => {
+    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+  });
 }
 
 export function pause(mopidy?: Mopidy | null) {
-  return mopidy?.playback
-    ?.pause()
-    .catch((reason) => {
-      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+  return mopidy?.playback?.pause().catch((reason) => {
+    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+  });
 }
 
 export function stop(mopidy?: Mopidy | null) {
-  return mopidy?.playback
-    ?.stop()
-    .catch((reason) => {
-      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+  return mopidy?.playback?.stop().catch((reason) => {
+    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+  });
 }
 
 export function play(mopidy?: Mopidy | null) {
-  return mopidy?.playback
-    ?.play({})
-    .catch((reason) => {
-      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+  return mopidy?.playback?.play({}).catch((reason) => {
+    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+  });
 }
 
 export function mute(mopidy: Mopidy | null, newMute: boolean) {
