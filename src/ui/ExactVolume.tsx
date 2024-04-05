@@ -43,7 +43,7 @@ const ExactVolume = ({
           <IconButton
             disabled={disabled}
             type="button"
-            sx={{ color: '#1976d2', ml: styles.py, mr: styles.py.map((n) => n * 3), p: styles.py }}
+            sx={{ color: '#1976d2', p: 0, my: styles.py, ml: styles.py, mr: styles.py.map((n) => n * 4) }}
             onClick={() => handleExactVolume(exactVolume)}
           >
             <GraphicEqIcon />

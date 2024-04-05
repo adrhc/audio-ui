@@ -17,23 +17,26 @@ const theme = createTheme({
       default: '#fffaf0',
     },
   },
+  typography: {
+    fontSize: 24
+  },
   components: {
-    MuiSvgIcon: {
+    /* MuiSvgIcon: {
       styleOverrides: {
         root: {
           width: '2em',
-          height: '2em'
-        }
-      }
-    },
+          height: '2em',
+        },
+      },
+    }, */
     MuiChip: {
       styleOverrides: {
         root: {
-          height: 'auto'
-        }
-      }
-    }
-  }
+          height: 'auto',
+        },
+      },
+    },
+  },
 });
 
 const router = createHashRouter([
