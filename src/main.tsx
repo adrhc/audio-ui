@@ -10,11 +10,11 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import VolumePage from './VolumePage.tsx';
 import ErrorPage from './ErrorPage.tsx';
 import App from './App.tsx';
-import { createBreakpoints } from '@mui/system';
+// import { createBreakpoints } from '@mui/system';
 
 // responsiveFontSizes from '@mui/material'
 // import { createBreakpoints } from '@mui/system'
-const breakpoints = createBreakpoints({});
+// const breakpoints = createBreakpoints({});
 const theme = createTheme({
   palette: {
     background: {
