@@ -105,10 +105,8 @@ function VolumePage() {
   }
 
   function handleSlide(newSlidingVolume: number) {
-    // console.log(`[handleSlide] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
-    addLog(
-      `[handleSlide] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`
-    );
+    // console.log(`[handleSlide] rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
+    addLog(`[handleSlide] rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
     if (mopidyRef.current) {
       doSetMopidyVolume(newSlidingVolume);
     } else {
@@ -118,7 +116,8 @@ function VolumePage() {
   }
 
   function handleExactVolume(newVolume: number) {
-    // console.log(`[handleExactVolume] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newVolume = ${newVolume}`);
+    // console.log(`[handleExactVolume] rand = ${rand}, newVolume = ${newVolume}`);
+    addLog(`[handleExactVolume] rand = ${rand}, newVolume = ${newVolume}`);
     if (mopidyRef.current) {
       doSetMopidyVolume(newVolume, setSliderValue);
     } else {
