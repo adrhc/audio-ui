@@ -10,25 +10,26 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import VolumePage from './VolumePage.tsx';
 import ErrorPage from './ErrorPage.tsx';
 import App from './App.tsx';
+import { createBreakpoints } from '@mui/system';
 
 // responsiveFontSizes from '@mui/material'
-// createBreakpoints from '@mui/system'
-// const breakpoints = createBreakpoints({});
+// import { createBreakpoints } from '@mui/system'
+const breakpoints = createBreakpoints({});
 const theme = createTheme({
   palette: {
     background: {
       default: '#fffaf0',
     },
   },
-  typography: {
+  /* typography: {
     fontSize: 16,
-  },
+  }, */
   /* typography: {
       [breakpoints.down('xs')]: {
         fontSize: 28,
       },
       [breakpoints.up('xs')]: {
-        fontSize: 18,
+        fontSize: 16,
       },
     }, */
   components: {
@@ -39,6 +40,8 @@ const theme = createTheme({
           height: '2em',
         },
       },
+    }, */
+    /* MuiCssBaseline: {
     }, */
     MuiChip: {
       styleOverrides: {
