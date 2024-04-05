@@ -73,7 +73,9 @@ function VolumePage() {
     mopidy.on('websocket:error', async (e: object | string) => {
       // console.log(`[websocket:error] rand = ${rand}`);
       // console.error('Something went wrong with the Mopidy connection!', e);
-      addLog(`Something went wrong with the Mopidy connection! rand = ${rand}, ${JSON.stringify(e)}`);
+      addLog(
+        `Something went wrong with the Mopidy connection! rand = ${rand}, ${JSON.stringify(e, ['message', 'arguments', 'type', 'name'])}`
+      );
     });
 
     /* mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
