@@ -151,7 +151,7 @@ function VolumePage() {
           setVolume={setSliderValue}
           onMute={handleMute}
           onSlide={handleSlide}
-          addLog={addLog}
+          // addLog={addLog}
         />
         <Chip variant="outlined" icon={<GraphicEqIcon />} label={volume} sx={{ fontWeight: 'bold' }} />
         <VolumeButtons
