@@ -30,7 +30,7 @@ function VolumePage() {
   const mopidyRef = useRef<Mopidy | null>(null);
 
   useEffect(() => {
-    console.log(`[useEffect] rand = ${rand}`);
+    // console.log(`[useEffect] rand = ${rand}`);
     setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
@@ -72,7 +72,7 @@ function VolumePage() {
     }); */
 
     return () => {
-      console.log(`[useEffect:destroy] rand = ${rand}`);
+      // console.log(`[useEffect:destroy] rand = ${rand}`);
       mopidyRef.current = null;
       mopidy.close()?.then(() => mopidy.off());
     };
@@ -91,13 +91,13 @@ function VolumePage() {
     }
   }
 
-  function handleSlidingVolume(newSlidingVolume: number) {
-    // console.log(`[handleSlidingVolume] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
+  function handleSlide(newSlidingVolume: number) {
+    // console.log(`[handleSlide] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
     if (mopidyRef.current) {
       doSetMopidyVolume(newSlidingVolume);
     } else {
-      // console.error(`[handleSlidingVolume] mopidyRef = false, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
-      alert(`[handleSlidingVolume] mopidyRef = false, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
+      // console.error(`[handleSlide] mopidyRef = false, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
+      alert(`[handleSlide] mopidyRef = false, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
     }
   }
 
@@ -134,7 +134,7 @@ function VolumePage() {
           volume={sliderValue}
           setVolume={setSliderValue}
           onMute={handleMute}
-          onSlide={handleSlidingVolume}
+          onSlide={handleSlide}
         />
         <Chip variant="outlined" icon={<GraphicEqIcon />} label={volume} sx={{ fontWeight: 'bold' }} />
         <VolumeButtons
