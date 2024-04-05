@@ -1,21 +1,29 @@
-import { VolumeDown, VolumeUp } from '@mui/icons-material';
+import { VolumeUp } from '@mui/icons-material';
 import { Slider, Stack } from '@mui/material';
+import { useCallback, useState } from 'react';
+import { debounce } from 'lodash';
+import MuteIconButton from './MuteIconButton';
+import { NoParamsProc } from '../lib/types';
 
 export type VolumeSliderParam = {
   disabled?: boolean;
-  sliderVolume: number;
-  handleSliderVolume: (v: number) => void;
+  mute: boolean;
+  volume: number;
+  onMute: NoParamsProc;
+  onSlide: (volume: number) => void;
 };
 
-const VolumeSlider = ({ disabled, sliderVolume, handleSliderVolume }: VolumeSliderParam) => {
+const VolumeSlider = ({ disabled, mute, volume, onMute, onSlide }: VolumeSliderParam) => {
+  const onSlideFn = useCallback(debounce(onSlide, 300), []);
+
   return (
     <Stack direction="row" spacing={2} alignItems="center">
-      <VolumeDown />
+      <MuteIconButton mute={mute} onClick={onMute} />
       <Slider
         disabled={disabled}
         aria-label="Volume"
-        value={sliderVolume}
-        onChange={(_e, newValue) => handleSliderVolume(newValue as number)}
+        value={volume}
+        onChange={(_e, newValue) => onSlideFn(newValue as number)}
       />
       <VolumeUp />
     </Stack>

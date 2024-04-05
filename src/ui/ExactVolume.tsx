@@ -1,6 +1,7 @@
 import { Box, InputBase, IconButton } from '@mui/material';
 import { onEnterKey } from '../lib/keys';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
+import { Styles } from '../lib/types';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 export type ExactVolumeParam = {
@@ -8,8 +9,8 @@ export type ExactVolumeParam = {
   exactVolume: number;
   setExactVolume: (v: number) => void;
   handleExactVolume: (v: number) => void;
-  inputStyle: Record<string, number | string | number[] | string[]>;
-  iconStyle: Record<string, number | string | number[] | string[]>;
+  inputStyle: Styles;
+  iconStyle: Styles;
 };
 
 const ExactVolume = ({
