@@ -11,6 +11,9 @@ import VolumePage from './VolumePage.tsx';
 import ErrorPage from './ErrorPage.tsx';
 import App from './App.tsx';
 
+// responsiveFontSizes from '@mui/material'
+// createBreakpoints from '@mui/system'
+// const breakpoints = createBreakpoints({});
 const theme = createTheme({
   palette: {
     background: {
@@ -18,8 +21,16 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontSize: 20
+    fontSize: 16,
   },
+  /* typography: {
+      [breakpoints.down('xs')]: {
+        fontSize: 28,
+      },
+      [breakpoints.up('xs')]: {
+        fontSize: 18,
+      },
+    }, */
   components: {
     /* MuiSvgIcon: {
       styleOverrides: {
