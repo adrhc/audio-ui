@@ -1,6 +1,6 @@
 import { VolumeUp } from '@mui/icons-material';
 import { Slider, Stack } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { debounce } from 'lodash';
 import MuteIconButton from './MuteIconButton';
 import { NoParamsProc } from '../lib/types';
