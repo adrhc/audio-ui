@@ -1,6 +1,6 @@
 import { Chip, Stack } from '@mui/material';
 import Mopidy from 'mopidy';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import ExactVolume from './ui/ExactVolume';
 import VolumeSlider from './ui/VolumeSlider';
@@ -34,7 +34,6 @@ function VolumePage() {
   function addLog(log: string) {
     setLogs((oldLog) => [log, ...oldLog]);
   }
-  const addLogFn = useCallback(addLog, []);
 
   useEffect(() => {
     // console.log(`[useEffect] rand = ${rand}`);
@@ -152,7 +151,7 @@ function VolumePage() {
           setVolume={setSliderValue}
           onMute={handleMute}
           onSlide={handleSlide}
-          // addLog={addLogFn}
+          // addLog={addLog}
         />
         <Chip variant="outlined" icon={<GraphicEqIcon />} label={volume} sx={{ fontWeight: 'bold' }} />
         <VolumeButtons
