@@ -37,7 +37,7 @@ function VolumePage() {
 
   useEffect(() => {
     // console.log(`[useEffect] rand = ${rand}`);
-    // addLog(`[useEffect] rand = ${rand}`);
+    addLog(`[useEffect] rand = ${rand}`);
     setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
