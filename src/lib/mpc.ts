@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 
-export function resume(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.resume().catch((reason) => {
+export function stop(mopidy?: Mopidy | null) {
+  return mopidy?.playback?.stop().catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
   });
 }
@@ -12,8 +12,8 @@ export function pause(mopidy?: Mopidy | null) {
   });
 }
 
-export function stop(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.stop().catch((reason) => {
+export function resume(mopidy?: Mopidy | null) {
+  return mopidy?.playback?.resume().catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
   });
 }
