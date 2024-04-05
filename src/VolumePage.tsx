@@ -92,7 +92,7 @@ function VolumePage() {
     if (mopidyRef.current) {
       setMopidyVolume(
         (v) => {
-          addLog(`[doSetMopidyVolume.setMopidyVolume] rand = ${rand}, newValue = ${newValue}`);
+          // addLog(`[doSetMopidyVolume.setMopidyVolume] rand = ${rand}, newValue = ${newValue}`);
           setVolume(v);
           onSuccess && onSuccess(v);
         },
