@@ -18,7 +18,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontSize: 24
+    fontSize: 20
   },
   components: {
     /* MuiSvgIcon: {
