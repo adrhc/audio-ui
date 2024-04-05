@@ -3,13 +3,14 @@ import { onEnterKey } from '../lib/keys';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import { Styles } from '../lib/types';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
+import * as CSS from 'csstype';
 
 export type ExactVolumeParam = {
   disabled?: boolean;
   exactVolume: number;
   setExactVolume: (v: number) => void;
   handleExactVolume: (v: number) => void;
-  inputStyle: Styles;
+  inputStyle?: CSS.PropertiesFallback<number | string>;
   iconStyle: Styles;
 };
 
