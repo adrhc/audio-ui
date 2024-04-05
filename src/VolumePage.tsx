@@ -94,7 +94,7 @@ function VolumePage() {
   function handleSlide(newSlidingVolume: number) {
     // console.log(`[handleSlide] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
     if (mopidyRef.current) {
-      doSetMopidyVolume(newSlidingVolume);
+      doSetMopidyVolume(newSlidingVolume, setSliderValue);
     } else {
       // console.error(`[handleSlide] mopidyRef = false, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
       alert(`[handleSlide] mopidyRef = false, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
