@@ -30,7 +30,6 @@ const VolumeButtons = ({ disabled, volume, handleExactVolume, btnStyle }: Volume
       >
         <RemoveCircleIcon />
       </Button>
-      {/* <Chip label={volume} sx={{px: 0.5, mx: 1}}/> */}
       <Button
         disabled={disabled}
         variant="outlined"

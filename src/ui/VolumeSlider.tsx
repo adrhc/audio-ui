@@ -9,12 +9,18 @@ export type VolumeSliderParam = {
   disabled?: boolean;
   mute: boolean;
   volume: number;
+  setVolume: (volume: number) => void;
   onMute: NoParamsProc;
   onSlide: (volume: number) => void;
 };
 
-const VolumeSlider = ({ disabled, mute, volume, onMute, onSlide }: VolumeSliderParam) => {
+const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide }: VolumeSliderParam) => {
   const onSlideFn = useCallback(debounce(onSlide, 300), []);
+
+  function handleChange(volume: number) {
+    setVolume(volume);
+    onSlideFn(volume);
+  }
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
@@ -23,7 +29,7 @@ const VolumeSlider = ({ disabled, mute, volume, onMute, onSlide }: VolumeSliderP
         disabled={disabled}
         aria-label="Volume"
         value={volume}
-        onChange={(_e, newValue) => onSlideFn(newValue as number)}
+        onChange={(_e, newValue) => handleChange(newValue as number)}
       />
       <VolumeUp />
     </Stack>
