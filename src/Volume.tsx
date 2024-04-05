@@ -1,14 +1,13 @@
-import { Box, Button, ButtonGroup, Chip, IconButton, InputBase, Slider, Stack } from '@mui/material';
+import { Button, Chip, Stack } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { onEnterKey } from './lib/keys';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { VolumeDown, VolumeUp } from '@mui/icons-material';
 import { debounce } from 'lodash';
+import ExactVolume from './ui/ExactVolume';
+import VolumeSlider from './ui/VolumeSlider';
+import VolumeButtons from './ui/VolumeButtons';
 
 // type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 const DEFAULT_EXACT_VOLUME = 9;
@@ -134,76 +133,31 @@ function Volume() {
   const btnStyle = { py: [3, 2] };
 
   return (
-    <Stack sx={{ height: '100%', alignItems: 'center', justifyContent: 'center' }}>
+    <Stack sx={{ height: '100%', alignItems: 'center' }}>
       <Stack spacing={2} sx={{ height: '100%', justifyContent: 'center', width: '100%', maxWidth: '300px' }}>
-        {/* <Link to="." reloadDocument={true} state={{}}> */}
         <Button variant="outlined" size="large" sx={btnStyle} onClick={refresh}>
           <AutorenewIcon />
         </Button>
-        {/* </Link> */}
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            width: '100%',
-            border: 'solid thin rgba(0, 0, 0, 0.2)',
-            borderRadius: 1,
-          }}
-        >
-          <InputBase
-            fullWidth
-            disabled={disabled}
-            type="number"
-            value={exactVolume}
-            onChange={(e) => setExactVolume(+e.target.value)}
-            onKeyUp={(e) => onEnterKey(() => handleExactVolume(exactVolume), e)}
-            sx={{ '& .MuiInputBase-input': { paddingLeft: btnStyle.py, fontWeight: 'bold' } }}
-            inputProps={{ min: 0, max: 100 }}
-          />
-          <IconButton
-            disabled={disabled}
-            type="button"
-            sx={{ p: btnStyle.py, color: '#1976d2' }}
-            onClick={() => handleExactVolume(exactVolume)}
-          >
-            <GraphicEqIcon />
-          </IconButton>
-        </Box>
-        <Stack direction="row" spacing={2} alignItems="center">
-          <VolumeDown />
-          <Slider
-            disabled={disabled}
-            aria-label="Volume"
-            value={sliderVolume || 0}
-            onChange={(_e, newValue) => handleSliderVolume(newValue as number)}
-          />
-          <VolumeUp />
-        </Stack>
-        {/* <Typography textAlign="center" sx={{ fontWeight: 'bold', mt: '8px !important' }}>
-          {volume}
-        </Typography> */}
+        <ExactVolume
+          disabled={disabled}
+          exactVolume={exactVolume}
+          setExactVolume={setExactVolume}
+          handleExactVolume={handleExactVolume}
+          inputStyle={{ paddingLeft: btnStyle.py }}
+          iconStyle={{ p: btnStyle.py }}
+        />
+        <VolumeSlider
+          disabled={disabled}
+          sliderVolume={sliderVolume}
+          handleSliderVolume={handleSliderVolume}
+        />
         <Chip variant="outlined" icon={<GraphicEqIcon />} label={volume} sx={{ fontWeight: 'bold' }} />
-        <ButtonGroup>
-          <Button
-            disabled={disabled}
-            variant="outlined"
-            size="large"
-            sx={{ ...btnStyle, flexGrow: 1 }}
-            onClick={() => handleExactVolume(volume - 1)}
-          >
-            <RemoveCircleIcon />
-          </Button>
-          {/* <Chip label={volume} sx={{px: 0.5, mx: 1}}/> */}
-          <Button
-            disabled={disabled}
-            variant="outlined"
-            size="large"
-            sx={{ ...btnStyle, flexGrow: 1 }}
-            onClick={() => handleExactVolume(volume + 1)}
-          >
-            <AddCircleIcon />
-          </Button>
-        </ButtonGroup>
+        <VolumeButtons
+          btnStyle={btnStyle}
+          disabled={disabled}
+          volume={volume}
+          handleExactVolume={handleExactVolume}
+        />
       </Stack>
     </Stack>
   );
