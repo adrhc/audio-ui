@@ -19,8 +19,8 @@ const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addL
   const onSlideFn = useCallback(debounce(onSlide, 300), []);
 
   function handleChange(volume: number) {
-    addLog && addLog(`[handleChange] volume = ${volume}`);
     setVolume(volume);
+    addLog && addLog(`[handleChange] volume = ${volume}`);
     onSlideFn(volume);
   }
 
