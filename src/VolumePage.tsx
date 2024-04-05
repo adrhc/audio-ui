@@ -88,7 +88,7 @@ function VolumePage() {
 
   function doSetMopidyVolume(newValue: number, onSuccess?: (volume: number) => void) {
     // console.log(`[doSetMopidyVolume] rand = ${rand}, newValue = ${newValue}`);
-    addLog(`[doSetMopidyVolume] rand = ${rand}, newValue = ${newValue}`);
+    // addLog(`[doSetMopidyVolume] rand = ${rand}, newValue = ${newValue}`);
     if (mopidyRef.current) {
       setMopidyVolume(
         (v) => {
