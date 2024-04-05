@@ -10,6 +10,7 @@ import AudioPanel from './ui/AudioPanel';
 import Logs from './ui/Logs';
 
 // type CoreListenerEvent = keyof Mopidy.core.CoreListener;
+const SHOW_LOGS = false;
 const DEFAULT_EXACT_VOLUME = 9;
 
 function VolumePage() {
@@ -32,7 +33,7 @@ function VolumePage() {
   const mopidyRef = useRef<Mopidy | null>(null);
 
   function addLog(log: string) {
-    setLogs((oldLog) => [log, ...oldLog]);
+    SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
   }
 
   useEffect(() => {
