@@ -11,7 +11,7 @@ import AudioPanel from './ui/AudioPanel';
 // type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 const DEFAULT_EXACT_VOLUME = 9;
 
-function Volume() {
+function VolumePage() {
   // console.log(`[Volume]`);
 
   const [mute, setMute] = useState(false);
@@ -155,4 +155,4 @@ function Volume() {
   );
 }
 
-export default Volume;
+export default VolumePage;

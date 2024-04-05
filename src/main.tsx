@@ -7,7 +7,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
-import Volume from './Volume.tsx';
+import VolumePage from './VolumePage.tsx';
 import ErrorPage from './ErrorPage.tsx';
 import App from './App.tsx';
 
@@ -31,7 +31,7 @@ const router = createHashRouter([
       },
       {
         path: 'volume',
-        element: <Volume />,
+        element: <VolumePage />,
       },
     ],
   },
