@@ -1,34 +1,42 @@
 import Mopidy from 'mopidy';
 
-export function stop(mopidy?: Mopidy | null, onSuccess?: () => void) {
+export function resume(mopidy?: Mopidy | null) {
+  return mopidy?.playback
+    ?.resume()
+    .catch((reason) => {
+      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
+}
+
+export function pause(mopidy?: Mopidy | null) {
+  return mopidy?.playback
+    ?.pause()
+    .catch((reason) => {
+      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
+}
+
+export function stop(mopidy?: Mopidy | null) {
   return mopidy?.playback
     ?.stop()
-    .then(() => {
-      onSuccess && onSuccess();
-    })
     .catch((reason) => {
       alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
     });
 }
 
-export function play(mopidy?: Mopidy | null, onSuccess?: () => void) {
+export function play(mopidy?: Mopidy | null) {
   return mopidy?.playback
     ?.play({})
-    .then(() => {
-      onSuccess && onSuccess();
-    })
     .catch((reason) => {
       alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
     });
 }
 
-export function mute(onSuccess: (mute: boolean) => void, newMute: boolean, mopidy?: Mopidy | null) {
+export function mute(mopidy: Mopidy | null, newMute: boolean) {
   return mopidy?.mixer
     ?.setMute({ mute: newMute })
     .then((success: boolean) => {
-      if (success) {
-        onSuccess(newMute);
-      } else {
+      if (!success) {
         alert(`Couldn't mute!`);
       }
     })
@@ -37,13 +45,11 @@ export function mute(onSuccess: (mute: boolean) => void, newMute: boolean, mopid
     });
 }
 
-export function setVolume(onSuccess: (volume: number) => void, newVolume: number, mopidy?: Mopidy | null) {
+export function setVolume(mopidy: Mopidy | null, newVolume: number) {
   return mopidy?.mixer
     ?.setVolume({ volume: newVolume })
     .then((success: boolean) => {
-      if (success) {
-        onSuccess(newVolume);
-      } else {
+      if (!success) {
         alert(`Couldn't change the volume to ${newVolume}!`);
       }
     })

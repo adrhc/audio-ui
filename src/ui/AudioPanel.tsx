@@ -1,17 +1,58 @@
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import AutorenewIcon from '@mui/icons-material/Autorenew';
 import StopIcon from '@mui/icons-material/Stop';
-import { NoParamsProc, Styles } from '../lib/types';
+import { NoParamsProc, PlaybackState, Styles } from '../lib/types';
+import { RestartAlt } from '@mui/icons-material';
+import PauseIcon from '@mui/icons-material/Pause';
 
 export type AudioButtonsParam = {
   styles?: Styles;
-  play: NoParamsProc;
+  state: PlaybackState | undefined;
   stop: NoParamsProc;
+  pause: NoParamsProc;
+  play: NoParamsProc;
+  resume: NoParamsProc;
   refresh: NoParamsProc;
 };
 
-const AudioPanel = ({ styles, play, stop, refresh }: AudioButtonsParam) => {
+const AudioPanel = ({ styles, state, stop, pause, play, resume, refresh }: AudioButtonsParam) => {
+  const stopEnabled = !!state && state !== 'stopped';
+  const pauseEnabled = state === 'playing';
+
+  function PlayOrResumeButton() {
+    switch (state) {
+      case 'paused':
+        return (
+          <>
+            <Tooltip title="Resume">
+              <IconButton sx={{ color: 'black' }} onClick={() => resume()}>
+                <PlayArrowIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        );
+      case 'stopped':
+        return (
+          <>
+            <Tooltip title="Play">
+              <IconButton sx={{ color: 'black' }} onClick={() => play()}>
+                <PlayArrowIcon />
+              </IconButton>
+            </Tooltip>
+          </>
+        );
+      default:
+        return (
+          <>
+            {' '}
+            <IconButton sx={{ color: 'black' }} onClick={() => play()} disabled={true}>
+              <PlayArrowIcon />
+            </IconButton>
+          </>
+        );
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -21,15 +62,19 @@ const AudioPanel = ({ styles, play, stop, refresh }: AudioButtonsParam) => {
         ...styles,
       }}
     >
-      <IconButton sx={{ color: 'black' }} onClick={() => stop()}>
+      <IconButton sx={{ color: 'black' }} onClick={() => stop()} disabled={!stopEnabled}>
         <StopIcon />
       </IconButton>
-      <IconButton sx={{ color: 'black' }} onClick={() => play()}>
-        <PlayArrowIcon />
+      <IconButton sx={{ color: 'black' }} onClick={() => pause()} disabled={!pauseEnabled}>
+        <PauseIcon />
       </IconButton>
-      <IconButton sx={{ color: 'black' }} onClick={() => refresh()}>
-        <AutorenewIcon />
-      </IconButton>
+      <PlayOrResumeButton />
+      <Tooltip title="Reload the page">
+        <IconButton sx={{ color: 'black' }} onClick={() => refresh()}>
+          <RestartAlt />
+          {/* <Autorenew /> */}
+        </IconButton>
+      </Tooltip>
     </Box>
   );
 };

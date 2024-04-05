@@ -1,4 +1,4 @@
-import { Box, InputBase, IconButton } from '@mui/material';
+import { Box, InputBase, IconButton, Tooltip } from '@mui/material';
 import { onEnterKey } from '../lib/keys';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import { Styles } from '../lib/types';
@@ -42,14 +42,16 @@ const ExactVolume = ({
         sx={{ '& .MuiInputBase-input': { fontWeight: 'bold', ...inputStyle } }}
         inputProps={{ min: 0, max: 100 }}
       />
-      <IconButton
-        disabled={disabled}
-        type="button"
-        sx={{ color: '#1976d2', ...iconStyle }}
-        onClick={() => handleExactVolume(exactVolume)}
-      >
-        <GraphicEqIcon />
-      </IconButton>
+      <Tooltip title={`Set the volume to ${exactVolume}.`}>
+        <IconButton
+          disabled={disabled}
+          type="button"
+          sx={{ color: '#1976d2', ...iconStyle }}
+          onClick={() => handleExactVolume(exactVolume)}
+        >
+          <GraphicEqIcon />
+        </IconButton>
+      </Tooltip>
     </Box>
   );
 };
