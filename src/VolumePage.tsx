@@ -41,19 +41,19 @@ function VolumePage() {
     setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
-    // console.log(`[useEffect] rand = ${rand}, mopidy:`, mopidy);
+    // console.log(`[useEffect] rand = ${rand}`);
 
     mopidy.on('websocket:close', async () => {
-      // console.log(`[websocket:close] rand = ${rand}`, mopidy);
+      // console.log(`[websocket:close] rand = ${rand}`);
     });
 
     mopidy.on('state:offline', async () => {
-      // console.log(`[state:offline] rand = ${rand}`, mopidy);
+      // console.log(`[state:offline] rand = ${rand}`);
       setDisabled(true);
     });
 
     mopidy.on('state:online', async () => {
-      // console.log(`[state:online] rand = ${rand}`, mopidy);
+      // console.log(`[state:online] rand = ${rand}`);
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
       const serverMute = await mopidy.mixer?.getMute();
@@ -68,12 +68,13 @@ function VolumePage() {
       setDisabled(false);
     });
 
-    /* mopidy.on('websocket:error', async (e: object | string) => {
-      // console.log(`[websocket:error] rand = ${rand}`, mopidy);
-      console.error('Something went wrong with the Mopidy connection!', e);
+    mopidy.on('websocket:error', async (e: object | string) => {
+      // console.log(`[websocket:error] rand = ${rand}`);
+      // console.error('Something went wrong with the Mopidy connection!', e);
+      addLog(`Something went wrong with the Mopidy connection! ${JSON.stringify(e)}`);
     });
 
-    mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
+    /* mopidy.on('state:volumeChanged' as CoreListenerEvent, async ({ volume }: { volume: number }) => {
       // console.log(`[state:volumeChanged] rand = ${rand}, volume = ${volume}`);
       setVolume(volume);
     }); */
