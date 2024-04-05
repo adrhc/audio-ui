@@ -21,13 +21,13 @@ const AudioPanel = ({ styles, play, stop, refresh }: AudioButtonsParam) => {
         ...styles,
       }}
     >
-      <IconButton onClick={() => play()}>
+      <IconButton sx={{ color: 'black' }} onClick={() => stop()}>
         <StopIcon />
       </IconButton>
-      <IconButton onClick={() => stop()}>
+      <IconButton sx={{ color: 'black' }} onClick={() => play()}>
         <PlayArrowIcon />
       </IconButton>
-      <IconButton onClick={() => refresh()}>
+      <IconButton sx={{ color: 'black' }} onClick={() => refresh()}>
         <AutorenewIcon />
       </IconButton>
     </Box>

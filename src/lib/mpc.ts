@@ -1,5 +1,27 @@
 import Mopidy from 'mopidy';
 
+export function stop(mopidy?: Mopidy | null, onSuccess?: () => void) {
+  return mopidy?.playback
+    ?.stop()
+    .then(() => {
+      onSuccess && onSuccess();
+    })
+    .catch((reason) => {
+      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
+}
+
+export function play(mopidy?: Mopidy | null, onSuccess?: () => void) {
+  return mopidy?.playback
+    ?.play({})
+    .then(() => {
+      onSuccess && onSuccess();
+    })
+    .catch((reason) => {
+      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
+}
+
 export function mute(onSuccess: (mute: boolean) => void, newMute: boolean, mopidy?: Mopidy | null) {
   return mopidy?.mixer
     ?.setMute({ mute: newMute })

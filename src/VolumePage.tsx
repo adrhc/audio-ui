@@ -5,7 +5,7 @@ import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import ExactVolume from './ui/ExactVolume';
 import VolumeSlider from './ui/VolumeSlider';
 import VolumeButtons from './ui/VolumeButtons';
-import { mute as muteMopidy, setVolume as setMopidyVolume } from './lib/mpc';
+import { stop as stopMopidy, mute as muteMopidy, setVolume as setMopidyVolume, play } from './lib/mpc';
 import AudioPanel from './ui/AudioPanel';
 import Logs from './ui/Logs';
 
@@ -137,6 +137,14 @@ function VolumePage() {
     muteMopidy(setMute, !mute, mopidyRef.current);
   }
 
+  function handlePlay(): void {
+    play(mopidyRef.current);
+  }
+
+  function handleStop(): void {
+    stopMopidy(mopidyRef.current);
+  }
+
   const btnStyle = { py: [3, 2] };
 
   return (
@@ -167,8 +175,8 @@ function VolumePage() {
           handleExactVolume={handleExactVolume}
         />
         <AudioPanel
-          play={() => setRand(Math.random())}
-          stop={() => setRand(Math.random())}
+          play={() => handlePlay()}
+          stop={() => handleStop()}
           refresh={() => setRand(Math.random())}
         />
       </Stack>
