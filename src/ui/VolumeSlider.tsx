@@ -16,7 +16,7 @@ export type VolumeSliderParam = {
 };
 
 const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide }: VolumeSliderParam) => {
-  const onSlideFn = useCallback(debounce(onSlide, 200), []);
+  const onSlideFn = useCallback(debounce(onSlide, 300), []);
 
   function handleChange(volume: number) {
     setVolume(volume);
