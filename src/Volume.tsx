@@ -1,7 +1,6 @@
 import { Button, Chip, Stack } from '@mui/material';
 import Mopidy from 'mopidy';
 import { useCallback, useEffect, useRef, useState } from 'react';
-// import EqualizerIcon from '@mui/icons-material/Equalizer';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import { debounce } from 'lodash';

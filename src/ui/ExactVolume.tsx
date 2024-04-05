@@ -1,6 +1,7 @@
 import { Box, InputBase, IconButton } from '@mui/material';
 import { onEnterKey } from '../lib/keys';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
+// import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 export type ExactVolumeParam = {
   disabled?: boolean;
