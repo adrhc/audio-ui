@@ -94,7 +94,7 @@ function VolumePage() {
     });
 
     mopidy.on('event:muteChanged' as CoreListenerEvent, ({ mute }: { mute: boolean }) => {
-      console.log(`[event:muteChanged] rand = ${rand}, mute = ${mute}`);
+      // console.log(`[event:muteChanged] rand = ${rand}, mute = ${mute}`);
       // addLog(`[event:muteChanged] rand = ${rand}, mute = ${mute}`);
       setMute(mute);
     });
