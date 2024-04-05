@@ -145,7 +145,6 @@ function VolumePage() {
         />
         <AudioPanel
           styles={{ mt: '10px !important' }}
-          mopidy={mopidyRef.current}
           play={() => setRand(Math.random())}
           stop={() => setRand(Math.random())}
           refresh={() => setRand(Math.random())}
