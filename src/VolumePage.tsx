@@ -1,12 +1,13 @@
 import { Chip, Stack } from '@mui/material';
 import Mopidy from 'mopidy';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import ExactVolume from './ui/ExactVolume';
 import VolumeSlider from './ui/VolumeSlider';
 import VolumeButtons from './ui/VolumeButtons';
 import { mute as muteMopidy, setVolume as setMopidyVolume } from './lib/mpc';
 import AudioPanel from './ui/AudioPanel';
+import Logs from './ui/Logs';
 
 // type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 const DEFAULT_EXACT_VOLUME = 9;
@@ -20,6 +21,7 @@ function VolumePage() {
   const [exactVolume, setExactVolume] = useState(DEFAULT_EXACT_VOLUME);
   const [disabled, setDisabled] = useState(true);
   const [rand, setRand] = useState(0);
+  const [logs, setLogs] = useState<string[]>([]);
 
   // console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
   // alert(`volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
@@ -29,8 +31,14 @@ function VolumePage() {
 
   const mopidyRef = useRef<Mopidy | null>(null);
 
+  function addLog(log: string) {
+    setLogs((oldLog) => [log, ...oldLog]);
+  }
+  const addLogFn = useCallback(addLog, []);
+
   useEffect(() => {
     // console.log(`[useEffect] rand = ${rand}`);
+    // addLog(`[useEffect] rand = ${rand}`);
     setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
@@ -73,6 +81,7 @@ function VolumePage() {
 
     return () => {
       // console.log(`[useEffect:destroy] rand = ${rand}`);
+      addLog(`[useEffect:destroy] rand = ${rand}`);
       mopidyRef.current = null;
       mopidy.close()?.then(() => mopidy.off());
     };
@@ -81,10 +90,15 @@ function VolumePage() {
   function doSetMopidyVolume(newValue: number, onSuccess?: (volume: number) => void) {
     // console.log(`[doSetMopidyVolume] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newValue = ${newValue}`);
     if (mopidyRef.current) {
-      setMopidyVolume(v => {
-        setVolume(v);
-        onSuccess && onSuccess(v);
-      }, newValue, mopidyRef.current);
+      setMopidyVolume(
+        (v) => {
+          addLog(`[doSetMopidyVolume] rand = ${rand}, newValue = ${newValue}`);
+          setVolume(v);
+          onSuccess && onSuccess(v);
+        },
+        newValue,
+        mopidyRef.current
+      );
     } else {
       // console.error(`[doSetMopidyVolume] mopidyRef = false, rand = ${rand}, newValue = ${newValue}`);
       alert(`[doSetMopidyVolume] mopidyRef = false, rand = ${rand}, newValue = ${newValue}`);
@@ -93,6 +107,9 @@ function VolumePage() {
 
   function handleSlide(newSlidingVolume: number) {
     // console.log(`[handleSlide] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
+    addLog(
+      `[handleSlide] mopidyRef = ${!!mopidyRef.current}, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`
+    );
     if (mopidyRef.current) {
       doSetMopidyVolume(newSlidingVolume);
     } else {
@@ -135,6 +152,7 @@ function VolumePage() {
           setVolume={setSliderValue}
           onMute={handleMute}
           onSlide={handleSlide}
+          addLog={addLogFn}
         />
         <Chip variant="outlined" icon={<GraphicEqIcon />} label={volume} sx={{ fontWeight: 'bold' }} />
         <VolumeButtons
@@ -149,6 +167,7 @@ function VolumePage() {
           refresh={() => setRand(Math.random())}
         />
       </Stack>
+      <Logs logs={logs} />
     </Stack>
   );
 }
