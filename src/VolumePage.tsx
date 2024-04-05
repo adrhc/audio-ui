@@ -144,7 +144,6 @@ function VolumePage() {
           handleExactVolume={handleExactVolume}
         />
         <AudioPanel
-          styles={{ mt: '10px !important' }}
           play={() => setRand(Math.random())}
           stop={() => setRand(Math.random())}
           refresh={() => setRand(Math.random())}
