@@ -18,6 +18,8 @@ const ExactVolume = ({
   handleExactVolume,
   styles,
 }: ExactVolumeParam) => {
+  const spaceLR = styles.py.map((n) => n * 2);
+
   return (
     <Box
       sx={{
@@ -35,7 +37,7 @@ const ExactVolume = ({
         value={exactVolume}
         onChange={(e) => setExactVolume(+e.target.value)}
         onKeyUp={(e) => onEnterKey(() => handleExactVolume(exactVolume), e)}
-        sx={{ '& .MuiInputBase-input': { fontWeight: 'bold', paddingLeft: styles.py.map((n) => n * 4) } }}
+        sx={{ '& .MuiInputBase-input': { fontWeight: 'bold', paddingLeft: spaceLR } }}
         inputProps={{ min: 0, max: 100 }}
       />
       <Tooltip title={`Set the volume to ${exactVolume}.`}>
@@ -43,7 +45,7 @@ const ExactVolume = ({
           <IconButton
             disabled={disabled}
             type="button"
-            sx={{ color: '#1976d2', p: 0, my: styles.py, ml: styles.py, mr: styles.py.map((n) => n * 4) }}
+            sx={{ color: '#1976d2', p: 0, my: styles.py, ml: styles.py, mr: spaceLR }}
             onClick={() => handleExactVolume(exactVolume)}
           >
             <GraphicEqIcon />
