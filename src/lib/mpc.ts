@@ -1,4 +1,19 @@
-import Mopidy from "mopidy";
+import Mopidy from 'mopidy';
+
+export function setVolume(onSuccess: () => void, volume: number, mopidy: Mopidy) {
+  return mopidy.mixer
+    ?.setVolume({ volume })
+    .then((success: boolean) => {
+      if (success) {
+        onSuccess();
+      } else {
+        alert(`Couldn't set the volume to ${volume}!`);
+      }
+    })
+    .catch((reason) => {
+      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
+}
 
 export async function showPlaybackInfo(mopidy: Mopidy) {
   const trackPromise = mopidy.playback?.getCurrentTrack();
@@ -14,26 +29,29 @@ export async function showPlaybackInfo(mopidy: Mopidy) {
   }
 
   const artists = track?.artists?.map((a) => a.name).join(', ');
-  console.log(`${artists || ""} - ${track?.name}`);
+  console.log(`${artists || ''} - ${track?.name}`);
   console.log(`[${state}] ${renderTrackNumber(track)}   ` + `${renderPosition(track, timePosition)}`);
 }
 
 function renderTrackNumber(track: Mopidy.models.Track | null | undefined) {
-  return `#${track?.track_no || "-"}/${track?.album?.num_tracks || "-"}`;
+  return `#${track?.track_no || '-'}/${track?.album?.num_tracks || '-'}`;
 }
 
-function renderPosition(track: Mopidy.models.Track | null | undefined, timePosition: number | null | undefined) {
+function renderPosition(
+  track: Mopidy.models.Track | null | undefined,
+  timePosition: number | null | undefined
+) {
   const pos = renderTime(timePosition);
   const length = renderTime(track?.length);
-  const percentage = Math.floor((timePosition??0 * 100) / (track?.length || 1));
+  const percentage = Math.floor((timePosition ?? 0 * 100) / (track?.length || 1));
   return `${pos}/${length} (${percentage}%)`;
 }
 
 function renderTime(timeInSeconds: number | null | undefined) {
-  const minutes = Math.floor(timeInSeconds??0 / 1000 / 60);
-  const seconds = Math.floor((timeInSeconds??0 / 1000) % 60)
+  const minutes = Math.floor(timeInSeconds ?? 0 / 1000 / 60);
+  const seconds = Math.floor((timeInSeconds ?? 0 / 1000) % 60)
     .toString()
-    .padStart(2, "0");
+    .padStart(2, '0');
   return `${minutes}:${seconds}`;
 }
 

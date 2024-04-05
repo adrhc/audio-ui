@@ -8,6 +8,7 @@ import { debounce } from 'lodash';
 import ExactVolume from './ui/ExactVolume';
 import VolumeSlider from './ui/VolumeSlider';
 import VolumeButtons from './ui/VolumeButtons';
+import { setVolume as setMopidyVolume } from './lib/mpc';
 
 // type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 const DEFAULT_EXACT_VOLUME = 9;
@@ -84,13 +85,7 @@ function Volume() {
       return;
     }
     // console.log(`[mopidy] debouncedSliderVolume = ${debouncedSliderVolume}`);
-    mopidyRef.current.mixer?.setVolume({ volume: debouncedSliderVolume }).then((b) => {
-      if (b) {
-        setVolume(debouncedSliderVolume);
-      } else {
-        alert(`Couldn't set the volume to ${debouncedSliderVolume}!`);
-      }
-    });
+    setMopidyVolume(() => setVolume(debouncedSliderVolume), debouncedSliderVolume, mopidyRef.current);
   }, [debouncedSliderVolume]);
 
   const setDebouncedSliderVolumeFn = useCallback(debounce(setDebouncedSliderVolume, 300), []);
@@ -111,23 +106,18 @@ function Volume() {
     // console.log(`[handleExactVolume] newExactVolume = ${newExactVolume}`);
     if (mopidyRef.current && newExactVolume >= 0 && newExactVolume <= 100) {
       // console.log(`[mopidy] newExactVolume = ${newExactVolume}`);
-      mopidyRef.current.mixer?.setVolume({ volume: newExactVolume }).then((b) => {
-        if (b) {
+      setMopidyVolume(
+        () => {
           setVolume(newExactVolume);
           setSliderVolume(newExactVolume);
-        } else {
-          alert(`Couldn't set the volume to ${newExactVolume}!`);
-        }
-      });
-      // .then((b) => console.log(`[handleExactVolume] rand = ${rand}, newExactVolume = ${newExactVolume}, ok = ${b}`));
+        },
+        newExactVolume,
+        mopidyRef.current
+      );
     } else {
       // console.error(`[handleExactVolume] rand = ${rand}, newExactVolume = ${newExactVolume}, mopidyRef = false`);
       alert(`rand = ${rand}, newExactVolume = ${newExactVolume}, mopidyRef = false`);
     }
-  }
-
-  function refresh() {
-    setRand(Math.random());
   }
 
   const btnStyle = { py: [3, 2] };
@@ -135,7 +125,7 @@ function Volume() {
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
       <Stack spacing={2} sx={{ height: '100%', justifyContent: 'center', width: '100%', maxWidth: '300px' }}>
-        <Button variant="outlined" size="large" sx={btnStyle} onClick={refresh}>
+        <Button variant="outlined" size="large" sx={btnStyle} onClick={() => setRand(Math.random())}>
           <AutorenewIcon />
         </Button>
         <ExactVolume
