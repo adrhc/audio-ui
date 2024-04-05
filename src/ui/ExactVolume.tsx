@@ -43,14 +43,16 @@ const ExactVolume = ({
         inputProps={{ min: 0, max: 100 }}
       />
       <Tooltip title={`Set the volume to ${exactVolume}.`}>
-        <IconButton
-          disabled={disabled}
-          type="button"
-          sx={{ color: '#1976d2', ...iconStyle }}
-          onClick={() => handleExactVolume(exactVolume)}
-        >
-          <GraphicEqIcon />
-        </IconButton>
+        <span>
+          <IconButton
+            disabled={disabled}
+            type="button"
+            sx={{ color: '#1976d2', ...iconStyle }}
+            onClick={() => handleExactVolume(exactVolume)}
+          >
+            <GraphicEqIcon />
+          </IconButton>
+        </span>
       </Tooltip>
     </Box>
   );

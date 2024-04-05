@@ -101,17 +101,17 @@ function VolumePage() {
 
     mopidy.on(
       'event:playbackStateChanged' as CoreListenerEvent,
-      ({ old_state, new_state }: { old_state: PlaybackState; new_state: PlaybackState }) => {
-        console.log(
+      ({ new_state }: { old_state: PlaybackState; new_state: PlaybackState }) => {
+        /* console.log(
           `[event:playbackStateChanged] rand = ${rand}, old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)}`
-        );
+        ); */
         // addLog(`[event:playbackStateChanged] rand = ${rand}, old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)`);
         setPbState(new_state);
       }
     );
 
     mopidy.on('event:volumeChanged' as CoreListenerEvent, ({ volume }: { volume: number }) => {
-      console.log(`[event:volumeChanged] rand = ${rand}, volume = ${volume}`);
+      // console.log(`[event:volumeChanged] rand = ${rand}, volume = ${volume}`);
       // addLog(`[event:volumeChanged] rand = ${rand}, volume = ${volume}`);
       setVolume(volume);
       setSliderValue(volume);
