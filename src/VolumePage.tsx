@@ -54,7 +54,7 @@ function VolumePage() {
     // addLog(`[useEffect] rand = ${rand}`);
 
     mopidy.on('websocket:error', async (e: object | string) => {
-      console.error(`[websocket:error] rand = ${rand}`, e);
+      // console.error(`[websocket:error] rand = ${rand}`, e);
       // console.error('Something went wrong with the Mopidy connection!', e);
       addLog(
         `[websocket:error] rand = ${rand}, ${JSON.stringify(e, ['message', 'arguments', 'type', 'name'])}`
@@ -90,7 +90,7 @@ function VolumePage() {
         setPbState(pbState);
       }
       setDisabled(false);
-      console.log(`[state:online] rand = ${rand}, mute = ${mute}, volume = ${volume}, pbState = ${pbState}`);
+      // console.log(`[state:online] rand = ${rand}, mute = ${mute}, volume = ${volume}, pbState = ${pbState}`);
     });
 
     mopidy.on('event:muteChanged' as CoreListenerEvent, ({ mute }: { mute: boolean }) => {
