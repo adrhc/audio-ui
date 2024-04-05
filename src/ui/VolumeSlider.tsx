@@ -15,10 +15,11 @@ export type VolumeSliderParam = {
   addLog?: (log: string) => void
 };
 
-const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide }: VolumeSliderParam) => {
+const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addLog }: VolumeSliderParam) => {
   const onSlideFn = useCallback(debounce(onSlide, 300), []);
 
   function handleChange(volume: number) {
+    addLog && addLog(`[handleChange] volume = ${volume}`);
     setVolume(volume);
     onSlideFn(volume);
   }
