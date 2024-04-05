@@ -11,7 +11,7 @@ export type VolumeSliderParam = {
   setVolume: (volume: number) => void;
   onMute: NoParamsProc;
   onSlide: (volume: number) => void;
-  addLog?: (log: string) => void
+  addLog?: (log: string) => void;
 };
 
 const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addLog }: VolumeSliderParam) => {
@@ -23,14 +23,17 @@ const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addL
     onSlideFn(volume);
   }
 
+  const spacing = 1;
+
   return (
-    <Stack direction="row" spacing={2} alignItems="center">
-      <MuteIconButton mute={mute} onClick={onMute} />
+    <Stack direction="row" spacing={spacing} alignItems="center">
+      <MuteIconButton styles={{ p: 0 }} mute={mute} onClick={onMute} />
       <Slider
         disabled={disabled}
         aria-label="Volume"
         value={volume}
         onChange={(_e, newValue) => handleChange(newValue as number)}
+        sx={{ ml: `${spacing * 4}px !important` }}
       />
       <VolumeUp />
     </Stack>

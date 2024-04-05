@@ -178,18 +178,17 @@ function VolumePage() {
     resumeMopidy(mopidyRef.current);
   }
 
-  const btnStyle = { py: [3, 2] };
+  const btnStyle = { py: [1] };
 
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
-      <Stack spacing={2} sx={{ height: '100%', justifyContent: 'center', width: '100%', maxWidth: '300px' }}>
+      <Stack spacing={1} sx={{ height: '100%', justifyContent: 'center', width: '100%', maxWidth: '300px' }}>
         <ExactVolume
           disabled={disabled}
           exactVolume={exactVolume}
           setExactVolume={setExactVolume}
           handleExactVolume={handleExactVolume}
-          inputStyle={{ paddingLeft: btnStyle.py }}
-          iconStyle={{ p: btnStyle.py }}
+          styles={{ py: btnStyle.py }}
         />
         <VolumeSlider
           disabled={disabled}
@@ -200,7 +199,12 @@ function VolumePage() {
           onSlide={handleSlide}
           // addLog={addLog}
         />
-        <Chip variant="outlined" icon={<GraphicEqIcon />} label={volume} sx={{ fontWeight: 'bold' }} />
+        <Chip
+          variant="outlined"
+          icon={<GraphicEqIcon />}
+          label={volume}
+          sx={{ py: btnStyle.py, fontWeight: 'bold' }}
+        />
         <VolumeButtons
           btnStyle={btnStyle}
           disabled={disabled}

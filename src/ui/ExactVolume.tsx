@@ -1,17 +1,14 @@
 import { Box, InputBase, IconButton, Tooltip } from '@mui/material';
 import { onEnterKey } from '../lib/keys';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import { Styles } from '../lib/types';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
-import * as CSS from 'csstype';
 
 export type ExactVolumeParam = {
   disabled?: boolean;
   exactVolume: number;
   setExactVolume: (v: number) => void;
   handleExactVolume: (v: number) => void;
-  inputStyle?: CSS.PropertiesFallback<number | string>;
-  iconStyle: Styles;
+  styles: { py: number[] };
 };
 
 const ExactVolume = ({
@@ -19,8 +16,7 @@ const ExactVolume = ({
   exactVolume,
   setExactVolume,
   handleExactVolume,
-  inputStyle,
-  iconStyle,
+  styles,
 }: ExactVolumeParam) => {
   return (
     <Box
@@ -39,7 +35,7 @@ const ExactVolume = ({
         value={exactVolume}
         onChange={(e) => setExactVolume(+e.target.value)}
         onKeyUp={(e) => onEnterKey(() => handleExactVolume(exactVolume), e)}
-        sx={{ '& .MuiInputBase-input': { fontWeight: 'bold', ...inputStyle } }}
+        sx={{ '& .MuiInputBase-input': { fontWeight: 'bold', paddingLeft: styles.py.map((n) => n * 4) } }}
         inputProps={{ min: 0, max: 100 }}
       />
       <Tooltip title={`Set the volume to ${exactVolume}.`}>
@@ -47,7 +43,7 @@ const ExactVolume = ({
           <IconButton
             disabled={disabled}
             type="button"
-            sx={{ color: '#1976d2', ...iconStyle }}
+            sx={{ color: '#1976d2', ml: styles.py, mr: styles.py.map((n) => n * 3), p: styles.py }}
             onClick={() => handleExactVolume(exactVolume)}
           >
             <GraphicEqIcon />

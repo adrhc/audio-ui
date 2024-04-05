@@ -1,13 +1,14 @@
 import { ButtonGroup, Button } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { Styles } from '../lib/types';
 
 export type VolumeButtonsParam = {
   disabled?: boolean;
   volume: number;
   handleExactVolume: (v: number) => void;
   // btnStyle: {[key: string]: number | string | number[] | string[]};
-  btnStyle: Record<string, number | string | number[] | string[]>;
+  btnStyle: Styles;
 };
 
 const VolumeButtons = ({ disabled, volume, handleExactVolume, btnStyle }: VolumeButtonsParam) => {

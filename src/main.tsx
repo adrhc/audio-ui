@@ -17,6 +17,23 @@ const theme = createTheme({
       default: '#fffaf0',
     },
   },
+  components: {
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          width: '2em',
+          height: '2em'
+        }
+      }
+    },
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          height: 'auto'
+        }
+      }
+    }
+  }
 });
 
 const router = createHashRouter([
