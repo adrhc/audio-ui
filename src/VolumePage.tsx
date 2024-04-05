@@ -80,8 +80,8 @@ function VolumePage() {
 
     return () => {
       // console.log(`[useEffect:destroy] rand = ${rand}`);
-      addLog(`[useEffect:destroy] rand = ${rand}`);
       mopidyRef.current = null;
+      addLog(`[useEffect:destroy] rand = ${rand}`);
       mopidy.close()?.then(() => mopidy.off());
     };
   }, [rand]);
