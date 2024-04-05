@@ -10,28 +10,31 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import VolumePage from './VolumePage.tsx';
 import ErrorPage from './ErrorPage.tsx';
 import App from './App.tsx';
-// import { createBreakpoints } from '@mui/system';
+import { createBreakpoints } from '@mui/system';
 
 // responsiveFontSizes from '@mui/material'
 // import { createBreakpoints } from '@mui/system'
-// const breakpoints = createBreakpoints({});
+const breakpoints = createBreakpoints({});
+// console.log(`breakpoints.down('sm') = ${breakpoints.down('sm')}`);
+// console.log(breakpoints);
 const theme = createTheme({
   palette: {
     background: {
       default: '#fffaf0',
     },
   },
-  /* typography: {
-    fontSize: 16,
+  typography: {
+    fontSize: 28,
+  },
+  /* // NO EFFECT
+  typography: {
+    [breakpoints.down('sm')]: {
+      fontSize: 28,
+    },
+    [breakpoints.up('sm')]: {
+      fontSize: 16,
+    },
   }, */
-  /* typography: {
-      [breakpoints.down('xs')]: {
-        fontSize: 28,
-      },
-      [breakpoints.up('xs')]: {
-        fontSize: 16,
-      },
-    }, */
   components: {
     /* MuiSvgIcon: {
       styleOverrides: {
@@ -41,7 +44,14 @@ const theme = createTheme({
         },
       },
     }, */
-    /* MuiCssBaseline: {
+    /* // IGNORED
+    MuiCssBaseline: {
+      styleOverrides: () => `
+      ${breakpoints.down('sm')} {
+        body {
+          font-size: 28px !important;
+        }
+      }`,
     }, */
     MuiChip: {
       styleOverrides: {
