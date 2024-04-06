@@ -17,6 +17,7 @@ import PlaybackPanel from './ui/PlaybackPanel';
 import Logs from './ui/Logs';
 import { PlaybackState } from './lib/types';
 import { iconFontSize, inputFontSize, rowHeight, YS } from './ui/VolumePage-styles';
+import ExactVolumePanel from './ui/ExactVolumePanel';
 
 const SHOW_LOGS = false;
 const DEFAULT_EXACT_VOLUME = 9;
@@ -187,38 +188,17 @@ function VolumePage() {
           justifyContent: 'center',
           width: '100%',
           height: '100%',
-          maxWidth: '300px',
+          minWidth: '340px',
+          maxWidth: '400px',
           '& > div': { height: rowHeight },
         }}
       >
-        <Stack spacing={1} direction="row" sx={{ justifyContent: 'center' }}>
-          <Chip
-            sx={{
-              fontSize: inputFontSize,
-              fontWeight: 'bold',
-              height: 'auto',
-              lineHeight: 1,
-            }}
-            variant="outlined"
-            label="20"
-          />
-          <ExactVolume
-            disabled={disabled}
-            exactVolume={exactVolume}
-            setExactVolume={setExactVolume}
-            handleExactVolume={handleExactVolume}
-          />
-          <Chip
-            sx={{
-              fontSize: inputFontSize,
-              fontWeight: 'bold',
-              height: 'auto',
-              lineHeight: 1,
-            }}
-            variant="outlined"
-            label="80"
-          />
-        </Stack>
+        <ExactVolumePanel
+          disabled={disabled}
+          exactVolume={exactVolume}
+          setExactVolume={setExactVolume}
+          handleExactVolume={handleExactVolume}
+        />
         <VolumeSlider
           disabled={disabled}
           mute={mute}
