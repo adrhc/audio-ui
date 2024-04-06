@@ -1,5 +1,5 @@
-import { Chip, Stack } from '@mui/material';
-import Mopidy from 'mopidy';
+import { Chip, Stack, Typography } from '@mui/material';
+import Mopidy, { models } from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import VolumeSlider from './ui/VolumeSlider';
@@ -11,6 +11,11 @@ import {
   pause as pauseMopidy,
   resume as resumeMopidy,
   play as playMopidy,
+  next,
+  previous,
+  getCurrentTlTrack,
+  logTlTrack,
+  getArtists,
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
 import Logs from './ui/Logs';
@@ -26,6 +31,8 @@ type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 function VolumePage() {
   // console.log(`[Volume]`);
 
+  const [song, setSong] = useState<string | undefined>();
+  const [artists, setArtists] = useState<string | undefined>();
   const [mute, setMute] = useState(false);
   const [pbState, setPbState] = useState<PlaybackState>();
   const [volume, setVolume] = useState(0);
@@ -62,6 +69,11 @@ function VolumePage() {
       );
     });
 
+    /* mopidy.on('websocket:incomingMessage', (param: string | number | boolean | object | []) => {
+      console.log(`[websocket:incomingMessage] rand = ${rand} param:`, param);
+      // addLog(`[websocket:close] rand = ${rand}`);
+    }); */
+
     mopidy.on('websocket:close', () => {
       // console.log(`[websocket:close] rand = ${rand}`);
       // addLog(`[websocket:close] rand = ${rand}`);
@@ -77,6 +89,12 @@ function VolumePage() {
       // console.log(`[state:online] rand = ${rand}`);
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
+      getCurrentTlTrack((tlt: models.TlTrack | null) => {
+        setSong(tlt?.track?.name);
+        setArtists(getArtists(tlt?.track));
+        logTlTrack(tlt);
+      }, mopidy);
+
       const mute = await mopidy.mixer?.getMute();
       if (mute != null) {
         setMute(mute);
@@ -114,6 +132,11 @@ function VolumePage() {
     mopidy.on('event:volumeChanged' as CoreListenerEvent, ({ volume }: { volume: number }) => {
       // console.log(`[event:volumeChanged] rand = ${rand}, volume = ${volume}`);
       // addLog(`[event:volumeChanged] rand = ${rand}, volume = ${volume}`);
+      getCurrentTlTrack((tlt: models.TlTrack | null) => {
+        setSong(tlt?.track?.name);
+        setArtists(getArtists(tlt?.track));
+        logTlTrack(tlt);
+      }, mopidy);
       setVolume(volume);
       setSliderValue(volume);
     });
@@ -159,26 +182,6 @@ function VolumePage() {
     }
   }
 
-  function handleMute() {
-    muteMopidy(mopidyRef.current, !mute);
-  }
-
-  function handleStop(): void {
-    stopMopidy(mopidyRef.current);
-  }
-
-  function handlePause(): void {
-    pauseMopidy(mopidyRef.current);
-  }
-
-  function handlePlay(): void {
-    playMopidy(mopidyRef.current);
-  }
-
-  function handleResume(): void {
-    resumeMopidy(mopidyRef.current);
-  }
-
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
       <Stack
@@ -193,6 +196,8 @@ function VolumePage() {
           '& > div': { height: rowHeight },
         }}
       >
+        <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }}>{song}</Typography>
+        <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }}>{artists}</Typography>
         <ExactVolumePanel
           disabled={disabled}
           exactVolume={exactVolume}
@@ -204,7 +209,7 @@ function VolumePage() {
           mute={mute}
           volume={sliderValue}
           setVolume={setSliderValue}
-          onMute={handleMute}
+          onMute={() => muteMopidy(mopidyRef.current, !mute)}
           onSlide={handleSlide}
           // addLog={addLog}
         />
@@ -221,11 +226,14 @@ function VolumePage() {
         />
         <VolumeButtons disabled={disabled} volume={volume} handleExactVolume={handleExactVolume} />
         <PlaybackPanel
+          disabled={disabled}
           state={pbState}
-          pause={() => handlePause()}
-          stop={() => handleStop()}
-          play={() => handlePlay()}
-          resume={() => handleResume()}
+          previous={() => previous(mopidyRef.current)}
+          next={() => next(mopidyRef.current)}
+          pause={() => pauseMopidy(mopidyRef.current)}
+          stop={() => stopMopidy(mopidyRef.current)}
+          play={() => playMopidy(mopidyRef.current)}
+          resume={() => resumeMopidy(mopidyRef.current)}
           refresh={() => setRand(Math.random())}
         />
       </Stack>

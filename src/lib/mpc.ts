@@ -1,4 +1,16 @@
-import Mopidy from 'mopidy';
+import Mopidy, { models } from 'mopidy';
+
+export function previous(mopidy?: Mopidy | null) {
+  return mopidy?.playback?.previous().catch((reason) => {
+    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+  });
+}
+
+export function next(mopidy?: Mopidy | null) {
+  return mopidy?.playback?.next().catch((reason) => {
+    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+  });
+}
 
 export function stop(mopidy?: Mopidy | null) {
   return mopidy?.playback?.stop().catch((reason) => {
@@ -22,6 +34,17 @@ export function play(mopidy?: Mopidy | null) {
   return mopidy?.playback?.play({}).catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
   });
+}
+
+export function getCurrentTlTrack(onSuccess: (tlt: models.TlTrack | null) => void, mopidy?: Mopidy | null) {
+  return mopidy?.playback
+    ?.getCurrentTlTrack()
+    .then((tlt: models.TlTrack | null) => {
+      onSuccess(tlt);
+    })
+    .catch((reason) => {
+      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
 }
 
 export function mute(mopidy: Mopidy | null, newMute: boolean) {
@@ -51,6 +74,9 @@ export function setVolume(mopidy: Mopidy | null, newVolume: number) {
 }
 
 export async function showPlaybackInfo(mopidy: Mopidy) {
+  console.log('getCurrentTlTrack:', await mopidy.playback?.getCurrentTlTrack());
+  // console.log('getStreamTitle:', await mopidy.playback?.getStreamTitle());
+  // console.log('getTimePosition:', await mopidy.playback?.getTimePosition());
   const trackPromise = mopidy.playback?.getCurrentTrack();
   const statePromise = mopidy.playback?.getState();
   const timePositionPromise = mopidy.playback?.getTimePosition();
@@ -87,6 +113,20 @@ export async function showTracklistInfo(mopidy: Mopidy) {
       `random: ${random}   ` +
       `single: ${single}   ` +
       `consume: ${consume}`
+  );
+}
+
+export function getArtists(track: models.Track | undefined | null) {
+  return track?.artists?.map((a) => a.name).join(', ');
+}
+
+export function logTlTrack(tlt: models.TlTrack | null) {
+  const track = tlt?.track;
+  const artists = getArtists(track);
+  const composers = track?.composers?.map((a) => a.name).join(', ');
+  const performers = track?.performers?.map((a) => a.name).join(', ');
+  console.log(
+    `tlid = ${tlt?.tlid}\nuri = ${track?.uri}\nname = ${track?.name}\nalbum: ${track?.album?.name}\nartists: ${artists}\nlength = ${track?.length}\ncomment = ${track?.comment}\ncomposers: ${composers}\nperformers: ${performers}\ntrack_no = ${track?.track_no}\ndisc_no = ${track?.disc_no}\ngenre = ${track?.genre}\nbitrate = ${track?.bitrate}\nMusicBrainz ID = ${track?.musicbrainz_id}`
   );
 }
 

@@ -5,6 +5,8 @@ import { NoParamsProc, PlaybackState, Styles } from '../lib/types';
 import { RestartAlt } from '@mui/icons-material';
 import PauseIcon from '@mui/icons-material/Pause';
 import { BORDER, iconFontSizeMap } from './VolumePage-styles';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const SX: Record<string, Styles> = {
   box: {
@@ -17,13 +19,18 @@ const SX: Record<string, Styles> = {
     p: 0,
   },
   icon: {
-    fontSize: iconFontSizeMap(ifs => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))), // [48, 40],
+    fontSize: iconFontSizeMap(ifs => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))) // [48, 40]
+  },
+  bf: {
+    fontSize: iconFontSizeMap(ifs => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.25)))
   }
 };
 
 export type AudioButtonsParam = {
-  styles?: Styles;
+  disabled: boolean;
   state: PlaybackState | undefined;
+  previous: NoParamsProc;
+  next: NoParamsProc;
   stop: NoParamsProc;
   pause: NoParamsProc;
   play: NoParamsProc;
@@ -31,7 +38,7 @@ export type AudioButtonsParam = {
   refresh: NoParamsProc;
 };
 
-const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: AudioButtonsParam) => {
+const PlaybackPanel = ({ disabled, state, previous, next, stop, pause, play, resume, refresh }: AudioButtonsParam) => {
   const stopEnabled = !!state && state !== 'stopped';
   const pauseEnabled = state === 'playing';
 
@@ -41,7 +48,7 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
         return (
           <>
             <Tooltip title="Resume">
-              <IconButton sx={SX.btn} onClick={() => resume()}>
+              <IconButton sx={SX.btn} onClick={() => resume()} disabled={disabled}>
                 <PlayArrowIcon sx={SX.icon} />
               </IconButton>
             </Tooltip>
@@ -51,7 +58,7 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
         return (
           <>
             <Tooltip title="Play">
-              <IconButton sx={SX.btn} onClick={() => play()}>
+              <IconButton sx={SX.btn} onClick={() => play()} disabled={disabled}>
                 <PlayArrowIcon sx={SX.icon} />
               </IconButton>
             </Tooltip>
@@ -70,11 +77,14 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
   }
 
   return (
-    <Box sx={{ ...BORDER, ...SX.box, ...styles } as Styles}>
-      <IconButton sx={SX.btn} onClick={() => stop()} disabled={!stopEnabled}>
+    <Box sx={{ ...BORDER, ...SX.box}}>
+      <IconButton sx={SX.btn} onClick={() => previous()} disabled={disabled}>
+        <NavigateBeforeIcon sx={SX.icon} />
+      </IconButton>
+      <IconButton sx={SX.btn} onClick={() => stop()} disabled={disabled || !stopEnabled}>
         <StopIcon sx={SX.icon} />
       </IconButton>
-      <IconButton sx={SX.btn} onClick={() => pause()} disabled={!pauseEnabled}>
+      <IconButton sx={SX.btn} onClick={() => pause()} disabled={disabled || !pauseEnabled}>
         <PauseIcon sx={SX.icon} />
       </IconButton>
       <PlayOrResumeButton />
@@ -84,6 +94,9 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
           {/* <Autorenew sx={SX.icon} /> */}
         </IconButton>
       </Tooltip>
+      <IconButton sx={SX.btn} onClick={() => next()} disabled={disabled}>
+        <NavigateNextIcon sx={SX.icon} />
+      </IconButton>
     </Box>
   );
 };
