@@ -1,5 +1,5 @@
 import { VolumeUp } from '@mui/icons-material';
-import { Slider, Stack, debounce } from '@mui/material';
+import { IconButton, Slider, Stack, debounce } from '@mui/material';
 import { useCallback } from 'react';
 import MuteIconButton from './MuteIconButton';
 import { NoParamsProc } from '../lib/types';
@@ -40,7 +40,9 @@ const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addL
         onChange={(_e, newValue) => handleChange(newValue as number)}
         sx={{ ml: `${spacing * 4}px !important` }}
       />
-      <VolumeUp sx={{ fontSize }} />
+      <IconButton onClick={() => handleChange(volume + 1)}>
+        <VolumeUp sx={{ fontSize, color: 'black' }} />
+      </IconButton>
     </Stack>
   );
 };
