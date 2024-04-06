@@ -13,7 +13,7 @@ import {
   resume as resumeMopidy,
   play as playMopidy,
 } from './lib/mpc';
-import AudioPanel from './ui/AudioPanel';
+import PlaybackPanel from './ui/PlaybackPanel';
 import Logs from './ui/Logs';
 import { PlaybackState } from './lib/types';
 
@@ -211,7 +211,7 @@ function VolumePage() {
           volume={volume}
           handleExactVolume={handleExactVolume}
         />
-        <AudioPanel
+        <PlaybackPanel
           state={pbState}
           pause={() => handlePause()}
           stop={() => handleStop()}

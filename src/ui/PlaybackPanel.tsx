@@ -15,7 +15,7 @@ export type AudioButtonsParam = {
   refresh: NoParamsProc;
 };
 
-const AudioPanel = ({ styles, state, stop, pause, play, resume, refresh }: AudioButtonsParam) => {
+const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: AudioButtonsParam) => {
   const stopEnabled = !!state && state !== 'stopped';
   const pauseEnabled = state === 'playing';
 
@@ -82,4 +82,4 @@ const AudioPanel = ({ styles, state, stop, pause, play, resume, refresh }: Audio
   );
 };
 
-export default AudioPanel;
+export default PlaybackPanel;
