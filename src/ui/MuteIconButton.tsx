@@ -1,6 +1,7 @@
 import { Tooltip, IconButton } from '@mui/material';
 import DownMuteIcon from './DownMuteIcon';
 import { Styles } from '../lib/types';
+import { toArray } from '../lib/array';
 // import { AllSystemCSSProperties } from '@mui/system/styleFunctionSx';
 
 type MuteIconButtonParam = {
@@ -13,7 +14,7 @@ const MuteIconButton = ({ styles, mute, onClick }: MuteIconButtonParam) => {
   return (
     <Tooltip title={mute ? 'Unmute' : 'Mute'}>
       <IconButton
-        sx={[{ color: 'black' }, ...(Array.isArray(styles) ? styles : [styles]), mute && { color: 'red' }]}
+        sx={[{ color: 'black' }, ...toArray(styles), mute && { color: 'red' }]}
         onClick={onClick}
         aria-label="Mute"
       >

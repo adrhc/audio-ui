@@ -10,3 +10,7 @@ export function fillWithLastElem<T>(arr: T[], length: number) {
 export function valueAtIndexOrLast<T>(arr: T[], index: number): T {
   return arr.length <= index ? arr[arr.length - 1] : arr[index];
 }
+
+export function toArray<T>(t: T) {
+  return Array.isArray(t) ? t : [t];
+}
