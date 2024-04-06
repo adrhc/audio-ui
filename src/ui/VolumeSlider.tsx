@@ -29,7 +29,7 @@ const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addL
   return (
     <Stack direction="row" spacing={spacing} alignItems="center">
       <MuteIconButton
-        styles={{ p: 0, '& > .MuiSvgIcon-fontSizeMedium': { fontSize } }}
+        styles={{ p: 0, '& .MuiSvgIcon-fontSizeMedium': { fontSize } }}
         mute={mute}
         onClick={onMute}
       />

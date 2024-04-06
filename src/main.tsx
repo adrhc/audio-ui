@@ -53,6 +53,16 @@ const theme = createTheme({
         }
       }`,
     }, */
+    MuiChip: {
+      styleOverrides: {
+        root: {
+          height: 'auto',
+        },
+        labelMedium: {
+          fontSize: 22
+        }
+      },
+    },
     MuiInputBase: {
       styleOverrides: {
         root: {
@@ -66,16 +76,6 @@ const theme = createTheme({
           fontSize: 32,
         }
       }
-    },
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          height: 'auto',
-        },
-        labelMedium: {
-          fontSize: 22
-        }
-      },
     },
   },
 });
