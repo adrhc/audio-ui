@@ -1,4 +1,4 @@
-import { Stack, Chip, Button } from '@mui/material';
+import { Stack, Button } from '@mui/material';
 import ExactVolume from './ExactVolume';
 import { inputFontSize } from './VolumePage-styles';
 import { Styles } from '../lib/types';
