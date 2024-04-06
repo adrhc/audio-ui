@@ -40,7 +40,7 @@ const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addL
         onChange={(_e, newValue) => handleChange(newValue as number)}
         sx={{ ml: `${spacing * 4}px !important` }}
       />
-      <IconButton onClick={() => handleChange(volume + 1)}>
+      <IconButton onClick={() => handleChange(100)}>
         <VolumeUp sx={{ fontSize, color: 'black' }} />
       </IconButton>
     </Stack>
