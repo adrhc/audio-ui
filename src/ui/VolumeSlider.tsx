@@ -24,10 +24,15 @@ const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addL
   }
 
   const spacing = 1;
+  const fontSize = [40, 36];
 
   return (
     <Stack direction="row" spacing={spacing} alignItems="center">
-      <MuteIconButton styles={{ p: 0 }} mute={mute} onClick={onMute} />
+      <MuteIconButton
+        styles={{ p: 0, '& > .MuiSvgIcon-fontSizeMedium': { fontSize } }}
+        mute={mute}
+        onClick={onMute}
+      />
       <Slider
         disabled={disabled}
         aria-label="Volume"
@@ -35,7 +40,7 @@ const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addL
         onChange={(_e, newValue) => handleChange(newValue as number)}
         sx={{ ml: `${spacing * 4}px !important` }}
       />
-      <VolumeUp />
+      <VolumeUp sx={{ fontSize }} />
     </Stack>
   );
 };

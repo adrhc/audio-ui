@@ -59,7 +59,7 @@ const AudioPanel = ({ styles, state, stop, pause, play, resume, refresh }: Audio
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        '& .MuiSvgIcon-root': {
+        '& .MuiSvgIcon-fontSizeMedium': {
           fontSize: [48, 40],
         },
         ...styles,

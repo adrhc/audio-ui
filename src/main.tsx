@@ -56,13 +56,13 @@ const theme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          fontSize: 24
+          fontSize: 22
         }
       }      
     },
     MuiSvgIcon: {
       styleOverrides: {
-        root: {
+        fontSizeMedium: {
           fontSize: 32,
         }
       }
@@ -73,7 +73,7 @@ const theme = createTheme({
           height: 'auto',
         },
         labelMedium: {
-          fontSize: 24
+          fontSize: 22
         }
       },
     },
