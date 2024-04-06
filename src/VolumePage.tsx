@@ -16,6 +16,7 @@ import {
 import PlaybackPanel from './ui/PlaybackPanel';
 import Logs from './ui/Logs';
 import { PlaybackState } from './lib/types';
+import { FONT_SIZE } from './ui/volume-page-styles';
 
 const SHOW_LOGS = false;
 const DEFAULT_EXACT_VOLUME = 9;
@@ -188,7 +189,7 @@ function VolumePage() {
           exactVolume={exactVolume}
           setExactVolume={setExactVolume}
           handleExactVolume={handleExactVolume}
-          styles={{ py: btnStyle.py }}
+          ys={btnStyle.py}
         />
         <VolumeSlider
           disabled={disabled}
@@ -200,10 +201,16 @@ function VolumePage() {
           // addLog={addLog}
         />
         <Chip
+          sx={{
+            fontSize: FONT_SIZE.input,
+            py: btnStyle.py,
+            fontWeight: 'bold',
+            height: 'auto',
+            lineHeight: 1,
+          }}
           variant="outlined"
-          icon={<GraphicEqIcon />}
+          icon={<GraphicEqIcon sx={{ fontSize: FONT_SIZE.icon }} />}
           label={volume}
-          sx={{ py: btnStyle.py, fontWeight: 'bold' }}
         />
         <VolumeButtons
           btnStyle={btnStyle}

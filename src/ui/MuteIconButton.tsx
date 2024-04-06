@@ -9,9 +9,10 @@ type MuteIconButtonParam = {
 };
 
 const MuteIconButton = ({ styles, mute, onClick }: MuteIconButtonParam) => {
+  const color = mute ? 'red' : styles?.color ? styles.color : 'black';
   return (
     <Tooltip title={mute ? 'Unmute' : 'Mute'}>
-      <IconButton sx={{ color: mute ? 'red' : 'black', ...styles }} onClick={onClick} aria-label="Mute">
+      <IconButton sx={{ color, ...styles }} onClick={onClick} aria-label="Mute">
         <DownMuteIcon mute={mute} />
       </IconButton>
     </Tooltip>

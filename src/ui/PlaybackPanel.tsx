@@ -4,6 +4,22 @@ import StopIcon from '@mui/icons-material/Stop';
 import { NoParamsProc, PlaybackState, Styles } from '../lib/types';
 import { RestartAlt } from '@mui/icons-material';
 import PauseIcon from '@mui/icons-material/Pause';
+import { FONT_SIZE } from './volume-page-styles';
+
+const SX: Record<string, Styles> = {
+  box: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  btn: {
+    color: 'black',
+    p: 0,
+  },
+  icon: {
+    fontSize: FONT_SIZE.icon.map((n, i) => n + (i == 0 ? 12 : 4)) // [48, 40],
+  },
+};
 
 export type AudioButtonsParam = {
   styles?: Styles;
@@ -25,8 +41,8 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
         return (
           <>
             <Tooltip title="Resume">
-              <IconButton sx={{ color: 'black' }} onClick={() => resume()}>
-                <PlayArrowIcon />
+              <IconButton sx={SX.btn} onClick={() => resume()}>
+                <PlayArrowIcon sx={SX.icon} />
               </IconButton>
             </Tooltip>
           </>
@@ -35,8 +51,8 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
         return (
           <>
             <Tooltip title="Play">
-              <IconButton sx={{ color: 'black' }} onClick={() => play()}>
-                <PlayArrowIcon />
+              <IconButton sx={SX.btn} onClick={() => play()}>
+                <PlayArrowIcon sx={SX.icon} />
               </IconButton>
             </Tooltip>
           </>
@@ -45,8 +61,8 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
         return (
           <>
             {' '}
-            <IconButton sx={{ color: 'black' }} onClick={() => play()} disabled={true}>
-              <PlayArrowIcon />
+            <IconButton sx={SX.btn} onClick={() => play()} disabled={true}>
+              <PlayArrowIcon sx={SX.icon} />
             </IconButton>
           </>
         );
@@ -54,28 +70,18 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
   }
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        '& .MuiSvgIcon-fontSizeMedium': {
-          fontSize: [48, 40],
-        },
-        ...styles,
-      }}
-    >
-      <IconButton sx={{ color: 'black' }} onClick={() => stop()} disabled={!stopEnabled}>
-        <StopIcon />
+    <Box sx={{ ...SX.box, ...styles } as Styles}>
+      <IconButton sx={SX.btn} onClick={() => stop()} disabled={!stopEnabled}>
+        <StopIcon sx={SX.icon} />
       </IconButton>
-      <IconButton sx={{ color: 'black' }} onClick={() => pause()} disabled={!pauseEnabled}>
-        <PauseIcon />
+      <IconButton sx={SX.btn} onClick={() => pause()} disabled={!pauseEnabled}>
+        <PauseIcon sx={SX.icon} />
       </IconButton>
       <PlayOrResumeButton />
       <Tooltip title="Reload the page">
-        <IconButton sx={{ color: 'black' }} onClick={() => refresh()}>
-          <RestartAlt />
-          {/* <Autorenew /> */}
+        <IconButton sx={SX.btn} onClick={() => refresh()}>
+          <RestartAlt sx={SX.icon} />
+          {/* <Autorenew sx={SX.icon} /> */}
         </IconButton>
       </Tooltip>
     </Box>

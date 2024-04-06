@@ -35,16 +35,8 @@ const theme = createTheme({
       fontSize: 16,
     },
   }, */
-  components: {
-    /* MuiSvgIcon: {
-      styleOverrides: {
-        root: {
-          width: '2em',
-          height: '2em',
-        },
-      },
-    }, */
-    /* // IGNORED
+  /* components: {
+    // IGNORED
     MuiCssBaseline: {
       styleOverrides: () => `
       ${breakpoints.down('sm')} {
@@ -52,32 +44,32 @@ const theme = createTheme({
           font-size: 28px !important;
         }
       }`,
-    }, */
+    },
     MuiChip: {
       styleOverrides: {
         root: {
           height: 'auto',
         },
         labelMedium: {
-          fontSize: 22
+          fontSize: FONT_SIZE.default
         }
       },
     },
     MuiInputBase: {
       styleOverrides: {
         root: {
-          fontSize: 22
+          fontSize: FONT_SIZE.default
         }
       }      
     },
     MuiSvgIcon: {
       styleOverrides: {
         fontSizeMedium: {
-          fontSize: 32,
+          fontSize: FONT_SIZE.icon,
         }
       }
     },
-  },
+  }, */
 });
 
 const router = createHashRouter([

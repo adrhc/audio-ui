@@ -1,8 +1,18 @@
 import { VolumeUp } from '@mui/icons-material';
-import { IconButton, Slider, Stack, debounce } from '@mui/material';
+import { IconButton, Slider, Stack, Tooltip, debounce } from '@mui/material';
 import { useCallback } from 'react';
 import MuteIconButton from './MuteIconButton';
-import { NoParamsProc } from '../lib/types';
+import { NoParamsProc, Styles } from '../lib/types';
+import { FONT_SIZE } from './volume-page-styles';
+
+const spacing = 1;
+const fontSize = FONT_SIZE.icon.map((n, i) => n + (i == 0 ? 4 : 0)); // [40, 36];
+
+type SX_KEYS = 'muteBtn' | 'slider' | 'upIcon';
+const SX: Partial<Record<SX_KEYS, Styles>> = {
+  muteBtn: { '& .MuiSvgIcon-fontSizeMedium': { fontSize: fontSize.map((s) => s + 3) } },
+  upIcon: { fontSize, color: 'black' },
+};
 
 export type VolumeSliderParam = {
   disabled?: boolean;
@@ -23,26 +33,21 @@ const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addL
     onSlideFn(volume);
   }
 
-  const spacing = 1;
-  const fontSize = [40, 36];
-
   return (
     <Stack direction="row" spacing={spacing} alignItems="center">
-      <MuteIconButton
-        styles={{ p: 0, '& .MuiSvgIcon-fontSizeMedium': { fontSize } }}
-        mute={mute}
-        onClick={onMute}
-      />
+      <MuteIconButton styles={SX.muteBtn} mute={mute} onClick={onMute} />
       <Slider
         disabled={disabled}
         aria-label="Volume"
         value={volume}
         onChange={(_e, newValue) => handleChange(newValue as number)}
-        sx={{ ml: `${spacing * 4}px !important` }}
+        sx={SX.slider}
       />
-      <IconButton onClick={() => handleChange(100)}>
-        <VolumeUp sx={{ fontSize, color: 'black' }} />
-      </IconButton>
+      <Tooltip title="Set the volume to 100">
+        <IconButton onClick={() => handleChange(100)}>
+          <VolumeUp sx={SX.upIcon} />
+        </IconButton>
+      </Tooltip>
     </Stack>
   );
 };

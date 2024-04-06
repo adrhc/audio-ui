@@ -2,6 +2,7 @@ import { ButtonGroup, Button } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import { Styles } from '../lib/types';
+import { FONT_SIZE } from './volume-page-styles';
 
 export type VolumeButtonsParam = {
   disabled?: boolean;
@@ -29,7 +30,7 @@ const VolumeButtons = ({ disabled, volume, handleExactVolume, btnStyle }: Volume
         sx={{ ...btnStyle, flexGrow: 1 }}
         onClick={() => doHandleExactVolume(volume - 1)}
       >
-        <RemoveCircleIcon />
+        <RemoveCircleIcon sx={{ fontSize: FONT_SIZE.icon }} />
       </Button>
       <Button
         disabled={disabled}
@@ -38,7 +39,7 @@ const VolumeButtons = ({ disabled, volume, handleExactVolume, btnStyle }: Volume
         sx={{ ...btnStyle, flexGrow: 1 }}
         onClick={() => doHandleExactVolume(volume + 1)}
       >
-        <AddCircleIcon />
+        <AddCircleIcon sx={{ fontSize: FONT_SIZE.icon }} />
       </Button>
     </ButtonGroup>
   );
