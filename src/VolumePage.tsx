@@ -14,7 +14,6 @@ import {
   next,
   previous,
   getCurrentTlTrack,
-  logTlTrack,
   getArtists,
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
@@ -92,7 +91,7 @@ function VolumePage() {
       getCurrentTlTrack((tlt: models.TlTrack | null) => {
         setSong(tlt?.track?.name);
         setArtists(getArtists(tlt?.track));
-        logTlTrack(tlt);
+        // logTlTrack(tlt);
       }, mopidy);
 
       const mute = await mopidy.mixer?.getMute();
@@ -135,7 +134,7 @@ function VolumePage() {
       getCurrentTlTrack((tlt: models.TlTrack | null) => {
         setSong(tlt?.track?.name);
         setArtists(getArtists(tlt?.track));
-        logTlTrack(tlt);
+        // logTlTrack(tlt);
       }, mopidy);
       setVolume(volume);
       setSliderValue(volume);
