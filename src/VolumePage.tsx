@@ -188,7 +188,7 @@ function VolumePage() {
           width: '100%',
           height: '100%',
           minWidth: '340px',
-          maxWidth: '400px',
+          maxWidth: '350px',
           '& > div': { height: rowHeight },
         }}
       >
