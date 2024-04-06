@@ -178,7 +178,7 @@ function VolumePage() {
     resumeMopidy(mopidyRef.current);
   }
 
-  const btnStyle = { py: [4, 2] };
+  const btnStyle = { py: [3, 2] };
 
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
