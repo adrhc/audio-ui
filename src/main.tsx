@@ -23,9 +23,9 @@ const theme = createTheme({
       default: '#fffaf0',
     },
   },
-  typography: {
-    fontSize: 28,
-  },
+  /* typography: {
+    fontSize: 16,
+  }, */
   /* // NO EFFECT
   typography: {
     [breakpoints.down('sm')]: {
@@ -53,11 +53,28 @@ const theme = createTheme({
         }
       }`,
     }, */
+    MuiInputBase: {
+      styleOverrides: {
+        root: {
+          fontSize: 24
+        }
+      }      
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: {
+          fontSize: 32,
+        }
+      }
+    },
     MuiChip: {
       styleOverrides: {
         root: {
           height: 'auto',
         },
+        labelMedium: {
+          fontSize: 24
+        }
       },
     },
   },
