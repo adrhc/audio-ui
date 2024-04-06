@@ -187,8 +187,8 @@ function VolumePage() {
           justifyContent: 'center',
           width: '100%',
           height: '100%',
-          minWidth: '340px',
-          maxWidth: '350px',
+          minWidth: '300px',
+          maxWidth: '330px',
           '& > div': { height: rowHeight },
         }}
       >
