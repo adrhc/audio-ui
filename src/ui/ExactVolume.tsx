@@ -17,8 +17,8 @@ const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume 
   // console.log('xFactor:', xFactor)
   // ExactVolume height is ys, see '& .MuiInputBase-input'.py
   const inputPaddingLeft = YS.map((ys) => ys * xFactor);
-  // icon right space = iconPaddingMyMl + iconMarginRight = inputPaddingLeft
-  const iconPaddingMyMl = YS.map((ys) => (ys * xFactor) / 4);
+  // icon right space = iconPaddingMy + iconMarginRight = inputPaddingLeft
+  const iconPaddingMy = YS.map((ys) => (ys * xFactor) / 4);
   const iconMarginRight = YS.map((ys) => (3 * ys * xFactor) / 4);
 
   return (
@@ -53,10 +53,10 @@ const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume 
             type="button"
             sx={{
               color: '#1976d2',
-              p: iconPaddingMyMl,
+              p: iconPaddingMy,
               ml: '1px',
               mr: iconMarginRight,
-              my: iconPaddingMyMl,
+              my: iconPaddingMy,
             }}
             onClick={() => handleExactVolume(exactVolume)}
           >
