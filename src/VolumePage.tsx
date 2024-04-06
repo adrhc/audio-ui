@@ -188,7 +188,7 @@ function VolumePage() {
           width: '100%',
           height: '100%',
           // see https://www.whatismybrowser.com/w/66ZAAY4
-          minWidth: '320px',
+          minWidth: '310px',
           maxWidth: '330px',
           '& > div': { height: rowHeight },
         }}
