@@ -1,18 +1,15 @@
 import { ButtonGroup, Button } from '@mui/material';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { Styles } from '../lib/types';
-import { FONT_SIZE } from './volume-page-styles';
+import { iconFontSize } from './VolumePage-styles';
 
 export type VolumeButtonsParam = {
   disabled?: boolean;
   volume: number;
   handleExactVolume: (v: number) => void;
-  // btnStyle: {[key: string]: number | string | number[] | string[]};
-  btnStyle: Styles;
 };
 
-const VolumeButtons = ({ disabled, volume, handleExactVolume, btnStyle }: VolumeButtonsParam) => {
+const VolumeButtons = ({ disabled, volume, handleExactVolume }: VolumeButtonsParam) => {
   function doHandleExactVolume(volume: number) {
     if (volume >= 0 && volume <= 100) {
       handleExactVolume(volume);
@@ -27,19 +24,19 @@ const VolumeButtons = ({ disabled, volume, handleExactVolume, btnStyle }: Volume
         disabled={disabled}
         variant="outlined"
         size="large"
-        sx={{ ...btnStyle, flexGrow: 1 }}
+        sx={{ flexGrow: 1 }}
         onClick={() => doHandleExactVolume(volume - 1)}
       >
-        <RemoveCircleIcon sx={{ fontSize: FONT_SIZE.icon }} />
+        <RemoveCircleIcon sx={{ fontSize: iconFontSize }} />
       </Button>
       <Button
         disabled={disabled}
         variant="outlined"
         size="large"
-        sx={{ ...btnStyle, flexGrow: 1 }}
+        sx={{ flexGrow: 1 }}
         onClick={() => doHandleExactVolume(volume + 1)}
       >
-        <AddCircleIcon sx={{ fontSize: FONT_SIZE.icon }} />
+        <AddCircleIcon sx={{ fontSize: iconFontSize }} />
       </Button>
     </ButtonGroup>
   );

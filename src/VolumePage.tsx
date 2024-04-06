@@ -16,7 +16,7 @@ import {
 import PlaybackPanel from './ui/PlaybackPanel';
 import Logs from './ui/Logs';
 import { PlaybackState } from './lib/types';
-import { FONT_SIZE } from './ui/volume-page-styles';
+import { iconFontSize, inputFontSize, rowHeight, YS } from './ui/VolumePage-styles';
 
 const SHOW_LOGS = false;
 const DEFAULT_EXACT_VOLUME = 9;
@@ -179,18 +179,46 @@ function VolumePage() {
     resumeMopidy(mopidyRef.current);
   }
 
-  const btnStyle = { py: [3, 2] };
-
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
-      <Stack spacing={1} sx={{ height: '100%', justifyContent: 'center', width: '100%', maxWidth: '300px' }}>
-        <ExactVolume
-          disabled={disabled}
-          exactVolume={exactVolume}
-          setExactVolume={setExactVolume}
-          handleExactVolume={handleExactVolume}
-          ys={btnStyle.py}
-        />
+      <Stack
+        spacing={1}
+        sx={{
+          justifyContent: 'center',
+          width: '100%',
+          height: '100%',
+          maxWidth: '300px',
+          '& > div': { height: rowHeight },
+        }}
+      >
+        <Stack spacing={1} direction="row" sx={{ justifyContent: 'center' }}>
+          <Chip
+            sx={{
+              fontSize: inputFontSize,
+              fontWeight: 'bold',
+              height: 'auto',
+              lineHeight: 1,
+            }}
+            variant="outlined"
+            label="20"
+          />
+          <ExactVolume
+            disabled={disabled}
+            exactVolume={exactVolume}
+            setExactVolume={setExactVolume}
+            handleExactVolume={handleExactVolume}
+          />
+          <Chip
+            sx={{
+              fontSize: inputFontSize,
+              fontWeight: 'bold',
+              height: 'auto',
+              lineHeight: 1,
+            }}
+            variant="outlined"
+            label="80"
+          />
+        </Stack>
         <VolumeSlider
           disabled={disabled}
           mute={mute}
@@ -202,22 +230,16 @@ function VolumePage() {
         />
         <Chip
           sx={{
-            fontSize: FONT_SIZE.input,
-            py: btnStyle.py,
+            fontSize: inputFontSize,
+            py: YS,
             fontWeight: 'bold',
-            height: 'auto',
             lineHeight: 1,
           }}
           variant="outlined"
-          icon={<GraphicEqIcon sx={{ fontSize: FONT_SIZE.icon }} />}
+          icon={<GraphicEqIcon sx={{ fontSize: iconFontSize }} />}
           label={volume}
         />
-        <VolumeButtons
-          btnStyle={btnStyle}
-          disabled={disabled}
-          volume={volume}
-          handleExactVolume={handleExactVolume}
-        />
+        <VolumeButtons disabled={disabled} volume={volume} handleExactVolume={handleExactVolume} />
         <PlaybackPanel
           state={pbState}
           pause={() => handlePause()}

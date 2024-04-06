@@ -1,7 +1,8 @@
 import { Box, InputBase, IconButton, Tooltip } from '@mui/material';
 import { onEnterKey } from '../lib/keys';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import { FONT_SIZE } from './volume-page-styles';
+import { BORDER, YS, iconFontSize, inputFontSize } from './VolumePage-styles';
+import { useBreakpointValue } from '../lib/hooks';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 export type ExactVolumeParam = {
@@ -9,15 +10,16 @@ export type ExactVolumeParam = {
   exactVolume: number;
   setExactVolume: (v: number) => void;
   handleExactVolume: (v: number) => void;
-  ys: number[];
 };
 
-const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume, ys }: ExactVolumeParam) => {
-  const inputPaddingLeft = ys.map((ys) => ys * 2);
-  // icon btn height = ys (i.e. ys + my)
-  // icon right space = iconPaddingMyMl + iconMarginRight = ys / 2 + ys * 3 / 2 = ys * 2 = inputPaddingLeft
-  const iconPaddingMyMl = ys.map((ys) => ys / 2);
-  const iconMarginRight = ys.map((ys) => (ys * 3) / 2);
+const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume }: ExactVolumeParam) => {
+  const xFactor = useBreakpointValue([0.5, 1, 2]);
+  // console.log('xFactor:', xFactor)
+  // ExactVolume height is ys, see '& .MuiInputBase-input'.py
+  const inputPaddingLeft = YS.map((ys) => ys * xFactor);
+  // icon right space = iconPaddingMyMl + iconMarginRight = inputPaddingLeft
+  const iconPaddingMyMl = YS.map((ys) => (ys * xFactor) / 4);
+  const iconMarginRight = YS.map((ys) => (3 * ys * xFactor) / 4);
 
   return (
     <Box
@@ -25,8 +27,7 @@ const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume,
         display: 'flex',
         alignItems: 'center',
         width: '100%',
-        border: 'solid thin rgba(0, 0, 0, 0.2)',
-        borderRadius: 1,
+        ...BORDER,
       }}
     >
       <InputBase
@@ -37,9 +38,9 @@ const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume,
         onChange={(e) => setExactVolume(+e.target.value)}
         onKeyUp={(e) => onEnterKey(() => handleExactVolume(exactVolume), e)}
         sx={{
+          fontSize: inputFontSize,
+          fontWeight: 'bold',
           '& .MuiInputBase-input': {
-            fontSize: FONT_SIZE.input,
-            fontWeight: 'bold',
             pl: inputPaddingLeft,
           },
         }}
@@ -59,7 +60,7 @@ const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume,
             }}
             onClick={() => handleExactVolume(exactVolume)}
           >
-            <GraphicEqIcon sx={{ fontSize: FONT_SIZE.icon }} />
+            <GraphicEqIcon sx={{ fontSize: iconFontSize }} />
           </IconButton>
         </span>
       </Tooltip>

@@ -4,7 +4,7 @@ import StopIcon from '@mui/icons-material/Stop';
 import { NoParamsProc, PlaybackState, Styles } from '../lib/types';
 import { RestartAlt } from '@mui/icons-material';
 import PauseIcon from '@mui/icons-material/Pause';
-import { FONT_SIZE } from './volume-page-styles';
+import { BORDER, iconFontSizeMap } from './VolumePage-styles';
 
 const SX: Record<string, Styles> = {
   box: {
@@ -17,8 +17,8 @@ const SX: Record<string, Styles> = {
     p: 0,
   },
   icon: {
-    fontSize: FONT_SIZE.icon.map((n, i) => n + (i == 0 ? 12 : 4)) // [48, 40],
-  },
+    fontSize: iconFontSizeMap(ifs => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))), // [48, 40],
+  }
 };
 
 export type AudioButtonsParam = {
@@ -70,7 +70,7 @@ const PlaybackPanel = ({ styles, state, stop, pause, play, resume, refresh }: Au
   }
 
   return (
-    <Box sx={{ ...SX.box, ...styles } as Styles}>
+    <Box sx={{ ...BORDER, ...SX.box, ...styles } as Styles}>
       <IconButton sx={SX.btn} onClick={() => stop()} disabled={!stopEnabled}>
         <StopIcon sx={SX.icon} />
       </IconButton>
