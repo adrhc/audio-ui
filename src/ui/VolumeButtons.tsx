@@ -36,7 +36,7 @@ const VolumeButtons = ({ disabled, volume, handleExactVolume, btnStyle }: Volume
         variant="outlined"
         size="large"
         sx={{ ...btnStyle, flexGrow: 1 }}
-        onClick={() => handleExactVolume(volume + 1)}
+        onClick={() => doHandleExactVolume(volume + 1)}
       >
         <AddCircleIcon />
       </Button>
