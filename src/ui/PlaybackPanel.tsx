@@ -22,7 +22,7 @@ const SX: Record<string, Styles> = {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))), // [48, 40]
   },
   reload: {
-    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.25))),
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0 : -0.5))),
   },
 };
 

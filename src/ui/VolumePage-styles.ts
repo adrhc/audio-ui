@@ -8,7 +8,7 @@ export const YS = [2.5, 1.5]; // available y space
 
 const FONT_SIZE: Record<'input' | 'icon', number[]> = {
   input: [3, 2.75],
-  icon: [4.5],
+  icon: [4.5, 4.5],
 };
 
 export const BORDER = { border: 'solid thin rgba(0, 0, 0, 0.2)', borderRadius: 1 };
