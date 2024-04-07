@@ -23,7 +23,7 @@ import ExactVolumePanel from './ui/ExactVolumePanel';
 import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
 
 const SHOW_LOGS = false;
-const DEFAULT_EXACT_VOLUME = 9;
+const DEFAULT_EXACT_VOLUME = 5; // KEF = 75
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
