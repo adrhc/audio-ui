@@ -19,11 +19,11 @@ const SX: Record<string, Styles> = {
     p: 0,
   },
   icon: {
-    fontSize: iconFontSizeMap(ifs => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))) // [48, 40]
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))), // [48, 40]
   },
   reload: {
-    fontSize: iconFontSizeMap(ifs => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.25)))
-  }
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.25))),
+  },
 };
 
 export type AudioButtonsParam = {
@@ -38,7 +38,17 @@ export type AudioButtonsParam = {
   reload: NoParamsProc;
 };
 
-const PlaybackPanel = ({ disabled, state, previous, next, stop, pause, play, resume, reload }: AudioButtonsParam) => {
+export default function PlaybackPanel({
+  disabled,
+  state,
+  previous,
+  next,
+  stop,
+  pause,
+  play,
+  resume,
+  reload,
+}: AudioButtonsParam) {
   const stopEnabled = !!state && state !== 'stopped';
   const pauseEnabled = state === 'playing';
 
@@ -77,7 +87,7 @@ const PlaybackPanel = ({ disabled, state, previous, next, stop, pause, play, res
   }
 
   return (
-    <Box sx={{ ...BORDER, ...SX.box}}>
+    <Box sx={{ ...BORDER, ...SX.box }}>
       <IconButton sx={SX.btn} onClick={() => previous()} disabled={disabled}>
         <NavigateBeforeIcon sx={SX.icon} />
       </IconButton>
@@ -99,6 +109,4 @@ const PlaybackPanel = ({ disabled, state, previous, next, stop, pause, play, res
       </IconButton>
     </Box>
   );
-};
-
-export default PlaybackPanel;
+}
