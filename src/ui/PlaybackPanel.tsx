@@ -90,13 +90,13 @@ export default function PlaybackPanel({
       <IconButton sx={SX.btn} onClick={() => previous()} disabled={disabled}>
         <NavigateBeforeIcon sx={SX.icon} />
       </IconButton>
-      <IconButton sx={SX.btn} onClick={() => stop()} disabled={disabled || !stopEnabled}>
-        <StopIcon sx={SX.icon} />
-      </IconButton>
       <IconButton sx={SX.btn} onClick={() => pause()} disabled={disabled || !pauseEnabled}>
         <PauseIcon sx={SX.icon} />
       </IconButton>
       <PlayOrResumeButton />
+      <IconButton sx={SX.btn} onClick={() => stop()} disabled={disabled || !stopEnabled}>
+        <StopIcon sx={SX.icon} />
+      </IconButton>
       {/* <Tooltip title="Reload the page">
         <IconButton sx={SX.btn} onClick={() => reload()}>
           <RestartAlt sx={SX.reload} />
