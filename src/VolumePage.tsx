@@ -227,7 +227,7 @@ function VolumePage() {
           icon={<GraphicEqIcon sx={{ fontSize: iconFontSize }} />}
           label={volume}
         /> */}
-        <VolumeButtons disabled={disabled} volume={volume} doSetMopidyVolume={doSetMopidyVolume} />
+        <VolumeButtons disabled={disabled} volume={volume} handleExactVolume={doSetMopidyVolume} />
         <PlaybackPanel
           disabled={disabled}
           state={pbState}
