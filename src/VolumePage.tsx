@@ -18,7 +18,7 @@ import {
 import PlaybackPanel from './ui/PlaybackPanel';
 import Logs from './ui/Logs';
 import { PlaybackState, Styles } from './lib/types';
-import { iconFontSize, inputFontSize, rowHeight, YS } from './ui/VolumePage-styles';
+import { TITLE, rowHeight } from './ui/VolumePage-styles';
 import ExactVolumePanel from './ui/ExactVolumePanel';
 import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
 
@@ -183,8 +183,6 @@ function VolumePage() {
     }
   }
 
-  const titleStyle: Styles = { textAlign: 'center', fontWeight: 'bold', lineHeight: 1 };
-
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
       <Stack
@@ -200,8 +198,8 @@ function VolumePage() {
         }}
       >
         <Box sx={{ height: 'auto !important' }}>
-          <Typography sx={titleStyle}>{songAndArtists.song}</Typography>
-          <Typography sx={titleStyle}>{songAndArtists.artists}</Typography>
+          <Typography sx={TITLE}>{songAndArtists.song}</Typography>
+          <Typography sx={TITLE}>{songAndArtists.artists}</Typography>
         </Box>
         <ExactVolumePanel
           disabled={disabled}
