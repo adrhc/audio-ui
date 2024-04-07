@@ -2,7 +2,7 @@ import { Box, IconButton, Tooltip } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import { NoParamsProc, PlaybackState, Styles } from '../lib/types';
-import { RestartAlt } from '@mui/icons-material';
+// import { RestartAlt } from '@mui/icons-material';
 import PauseIcon from '@mui/icons-material/Pause';
 import { BORDER, iconFontSizeMap } from './VolumePage-styles';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
@@ -35,7 +35,7 @@ export type AudioButtonsParam = {
   pause: NoParamsProc;
   play: NoParamsProc;
   resume: NoParamsProc;
-  reload: NoParamsProc;
+  reload?: NoParamsProc;
 };
 
 export default function PlaybackPanel({
@@ -47,7 +47,6 @@ export default function PlaybackPanel({
   pause,
   play,
   resume,
-  reload,
 }: AudioButtonsParam) {
   const stopEnabled = !!state && state !== 'stopped';
   const pauseEnabled = state === 'playing';
@@ -98,12 +97,11 @@ export default function PlaybackPanel({
         <PauseIcon sx={SX.icon} />
       </IconButton>
       <PlayOrResumeButton />
-      <Tooltip title="Reload the page">
+      {/* <Tooltip title="Reload the page">
         <IconButton sx={SX.btn} onClick={() => reload()}>
           <RestartAlt sx={SX.reload} />
-          {/* <Autorenew sx={SX.icon} /> */}
         </IconButton>
-      </Tooltip>
+      </Tooltip> */}
       <IconButton sx={SX.btn} onClick={() => next()} disabled={disabled}>
         <NavigateNextIcon sx={SX.icon} />
       </IconButton>
