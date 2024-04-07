@@ -1,7 +1,6 @@
-import { Box, Chip, Stack, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import Mopidy, { models } from 'mopidy';
 import { useEffect, useRef, useState } from 'react';
-import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import VolumeSlider from './ui/VolumeSlider';
 import VolumeButtons from './ui/VolumeButtons';
 import {
@@ -17,7 +16,7 @@ import {
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
 import Logs from './ui/Logs';
-import { PlaybackState, Styles } from './lib/types';
+import { PlaybackState } from './lib/types';
 import { TITLE, rowHeight } from './ui/VolumePage-styles';
 import ExactVolumePanel from './ui/ExactVolumePanel';
 import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
