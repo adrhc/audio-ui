@@ -21,7 +21,7 @@ const SX: Record<string, Styles> = {
   icon: {
     fontSize: iconFontSizeMap(ifs => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))) // [48, 40]
   },
-  bf: {
+  reload: {
     fontSize: iconFontSizeMap(ifs => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.25)))
   }
 };
@@ -35,10 +35,10 @@ export type AudioButtonsParam = {
   pause: NoParamsProc;
   play: NoParamsProc;
   resume: NoParamsProc;
-  refresh: NoParamsProc;
+  reload: NoParamsProc;
 };
 
-const PlaybackPanel = ({ disabled, state, previous, next, stop, pause, play, resume, refresh }: AudioButtonsParam) => {
+const PlaybackPanel = ({ disabled, state, previous, next, stop, pause, play, resume, reload }: AudioButtonsParam) => {
   const stopEnabled = !!state && state !== 'stopped';
   const pauseEnabled = state === 'playing';
 
@@ -89,8 +89,8 @@ const PlaybackPanel = ({ disabled, state, previous, next, stop, pause, play, res
       </IconButton>
       <PlayOrResumeButton />
       <Tooltip title="Reload the page">
-        <IconButton sx={SX.btn} onClick={() => refresh()}>
-          <RestartAlt sx={SX.icon} />
+        <IconButton sx={SX.btn} onClick={() => reload()}>
+          <RestartAlt sx={SX.reload} />
           {/* <Autorenew sx={SX.icon} /> */}
         </IconButton>
       </Tooltip>

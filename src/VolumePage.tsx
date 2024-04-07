@@ -237,7 +237,7 @@ function VolumePage() {
           stop={() => stopMopidy(mopidyRef.current)}
           play={() => playMopidy(mopidyRef.current)}
           resume={() => resumeMopidy(mopidyRef.current)}
-          refresh={() => setRand(Math.random())}
+          reload={() => setRand(Math.random())}
         />
       </Stack>
       <Logs logs={logs} />
