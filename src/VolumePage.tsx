@@ -23,7 +23,7 @@ import ExactVolumePanel from './ui/ExactVolumePanel';
 import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
 
 const SHOW_LOGS = false;
-const DEFAULT_EXACT_VOLUME = 5; // KEF = 75
+// const DEFAULT_EXACT_VOLUME = 5; // KEF = 75
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
@@ -35,7 +35,7 @@ function VolumePage() {
   const [pbState, setPbState] = useState<PlaybackState>();
   const [volume, setVolume] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
-  const [exactVolume, setExactVolume] = useState(DEFAULT_EXACT_VOLUME);
+  // const [exactVolume, setExactVolume] = useState(DEFAULT_EXACT_VOLUME);
   const [disabled, setDisabled] = useState(true);
   const [rand, setRand] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
@@ -53,7 +53,7 @@ function VolumePage() {
   }
 
   useEffect(() => {
-    setExactVolume(DEFAULT_EXACT_VOLUME);
+    // setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
     // console.log(`[useEffect] rand = ${rand}`);
@@ -183,17 +183,6 @@ function VolumePage() {
     }
   }
 
-  function handleExactVolume(newVolume: number) {
-    // console.log(`[handleExactVolume] rand = ${rand}, newVolume = ${newVolume}`);
-    // addLog(`[handleExactVolume] rand = ${rand}, newVolume = ${newVolume}`);
-    if (mopidyRef.current) {
-      doSetMopidyVolume(newVolume);
-    } else {
-      // console.error(`[handleExactVolume] mopidyRef = false, rand = ${rand}, newVolume = ${newVolume}`);
-      alert(`[handleExactVolume] mopidyRef = false, rand = ${rand}, newVolume = ${newVolume}`);
-    }
-  }
-
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
       <Stack
@@ -212,9 +201,10 @@ function VolumePage() {
         <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }}>{songAndArtists.artists}</Typography>
         <ExactVolumePanel
           disabled={disabled}
-          exactVolume={exactVolume}
-          setExactVolume={setExactVolume}
-          handleExactVolume={handleExactVolume}
+          volume={volume}
+          // exactVolume={exactVolume}
+          // setExactVolume={setExactVolume}
+          handleExactVolume={doSetMopidyVolume}
         />
         <VolumeSlider
           disabled={disabled}
@@ -225,7 +215,7 @@ function VolumePage() {
           onSlide={handleSlide}
           // addLog={addLog}
         />
-        <Chip
+        {/* <Chip
           sx={{
             fontSize: inputFontSize,
             py: YS,
@@ -235,8 +225,8 @@ function VolumePage() {
           variant="outlined"
           icon={<GraphicEqIcon sx={{ fontSize: iconFontSize }} />}
           label={volume}
-        />
-        <VolumeButtons disabled={disabled} volume={volume} handleExactVolume={handleExactVolume} />
+        /> */}
+        <VolumeButtons disabled={disabled} volume={volume} doSetMopidyVolume={doSetMopidyVolume} />
         <PlaybackPanel
           disabled={disabled}
           state={pbState}
