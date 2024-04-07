@@ -13,14 +13,14 @@ import {
   play as playMopidy,
   next,
   previous,
-  getCurrentTlTrack,
-  getArtists,
+  logTlTrack,
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
 import Logs from './ui/Logs';
 import { PlaybackState } from './lib/types';
 import { iconFontSize, inputFontSize, rowHeight, YS } from './ui/VolumePage-styles';
 import ExactVolumePanel from './ui/ExactVolumePanel';
+import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
 
 const SHOW_LOGS = false;
 const DEFAULT_EXACT_VOLUME = 9;
@@ -30,8 +30,7 @@ type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 function VolumePage() {
   // console.log(`[Volume]`);
 
-  const [song, setSong] = useState<string | undefined>();
-  const [artists, setArtists] = useState<string | undefined>();
+  const [songAndArtists, setSongAndArtists] = useState<SongAndArtists>({});
   const [mute, setMute] = useState(false);
   const [pbState, setPbState] = useState<PlaybackState>();
   const [volume, setVolume] = useState(0);
@@ -69,7 +68,18 @@ function VolumePage() {
     });
 
     /* mopidy.on('websocket:incomingMessage', (param: string | number | boolean | object | []) => {
-      console.log(`[websocket:incomingMessage] rand = ${rand} param:`, param);
+      if (typeof param?.data === 'string') {
+        const json = JSON.parse(param.data);
+        const result = json.result ?? json.tl_track;
+        if (result && result['__model__'] === 'TlTrack') {
+          console.log(`[websocket:incomingMessage] ${Date.now()}, TlTrack:`, json);
+          logTlTrack(result as models.TlTrack);
+          return;
+        }
+      }
+      if (param?.data) {
+        console.log(`[websocket:incomingMessage] ${Date.now()}, data:\n`, param.data);
+      }
       // addLog(`[websocket:close] rand = ${rand}`);
     }); */
 
@@ -88,11 +98,8 @@ function VolumePage() {
       // console.log(`[state:online] rand = ${rand}`);
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
-      getCurrentTlTrack((tlt: models.TlTrack | null) => {
-        setSong(tlt?.track?.name);
-        setArtists(getArtists(tlt?.track));
-        // logTlTrack(tlt);
-      }, mopidy);
+      LOG_TLT && console.log(`[state:online] TlTrack:`);
+      collectSongAndArtists(setSongAndArtists, mopidy);
 
       const mute = await mopidy.mixer?.getMute();
       if (mute != null) {
@@ -128,14 +135,20 @@ function VolumePage() {
       }
     );
 
+    mopidy.on('event:trackPlaybackStarted' as CoreListenerEvent, (params: { tl_track: models.TlTrack }) => {
+      if (LOG_TLT) {
+        console.log(`[event:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
+        logTlTrack(params.tl_track);
+      }
+      const songAndArtists = toSongAndArtists(params.tl_track);
+      setSongAndArtists(songAndArtists);
+    });
+
     mopidy.on('event:volumeChanged' as CoreListenerEvent, ({ volume }: { volume: number }) => {
-      // console.log(`[event:volumeChanged] rand = ${rand}, volume = ${volume}`);
       // addLog(`[event:volumeChanged] rand = ${rand}, volume = ${volume}`);
-      getCurrentTlTrack((tlt: models.TlTrack | null) => {
-        setSong(tlt?.track?.name);
-        setArtists(getArtists(tlt?.track));
-        // logTlTrack(tlt);
-      }, mopidy);
+      // console.log(`[event:volumeChanged] ${Date.now()}, rand = ${rand}, volume = ${volume}`);
+      LOG_TLT && console.log(`[event:volumeChanged] ${Date.now()}, TlTrack:`);
+      collectSongAndArtists(setSongAndArtists, mopidy);
       setVolume(volume);
       setSliderValue(volume);
     });
@@ -195,8 +208,8 @@ function VolumePage() {
           '& > div': { height: rowHeight },
         }}
       >
-        <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }}>{song}</Typography>
-        <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }}>{artists}</Typography>
+        <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }}>{songAndArtists.song}</Typography>
+        <Typography sx={{ textAlign: 'center', fontWeight: 'bold' }}>{songAndArtists.artists}</Typography>
         <ExactVolumePanel
           disabled={disabled}
           exactVolume={exactVolume}

@@ -75,7 +75,7 @@ export function setVolume(mopidy: Mopidy | null, newVolume: number) {
 
 export async function showPlaybackInfo(mopidy: Mopidy) {
   console.log('getCurrentTlTrack:', await mopidy.playback?.getCurrentTlTrack());
-  // console.log('getStreamTitle:', await mopidy.playback?.getStreamTitle());
+  console.log('getStreamTitle:', await mopidy.playback?.getStreamTitle());
   // console.log('getTimePosition:', await mopidy.playback?.getTimePosition());
   const trackPromise = mopidy.playback?.getCurrentTrack();
   const statePromise = mopidy.playback?.getState();
@@ -126,7 +126,7 @@ export function logTlTrack(tlt: models.TlTrack | null) {
   const composers = track?.composers?.map((a) => a.name).join(', ');
   const performers = track?.performers?.map((a) => a.name).join(', ');
   console.log(
-    `tlid = ${tlt?.tlid}\nuri = ${track?.uri}\nname = ${track?.name}\nalbum: ${track?.album?.name}\nartists: ${artists}\nlength = ${track?.length}\ncomment = ${track?.comment}\ncomposers: ${composers}\nperformers: ${performers}\ntrack_no = ${track?.track_no}\ndisc_no = ${track?.disc_no}\ngenre = ${track?.genre}\nbitrate = ${track?.bitrate}\nMusicBrainz ID = ${track?.musicbrainz_id}`
+    `${Date.now()}\ntlid = ${tlt?.tlid}\nuri = ${track?.uri}\nname = ${track?.name}\nalbum: ${track?.album?.name}\nartists: ${artists}\nlength = ${track?.length}\ncomment = ${track?.comment}\ncomposers: ${composers}\nperformers: ${performers}\ntrack_no = ${track?.track_no}\ndisc_no = ${track?.disc_no}\ngenre = ${track?.genre}\nbitrate = ${track?.bitrate}\nMusicBrainz ID = ${track?.musicbrainz_id}`
   );
 }
 
