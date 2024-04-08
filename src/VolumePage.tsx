@@ -31,7 +31,7 @@ type VolumePageState = {
   songAndArtists: SongAndArtists;
 };
 
-function VolumePage() {
+export default function VolumePage() {
   const { online, mopidyRef } = useContext(AppContext);
   const disabled = !online || !mopidyRef.current;
   const [logs, setLogs] = useState<string[]>([]);
@@ -200,5 +200,3 @@ function VolumePage() {
     </Stack>
   );
 }
-
-export default VolumePage;

@@ -18,7 +18,7 @@ type AppState = {
   logs: string[];
 };
 
-function App() {
+export default function App() {
   const mopidyRef = useRef<Mopidy | null>(null);
   const [state, setState] = useState<AppState>({ mopidyRef, online: false, logs: [] });
 
@@ -99,5 +99,3 @@ function App() {
     </Container>
   );
 }
-
-export default App;
