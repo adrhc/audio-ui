@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import Mopidy, { models } from 'mopidy';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import VolumeSlider from './ui/VolumeSlider';
 import VolumeButtons from './ui/VolumeButtons';
 import {
@@ -15,170 +15,128 @@ import {
   logTlTrack,
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
-import Logs from './ui/Logs';
-import { PlaybackState } from './lib/types';
+import { MopidyEvent, PlaybackState } from './lib/types';
 import { TITLE, rowHeight } from './ui/VolumePage-styles';
 import ExactVolumePanel from './ui/ExactVolumePanel';
 import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
+import { AppContext } from './App';
 
-const SHOW_LOGS = false;
 // const DEFAULT_EXACT_VOLUME = 5; // KEF = 75
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
 function VolumePage() {
-  // console.log(`[Volume]`);
+  // console.log(`[VolumePage]`);
+
+  const { online, mopidyRef, addLog } = useContext(AppContext);
+  console.log(`[VolumePage] online = ${online}, mopidyRef = ${!!mopidyRef.current}`);
+  const disabled = !online;
 
   const [songAndArtists, setSongAndArtists] = useState<SongAndArtists>({});
   const [mute, setMute] = useState(false);
   const [pbStatus, setPbStatus] = useState<PlaybackState>();
   const [volume, setVolume] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
-  // const [exactVolume, setExactVolume] = useState(DEFAULT_EXACT_VOLUME);
-  const [disabled, setDisabled] = useState(true);
-  const [logs, setLogs] = useState<string[]>([]);
-
-  // console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
-  // alert(`volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
 
   // const location = useLocation();
   // const navigate = useNavigate();
 
-  const mopidyRef = useRef<Mopidy | null>(null);
+  useEffect(() => {
+    const mopidy = mopidyRef.current;
+    console.log(`[VolumePage:online] mopidy = ${!!mopidy}, online = ${online}`);
 
-  function addLog(log: string) {
-    SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
-  }
+    if (!online) {
+      return;
+    }
+
+    LOG_TLT && console.log(`[VolumePage:online] TlTrack:`);
+    collectSongAndArtists(setSongAndArtists, mopidy);
+
+    mopidy?.mixer?.getMute().then((it) => it != null && setMute(it));
+    mopidy?.mixer?.getVolume().then((it) => {
+      if (it != null) {
+        setVolume(it);
+        setSliderValue(it);
+      }
+    });
+    mopidy?.playback?.getState().then((it) => it != null && setPbStatus(it));
+  }, [mopidyRef.current, addLog, online]);
 
   useEffect(() => {
-    // setExactVolume(DEFAULT_EXACT_VOLUME);
+    const mopidy = mopidyRef.current;
+    console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}`);
+    
+    if (!mopidy) {
+      return;
+    }
 
-    const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
+    const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
-    mopidy.on('websocket:error', async (e: object | string) => {
-      // console.error(`[websocket:error]`, e);
-      // console.error('Something went wrong with the Mopidy connection!', e);
-      addLog(
-        `[websocket:error] ${JSON.stringify(e, ['message', 'arguments', 'type', 'name'])}`
-      );
-    });
-
-    /* mopidy.on('websocket:incomingMessage', (param: string | number | boolean | object | []) => {
-      if (typeof param?.data === 'string') {
-        const json = JSON.parse(param.data);
-        const result = json.result ?? json.tl_track;
-        if (result && result['__model__'] === 'TlTrack') {
-          console.log(`[websocket:incomingMessage] ${Date.now()}, TlTrack:`, json);
-          logTlTrack(result as models.TlTrack);
-          return;
-        }
-      }
-      if (param?.data) {
-        console.log(`[websocket:incomingMessage] ${Date.now()}, data:\n`, param.data);
-      }
-      // addLog(`[websocket:close]`);
-    }); */
-
-    mopidy.on('websocket:close', () => {
-      // console.log(`[websocket:close]`);
-      // addLog(`[websocket:close]`);
-    });
-
-    mopidy.on('state:offline', () => {
-      // console.log(`[state:offline]`);
-      // addLog(`[state:offline]`);
-      setDisabled(true);
-    });
-
-    mopidy.on('state:online', async () => {
-      // console.log(`[state:online]`);
-      // await showPlaybackInfo(mopidy);
-      // await showTracklistInfo(mopidy);
-      LOG_TLT && console.log(`[state:online] TlTrack:`);
-      collectSongAndArtists(setSongAndArtists, mopidy);
-
-      const mute = await mopidy.mixer?.getMute();
-      if (mute != null) {
+    events.push([
+      'event:muteChanged' as CoreListenerEvent,
+      ({ mute }: { mute: boolean }) => {
+        // console.log(`[VolumePage:muteChanged] mute = ${mute}`);
+        // addLog(`[VolumePage:muteChanged] mute = ${mute}`);
         setMute(mute);
-      }
-      const volume = await mopidy.mixer?.getVolume();
-      if (volume != null) {
-        setVolume(volume);
-        setSliderValue(volume);
-      }
-      const pbStatus = await mopidy.playback?.getState();
-      if (pbStatus != null) {
-        setPbStatus(pbStatus);
-      }
-      setDisabled(false);
-      // console.log(`[state:online] mute = ${mute}, volume = ${volume}, pbStatus = ${pbStatus}`);
-    });
+      },
+    ]);
 
-    mopidy.on('event:muteChanged' as CoreListenerEvent, ({ mute }: { mute: boolean }) => {
-      // console.log(`[event:muteChanged] mute = ${mute}`);
-      // addLog(`[event:muteChanged] mute = ${mute}`);
-      setMute(mute);
-    });
-
-    mopidy.on(
+    events.push([
       'event:playbackStateChanged' as CoreListenerEvent,
       ({ new_state }: { old_state: PlaybackState; new_state: PlaybackState }) => {
         /* console.log(
-          `[event:playbackStateChanged] old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)}`
+          `[VolumePage:playbackStateChanged] old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)}`
         ); */
-        // addLog(`[event:playbackStateChanged] old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)`);
+        // addLog(`[VolumePage:playbackStateChanged] old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)`);
         setPbStatus(new_state);
-      }
-    );
+      },
+    ]);
 
-    mopidy.on('event:trackPlaybackStarted' as CoreListenerEvent, (params: { tl_track: models.TlTrack }) => {
-      if (LOG_TLT) {
-        console.log(`[event:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
-        logTlTrack(params.tl_track);
-      }
-      const songAndArtists = toSongAndArtists(params.tl_track);
-      setSongAndArtists(songAndArtists);
-    });
+    events.push([
+      'event:trackPlaybackStarted' as CoreListenerEvent,
+      (params: { tl_track: models.TlTrack }) => {
+        if (LOG_TLT) {
+          console.log(`[VolumePage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
+          logTlTrack(params.tl_track);
+        }
+        setSongAndArtists(toSongAndArtists(params.tl_track));
+      },
+    ]);
 
-    mopidy.on('event:volumeChanged' as CoreListenerEvent, ({ volume }: { volume: number }) => {
-      // addLog(`[event:volumeChanged] volume = ${volume}`);
-      // console.log(`[event:volumeChanged] ${Date.now()}, volume = ${volume}`);
-      LOG_TLT && console.log(`[event:volumeChanged] ${Date.now()}, TlTrack:`);
-      collectSongAndArtists(setSongAndArtists, mopidy);
-      setVolume(volume);
-      setSliderValue(volume);
-    });
+    events.push([
+      'event:volumeChanged' as CoreListenerEvent,
+      ({ volume }: { volume: number }) => {
+        // addLog(`[VolumePage:volumeChanged] volume = ${volume}`);
+        // console.log(`[VolumePage:volumeChanged] ${Date.now()}, volume = ${volume}`);
+        LOG_TLT && console.log(`[VolumePage:volumeChanged] ${Date.now()}, TlTrack:`);
+        collectSongAndArtists(setSongAndArtists, mopidy);
+        setVolume(volume);
+        setSliderValue(volume);
+      },
+    ]);
+
+    events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      // console.log(`[useEffect:destroy]`);
-      mopidyRef.current = null;
-      // addLog(`[useEffect:destroy]`);
-      mopidy.close()?.then(() => mopidy.off());
+      console.log(`[VolumePage:mopidy:destroy]`);
+      addLog(`[VolumePage:destroy]`);
+      events.forEach((e) => mopidy?.off(...e));
     };
-  }, []);
+  }, [mopidyRef.current, addLog]);
 
   function doSetMopidyVolume(newValue: number) {
-    // console.log(`[doSetMopidyVolume] newValue = ${newValue}`);
-    // addLog(`[doSetMopidyVolume] newValue = ${newValue}`);
-    if (mopidyRef.current) {
-      setMopidyVolume(mopidyRef.current, newValue);
+    const mopidy = mopidyRef.current;
+    // console.log(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
+    // addLog(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
+    if (mopidy != null) {
+      setMopidyVolume(mopidy, newValue);
     } else {
-      // console.error(`[doSetMopidyVolume] mopidyRef = false, newValue = ${newValue}`);
-      alert(`[doSetMopidyVolume] mopidyRef = false, newValue = ${newValue}`);
+      console.error(`[doSetMopidyVolume] mopidy = ${!!mopidy}, newValue = ${newValue}`, mopidy);
+      alert(`[VolumePage:doSetMopidyVolume] mopidy = ${!!mopidy}, newValue = ${newValue}`);
     }
   }
 
-  function handleSlide(newSlidingVolume: number) {
-    // console.log(`[handleSlide] newSlidingVolume = ${newSlidingVolume}`);
-    // addLog(`[handleSlide] newSlidingVolume = ${newSlidingVolume}`);
-    if (mopidyRef.current) {
-      doSetMopidyVolume(newSlidingVolume);
-    } else {
-      // console.error(`[handleSlide] mopidyRef = false, newSlidingVolume = ${newSlidingVolume}`);
-      alert(`[handleSlide] mopidyRef = false, newSlidingVolume = ${newSlidingVolume}`);
-    }
-  }
-
+  const mopidy = mopidyRef.current;
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
       <Stack
@@ -209,9 +167,8 @@ function VolumePage() {
           mute={mute}
           volume={sliderValue}
           setVolume={setSliderValue}
-          onMute={() => muteMopidy(mopidyRef.current, !mute)}
-          onSlide={handleSlide}
-          // addLog={addLog}
+          onMute={() => muteMopidy(mopidy, !mute)}
+          onSlide={doSetMopidyVolume}
         />
         {/* <Chip
           sx={{
@@ -228,15 +185,14 @@ function VolumePage() {
         <PlaybackPanel
           disabled={disabled}
           status={pbStatus}
-          previous={() => previous(mopidyRef.current)}
-          next={() => next(mopidyRef.current)}
-          pause={() => pauseMopidy(mopidyRef.current)}
-          stop={() => stopMopidy(mopidyRef.current)}
-          play={() => playMopidy(mopidyRef.current)}
-          resume={() => resumeMopidy(mopidyRef.current)}
+          previous={() => previous(mopidy)}
+          next={() => next(mopidy)}
+          pause={() => pauseMopidy(mopidy)}
+          stop={() => stopMopidy(mopidy)}
+          play={() => playMopidy(mopidy)}
+          resume={() => resumeMopidy(mopidy)}
         />
       </Stack>
-      <Logs logs={logs} />
     </Stack>
   );
 }

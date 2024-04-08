@@ -6,20 +6,24 @@ import { toArray } from '../lib/array';
 
 type MuteIconButtonParam = {
   styles: Styles;
+  disabled?: boolean;
   mute: boolean;
   onClick: () => void;
 };
 
-const MuteIconButton = ({ styles, mute, onClick }: MuteIconButtonParam) => {
+const MuteIconButton = ({ styles, disabled, mute, onClick }: MuteIconButtonParam) => {
   return (
     <Tooltip title={mute ? 'Unmute' : 'Mute'}>
-      <IconButton
-        sx={[{ color: 'black' }, ...toArray(styles), mute && { color: 'red' }]}
-        onClick={onClick}
-        aria-label="Mute"
-      >
-        <DownMuteIcon mute={mute} />
-      </IconButton>
+      <span>
+        <IconButton
+          disabled={disabled}
+          sx={[{ color: 'black' }, ...toArray(styles), mute && { color: 'red' }]}
+          onClick={onClick}
+          aria-label="Mute"
+        >
+          <DownMuteIcon mute={mute} />
+        </IconButton>
+      </span>
     </Tooltip>
   );
 };

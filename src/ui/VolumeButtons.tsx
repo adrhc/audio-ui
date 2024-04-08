@@ -16,7 +16,7 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
     if (volume >= 0 && volume <= 100) {
       handleExactVolume(volume);
     } else {
-      console.warn(`[doHandleExactVolume] bad volume = ${volume}!`);
+      console.warn(`[VolumeButtons:doHandleExactVolume] bad volume = ${volume}!`);
     }
   }
 
