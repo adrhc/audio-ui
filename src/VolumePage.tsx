@@ -133,7 +133,7 @@ function VolumePage() {
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[VolumePage:mopidy:destroy]`);
+      console.log(`[VolumePage:destroy]`);
       addLog(`[VolumePage:destroy]`);
       events.forEach((e) => mopidy?.off(...e));
     };
