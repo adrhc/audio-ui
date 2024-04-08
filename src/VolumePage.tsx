@@ -15,15 +15,13 @@ import {
   logTlTrack,
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
-import { MopidyEvent, PlaybackState } from './lib/types';
+import { CoreListenerEvent, MopidyEvent, PlaybackState } from './lib/types';
 import { TITLE, rowHeight } from './ui/VolumePage-styles';
 import ExactVolumePanel from './ui/ExactVolumePanel';
 import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
 import { AppContext } from './App';
 import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
-
-type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
 function VolumePage() {
   // console.log(`[VolumePage]`);
@@ -128,7 +126,7 @@ function VolumePage() {
 
   function doSetMopidyVolume(newValue: number) {
     const mopidy = mopidyRef.current;
-    // console.log(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
+    console.log(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
     // addLog(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
     if (mopidy != null) {
       setMopidyVolume(mopidy, newValue);

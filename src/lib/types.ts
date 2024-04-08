@@ -6,3 +6,4 @@ export type NoArgsProc = () => void;
 export type PlaybackState = 'playing' | 'paused' | 'stopped';
 
 export type MopidyEvent<K extends keyof Mopidy.StrictEvents> = [K, Mopidy.StrictEvents[K]];
+export type CoreListenerEvent = keyof Mopidy.core.CoreListener;
