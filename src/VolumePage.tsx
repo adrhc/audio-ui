@@ -48,12 +48,12 @@ function VolumePage() {
   useEffect(() => {
     const mopidy = mopidyRef.current;
 
-    // console.log(`[VolumePage:online] mopidy = ${!!mopidy}, online = ${online}`);
+    console.log(`[VolumePage:online] mopidy = ${!!mopidy}, online = ${online}`);
     if (!mopidy || !online) {
       return;
     }
 
-    console.log(`[VolumePage:online]`);
+    // console.log(`[VolumePage:online]`);
     Promise.all([
       mopidy.playback?.getState(),
       mopidy.mixer?.getVolume(),
@@ -80,12 +80,12 @@ function VolumePage() {
   useEffect(() => {
     const mopidy = mopidyRef.current;
 
-    // console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}, online = ${online}`);
+    console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}, online = ${online}`);
     if (!mopidy) {
       return;
     }
 
-    console.log(`[VolumePage:mopidy]`);
+    // console.log(`[VolumePage:mopidy]`);
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push([
