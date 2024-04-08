@@ -36,9 +36,6 @@ function VolumePage() {
   const disabled = !online || !mopidyRef.current;
   const [logs, setLogs] = useState<string[]>([]);
   const [state, setState] = useState<VolumePageState>({ volume: 0, mute: false, songAndArtists: {} });
-  // const [pbStatus, setPbStatus] = useState<PlaybackState>();
-  // const [volume, setVolume] = useState(0);
-  // const [mute, setMute] = useState(false);
 
   console.log(
     `[VolumePage]\nmopidy = ${!!mopidyRef.current}\nonline = ${online}\npbStatus = ${state.pbStatus}\nvolume = ${state.volume}\nmute = ${state.mute}\nsong = ${state.songAndArtists.song}\nartists = ${state.songAndArtists.artists}`
