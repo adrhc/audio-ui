@@ -20,15 +20,16 @@ import { TITLE, rowHeight } from './ui/VolumePage-styles';
 import ExactVolumePanel from './ui/ExactVolumePanel';
 import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
 import { AppContext } from './App';
-
-// const DEFAULT_EXACT_VOLUME = 5; // KEF = 75
+import Logs from './ui/Logs';
+import { SHOW_LOGS } from './lib/config';
 
 type CoreListenerEvent = keyof Mopidy.core.CoreListener;
 
 function VolumePage() {
   // console.log(`[VolumePage]`);
 
-  const { online, mopidyRef, addLog } = useContext(AppContext);
+  const { online, mopidyRef } = useContext(AppContext);
+  const [logs, setLogs] = useState<string[]>([]);
   console.log(`[VolumePage] online = ${online}, mopidyRef = ${!!mopidyRef.current}`);
   const disabled = !online;
 
@@ -36,10 +37,13 @@ function VolumePage() {
   const [mute, setMute] = useState(false);
   const [pbStatus, setPbStatus] = useState<PlaybackState>();
   const [volume, setVolume] = useState(0);
-  const [sliderValue, setSliderValue] = useState(0);
 
   // const location = useLocation();
   // const navigate = useNavigate();
+
+  function addLog(log: string) {
+    SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
+  }
 
   useEffect(() => {
     const mopidy = mopidyRef.current;
@@ -56,16 +60,15 @@ function VolumePage() {
     mopidy?.mixer?.getVolume().then((it) => {
       if (it != null) {
         setVolume(it);
-        setSliderValue(it);
       }
     });
     mopidy?.playback?.getState().then((it) => it != null && setPbStatus(it));
-  }, [mopidyRef.current, addLog, online]);
+  }, [mopidyRef.current, online]);
 
   useEffect(() => {
     const mopidy = mopidyRef.current;
     console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}`);
-    
+
     if (!mopidy) {
       return;
     }
@@ -111,7 +114,6 @@ function VolumePage() {
         LOG_TLT && console.log(`[VolumePage:volumeChanged] ${Date.now()}, TlTrack:`);
         collectSongAndArtists(setSongAndArtists, mopidy);
         setVolume(volume);
-        setSliderValue(volume);
       },
     ]);
 
@@ -122,7 +124,7 @@ function VolumePage() {
       addLog(`[VolumePage:destroy]`);
       events.forEach((e) => mopidy?.off(...e));
     };
-  }, [mopidyRef.current, addLog]);
+  }, [mopidyRef.current]);
 
   function doSetMopidyVolume(newValue: number) {
     const mopidy = mopidyRef.current;
@@ -165,22 +167,10 @@ function VolumePage() {
         <VolumeSlider
           disabled={disabled}
           mute={mute}
-          volume={sliderValue}
-          setVolume={setSliderValue}
+          volume={volume}
           onMute={() => muteMopidy(mopidy, !mute)}
           onSlide={doSetMopidyVolume}
         />
-        {/* <Chip
-          sx={{
-            fontSize: inputFontSize,
-            py: YS,
-            fontWeight: 'bold',
-            lineHeight: 1,
-          }}
-          variant="outlined"
-          icon={<GraphicEqIcon sx={{ fontSize: iconFontSize }} />}
-          label={volume}
-        /> */}
         <VolumeButtons disabled={disabled} volume={volume} handleExactVolume={doSetMopidyVolume} />
         <PlaybackPanel
           disabled={disabled}
@@ -193,6 +183,7 @@ function VolumePage() {
           resume={() => resumeMopidy(mopidy)}
         />
       </Stack>
+      <Logs logs={logs} />
     </Stack>
   );
 }

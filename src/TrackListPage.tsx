@@ -1,4 +1,5 @@
 const TrackListPage = () => {
+    console.log(`[TrackListPage]`);
     return ( <>TrackListPage</> );
 }
  

@@ -4,15 +4,14 @@ import { useCallback, createContext, useEffect, useRef, useState, MutableRefObje
 import { Outlet } from 'react-router-dom';
 import Logs from './ui/Logs';
 import { logTlTrack } from './lib/mpc';
+import { SHOW_LOGS } from './lib/config';
 
-const SHOW_LOGS = false;
+export const AppContext = createContext<AppContextValue>({} as AppContextValue);
 
 export type AppContextValue = {
   online: boolean;
   mopidyRef: MutableRefObject<Mopidy | null>;
-  addLog: (log: string) => void;
 };
-export const AppContext = createContext<AppContextValue>({} as AppContextValue);
 
 function App() {
   const mopidyRef = useRef<Mopidy | null>(null);
@@ -21,9 +20,6 @@ function App() {
   const [online, setOnline] = useState(false);
   console.log(`[App] mopidyRef = ${!!mopidyRef.current}, online = ${online}, logs (${logs.length}):`, logs);
 
-  /* const addLog = useCallback((log: string) => {
-    SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
-  }, []); */
   function addLog(log: string) {
     SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
   }
@@ -86,10 +82,10 @@ function App() {
 
   return (
     <Container sx={{ pt: 1, pb: 1, height: '100%' }}>
-      <AppContext.Provider value={{ online, mopidyRef, addLog }}>
+      <Logs logs={logs} />
+      <AppContext.Provider value={{ online, mopidyRef }}>
         <Outlet />
       </AppContext.Provider>
-      <Logs logs={logs} />
     </Container>
   );
 }

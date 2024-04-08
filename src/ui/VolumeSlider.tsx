@@ -1,6 +1,6 @@
 import { VolumeUp } from '@mui/icons-material';
 import { IconButton, Slider, Stack, Tooltip, debounce } from '@mui/material';
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import MuteIconButton from './MuteIconButton';
 import { NoArgsProc } from '../lib/types';
 import { BORDER, iconFontSizeMap } from './VolumePage-styles';
@@ -12,18 +12,23 @@ export type VolumeSliderParam = {
   disabled?: boolean;
   mute: boolean;
   volume: number;
-  setVolume: (volume: number) => void;
   onMute: NoArgsProc;
   onSlide: (volume: number) => void;
-  addLog?: (log: string) => void;
 };
 
-const VolumeSlider = ({ disabled, mute, volume, setVolume, onMute, onSlide, addLog }: VolumeSliderParam) => {
+const VolumeSlider = ({ disabled, mute, volume: parentVolume, onMute, onSlide }: VolumeSliderParam) => {
+  const [volume, setVolume] = useState(parentVolume);
+
+  useEffect(() => {
+    // console.log(`[VolumeSlider:useEffect] volume = ${volume}, parentVolume = ${parentVolume}`);
+    setVolume(parentVolume);
+  }, [parentVolume]);
+
   const onSlideFn = useCallback(debounce(onSlide, 150), []);
 
   function handleChange(volume: number) {
+    // console.log(`[VolumeSlider:handleChange] volume = ${volume}, parentVolume = ${parentVolume}`);
     setVolume(volume);
-    addLog && addLog(`[VolumeSlider:handleChange] volume = ${volume}`);
     onSlideFn(volume);
   }
 
