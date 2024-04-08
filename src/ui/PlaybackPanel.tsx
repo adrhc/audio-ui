@@ -7,14 +7,7 @@ import { BORDER, iconFontSizeMap } from './VolumePage-styles';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import PlayOrResumeButton from './PlayOrResumeButton';
-import AudioFileIcon from '@mui/icons-material/AudioFile';
-import AudioFileRoundedIcon from '@mui/icons-material/AudioFileRounded';
-import AudioFileOutlinedIcon from '@mui/icons-material/AudioFileOutlined';
-import PlaylistAddCheckCircleOutlinedIcon from '@mui/icons-material/PlaylistAddCheckCircleOutlined';
-import FeaturedPlayListOutlinedIcon from '@mui/icons-material/FeaturedPlayListOutlined';
-import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import QueueMusicOutlinedIcon from '@mui/icons-material/QueueMusicOutlined';
-// import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 // import TuneIcon from '@mui/icons-material/Tune';
 import { Link } from 'react-router-dom';
 

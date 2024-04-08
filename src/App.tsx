@@ -1,9 +1,8 @@
 import { Container } from '@mui/material';
-import Mopidy, { models } from 'mopidy';
-import { useCallback, createContext, useEffect, useRef, useState, MutableRefObject } from 'react';
+import Mopidy from 'mopidy';
+import { createContext, useEffect, useRef, useState, MutableRefObject } from 'react';
 import { Outlet } from 'react-router-dom';
 import Logs from './ui/Logs';
-import { logTlTrack } from './lib/mpc';
 import { SHOW_LOGS } from './lib/config';
 
 export const AppContext = createContext<AppContextValue>({} as AppContextValue);
