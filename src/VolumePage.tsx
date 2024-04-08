@@ -24,17 +24,24 @@ import { AppContext } from './App';
 import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
 
+type MuteVolStatus = {
+  pbStatus?: PlaybackState;
+  volume: number;
+  mute: boolean;
+};
+
 function VolumePage() {
   const { online, mopidyRef } = useContext(AppContext);
   const disabled = !online;
   const [logs, setLogs] = useState<string[]>([]);
   const [songAndArtists, setSongAndArtists] = useState<SongAndArtists>({});
-  const [mute, setMute] = useState(false);
-  const [pbStatus, setPbStatus] = useState<PlaybackState>();
-  const [volume, setVolume] = useState(0);
+  const [muteVolStatus, setMuteVolStatus] = useState<MuteVolStatus>({ volume: 0, mute: false });
+  // const [pbStatus, setPbStatus] = useState<PlaybackState>();
+  // const [volume, setVolume] = useState(0);
+  // const [mute, setMute] = useState(false);
 
   console.log(
-    `[VolumePage]\nmopidyRef = ${!!mopidyRef.current}\nonline = ${online}\npbStatus = ${pbStatus}\nvolume = ${volume}\nmute = ${mute}\nsong = ${songAndArtists.song}\nartists = ${songAndArtists.artists}`
+    `[VolumePage]\nmopidyRef = ${!!mopidyRef.current}\nonline = ${online}\npbStatus = ${muteVolStatus.pbStatus}\nvolume = ${muteVolStatus.volume}\nmute = ${muteVolStatus.mute}\nsong = ${songAndArtists.song}\nartists = ${songAndArtists.artists}`
   );
 
   function addLog(log: string) {
@@ -51,14 +58,19 @@ function VolumePage() {
     console.log(`[VolumePage:online] online = ${online}, collectSongAndArtists`);
     collectSongAndArtists(setSongAndArtists, mopidy);
 
-    Promise.all([mopidy.mixer?.getMute(), mopidy.mixer?.getVolume(), mopidy.playback?.getState()]).then(
-      ([mute, volume, pbStatus]) => {
-        mute != null && setMute(mute);
-        volume != null && setVolume(volume);
-        pbStatus != null && setPbStatus(pbStatus);
+    Promise.all([mopidy.playback?.getState(), mopidy.mixer?.getVolume(), mopidy.mixer?.getMute()]).then(
+      ([newPbStatus, newVolume, newMute]) => {
+        console.log(
+          `[VolumePage:online] newPbStatus = ${newPbStatus}, newVolume = ${newVolume}, newMute = ${newMute}`
+        );
+        setMuteVolStatus((previous) => ({
+          pbStatus: newPbStatus ?? previous.pbStatus,
+          volume: newVolume ?? previous.volume,
+          mute: newMute ?? previous.mute,
+        }));
       }
     );
-  }, [mopidyRef.current, online]);
+  }, [online]);
 
   useEffect(() => {
     const mopidy = mopidyRef.current;
@@ -71,26 +83,6 @@ function VolumePage() {
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push([
-      'event:muteChanged' as CoreListenerEvent,
-      ({ mute }: { mute: boolean }) => {
-        // console.log(`[VolumePage:muteChanged] mute = ${mute}`);
-        // addLog(`[VolumePage:muteChanged] mute = ${mute}`);
-        setMute(mute);
-      },
-    ]);
-
-    events.push([
-      'event:playbackStateChanged' as CoreListenerEvent,
-      ({ new_state }: { old_state: PlaybackState; new_state: PlaybackState }) => {
-        /* console.log(
-          `[VolumePage:playbackStateChanged] old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)}`
-        ); */
-        // addLog(`[VolumePage:playbackStateChanged] old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)`);
-        setPbStatus(new_state);
-      },
-    ]);
-
-    events.push([
       'event:trackPlaybackStarted' as CoreListenerEvent,
       (params: { tl_track: models.TlTrack }) => {
         // console.log(`[VolumePage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
@@ -100,14 +92,39 @@ function VolumePage() {
     ]);
 
     events.push([
+      'event:muteChanged' as CoreListenerEvent,
+      ({ mute }: { mute: boolean }) => {
+        console.log(`[VolumePage:muteChanged] mute = ${mute}, muteVolStatus:\n`, muteVolStatus);
+        // addLog(`[VolumePage:muteChanged] mute = ${mute}`);
+        // setMute(mute);
+        setMuteVolStatus((previous) => ({ ...previous, mute }));
+      },
+    ]);
+
+    events.push([
+      'event:playbackStateChanged' as CoreListenerEvent,
+      ({ new_state: pbStatus }: { old_state: PlaybackState; new_state: PlaybackState }) => {
+        console.log(
+          `[VolumePage:playbackStateChanged] pbStatus = ${pbStatus}, muteVolStatus:\n`,
+          muteVolStatus
+        );
+        // addLog(`[VolumePage:playbackStateChanged] old_state = ${old_state}, pbStatus = ${pbStatus}`);
+        // setPbStatus(pbStatus);
+        setMuteVolStatus((previous) => ({ ...previous, pbStatus }));
+      },
+    ]);
+
+    events.push([
       'event:volumeChanged' as CoreListenerEvent,
       ({ volume }: { volume: number }) => {
         // addLog(`[VolumePage:volumeChanged] volume = ${volume}`);
+        // console.log(`[VolumePage:volumeChanged] volume = ${volume}`);
         // console.log(`[VolumePage:volumeChanged] ${Date.now()}, volume = ${volume}`);
         // console.log(`[VolumePage:volumeChanged] ${Date.now()}, TlTrack:`);
-        console.log(`[VolumePage:volumeChanged] collectSongAndArtists`);
+        console.log(`[VolumePage:volumeChanged] volume = ${volume}, muteVolStatus:\n`, muteVolStatus);
         collectSongAndArtists(setSongAndArtists, mopidy);
-        setVolume(volume);
+        // setVolume(volume);
+        setMuteVolStatus((previous) => ({ ...previous, volume }));
       },
     ]);
 
@@ -153,22 +170,26 @@ function VolumePage() {
         </Box>
         <ExactVolumePanel
           disabled={disabled}
-          volume={volume}
+          volume={muteVolStatus.volume}
           // exactVolume={exactVolume}
           // setExactVolume={setExactVolume}
           handleExactVolume={doSetMopidyVolume}
         />
         <VolumeSlider
           disabled={disabled}
-          mute={mute}
-          volume={volume}
-          onMute={() => muteMopidy(mopidy, !mute)}
+          mute={muteVolStatus.mute}
+          volume={muteVolStatus.volume}
+          onMute={() => muteMopidy(mopidy, !muteVolStatus.mute)}
           onSlide={doSetMopidyVolume}
         />
-        <VolumeButtons disabled={disabled} volume={volume} handleExactVolume={doSetMopidyVolume} />
+        <VolumeButtons
+          disabled={disabled}
+          volume={muteVolStatus.volume}
+          handleExactVolume={doSetMopidyVolume}
+        />
         <PlaybackPanel
           disabled={disabled}
-          status={pbStatus}
+          status={muteVolStatus.pbStatus}
           previous={() => previous(mopidy)}
           next={() => next(mopidy)}
           pause={() => pauseMopidy(mopidy)}
