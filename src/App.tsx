@@ -80,7 +80,7 @@ function App() {
   }, []);
 
   return (
-    <Container sx={{ pt: 1, pb: 1, height: '100%' }}>
+    <Container sx={{ p: 1, height: '100%' }}>
       <Logs logs={logs} />
       <AppContext.Provider value={{ online, mopidyRef }}>
         <Outlet />

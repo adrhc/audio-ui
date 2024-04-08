@@ -1,5 +1,32 @@
 import Mopidy, { models } from 'mopidy';
 
+export type SongAndArtists = {
+  tlid?: number;
+  song?: string | null;
+  artists?: string | null;
+};
+
+export function toSongAndArtists(tlt: models.TlTrack | null) {
+  // logTlTrack(tlt);
+  const song = tlt?.track?.name ?? tlt?.track?.comment ?? tlt?.track?.uri;
+  const artists = getArtists(tlt?.track);
+  return { tlid: tlt?.tlid, song, artists } as SongAndArtists;
+}
+
+export function collectTrackList(onSuccess: (sa: SongAndArtists[]) => void, mopidy?: Mopidy | null) {
+  getTlTracks((tlt) => {
+    // logTlTrack(tlt);
+    onSuccess(tlt.map((it) => toSongAndArtists(it)));
+  }, mopidy);
+}
+
+export function collectSongAndArtists(onSuccess: (sa: SongAndArtists) => void, mopidy?: Mopidy | null) {
+  getCurrentTlTrack((tlt) => {
+    // logTlTrack(tlt);
+    onSuccess(toSongAndArtists(tlt));
+  }, mopidy);
+}
+
 export function previous(mopidy?: Mopidy | null) {
   return mopidy?.playback?.previous().catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
@@ -30,18 +57,28 @@ export function resume(mopidy?: Mopidy | null) {
   });
 }
 
-export function play(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.play({}).catch((reason) => {
-    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-  });
+export function play(mopidy?: Mopidy | null, tlid?: number, onSuccess?: () => void) {
+  return mopidy?.playback
+    ?.play({ tlid })
+    .then(onSuccess)
+    .catch((reason) => {
+      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
+}
+
+export function getTlTracks(onSuccess: (tlt: models.TlTrack[]) => void, mopidy?: Mopidy | null) {
+  return mopidy?.tracklist
+    ?.getTlTracks()
+    .then(onSuccess)
+    .catch((reason) => {
+      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+    });
 }
 
 export function getCurrentTlTrack(onSuccess: (tlt: models.TlTrack | null) => void, mopidy?: Mopidy | null) {
   return mopidy?.playback
     ?.getCurrentTlTrack()
-    .then((tlt: models.TlTrack | null) => {
-      onSuccess(tlt);
-    })
+    .then(onSuccess)
     .catch((reason) => {
       alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
     });

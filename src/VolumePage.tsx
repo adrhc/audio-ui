@@ -12,32 +12,30 @@ import {
   play as playMopidy,
   next,
   previous,
-  logTlTrack,
+  collectSongAndArtists,
+  SongAndArtists,
+  toSongAndArtists,
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
 import { CoreListenerEvent, MopidyEvent, PlaybackState } from './lib/types';
 import { TITLE, rowHeight } from './ui/VolumePage-styles';
 import ExactVolumePanel from './ui/ExactVolumePanel';
-import { collectSongAndArtists, LOG_TLT, SongAndArtists, toSongAndArtists } from './lib/util/VolumePage';
 import { AppContext } from './App';
 import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
 
 function VolumePage() {
-  // console.log(`[VolumePage]`);
-
   const { online, mopidyRef } = useContext(AppContext);
-  const [logs, setLogs] = useState<string[]>([]);
-  console.log(`[VolumePage] online = ${online}, mopidyRef = ${!!mopidyRef.current}`);
   const disabled = !online;
-
+  const [logs, setLogs] = useState<string[]>([]);
   const [songAndArtists, setSongAndArtists] = useState<SongAndArtists>({});
   const [mute, setMute] = useState(false);
   const [pbStatus, setPbStatus] = useState<PlaybackState>();
   const [volume, setVolume] = useState(0);
 
-  // const location = useLocation();
-  // const navigate = useNavigate();
+  console.log(
+    `[VolumePage]\nmopidyRef = ${!!mopidyRef.current}\nonline = ${online}\npbStatus = ${pbStatus}\nvolume = ${volume}\nmute = ${mute}\nsong = ${songAndArtists.song}\nartists = ${songAndArtists.artists}`
+  );
 
   function addLog(log: string) {
     SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
@@ -45,32 +43,31 @@ function VolumePage() {
 
   useEffect(() => {
     const mopidy = mopidyRef.current;
-    console.log(`[VolumePage:online] mopidy = ${!!mopidy}, online = ${online}`);
 
-    if (!online) {
+    if (!mopidy || !online) {
       return;
     }
 
-    LOG_TLT && console.log(`[VolumePage:online] TlTrack:`);
+    console.log(`[VolumePage:online] online = ${online}, collectSongAndArtists`);
     collectSongAndArtists(setSongAndArtists, mopidy);
 
-    mopidy?.mixer?.getMute().then((it) => it != null && setMute(it));
-    mopidy?.mixer?.getVolume().then((it) => {
-      if (it != null) {
-        setVolume(it);
+    Promise.all([mopidy.mixer?.getMute(), mopidy.mixer?.getVolume(), mopidy.playback?.getState()]).then(
+      ([mute, volume, pbStatus]) => {
+        mute != null && setMute(mute);
+        volume != null && setVolume(volume);
+        pbStatus != null && setPbStatus(pbStatus);
       }
-    });
-    mopidy?.playback?.getState().then((it) => it != null && setPbStatus(it));
+    );
   }, [mopidyRef.current, online]);
 
   useEffect(() => {
     const mopidy = mopidyRef.current;
-    console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}`);
 
     if (!mopidy) {
       return;
     }
 
+    console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}`);
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push([
@@ -96,10 +93,8 @@ function VolumePage() {
     events.push([
       'event:trackPlaybackStarted' as CoreListenerEvent,
       (params: { tl_track: models.TlTrack }) => {
-        if (LOG_TLT) {
-          console.log(`[VolumePage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
-          logTlTrack(params.tl_track);
-        }
+        // console.log(`[VolumePage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
+        // logTlTrack(params.tl_track);
         setSongAndArtists(toSongAndArtists(params.tl_track));
       },
     ]);
@@ -109,7 +104,8 @@ function VolumePage() {
       ({ volume }: { volume: number }) => {
         // addLog(`[VolumePage:volumeChanged] volume = ${volume}`);
         // console.log(`[VolumePage:volumeChanged] ${Date.now()}, volume = ${volume}`);
-        LOG_TLT && console.log(`[VolumePage:volumeChanged] ${Date.now()}, TlTrack:`);
+        // console.log(`[VolumePage:volumeChanged] ${Date.now()}, TlTrack:`);
+        console.log(`[VolumePage:volumeChanged] collectSongAndArtists`);
         collectSongAndArtists(setSongAndArtists, mopidy);
         setVolume(volume);
       },
