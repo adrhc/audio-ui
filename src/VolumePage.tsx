@@ -31,12 +31,11 @@ function VolumePage() {
 
   const [songAndArtists, setSongAndArtists] = useState<SongAndArtists>({});
   const [mute, setMute] = useState(false);
-  const [pbState, setPbState] = useState<PlaybackState>();
+  const [pbStatus, setPbStatus] = useState<PlaybackState>();
   const [volume, setVolume] = useState(0);
   const [sliderValue, setSliderValue] = useState(0);
   // const [exactVolume, setExactVolume] = useState(DEFAULT_EXACT_VOLUME);
   const [disabled, setDisabled] = useState(true);
-  const [rand, setRand] = useState(0);
   const [logs, setLogs] = useState<string[]>([]);
 
   // console.log(`[Volume] volume = ${volume}, exactVolume = ${exactVolume}, disabled = ${disabled}`);
@@ -55,14 +54,12 @@ function VolumePage() {
     // setExactVolume(DEFAULT_EXACT_VOLUME);
 
     const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
-    // console.log(`[useEffect] rand = ${rand}`);
-    // addLog(`[useEffect] rand = ${rand}`);
 
     mopidy.on('websocket:error', async (e: object | string) => {
-      // console.error(`[websocket:error] rand = ${rand}`, e);
+      // console.error(`[websocket:error]`, e);
       // console.error('Something went wrong with the Mopidy connection!', e);
       addLog(
-        `[websocket:error] rand = ${rand}, ${JSON.stringify(e, ['message', 'arguments', 'type', 'name'])}`
+        `[websocket:error] ${JSON.stringify(e, ['message', 'arguments', 'type', 'name'])}`
       );
     });
 
@@ -79,22 +76,22 @@ function VolumePage() {
       if (param?.data) {
         console.log(`[websocket:incomingMessage] ${Date.now()}, data:\n`, param.data);
       }
-      // addLog(`[websocket:close] rand = ${rand}`);
+      // addLog(`[websocket:close]`);
     }); */
 
     mopidy.on('websocket:close', () => {
-      // console.log(`[websocket:close] rand = ${rand}`);
-      // addLog(`[websocket:close] rand = ${rand}`);
+      // console.log(`[websocket:close]`);
+      // addLog(`[websocket:close]`);
     });
 
     mopidy.on('state:offline', () => {
-      // console.log(`[state:offline] rand = ${rand}`);
-      // addLog(`[state:offline] rand = ${rand}`);
+      // console.log(`[state:offline]`);
+      // addLog(`[state:offline]`);
       setDisabled(true);
     });
 
     mopidy.on('state:online', async () => {
-      // console.log(`[state:online] rand = ${rand}`);
+      // console.log(`[state:online]`);
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
       LOG_TLT && console.log(`[state:online] TlTrack:`);
@@ -109,17 +106,17 @@ function VolumePage() {
         setVolume(volume);
         setSliderValue(volume);
       }
-      const pbState = await mopidy.playback?.getState();
-      if (pbState != null) {
-        setPbState(pbState);
+      const pbStatus = await mopidy.playback?.getState();
+      if (pbStatus != null) {
+        setPbStatus(pbStatus);
       }
       setDisabled(false);
-      // console.log(`[state:online] rand = ${rand}, mute = ${mute}, volume = ${volume}, pbState = ${pbState}`);
+      // console.log(`[state:online] mute = ${mute}, volume = ${volume}, pbStatus = ${pbStatus}`);
     });
 
     mopidy.on('event:muteChanged' as CoreListenerEvent, ({ mute }: { mute: boolean }) => {
-      // console.log(`[event:muteChanged] rand = ${rand}, mute = ${mute}`);
-      // addLog(`[event:muteChanged] rand = ${rand}, mute = ${mute}`);
+      // console.log(`[event:muteChanged] mute = ${mute}`);
+      // addLog(`[event:muteChanged] mute = ${mute}`);
       setMute(mute);
     });
 
@@ -127,10 +124,10 @@ function VolumePage() {
       'event:playbackStateChanged' as CoreListenerEvent,
       ({ new_state }: { old_state: PlaybackState; new_state: PlaybackState }) => {
         /* console.log(
-          `[event:playbackStateChanged] rand = ${rand}, old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)}`
+          `[event:playbackStateChanged] old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)}`
         ); */
-        // addLog(`[event:playbackStateChanged] rand = ${rand}, old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)`);
-        setPbState(new_state);
+        // addLog(`[event:playbackStateChanged] old_state = ${JSON.stringify(old_state)}, new_state = ${JSON.stringify(new_state)`);
+        setPbStatus(new_state);
       }
     );
 
@@ -144,8 +141,8 @@ function VolumePage() {
     });
 
     mopidy.on('event:volumeChanged' as CoreListenerEvent, ({ volume }: { volume: number }) => {
-      // addLog(`[event:volumeChanged] rand = ${rand}, volume = ${volume}`);
-      // console.log(`[event:volumeChanged] ${Date.now()}, rand = ${rand}, volume = ${volume}`);
+      // addLog(`[event:volumeChanged] volume = ${volume}`);
+      // console.log(`[event:volumeChanged] ${Date.now()}, volume = ${volume}`);
       LOG_TLT && console.log(`[event:volumeChanged] ${Date.now()}, TlTrack:`);
       collectSongAndArtists(setSongAndArtists, mopidy);
       setVolume(volume);
@@ -153,32 +150,32 @@ function VolumePage() {
     });
 
     return () => {
-      // console.log(`[useEffect:destroy] rand = ${rand}`);
+      // console.log(`[useEffect:destroy]`);
       mopidyRef.current = null;
-      // addLog(`[useEffect:destroy] rand = ${rand}`);
+      // addLog(`[useEffect:destroy]`);
       mopidy.close()?.then(() => mopidy.off());
     };
-  }, [rand]);
+  }, []);
 
   function doSetMopidyVolume(newValue: number) {
-    // console.log(`[doSetMopidyVolume] rand = ${rand}, newValue = ${newValue}`);
-    // addLog(`[doSetMopidyVolume] rand = ${rand}, newValue = ${newValue}`);
+    // console.log(`[doSetMopidyVolume] newValue = ${newValue}`);
+    // addLog(`[doSetMopidyVolume] newValue = ${newValue}`);
     if (mopidyRef.current) {
       setMopidyVolume(mopidyRef.current, newValue);
     } else {
-      // console.error(`[doSetMopidyVolume] mopidyRef = false, rand = ${rand}, newValue = ${newValue}`);
-      alert(`[doSetMopidyVolume] mopidyRef = false, rand = ${rand}, newValue = ${newValue}`);
+      // console.error(`[doSetMopidyVolume] mopidyRef = false, newValue = ${newValue}`);
+      alert(`[doSetMopidyVolume] mopidyRef = false, newValue = ${newValue}`);
     }
   }
 
   function handleSlide(newSlidingVolume: number) {
-    // console.log(`[handleSlide] rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
-    // addLog(`[handleSlide] rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
+    // console.log(`[handleSlide] newSlidingVolume = ${newSlidingVolume}`);
+    // addLog(`[handleSlide] newSlidingVolume = ${newSlidingVolume}`);
     if (mopidyRef.current) {
       doSetMopidyVolume(newSlidingVolume);
     } else {
-      // console.error(`[handleSlide] mopidyRef = false, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
-      alert(`[handleSlide] mopidyRef = false, rand = ${rand}, newSlidingVolume = ${newSlidingVolume}`);
+      // console.error(`[handleSlide] mopidyRef = false, newSlidingVolume = ${newSlidingVolume}`);
+      alert(`[handleSlide] mopidyRef = false, newSlidingVolume = ${newSlidingVolume}`);
     }
   }
 
@@ -230,14 +227,13 @@ function VolumePage() {
         <VolumeButtons disabled={disabled} volume={volume} handleExactVolume={doSetMopidyVolume} />
         <PlaybackPanel
           disabled={disabled}
-          state={pbState}
+          status={pbStatus}
           previous={() => previous(mopidyRef.current)}
           next={() => next(mopidyRef.current)}
           pause={() => pauseMopidy(mopidyRef.current)}
           stop={() => stopMopidy(mopidyRef.current)}
           play={() => playMopidy(mopidyRef.current)}
           resume={() => resumeMopidy(mopidyRef.current)}
-          reload={() => setRand(Math.random())}
         />
       </Stack>
       <Logs logs={logs} />

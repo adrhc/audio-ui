@@ -10,6 +10,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import VolumePage from './VolumePage.tsx';
 import ErrorPage from './ErrorPage.tsx';
 import App from './App.tsx';
+import TrackListPage from './TrackListPage.tsx';
 // import { createBreakpoints } from '@mui/system';
 
 // responsiveFontSizes from '@mui/material'
@@ -81,6 +82,10 @@ const router = createHashRouter([
       {
         path: '',
         element: <Dashboard />,
+      },
+      {
+        path: 'trackList',
+        element: <TrackListPage />,
       },
       {
         path: 'volume',
