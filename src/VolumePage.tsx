@@ -146,7 +146,7 @@ function VolumePage() {
     if (mopidy != null) {
       setMopidyVolume(mopidy, newValue);
     } else {
-      console.error(`[doSetMopidyVolume] mopidy = ${!!mopidy}, newValue = ${newValue}`, mopidy);
+      console.error(`[VolumePage:doSetMopidyVolume] mopidy = ${!!mopidy}, newValue = ${newValue}`, mopidy);
       alert(`[VolumePage:doSetMopidyVolume] mopidy = ${!!mopidy}, newValue = ${newValue}`);
     }
   }
