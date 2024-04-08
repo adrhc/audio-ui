@@ -13,18 +13,12 @@ export function toSongAndArtists(tlt: models.TlTrack | null) {
   return { tlid: tlt?.tlid, song, artists } as SongAndArtists;
 }
 
-export function collectTrackList(onSuccess: (sa: SongAndArtists[]) => void, mopidy?: Mopidy | null) {
-  getTlTracks((tlt) => {
-    // logTlTrack(tlt);
-    onSuccess(tlt.map((it) => toSongAndArtists(it)));
-  }, mopidy);
+export function getTrackList(mopidy?: Mopidy | null) {
+  return getTlTracks(mopidy)?.then((tlt) => tlt.map(toSongAndArtists));
 }
 
-export function collectSongAndArtists(onSuccess: (sa: SongAndArtists) => void, mopidy?: Mopidy | null) {
-  getCurrentTlTrack((tlt) => {
-    // logTlTrack(tlt);
-    onSuccess(toSongAndArtists(tlt));
-  }, mopidy);
+export function getSongAndArtists(mopidy?: Mopidy | null) {
+  return getCurrentTlTrack(mopidy)?.then(toSongAndArtists);
 }
 
 export function previous(mopidy?: Mopidy | null) {
@@ -66,22 +60,12 @@ export function play(mopidy?: Mopidy | null, tlid?: number, onSuccess?: () => vo
     });
 }
 
-export function getTlTracks(onSuccess: (tlt: models.TlTrack[]) => void, mopidy?: Mopidy | null) {
-  return mopidy?.tracklist
-    ?.getTlTracks()
-    .then(onSuccess)
-    .catch((reason) => {
-      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+export function getTlTracks(mopidy?: Mopidy | null) {
+  return mopidy?.tracklist?.getTlTracks();
 }
 
-export function getCurrentTlTrack(onSuccess: (tlt: models.TlTrack | null) => void, mopidy?: Mopidy | null) {
-  return mopidy?.playback
-    ?.getCurrentTlTrack()
-    .then(onSuccess)
-    .catch((reason) => {
-      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+export function getCurrentTlTrack(mopidy?: Mopidy | null) {
+  return mopidy?.playback?.getCurrentTlTrack();
 }
 
 export function mute(mopidy: Mopidy | null, newMute: boolean) {

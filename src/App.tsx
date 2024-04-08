@@ -12,20 +12,28 @@ export type AppContextValue = {
   mopidyRef: MutableRefObject<Mopidy | null>;
 };
 
+type AppState = {
+  mopidyRef: MutableRefObject<Mopidy | null>;
+  online: boolean;
+  logs: string[];
+};
+
 function App() {
   const mopidyRef = useRef<Mopidy | null>(null);
+  const [state, setState] = useState<AppState>({ mopidyRef, online: false, logs: [] });
 
-  const [logs, setLogs] = useState<string[]>([]);
-  const [online, setOnline] = useState(false);
-  console.log(`[App] mopidyRef = ${!!mopidyRef.current}, online = ${online}, logs (${logs.length}):`, logs);
+  console.log(
+    `[App] mopidyRef = ${!!mopidyRef.current}, online = ${state.online}, logs (${state.logs.length}):`,
+    state.logs
+  );
 
   function addLog(log: string) {
-    SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
+    SHOW_LOGS && setState((old) => ({ ...old, logs: [log, ...old.logs] }));
   }
 
   useEffect(() => {
     const mopidy = (mopidyRef.current = new Mopidy({ webSocketUrl: '' }));
-    console.log(`[App:useEffect] mopidyRef = true, online = ${online}`);
+    console.log(`[App:useEffect] online = ${state.online}`);
 
     /* mopidy.on(
       'websocket:incomingMessage',
@@ -59,15 +67,18 @@ function App() {
 
     mopidy.on('state:offline', () => {
       console.log(`[App:state:offline]`);
-      addLog(`[App:state:offline]`);
-      setOnline(false);
+      setState((old) => ({
+        ...old,
+        online: false,
+        logs: SHOW_LOGS ? [`[App:state:offline]`, ...old.logs] : old.logs,
+      }));
     });
 
     mopidy.on('state:online', async () => {
       console.log(`[App:state:online]`);
       // await showPlaybackInfo(mopidy);
       // await showTracklistInfo(mopidy);
-      setOnline(true);
+      setState((old) => ({ ...old, online: true }));
     });
 
     return () => {
@@ -81,8 +92,8 @@ function App() {
 
   return (
     <Container sx={{ p: 1, height: '100%' }}>
-      <Logs logs={logs} />
-      <AppContext.Provider value={{ online, mopidyRef }}>
+      <Logs logs={state.logs} />
+      <AppContext.Provider value={state}>
         <Outlet />
       </AppContext.Provider>
     </Container>

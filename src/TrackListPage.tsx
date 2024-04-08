@@ -1,42 +1,50 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './App';
-import { SongAndArtists, collectSongAndArtists, collectTrackList, play } from './lib/mpc';
+import { SongAndArtists, getSongAndArtists, getTrackList, play } from './lib/mpc';
 import { List, ListItem, ListItemButton, ListItemText, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
+type TrackListPageState = {
+  songs: SongAndArtists[];
+  current: SongAndArtists;
+};
+
 const TrackListPage = () => {
   const { online, mopidyRef } = useContext(AppContext);
-  const [songs, setSongs] = useState<SongAndArtists[]>([]);
-  const [currentSong, setCurrentSong] = useState<SongAndArtists>({});
-  console.log(
-    `[TrackListPage] mopidyRef = ${!!mopidyRef.current}, online = ${online} songs = ${songs.length}`
-  );
+  const [state, setState] = useState<TrackListPageState>({ songs: [], current: {} });
+  console.log(`[TrackListPage] mopidyRef = ${!!mopidyRef.current}, online = ${online}, state:\n`, state);
   const navigate = useNavigate();
 
   useEffect(() => {
     const mopidy = mopidyRef.current;
-    console.log(`[TrackListPage:useEffect] mopidy = ${!!mopidy}, online = ${online}`);
-    if (!online) {
+    if (!mopidy || !online) {
       return;
     }
-    collectTrackList(setSongs, mopidy);
-    collectSongAndArtists(setCurrentSong, mopidy);
+    console.log(`[TrackListPage:useEffect]`);
+    Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy)])
+      .then(([current, songs]) => {
+        console.log(`[TrackListPage:useEffect] ${songs?.length} songs, current:\n`, current);
+        setState((previous) => ({ current: current ?? previous.current, songs: songs ?? previous.songs }));
+      })
+      .catch((reason) => {
+        alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+      });
   }, [mopidyRef.current, online]);
 
-  function handleSelection(sa: SongAndArtists) {
-    console.log(`[TrackListPage:handleSelection] song = ${sa.song}, artists = ${sa.artists}`);
-    play(mopidyRef.current, sa.tlid, () => navigate(-1));
+  function handleSelection(song: SongAndArtists) {
+    console.log(`[TrackListPage:handleSelection] song:\n`, song);
+    play(mopidyRef.current, song.tlid, () => navigate(-1));
   }
 
   return (
     <Stack sx={{ height: '100%', justifyContent: 'center' }}>
       <List sx={{ p: 0, overflow: 'auto', maxHeight: '100%' }}>
-        {songs
+        {state.songs
           .filter((sa) => !!sa.song)
           .map((sa, i) => (
             <ListItem key={i} disablePadding disableGutters sx={{ border: 'solid thin rgba(0, 0, 0, 0.2)' }}>
               <ListItemButton
-                selected={sa.tlid == currentSong?.tlid}
+                selected={sa.tlid == state.current.tlid}
                 sx={{ px: 0.5, py: 0 }}
                 onClick={() => handleSelection(sa)}
               >

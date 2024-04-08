@@ -12,9 +12,9 @@ import {
   play as playMopidy,
   next,
   previous,
-  collectSongAndArtists,
   SongAndArtists,
   toSongAndArtists,
+  getSongAndArtists,
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
 import { CoreListenerEvent, MopidyEvent, PlaybackState } from './lib/types';
@@ -24,24 +24,24 @@ import { AppContext } from './App';
 import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
 
-type MuteVolStatus = {
+type VolumePageState = {
   pbStatus?: PlaybackState;
   volume: number;
   mute: boolean;
+  songAndArtists: SongAndArtists;
 };
 
 function VolumePage() {
   const { online, mopidyRef } = useContext(AppContext);
-  const disabled = !online;
+  const disabled = !online || !mopidyRef.current;
   const [logs, setLogs] = useState<string[]>([]);
-  const [songAndArtists, setSongAndArtists] = useState<SongAndArtists>({});
-  const [muteVolStatus, setMuteVolStatus] = useState<MuteVolStatus>({ volume: 0, mute: false });
+  const [state, setState] = useState<VolumePageState>({ volume: 0, mute: false, songAndArtists: {} });
   // const [pbStatus, setPbStatus] = useState<PlaybackState>();
   // const [volume, setVolume] = useState(0);
   // const [mute, setMute] = useState(false);
 
   console.log(
-    `[VolumePage]\nmopidyRef = ${!!mopidyRef.current}\nonline = ${online}\npbStatus = ${muteVolStatus.pbStatus}\nvolume = ${muteVolStatus.volume}\nmute = ${muteVolStatus.mute}\nsong = ${songAndArtists.song}\nartists = ${songAndArtists.artists}`
+    `[VolumePage]\nmopidy = ${!!mopidyRef.current}\nonline = ${online}\npbStatus = ${state.pbStatus}\nvolume = ${state.volume}\nmute = ${state.mute}\nsong = ${state.songAndArtists.song}\nartists = ${state.songAndArtists.artists}`
   );
 
   function addLog(log: string) {
@@ -51,35 +51,44 @@ function VolumePage() {
   useEffect(() => {
     const mopidy = mopidyRef.current;
 
+    // console.log(`[VolumePage:online] mopidy = ${!!mopidy}, online = ${online}`);
     if (!mopidy || !online) {
       return;
     }
 
-    console.log(`[VolumePage:online] online = ${online}, collectSongAndArtists`);
-    collectSongAndArtists(setSongAndArtists, mopidy);
-
-    Promise.all([mopidy.playback?.getState(), mopidy.mixer?.getVolume(), mopidy.mixer?.getMute()]).then(
-      ([newPbStatus, newVolume, newMute]) => {
+    console.log(`[VolumePage:online]`);
+    Promise.all([
+      mopidy.playback?.getState(),
+      mopidy.mixer?.getVolume(),
+      mopidy.mixer?.getMute(),
+      getSongAndArtists(mopidy),
+    ])
+      .then(([newPbStatus, newVolume, newMute, newSongAndArtists]) => {
         console.log(
-          `[VolumePage:online] newPbStatus = ${newPbStatus}, newVolume = ${newVolume}, newMute = ${newMute}`
+          `[VolumePage:online] newPbStatus = ${newPbStatus}, newVolume = ${newVolume}, newMute = ${newMute}, newSongAndArtists:\n`,
+          newSongAndArtists
         );
-        setMuteVolStatus((previous) => ({
+        setState((previous) => ({
           pbStatus: newPbStatus ?? previous.pbStatus,
           volume: newVolume ?? previous.volume,
           mute: newMute ?? previous.mute,
+          songAndArtists: newSongAndArtists ?? previous.songAndArtists,
         }));
-      }
-    );
+      })
+      .catch((reason) => {
+        alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
+      });
   }, [online]);
 
   useEffect(() => {
     const mopidy = mopidyRef.current;
 
+    // console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}, online = ${online}`);
     if (!mopidy) {
       return;
     }
 
-    console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}`);
+    console.log(`[VolumePage:mopidy]`);
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push([
@@ -87,30 +96,25 @@ function VolumePage() {
       (params: { tl_track: models.TlTrack }) => {
         // console.log(`[VolumePage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
         // logTlTrack(params.tl_track);
-        setSongAndArtists(toSongAndArtists(params.tl_track));
+        setState((previous) => ({ ...previous, songAndArtists: toSongAndArtists(params.tl_track) }));
       },
     ]);
 
     events.push([
       'event:muteChanged' as CoreListenerEvent,
       ({ mute }: { mute: boolean }) => {
-        console.log(`[VolumePage:muteChanged] mute = ${mute}, muteVolStatus:\n`, muteVolStatus);
+        console.log(`[VolumePage:muteChanged] mute = ${mute}, state:\n`, state);
         // addLog(`[VolumePage:muteChanged] mute = ${mute}`);
-        // setMute(mute);
-        setMuteVolStatus((previous) => ({ ...previous, mute }));
+        setState((previous) => ({ ...previous, mute }));
       },
     ]);
 
     events.push([
       'event:playbackStateChanged' as CoreListenerEvent,
       ({ new_state: pbStatus }: { old_state: PlaybackState; new_state: PlaybackState }) => {
-        console.log(
-          `[VolumePage:playbackStateChanged] pbStatus = ${pbStatus}, muteVolStatus:\n`,
-          muteVolStatus
-        );
+        console.log(`[VolumePage:playbackStateChanged] pbStatus = ${pbStatus}, state:\n`, state);
         // addLog(`[VolumePage:playbackStateChanged] old_state = ${old_state}, pbStatus = ${pbStatus}`);
-        // setPbStatus(pbStatus);
-        setMuteVolStatus((previous) => ({ ...previous, pbStatus }));
+        setState((previous) => ({ ...previous, pbStatus }));
       },
     ]);
 
@@ -121,10 +125,11 @@ function VolumePage() {
         // console.log(`[VolumePage:volumeChanged] volume = ${volume}`);
         // console.log(`[VolumePage:volumeChanged] ${Date.now()}, volume = ${volume}`);
         // console.log(`[VolumePage:volumeChanged] ${Date.now()}, TlTrack:`);
-        console.log(`[VolumePage:volumeChanged] volume = ${volume}, muteVolStatus:\n`, muteVolStatus);
-        collectSongAndArtists(setSongAndArtists, mopidy);
-        // setVolume(volume);
-        setMuteVolStatus((previous) => ({ ...previous, volume }));
+        console.log(`[VolumePage:volumeChanged] volume = ${volume}, state:\n`, state);
+        getSongAndArtists(mopidy)?.then((songAndArtists) => {
+          console.log(`[VolumePage:volumeChanged] newSongAndArtists:\n`, songAndArtists);
+          setState((previous) => ({ ...previous, volume, songAndArtists }));
+        });
       },
     ]);
 
@@ -165,31 +170,27 @@ function VolumePage() {
         }}
       >
         <Box sx={{ height: 'auto !important' }}>
-          <Typography sx={TITLE}>{songAndArtists.song}</Typography>
-          <Typography sx={TITLE}>{songAndArtists.artists}</Typography>
+          <Typography sx={TITLE}>{state.songAndArtists.song}</Typography>
+          <Typography sx={TITLE}>{state.songAndArtists.artists}</Typography>
         </Box>
         <ExactVolumePanel
           disabled={disabled}
-          volume={muteVolStatus.volume}
+          volume={state.volume}
           // exactVolume={exactVolume}
           // setExactVolume={setExactVolume}
           handleExactVolume={doSetMopidyVolume}
         />
         <VolumeSlider
           disabled={disabled}
-          mute={muteVolStatus.mute}
-          volume={muteVolStatus.volume}
-          onMute={() => muteMopidy(mopidy, !muteVolStatus.mute)}
+          mute={state.mute}
+          volume={state.volume}
+          onMute={() => muteMopidy(mopidy, !state.mute)}
           onSlide={doSetMopidyVolume}
         />
-        <VolumeButtons
-          disabled={disabled}
-          volume={muteVolStatus.volume}
-          handleExactVolume={doSetMopidyVolume}
-        />
+        <VolumeButtons disabled={disabled} volume={state.volume} handleExactVolume={doSetMopidyVolume} />
         <PlaybackPanel
           disabled={disabled}
-          status={muteVolStatus.pbStatus}
+          status={state.pbStatus}
           previous={() => previous(mopidy)}
           next={() => next(mopidy)}
           pause={() => pauseMopidy(mopidy)}
