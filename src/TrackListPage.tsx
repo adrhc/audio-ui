@@ -110,7 +110,7 @@ const TrackListPage = () => {
       <Button
         variant="outlined"
         onClick={() => navigate(-1)}
-        sx={{ py: [1.5, 1] }}
+        sx={{ py: [2, 1] }}
       >
         Back
       </Button>
