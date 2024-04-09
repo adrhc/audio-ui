@@ -62,11 +62,11 @@ export default function VolumePage() {
           `[VolumePage:online] newPbStatus = ${newPbStatus}, newVolume = ${newVolume}, newMute = ${newMute}, newSongAndArtists:\n`,
           newSongAndArtists
         );
-        setState((previous) => ({
-          pbStatus: newPbStatus ?? previous.pbStatus,
-          volume: newVolume ?? previous.volume,
-          mute: newMute ?? previous.mute,
-          songAndArtists: newSongAndArtists ?? previous.songAndArtists,
+        setState((old) => ({
+          pbStatus: newPbStatus ?? old.pbStatus,
+          volume: newVolume ?? old.volume,
+          mute: newMute ?? old.mute,
+          songAndArtists: newSongAndArtists ?? old.songAndArtists,
         }));
       })
       .catch((reason) => {
@@ -83,7 +83,7 @@ export default function VolumePage() {
       (params: { tl_track: models.TlTrack }) => {
         // console.log(`[VolumePage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
         // logTlTrack(params.tl_track);
-        setState((previous) => ({ ...previous, songAndArtists: toSongAndArtists(params.tl_track) }));
+        setState((old) => ({ ...old, songAndArtists: toSongAndArtists(params.tl_track) }));
       },
     ]);
 
@@ -92,7 +92,7 @@ export default function VolumePage() {
       ({ mute }: { mute: boolean }) => {
         console.log(`[VolumePage:muteChanged] mute = ${mute}`);
         // addLog(`[VolumePage:muteChanged] mute = ${mute}`);
-        setState((previous) => ({ ...previous, mute }));
+        setState((old) => ({ ...old, mute }));
       },
     ]);
 
@@ -101,7 +101,7 @@ export default function VolumePage() {
       ({ new_state: pbStatus }: { old_state: PlaybackState; new_state: PlaybackState }) => {
         console.log(`[VolumePage:playbackStateChanged] pbStatus = ${pbStatus}`);
         // addLog(`[VolumePage:playbackStateChanged] old_state = ${old_state}, pbStatus = ${pbStatus}`);
-        setState((previous) => ({ ...previous, pbStatus }));
+        setState((old) => ({ ...old, pbStatus }));
       },
     ]);
 
@@ -115,7 +115,7 @@ export default function VolumePage() {
         console.log(`[VolumePage:volumeChanged] volume = ${volume}`);
         getSongAndArtists(mopidy)?.then((songAndArtists) => {
           console.log(`[VolumePage:volumeChanged] newSongAndArtists:\n`, songAndArtists);
-          setState((previous) => ({ ...previous, volume, songAndArtists }));
+          setState((old) => ({ ...old, volume, songAndArtists }));
         });
       },
     ]);

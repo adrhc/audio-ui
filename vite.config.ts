@@ -10,7 +10,7 @@ export default defineConfig({
         changeOrigin: true,
       },
       '/mopidy': {
-        target: "ws://192.168.1.31:6680",
+        target: "ws://192.168.1.32:6680",
         changeOrigin: true,
         ws: true,
       },
