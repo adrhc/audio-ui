@@ -13,46 +13,46 @@ export function toSongAndArtists(tlt: models.TlTrack | null) {
   return { tlid: tlt?.tlid, song, artists } as SongAndArtists;
 }
 
-export function getTrackList(mopidy?: Mopidy | null) {
+export function getTrackList(mopidy: Mopidy) {
   return getTlTracks(mopidy)?.then((tlt) => tlt.map(toSongAndArtists));
 }
 
-export function getSongAndArtists(mopidy?: Mopidy | null) {
+export function getSongAndArtists(mopidy: Mopidy) {
   return getCurrentTlTrack(mopidy)?.then(toSongAndArtists);
 }
 
-export function previous(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.previous().catch((reason) => {
+export function previous(mopidy: Mopidy) {
+  return mopidy.playback?.previous().catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
   });
 }
 
-export function next(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.next().catch((reason) => {
+export function next(mopidy: Mopidy) {
+  return mopidy.playback?.next().catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
   });
 }
 
-export function stop(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.stop().catch((reason) => {
+export function stop(mopidy: Mopidy) {
+  return mopidy.playback?.stop().catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
   });
 }
 
-export function pause(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.pause().catch((reason) => {
+export function pause(mopidy: Mopidy) {
+  return mopidy.playback?.pause().catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
   });
 }
 
-export function resume(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.resume().catch((reason) => {
+export function resume(mopidy: Mopidy) {
+  return mopidy.playback?.resume().catch((reason) => {
     alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
   });
 }
 
-export function play(mopidy?: Mopidy | null, tlid?: number, onSuccess?: () => void) {
-  return mopidy?.playback
+export function play(mopidy: Mopidy, tlid?: number, onSuccess?: () => void) {
+  return mopidy.playback
     ?.play({ tlid })
     .then(onSuccess)
     .catch((reason) => {
@@ -60,16 +60,16 @@ export function play(mopidy?: Mopidy | null, tlid?: number, onSuccess?: () => vo
     });
 }
 
-export function getTlTracks(mopidy?: Mopidy | null) {
-  return mopidy?.tracklist?.getTlTracks();
+export function getTlTracks(mopidy: Mopidy) {
+  return mopidy.tracklist?.getTlTracks();
 }
 
-export function getCurrentTlTrack(mopidy?: Mopidy | null) {
-  return mopidy?.playback?.getCurrentTlTrack();
+export function getCurrentTlTrack(mopidy: Mopidy) {
+  return mopidy.playback?.getCurrentTlTrack();
 }
 
-export function mute(mopidy: Mopidy | null, newMute: boolean) {
-  return mopidy?.mixer
+export function mute(mopidy: Mopidy, newMute: boolean) {
+  return mopidy.mixer
     ?.setMute({ mute: newMute })
     .then((success: boolean) => {
       if (!success) {
@@ -81,8 +81,8 @@ export function mute(mopidy: Mopidy | null, newMute: boolean) {
     });
 }
 
-export function setVolume(mopidy: Mopidy | null, newVolume: number) {
-  return mopidy?.mixer
+export function setVolume(mopidy: Mopidy, newVolume: number) {
+  return mopidy.mixer
     ?.setVolume({ volume: newVolume })
     .then((success: boolean) => {
       if (!success) {

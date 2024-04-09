@@ -83,7 +83,7 @@ export default function App() {
       state.mopidy.off();
       state.mopidy.close();
     };
-  }, []);
+  }, [state.mopidy]);
 
   return (
     <Container sx={{ p: 1, height: '100%' }}>

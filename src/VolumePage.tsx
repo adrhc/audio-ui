@@ -32,13 +32,12 @@ type VolumePageState = {
 };
 
 export default function VolumePage() {
-  const { online, mopidyRef } = useContext(AppContext);
-  const disabled = !online || !mopidyRef.current;
+  const { mopidy, online } = useContext(AppContext);
   const [logs, setLogs] = useState<string[]>([]);
   const [state, setState] = useState<VolumePageState>({ volume: 0, mute: false, songAndArtists: {} });
 
   console.log(
-    `[VolumePage]\nmopidy = ${!!mopidyRef.current}\nonline = ${online}\npbStatus = ${state.pbStatus}\nvolume = ${state.volume}\nmute = ${state.mute}\nsong = ${state.songAndArtists.song}\nartists = ${state.songAndArtists.artists}`
+    `[VolumePage]\nonline = ${online}\npbStatus = ${state.pbStatus}\nvolume = ${state.volume}\nmute = ${state.mute}\nsong = ${state.songAndArtists.song}\nartists = ${state.songAndArtists.artists}`
   );
 
   function addLog(log: string) {
@@ -46,10 +45,8 @@ export default function VolumePage() {
   }
 
   useEffect(() => {
-    const mopidy = mopidyRef.current;
-
-    console.log(`[VolumePage:online] mopidy = ${!!mopidy}, online = ${online}`);
-    if (!mopidy || !online) {
+    console.log(`[VolumePage:online] online = ${online}`);
+    if (!online) {
       return;
     }
 
@@ -75,17 +72,10 @@ export default function VolumePage() {
       .catch((reason) => {
         alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
       });
-  }, [online]);
+  }, [mopidy, online]);
 
   useEffect(() => {
-    const mopidy = mopidyRef.current;
-
-    console.log(`[VolumePage:mopidy] mopidy = ${!!mopidy}, online = ${online}`);
-    if (!mopidy) {
-      return;
-    }
-
-    // console.log(`[VolumePage:mopidy]`);
+    console.log(`[VolumePage:mopidy]`);
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push([
@@ -100,7 +90,7 @@ export default function VolumePage() {
     events.push([
       'event:muteChanged' as CoreListenerEvent,
       ({ mute }: { mute: boolean }) => {
-        console.log(`[VolumePage:muteChanged] mute = ${mute}, state:\n`, state);
+        console.log(`[VolumePage:muteChanged] mute = ${mute}`);
         // addLog(`[VolumePage:muteChanged] mute = ${mute}`);
         setState((previous) => ({ ...previous, mute }));
       },
@@ -109,7 +99,7 @@ export default function VolumePage() {
     events.push([
       'event:playbackStateChanged' as CoreListenerEvent,
       ({ new_state: pbStatus }: { old_state: PlaybackState; new_state: PlaybackState }) => {
-        console.log(`[VolumePage:playbackStateChanged] pbStatus = ${pbStatus}, state:\n`, state);
+        console.log(`[VolumePage:playbackStateChanged] pbStatus = ${pbStatus}`);
         // addLog(`[VolumePage:playbackStateChanged] old_state = ${old_state}, pbStatus = ${pbStatus}`);
         setState((previous) => ({ ...previous, pbStatus }));
       },
@@ -122,7 +112,7 @@ export default function VolumePage() {
         // console.log(`[VolumePage:volumeChanged] volume = ${volume}`);
         // console.log(`[VolumePage:volumeChanged] ${Date.now()}, volume = ${volume}`);
         // console.log(`[VolumePage:volumeChanged] ${Date.now()}, TlTrack:`);
-        console.log(`[VolumePage:volumeChanged] volume = ${volume}, state:\n`, state);
+        console.log(`[VolumePage:volumeChanged] volume = ${volume}`);
         getSongAndArtists(mopidy)?.then((songAndArtists) => {
           console.log(`[VolumePage:volumeChanged] newSongAndArtists:\n`, songAndArtists);
           setState((previous) => ({ ...previous, volume, songAndArtists }));
@@ -130,28 +120,26 @@ export default function VolumePage() {
       },
     ]);
 
-    events.forEach((e) => mopidy?.on(...e));
+    events.forEach((e) => mopidy.on(...e));
 
     return () => {
       console.log(`[VolumePage:destroy]`);
       addLog(`[VolumePage:destroy]`);
-      events.forEach((e) => mopidy?.off(...e));
+      events.forEach((e) => mopidy.off(...e));
     };
-  }, [mopidyRef.current]);
+  }, [mopidy]);
 
   function doSetMopidyVolume(newValue: number) {
-    const mopidy = mopidyRef.current;
     console.log(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
     // addLog(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
     if (mopidy != null) {
       setMopidyVolume(mopidy, newValue);
     } else {
-      console.error(`[VolumePage:doSetMopidyVolume] mopidy = ${!!mopidy}, newValue = ${newValue}`, mopidy);
-      alert(`[VolumePage:doSetMopidyVolume] mopidy = ${!!mopidy}, newValue = ${newValue}`);
+      console.error(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`, mopidy);
+      alert(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
     }
   }
 
-  const mopidy = mopidyRef.current;
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
       <Stack
@@ -171,22 +159,22 @@ export default function VolumePage() {
           <Typography sx={TITLE}>{state.songAndArtists.artists}</Typography>
         </Box>
         <ExactVolumePanel
-          disabled={disabled}
+          disabled={!online}
           volume={state.volume}
           // exactVolume={exactVolume}
           // setExactVolume={setExactVolume}
           handleExactVolume={doSetMopidyVolume}
         />
         <VolumeSlider
-          disabled={disabled}
+          disabled={!online}
           mute={state.mute}
           volume={state.volume}
           onMute={() => muteMopidy(mopidy, !state.mute)}
           onSlide={doSetMopidyVolume}
         />
-        <VolumeButtons disabled={disabled} volume={state.volume} handleExactVolume={doSetMopidyVolume} />
+        <VolumeButtons disabled={!online} volume={state.volume} handleExactVolume={doSetMopidyVolume} />
         <PlaybackPanel
-          disabled={disabled}
+          disabled={!online}
           status={state.pbStatus}
           previous={() => previous(mopidy)}
           next={() => next(mopidy)}
