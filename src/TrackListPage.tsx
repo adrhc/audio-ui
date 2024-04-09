@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
+import { useBreakpointValue } from './lib/hooks';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -76,7 +77,7 @@ const TrackListPage = () => {
       sx={{
         pb: [2, 0],
         height: '100%',
-        justifyContent: 'center', 
+        justifyContent: 'center',
       }}
     >
       <List
@@ -107,7 +108,7 @@ const TrackListPage = () => {
             </ListItemButton>
           ))}
       </List>
-      <Button variant="outlined" onClick={() => navigate(-1)}>
+      <Button variant="outlined" onClick={() => navigate(-1)} size={useBreakpointValue(['large', 'medium'])}>
         Back
       </Button>
     </Stack>
