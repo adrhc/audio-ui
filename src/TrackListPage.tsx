@@ -10,17 +10,16 @@ type TrackListPageState = {
 };
 
 const TrackListPage = () => {
-  const { online, mopidyRef } = useContext(AppContext);
+  const { mopidy, online } = useContext(AppContext);
   const [state, setState] = useState<TrackListPageState>({ songs: [], current: {} });
-  console.log(`[TrackListPage] mopidyRef = ${!!mopidyRef.current}, online = ${online}, state:\n`, state);
+  console.log(`[TrackListPage] online = ${online}, state:\n`, state);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const mopidy = mopidyRef.current;
-    if (!mopidy || !online) {
+    if (!online) {
       return;
     }
-    console.log(`[TrackListPage:useEffect]`);
+    // console.log(`[TrackListPage:useEffect]`);
     Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy)])
       .then(([current, songs]) => {
         console.log(`[TrackListPage:useEffect] ${songs?.length} songs, current:\n`, current);
@@ -29,11 +28,11 @@ const TrackListPage = () => {
       .catch((reason) => {
         alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
       });
-  }, [mopidyRef.current, online]);
+  }, [mopidy, online]);
 
   function handleSelection(song: SongAndArtists) {
     console.log(`[TrackListPage:handleSelection] song:\n`, song);
-    play(mopidyRef.current, song.tlid, () => navigate(-1));
+    play(mopidy, song.tlid, () => navigate(-1));
   }
 
   return (
