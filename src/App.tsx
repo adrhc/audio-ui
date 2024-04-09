@@ -4,6 +4,7 @@ import { createContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
+import { formatErr } from './lib/logging';
 
 export const AppContext = createContext<AppContextValue>({} as AppContextValue);
 
@@ -55,7 +56,7 @@ export default function App() {
 
     state.mopidy.on('websocket:error', async (e: object | string) => {
       console.error(`[App:websocket:error]`, e);
-      addLog(`[App:websocket:error] ${JSON.stringify(e, ['message', 'arguments', 'type', 'name'])}`);
+      addLog(`[App:websocket:error] ${formatErr(e)}`);
     });
 
     state.mopidy.on('websocket:close', () => {

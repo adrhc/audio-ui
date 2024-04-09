@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './App';
 import { SongAndArtists, getSongAndArtists, getTrackList, play } from './lib/mpc';
-import { List, ListItemButton, ListItemText, Stack } from '@mui/material';
+import { Button, List, ListItemButton, ListItemText, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { formatErr } from './lib/logging';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -25,26 +26,31 @@ const TrackListPage = () => {
         console.log(`[TrackListPage:useEffect] ${songs?.length} songs, current:\n`, current);
         setState((previous) => ({ current: current ?? previous.current, songs: songs ?? previous.songs }));
       })
-      .catch((reason) => {
-        alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-      });
+      .catch((reason) => alert(formatErr(reason)));
   }, [mopidy, online]);
 
   function handleSelection(song: SongAndArtists) {
-    console.log(`[TrackListPage:handleSelection] song:\n`, song);
-    play(mopidy, song.tlid, () => navigate(-1));
+    // console.log(`[TrackListPage:handleSelection] song:\n`, song);
+    play(mopidy, song.tlid)?.catch((reason) => alert(formatErr(reason)));
   }
 
   return (
     <Stack
+      spacing={1}
       sx={{
         height: '100%',
         justifyContent: 'center',
-        border: 'thin solid rgba(0, 0, 0, 0.2)',
-        borderLeft: 'none',
       }}
     >
-      <List sx={{ p: 0, overflow: 'auto', maxHeight: '100%' }}>
+      <List
+        sx={{
+          p: 0,
+          overflow: 'auto',
+          maxHeight: '100%',
+          border: 'thin solid rgba(0, 0, 0, 0.2)',
+          borderLeft: 'none',
+        }}
+      >
         {state.songs
           .filter((sa) => !!sa.song)
           .map((sa, i) => (
@@ -64,6 +70,9 @@ const TrackListPage = () => {
             </ListItemButton>
           ))}
       </List>
+      <Button variant="outlined" onClick={() => navigate(-1)}>
+        Back
+      </Button>
     </Stack>
   );
 };

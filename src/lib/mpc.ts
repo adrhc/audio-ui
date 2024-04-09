@@ -1,4 +1,5 @@
 import Mopidy, { models } from 'mopidy';
+import { formatErr } from './logging';
 
 export type SongAndArtists = {
   tlid?: number;
@@ -51,13 +52,11 @@ export function resume(mopidy: Mopidy) {
   });
 }
 
-export function play(mopidy: Mopidy, tlid?: number, onSuccess?: () => void) {
-  return mopidy.playback
-    ?.play({ tlid })
-    .then(onSuccess)
-    .catch((reason) => {
+export function play(mopidy: Mopidy, tlid?: number) {
+  return mopidy.playback?.play({ tlid });
+  /* .catch((reason) => {
       alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+    }); */
 }
 
 export function getTlTracks(mopidy: Mopidy) {
@@ -76,9 +75,7 @@ export function mute(mopidy: Mopidy, newMute: boolean) {
         alert(`Couldn't mute!`);
       }
     })
-    .catch((reason) => {
-      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+    .catch((reason) => alert(formatErr(reason)));
 }
 
 export function setVolume(mopidy: Mopidy, newVolume: number) {
@@ -89,9 +86,7 @@ export function setVolume(mopidy: Mopidy, newVolume: number) {
         alert(`Couldn't change the volume to ${newVolume}!`);
       }
     })
-    .catch((reason) => {
-      alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-    });
+    .catch((reason) => alert(formatErr(reason)));
 }
 
 export async function showPlaybackInfo(mopidy: Mopidy) {
