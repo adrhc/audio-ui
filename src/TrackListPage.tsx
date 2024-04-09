@@ -74,8 +74,9 @@ const TrackListPage = () => {
     <Stack
       spacing={1}
       sx={{
+        pb: [1, 0],
         height: '100%',
-        justifyContent: 'center',
+        justifyContent: 'center', 
       }}
     >
       <List
