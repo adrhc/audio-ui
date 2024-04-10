@@ -10,7 +10,7 @@ import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
 import { Box, ToggleButton, Tooltip } from '@mui/material';
-import { BORDER, iconFontSize, iconFontSizeMap } from './VolumePage-styles';
+import { BORDER, iconFontSize } from './VolumePage-styles';
 
 const SX: Record<string, Styles> = {
   box: {
