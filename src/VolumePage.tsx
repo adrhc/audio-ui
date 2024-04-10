@@ -69,6 +69,7 @@ export default function VolumePage() {
           newSongAndArtists
         );
         setState((old) => ({
+          ...old,
           pbStatus: newPbStatus ?? old.pbStatus,
           volume: newVolume ?? old.volume,
           mute: newMute ?? old.mute,
