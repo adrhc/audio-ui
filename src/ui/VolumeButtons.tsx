@@ -1,6 +1,6 @@
 import { ButtonGroup, Button } from '@mui/material';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 import { iconFontSize, iconFontSizeMap } from './VolumePage-styles';
 import { Styles } from '../lib/types';
 import Looks5RoundedIcon from '@mui/icons-material/Looks5Rounded';
@@ -48,7 +48,7 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
         sx={{ flexGrow: 2 }}
         onClick={() => doHandleExactVolume(volume - 1)}
       >
-        <RemoveCircleIcon sx={{ fontSize: iconFontSize }} />
+        <RemoveIcon sx={{ fontSize: iconFontSize, color: 'black' }} />
       </Button>
       <Button
         disabled={disabled}
@@ -57,7 +57,7 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
         sx={{ flexGrow: 2 }}
         onClick={() => doHandleExactVolume(volume + 1)}
       >
-        <AddCircleIcon sx={{ fontSize: iconFontSize }} />
+        <AddIcon sx={{ fontSize: iconFontSize, color: 'black' }} />
       </Button>
       <Button
         disabled={disabled}
