@@ -1,7 +1,6 @@
 import { ButtonGroup, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import TuneIcon from '@mui/icons-material/Tune';
 import { iconFontSize, iconFontSizeMap } from './VolumePage-styles';
 import { Styles } from '../lib/types';
 import Looks5RoundedIcon from '@mui/icons-material/Looks5Rounded';
