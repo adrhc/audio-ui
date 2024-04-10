@@ -87,7 +87,7 @@ export default function App() {
   }, [state.mopidy]);
 
   return (
-    <Container sx={{ p: 1, height: '100%' }}>
+    <Container sx={{ p: [0.5, 1], height: '100%' }}>
       <Logs logs={state.logs} />
       <AppContext.Provider value={state}>
         <Outlet />
