@@ -8,7 +8,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import PlayOrResumeButton from './PlayOrResumeButton';
 import QueueMusicOutlinedIcon from '@mui/icons-material/QueueMusicOutlined';
-// import TuneIcon from '@mui/icons-material/Tune';
+import TuneIcon from '@mui/icons-material/Tune';
 import { Link } from 'react-router-dom';
 
 const SX: Record<string, Styles> = {
@@ -27,6 +27,9 @@ const SX: Record<string, Styles> = {
   pl: {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.5))),
   },
+  tune: {
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? -0.35 : -0.1))),
+  },
 };
 
 export type AudioButtonsParam = {
@@ -38,6 +41,7 @@ export type AudioButtonsParam = {
   pause: NoArgsProc;
   play: NoArgsProc;
   resume: NoArgsProc;
+  toggleTune: NoArgsProc;
 };
 
 export default function PlaybackPanel({
@@ -49,6 +53,7 @@ export default function PlaybackPanel({
   pause,
   play,
   resume,
+  toggleTune,
 }: AudioButtonsParam) {
   const stopEnabled = !!status && status !== 'stopped';
   const pauseEnabled = status === 'playing';
@@ -71,9 +76,9 @@ export default function PlaybackPanel({
       <IconButton disabled={disabled} sx={SX.btn} onClick={() => next()}>
         <NavigateNextIcon sx={SX.icon} />
       </IconButton>
-      {/* <IconButton disabled={disabled} sx={SX.btn}>
-        <TuneIcon sx={SX.icon} />
-      </IconButton> */}
+      <IconButton disabled={disabled} sx={SX.btn} onClick={toggleTune}>
+        <TuneIcon sx={SX.tune} />
+      </IconButton>
     </Box>
   );
 }

@@ -23,22 +23,28 @@ import ExactVolumePanel from './ui/ExactVolumePanel';
 import { AppContext } from './App';
 import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
+import MopidyPlayOptions from './ui/MopidyPlayOptions';
+import ShowIf from './ui/ShowIf';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
   volume: number;
   mute: boolean;
+  tuneOn: boolean;
   songAndArtists: SongAndArtists;
 };
 
 export default function VolumePage() {
   const { mopidy, online } = useContext(AppContext);
   const [logs, setLogs] = useState<string[]>([]);
-  const [state, setState] = useState<VolumePageState>({ volume: 0, mute: false, songAndArtists: {} });
+  const [state, setState] = useState<VolumePageState>({
+    tuneOn: false,
+    volume: 0,
+    mute: false,
+    songAndArtists: {},
+  });
 
-  console.log(
-    `[VolumePage]\nonline = ${online}\npbStatus = ${state.pbStatus}\nvolume = ${state.volume}\nmute = ${state.mute}\nsong = ${state.songAndArtists.song}\nartists = ${state.songAndArtists.artists}`
-  );
+  console.log(`[VolumePage] online = ${online}, state:\n`, state);
 
   function addLog(log: string) {
     SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
@@ -182,7 +188,11 @@ export default function VolumePage() {
           stop={() => stopMopidy(mopidy)}
           play={() => playMopidy(mopidy)}
           resume={() => resumeMopidy(mopidy)}
+          toggleTune={() => setState((old) => ({ ...old, tuneOn: !state.tuneOn }))}
         />
+        <ShowIf condition={state.tuneOn}>
+          <MopidyPlayOptions />
+        </ShowIf>
       </Stack>
       <Logs logs={logs} />
     </Stack>

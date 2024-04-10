@@ -26,7 +26,7 @@ export default function App() {
     logs: [],
   });
 
-  console.log(`[App] online = ${state.online}, logs (${state.logs.length}):`, state.logs);
+  console.log(`[App] online = ${state.online}, logs (${state.logs.length}):\n`, state.logs);
 
   function addLog(log: string) {
     SHOW_LOGS && setState((old) => ({ ...old, logs: [log, ...old.logs] }));

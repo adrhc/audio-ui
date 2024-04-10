@@ -67,6 +67,22 @@ export function getCurrentTlTrack(mopidy: Mopidy) {
   return mopidy.playback?.getCurrentTlTrack();
 }
 
+export function setConsume(mopidy: Mopidy, value: boolean) {
+  return mopidy.tracklist?.setConsume({ value }).catch((reason) => alert(formatErr(reason)));
+}
+
+export function setRandom(mopidy: Mopidy, value: boolean) {
+  return mopidy.tracklist?.setRandom({ value }).catch((reason) => alert(formatErr(reason)));
+}
+
+export function setRepeat(mopidy: Mopidy, value: boolean) {
+  return mopidy.tracklist?.setRepeat({ value }).catch((reason) => alert(formatErr(reason)));
+}
+
+export function setSingle(mopidy: Mopidy, value: boolean) {
+  return mopidy.tracklist?.setSingle({ value }).catch((reason) => alert(formatErr(reason)));
+}
+
 export function mute(mopidy: Mopidy, newMute: boolean) {
   return mopidy.mixer
     ?.setMute({ mute: newMute })
@@ -108,6 +124,17 @@ export async function showPlaybackInfo(mopidy: Mopidy) {
   const artists = track?.artists?.map((a) => a.name).join(', ');
   console.log(`${artists || ''} - ${track?.name}`);
   console.log(`[${state}] ${renderTrackNumber(track)}   ` + `${renderPosition(track, timePosition)}`);
+}
+
+export type PlayOptions = { consume?: boolean; random?: boolean; repeat?: boolean; single?: boolean };
+
+export function getPlayOptions(mopidy: Mopidy) {
+  return Promise.all([
+    mopidy.tracklist?.getConsume(),
+    mopidy.tracklist?.getRandom(),
+    mopidy.tracklist?.getRepeat(),
+    mopidy.tracklist?.getSingle(),
+  ]).then(([consume, random, repeat, single]) => ({ consume, random, repeat, single }) as PlayOptions);
 }
 
 export async function showTracklistInfo(mopidy: Mopidy) {
