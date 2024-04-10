@@ -45,19 +45,19 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
         disabled={disabled}
         variant="outlined"
         size="large"
-        sx={{ flexGrow: 2 }}
+        sx={{ flexGrow: 2, color: 'black' }}
         onClick={() => doHandleExactVolume(volume - 1)}
       >
-        <RemoveIcon sx={{ fontSize: iconFontSize, color: 'black' }} />
+        <RemoveIcon sx={{ fontSize: iconFontSize }} />
       </Button>
       <Button
         disabled={disabled}
         variant="outlined"
         size="large"
-        sx={{ flexGrow: 2 }}
+        sx={{ flexGrow: 2, color: 'black' }}
         onClick={() => doHandleExactVolume(volume + 1)}
       >
-        <AddIcon sx={{ fontSize: iconFontSize, color: 'black' }} />
+        <AddIcon sx={{ fontSize: iconFontSize }} />
       </Button>
       <Button
         disabled={disabled}
