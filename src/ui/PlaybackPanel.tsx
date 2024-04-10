@@ -7,7 +7,7 @@ import { BORDER, iconFontSizeMap } from './VolumePage-styles';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import PlayOrResumeButton from './PlayOrResumeButton';
-import QueueMusicOutlinedIcon from '@mui/icons-material/QueueMusicOutlined';
+import SubjectIcon from '@mui/icons-material/Subject';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Link } from 'react-router-dom';
 
@@ -64,7 +64,7 @@ export default function PlaybackPanel({
   return (
     <Box sx={{ ...BORDER, ...SX.box }}>
       <IconButton disabled={disabled} sx={SX.btn} component={Link} to="/trackList">
-        <QueueMusicOutlinedIcon sx={SX.pl} />
+        <SubjectIcon sx={SX.pl} />
       </IconButton>
       <IconButton disabled={disabled} sx={SX.btn} onClick={() => previous()}>
         <NavigateBeforeIcon sx={SX.bf} />
