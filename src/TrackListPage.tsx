@@ -86,7 +86,6 @@ const TrackListPage = () => {
       }}
     >
       <List
-        autoFocus={true}
         sx={{
           p: 0,
           overflow: 'auto',
@@ -100,6 +99,7 @@ const TrackListPage = () => {
           .map((sa, i) => (
             <ListItemButton
               key={i}
+              autoFocus={sa.tlid == state.current.tlid}
               selected={sa.tlid == state.current.tlid}
               sx={{ px: 0.5, py: [1, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
               onClick={() => handleSelection(sa)}
