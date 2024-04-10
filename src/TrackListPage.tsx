@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './App';
 import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from './lib/mpc';
 import { Button, List, ListItemButton, ListItemText, Stack } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
