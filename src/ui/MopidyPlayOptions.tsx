@@ -9,7 +9,7 @@ import ShuffleIcon from '@mui/icons-material/Shuffle';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
-import { Box, ToggleButton, Tooltip } from '@mui/material';
+import { Box, ToggleButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import { BORDER, iconFontSize } from './VolumePage-styles';
 
 const SX: Record<string, Styles> = {
@@ -67,6 +67,10 @@ const MopidyPlayOptions = () => {
     };
   }, [mopidy]);
 
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const btnStyle = isSmUp ? { ...SX.btn, p: 0.25 } : SX.btn;
+
   return (
     <Box sx={{ ...BORDER, ...SX.box }}>
       <Tooltip title="Repeat">
@@ -75,7 +79,7 @@ const MopidyPlayOptions = () => {
             value="repeat"
             selected={options.repeat}
             disabled={!online}
-            sx={SX.btn}
+            sx={btnStyle}
             onClick={() => setRepeat(mopidy, !options.repeat)}
           >
             <RepeatIcon sx={SX.icon} />
@@ -88,7 +92,7 @@ const MopidyPlayOptions = () => {
             value="single"
             selected={options.single}
             disabled={!online}
-            sx={SX.btn}
+            sx={btnStyle}
             onClick={() => setSingle(mopidy, !options.single)}
           >
             <TimesOneMobiledataIcon sx={SX.icon} />
@@ -101,7 +105,7 @@ const MopidyPlayOptions = () => {
             value="random"
             selected={options.random}
             disabled={!online}
-            sx={SX.btn}
+            sx={btnStyle}
             onClick={() => setRandom(mopidy, !options.random)}
           >
             <ShuffleIcon sx={SX.icon} />
@@ -114,7 +118,7 @@ const MopidyPlayOptions = () => {
             value="consume"
             selected={options.consume}
             disabled={!online}
-            sx={SX.btn}
+            sx={btnStyle}
             onClick={() => setConsume(mopidy, !options.consume)}
           >
             <RestaurantMenuIcon sx={SX.icon} />
