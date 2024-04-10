@@ -24,6 +24,9 @@ const SX: Record<string, Styles> = {
   icon: {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.75))),
   },
+  pl: {
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? -0.35 : -0.15))),
+  },
   tune: {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? -0.35 : -0.1))),
   },
@@ -32,7 +35,7 @@ const SX: Record<string, Styles> = {
   },
 };
 
-export type AudioButtonsParam = {
+export type PlaybackPanelParam = {
   disabled: boolean;
   status: PlaybackState | undefined;
   previous: NoArgsProc;
@@ -54,14 +57,14 @@ export default function PlaybackPanel({
   play,
   resume,
   toggleTune,
-}: AudioButtonsParam) {
+}: PlaybackPanelParam) {
   const stopEnabled = !!status && status !== 'stopped';
   const pauseEnabled = status === 'playing';
 
   return (
     <Box sx={{ ...BORDER, ...SX.box }}>
       <IconButton disabled={disabled} sx={SX.btn} component={Link} to="/trackList">
-        <SubjectIcon sx={SX.tune} />
+        <SubjectIcon sx={SX.pl} />
       </IconButton>
       <IconButton disabled={disabled} sx={SX.btn} onClick={() => previous()}>
         <NavigateBeforeIcon sx={SX.bf} />
