@@ -73,7 +73,7 @@ const TrackListPage = () => {
   }
 
   function goBack() {
-    emptyHistory && navigate(-1);
+    !emptyHistory && navigate(-1);
   }
 
   return (
