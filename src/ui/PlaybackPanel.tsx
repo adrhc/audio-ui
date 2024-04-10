@@ -30,6 +30,9 @@ const SX: Record<string, Styles> = {
   tune: {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? -0.35 : -0.1))),
   },
+  bf: {
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.75))),
+  },
 };
 
 export type AudioButtonsParam = {
@@ -64,7 +67,7 @@ export default function PlaybackPanel({
         <QueueMusicOutlinedIcon sx={SX.pl} />
       </IconButton>
       <IconButton disabled={disabled} sx={SX.btn} onClick={() => previous()}>
-        <NavigateBeforeIcon sx={SX.icon} />
+        <NavigateBeforeIcon sx={SX.bf} />
       </IconButton>
       <IconButton disabled={disabled || !pauseEnabled} sx={SX.btn} onClick={() => pause()}>
         <PauseIcon sx={SX.icon} />
@@ -74,7 +77,7 @@ export default function PlaybackPanel({
         <StopIcon sx={SX.icon} />
       </IconButton>
       <IconButton disabled={disabled} sx={SX.btn} onClick={() => next()}>
-        <NavigateNextIcon sx={SX.icon} />
+        <NavigateNextIcon sx={SX.bf} />
       </IconButton>
       <IconButton disabled={disabled} sx={SX.btn} onClick={toggleTune}>
         <TuneIcon sx={SX.tune} />
