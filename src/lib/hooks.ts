@@ -1,6 +1,7 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { valueAtIndexOrLast } from './array';
+import { useLocation } from 'react-router-dom';
 
 export function useBreakpointValue<T>(breakpointValues: T[]): T {
   const theme = useTheme();
@@ -19,4 +20,9 @@ export function useBreakpointValue<T>(breakpointValues: T[]): T {
   } else {
     return valueAtIndexOrLast(breakpointValues, 0);
   }
+}
+
+export function useEmptyHistory() {
+  const location = useLocation();
+  return location.key === 'default';
 }

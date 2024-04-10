@@ -2,10 +2,11 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './App';
 import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from './lib/mpc';
 import { Button, List, ListItemButton, ListItemText, Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
+import { useEmptyHistory } from './lib/hooks';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -13,9 +14,10 @@ type TrackListPageState = {
 };
 
 const TrackListPage = () => {
+  const emptyHistory = useEmptyHistory();
   const { mopidy, online } = useContext(AppContext);
   const [state, setState] = useState<TrackListPageState>({ songs: [], current: {} });
-  console.log(`[TrackListPage] online = ${online}, state:\n`, state);
+  console.log(`[TrackListPage] online = ${online}, emptyHistory = ${emptyHistory}, state:\n`, state);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -70,6 +72,10 @@ const TrackListPage = () => {
     play(mopidy, song.tlid)?.catch((reason) => alert(formatErr(reason)));
   }
 
+  function goBack() {
+    emptyHistory && navigate(-1);
+  }
+
   return (
     <Stack
       spacing={1}
@@ -107,11 +113,7 @@ const TrackListPage = () => {
             </ListItemButton>
           ))}
       </List>
-      <Button
-        variant="outlined"
-        onClick={() => navigate(-1)}
-        sx={{ py: [2, 1] }}
-      >
+      <Button variant="outlined" onClick={goBack} sx={{ py: [2, 1] }}>
         Back
       </Button>
     </Stack>
