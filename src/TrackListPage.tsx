@@ -86,6 +86,7 @@ const TrackListPage = () => {
       }}
     >
       <List
+        autoFocus={true}
         sx={{
           p: 0,
           overflow: 'auto',
