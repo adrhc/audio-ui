@@ -11,11 +11,23 @@ import SubjectIcon from '@mui/icons-material/Subject';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Link } from 'react-router-dom';
 
+export type PlaybackPanelParam = {
+  disabled: boolean;
+  status: PlaybackState | undefined;
+  previous: NoArgsProc;
+  next: NoArgsProc;
+  stop: NoArgsProc;
+  pause: NoArgsProc;
+  play: NoArgsProc;
+  resume: NoArgsProc;
+  toggleTune: NoArgsProc;
+};
+
 const SX: Record<string, Styles> = {
   box: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: ['center', 'space-evenly'],
   },
   btn: {
     color: 'black',
@@ -36,18 +48,6 @@ const SX: Record<string, Styles> = {
   bf: {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? 1 : 0.75))),
   },
-};
-
-export type PlaybackPanelParam = {
-  disabled: boolean;
-  status: PlaybackState | undefined;
-  previous: NoArgsProc;
-  next: NoArgsProc;
-  stop: NoArgsProc;
-  pause: NoArgsProc;
-  play: NoArgsProc;
-  resume: NoArgsProc;
-  toggleTune: NoArgsProc;
 };
 
 export default function PlaybackPanel({
