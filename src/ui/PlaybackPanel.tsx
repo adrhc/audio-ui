@@ -22,16 +22,19 @@ const SX: Record<string, Styles> = {
     p: 0,
   },
   icon: {
-    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.75))),
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? 1 : 0.75))),
+  },
+  pause: {
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? -0.35 : -0.1))),
   },
   pl: {
-    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? -0.35 : -0.1))),
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? -0.35 : -0.1))),
   },
   tune: {
-    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? -0.35 : -0.1))),
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? -0.35 : -0.1))),
   },
   bf: {
-    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.75))),
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? 1 : 0.75))),
   },
 };
 
@@ -70,7 +73,7 @@ export default function PlaybackPanel({
         <NavigateBeforeIcon sx={SX.bf} />
       </IconButton>
       <IconButton disabled={disabled || !pauseEnabled} sx={SX.btn} onClick={() => pause()}>
-        <PauseIcon sx={SX.icon} />
+        <PauseIcon sx={SX.pause} />
       </IconButton>
       <PlayOrResumeButton disabled={disabled} status={status} play={play} resume={resume} sx={SX} />
       <IconButton disabled={disabled || !stopEnabled} sx={SX.btn} onClick={() => stop()}>
