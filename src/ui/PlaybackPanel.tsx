@@ -25,7 +25,7 @@ const SX: Record<string, Styles> = {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? 1 : 0.75))),
   },
   pause: {
-    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? -0.35 : -0.1))),
+    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? -0.25 : 0))),
   },
   pl: {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? -0.35 : -0.1))),
