@@ -157,7 +157,7 @@ export default function VolumePage() {
           height: '100%',
           // see https://www.whatismybrowser.com/w/66ZAAY4
           minWidth: '310px',
-          maxWidth: '330px',
+          maxWidth: '400px',
           '& > div': { height: rowHeight },
         }}
       >
