@@ -24,9 +24,6 @@ const SX: Record<string, Styles> = {
   icon: {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.75))),
   },
-  pl: {
-    fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.5))),
-  },
   tune: {
     fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? -0.35 : -0.1))),
   },
@@ -64,7 +61,7 @@ export default function PlaybackPanel({
   return (
     <Box sx={{ ...BORDER, ...SX.box }}>
       <IconButton disabled={disabled} sx={SX.btn} component={Link} to="/trackList">
-        <SubjectIcon sx={SX.pl} />
+        <SubjectIcon sx={SX.tune} />
       </IconButton>
       <IconButton disabled={disabled} sx={SX.btn} onClick={() => previous()}>
         <NavigateBeforeIcon sx={SX.bf} />
