@@ -1,7 +1,16 @@
 import { CirclesWithBar } from 'react-loader-spinner';
 
-export default function Spinner({ show }: { show?: boolean }) {
-  if (!show) {
+export type SpinnerStyle = {
+  [key: string]: string;
+};
+
+export type SpinnerParam = {
+  hide?: boolean | null | undefined;
+  style?: SpinnerStyle | null | undefined;
+};
+
+export default function Spinner({ hide, style }: SpinnerParam) {
+  if (hide) {
     return <></>;
   }
   return (
@@ -18,6 +27,7 @@ export default function Spinner({ show }: { show?: boolean }) {
         maxWidth: '60%',
         maxHeight: '60%',
         margin: 'auto',
+        ...style,
       }}
       visible={true}
     />

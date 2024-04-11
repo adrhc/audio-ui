@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-const ShowIf = ({ condition, children }: { condition: boolean; children: ReactNode }) => {
+const ShowIf = ({ condition, children }: { condition: boolean | null | undefined; children: ReactNode }) => {
   if (condition) {
     return children;
   } else {

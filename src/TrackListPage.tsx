@@ -7,10 +7,13 @@ import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
 import { useEmptyHistory, useSmDown } from './lib/hooks';
+import Spinner from './ui/Spinner';
+import ShowIf from './ui/ShowIf';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
   current: SongAndArtists;
+  loading?: boolean;
 };
 
 const TrackListPage = () => {
@@ -39,10 +42,16 @@ const TrackListPage = () => {
       ({ volume }: { volume: number }) => {
         // console.log(`[TrackListPage:volumeChanged] volume = ${volume}`);
         console.log(`[TrackListPage:volumeChanged] volume = ${volume}`);
-        getSongAndArtists(mopidy)?.then((current) => {
-          console.log(`[TrackListPage:volumeChanged] newSongAndArtists:\n`, current);
-          setState((old) => ({ ...old, current }));
-        });
+        setState((old) => ({ ...old, loading: true }));
+        getSongAndArtists(mopidy)
+          ?.then((current) => {
+            console.log(`[TrackListPage:volumeChanged] newSongAndArtists:\n`, current);
+            setState((old) => ({ ...old, loading: false, current }));
+          })
+          .catch((reason) => {
+            setState((old) => ({ ...old, loading: false }));
+            alert(formatErr(reason));
+          });
       },
     ]);
 
@@ -59,17 +68,24 @@ const TrackListPage = () => {
       return;
     }
     // console.log(`[TrackListPage:online]`);
+    setState((old) => ({ ...old, loading: true }));
     Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy)])
       .then(([current, songs]) => {
         console.log(`[TrackListPage:online] ${songs?.length} songs, current:\n`, current);
-        setState((old) => ({ current: current ?? old.current, songs: songs ?? old.songs }));
+        setState((old) => ({ ...old, loading: false, current: current ?? {}, songs: songs ?? [] }));
       })
-      .catch((reason) => alert(formatErr(reason)));
+      .catch((reason) => {
+        setState((old) => ({ ...old, loading: false }));
+        alert(formatErr(reason));
+      });
   }, [mopidy, online]);
 
   function handleSelection(song: SongAndArtists) {
     // console.log(`[TrackListPage:handleSelection] song:\n`, song);
-    play(mopidy, song.tlid)?.catch((reason) => alert(formatErr(reason)));
+    setState((old) => ({ ...old, loading: true }));
+    play(mopidy, song.tlid)
+      ?.catch((reason) => alert(formatErr(reason)))
+      .finally(() => setState((old) => ({ ...old, loading: false })));
   }
 
   function goBack() {
@@ -80,7 +96,7 @@ const TrackListPage = () => {
 
   return (
     <Stack
-      spacing={1}
+      spacing={state.loading ? 0 : 1}
       sx={{
         pb: [1.5, 0],
         height: '100%',
@@ -88,13 +104,16 @@ const TrackListPage = () => {
       }}
     >
       <List
-        sx={{
-          p: 0,
-          overflow: 'auto',
-          maxHeight: '100%',
-          border: 'thin solid rgba(0, 0, 0, 0.2)',
-          borderLeft: 'none',
-        }}
+        sx={[
+          {
+            p: 0,
+            overflow: 'auto',
+            maxHeight: '100%',
+            border: 'thin solid rgba(0, 0, 0, 0.2)',
+            borderLeft: 'none',
+          },
+          state.loading ? { display: 'none' } : {},
+        ]}
       >
         {state.songs
           .filter((sa) => !!sa.song)
@@ -120,6 +139,9 @@ const TrackListPage = () => {
             </ListItemButton>
           ))}
       </List>
+      <ShowIf condition={state.loading}>
+        <Spinner />
+      </ShowIf>
       <Button variant="outlined" onClick={goBack} sx={{ py: [2, 1] }}>
         Back
       </Button>

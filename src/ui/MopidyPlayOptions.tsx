@@ -79,7 +79,7 @@ const MopidyPlayOptions = () => {
   return (
     // Only Stack works with Spinner!
     <Stack sx={{ height: '100%', ...BORDER }}>
-      <Spinner show={state.loading} />
+      <Spinner hide={!state.loading} />
       <Box sx={[{ height: '100%' }, ...toArray(SX.box), state.loading ? { display: 'none' } : {}]}>
         <Tooltip title="Repeat">
           <span>
