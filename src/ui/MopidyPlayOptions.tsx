@@ -9,8 +9,9 @@ import ShuffleIcon from '@mui/icons-material/Shuffle';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
-import { Box, ToggleButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Box, ToggleButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import { BORDER, iconFontSize } from './VolumePage-styles';
+import { useSmDown } from '../lib/hooks';
 
 const SX: Record<string, Styles> = {
   box: {
@@ -67,9 +68,7 @@ const MopidyPlayOptions = () => {
     };
   }, [mopidy]);
 
-  const theme = useTheme();
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true });
-  const btnStyle = isSmUp ? { ...SX.btn, p: 0.25 } : SX.btn;
+  const btnStyle = useSmDown(SX.btn, { ...SX.btn, p: 0.25 });
 
   return (
     <Box sx={{ ...BORDER, ...SX.box }}>
