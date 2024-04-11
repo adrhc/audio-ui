@@ -68,7 +68,7 @@ const MopidyPlayOptions = () => {
   }, [mopidy]);
 
   const theme = useTheme();
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'), { noSsr: true });
   const btnStyle = isSmUp ? { ...SX.btn, p: 0.25 } : SX.btn;
 
   return (

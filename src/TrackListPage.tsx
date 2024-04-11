@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
-import { useEmptyHistory } from './lib/hooks';
+import { useEmptyHistory, useSmDown } from './lib/hooks';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -76,6 +76,8 @@ const TrackListPage = () => {
     !emptyHistory && navigate(-1);
   }
 
+  const primaryTypoFontSize = useSmDown({ fontSize: '1.1rem' });
+
   return (
     <Stack
       spacing={1}
@@ -101,13 +103,17 @@ const TrackListPage = () => {
               key={i}
               autoFocus={sa.tlid == state.current.tlid}
               selected={sa.tlid == state.current.tlid}
-              sx={{ px: 0.5, py: [1.4, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
+              sx={{ px: 0.5, py: [1.2, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
               onClick={() => handleSelection(sa)}
             >
               <ListItemText
                 sx={{ wordBreak: 'break-all' }}
                 primary={sa.song}
-                primaryTypographyProps={{ letterSpacing: 0, lineHeight: sa.artists ? 1.5 : 1 }}
+                primaryTypographyProps={{
+                  letterSpacing: 0,
+                  lineHeight: sa.artists ? 1.5 : 1,
+                  ...primaryTypoFontSize,
+                }}
                 secondary={sa.artists}
                 secondaryTypographyProps={{ letterSpacing: 0, lineHeight: 1 }}
               />

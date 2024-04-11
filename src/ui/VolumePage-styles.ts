@@ -2,6 +2,9 @@ import { Theme } from '@mui/material';
 import { zipBreakpoints } from '../lib/styles';
 import { Styles } from '../lib/types';
 
+export const MIN_WIDTH = '310px';
+export const MAN_WIDTH = '400px';
+
 export const TITLE: Styles = { textAlign: 'center' };
 
 export const YS = [2.5, 1.5]; // available y space
