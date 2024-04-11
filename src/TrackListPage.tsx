@@ -96,7 +96,7 @@ const TrackListPage = () => {
 
   return (
     <Stack
-      spacing={state.loading ? 0 : 1}
+      spacing={state.loading ? 0 : 0.5}
       sx={{
         pb: [1.5, 0],
         height: '100%',
