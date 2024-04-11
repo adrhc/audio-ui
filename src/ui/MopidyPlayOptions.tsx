@@ -9,9 +9,11 @@ import ShuffleIcon from '@mui/icons-material/Shuffle';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
-import { Box, ToggleButton, Tooltip } from '@mui/material';
+import { Box, Stack, ToggleButton, Tooltip } from '@mui/material';
 import { BORDER, iconFontSize } from './VolumePage-styles';
 import { useSmDown } from '../lib/hooks';
+import Spinner from './Spinner';
+import { toArray } from '../lib/array';
 
 const SX: Record<string, Styles> = {
   box: {
@@ -28,19 +30,23 @@ const SX: Record<string, Styles> = {
   },
 };
 
+type MopidyPlayOptionsState = { loading?: boolean } & PlayOptions;
+
 const MopidyPlayOptions = () => {
   const { mopidy, online } = useContext(AppContext);
-  const [options, setOptions] = useState<PlayOptions>({});
-  console.log(`[MopidyPlayOptions] online = ${online}\noptions:`, options);
+  const [state, setState] = useState<MopidyPlayOptionsState>({});
+  console.log(`[MopidyPlayOptions] online = ${online}\nstate:`, state);
 
   function loadOptions(mopidy: Mopidy) {
     // console.log(`[MopidyPlayOptions:loadOptions]`);
+    setState((old) => ({ ...old, loading: true }));
     getPlayOptions(mopidy)
       .then((options) => {
-        // console.log(`[MopidyPlayOptions:loadOptions] newOptions:\n`, options);
-        setOptions(options);
+        // console.log(`[MopidyPlayOptions:loadOptions] newOptions:\n`, state);
+        setState((old) => ({ ...old, loading: false, ...options }));
       })
       .catch((reason) => {
+        setState((old) => ({ ...old, loading: false }));
         alert(formatErr(reason));
       });
   }
@@ -71,60 +77,64 @@ const MopidyPlayOptions = () => {
   const btnStyle = useSmDown(SX.btn, { ...SX.btn, p: 0.25 });
 
   return (
-    <Box sx={{ ...BORDER, ...SX.box }}>
-      <Tooltip title="Repeat">
-        <span>
-          <ToggleButton
-            value="repeat"
-            selected={options.repeat}
-            disabled={!online}
-            sx={btnStyle}
-            onClick={() => setRepeat(mopidy, !options.repeat)}
-          >
-            <RepeatIcon sx={SX.icon} />
-          </ToggleButton>
-        </span>
-      </Tooltip>
-      <Tooltip title="Playback is stopped after current song, unless in repeat mode.">
-        <span>
-          <ToggleButton
-            value="single"
-            selected={options.single}
-            disabled={!online}
-            sx={btnStyle}
-            onClick={() => setSingle(mopidy, !options.single)}
-          >
-            <TimesOneMobiledataIcon sx={SX.icon} />
-          </ToggleButton>
-        </span>
-      </Tooltip>
-      <Tooltip title="Random">
-        <span>
-          <ToggleButton
-            value="random"
-            selected={options.random}
-            disabled={!online}
-            sx={btnStyle}
-            onClick={() => setRandom(mopidy, !options.random)}
-          >
-            <ShuffleIcon sx={SX.icon} />
-          </ToggleButton>
-        </span>
-      </Tooltip>
-      <Tooltip title="Tracks are removed from the tracklist when they have been played.">
-        <span>
-          <ToggleButton
-            value="consume"
-            selected={options.consume}
-            disabled={!online}
-            sx={btnStyle}
-            onClick={() => setConsume(mopidy, !options.consume)}
-          >
-            <RestaurantMenuIcon sx={SX.icon} />
-          </ToggleButton>
-        </span>
-      </Tooltip>
-    </Box>
+    // Only Stack works with Spinner!
+    <Stack sx={{ height: '100%', ...BORDER }}>
+      <Spinner show={state.loading} />
+      <Box sx={[{ height: '100%' }, ...toArray(SX.box), state.loading ? { display: 'none' } : {}]}>
+        <Tooltip title="Repeat">
+          <span>
+            <ToggleButton
+              value="repeat"
+              selected={state.repeat}
+              disabled={!online}
+              sx={btnStyle}
+              onClick={() => setRepeat(mopidy, !state.repeat)}
+            >
+              <RepeatIcon sx={SX.icon} />
+            </ToggleButton>
+          </span>
+        </Tooltip>
+        <Tooltip title="Playback is stopped after current song, unless in repeat mode.">
+          <span>
+            <ToggleButton
+              value="single"
+              selected={state.single}
+              disabled={!online}
+              sx={btnStyle}
+              onClick={() => setSingle(mopidy, !state.single)}
+            >
+              <TimesOneMobiledataIcon sx={SX.icon} />
+            </ToggleButton>
+          </span>
+        </Tooltip>
+        <Tooltip title="Random">
+          <span>
+            <ToggleButton
+              value="random"
+              selected={state.random}
+              disabled={!online}
+              sx={btnStyle}
+              onClick={() => setRandom(mopidy, !state.random)}
+            >
+              <ShuffleIcon sx={SX.icon} />
+            </ToggleButton>
+          </span>
+        </Tooltip>
+        <Tooltip title="Tracks are removed from the tracklist when they have been played.">
+          <span>
+            <ToggleButton
+              value="consume"
+              selected={state.consume}
+              disabled={!online}
+              sx={btnStyle}
+              onClick={() => setConsume(mopidy, !state.consume)}
+            >
+              <RestaurantMenuIcon sx={SX.icon} />
+            </ToggleButton>
+          </span>
+        </Tooltip>
+      </Box>
+    </Stack>
   );
 };
 
