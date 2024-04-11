@@ -1,4 +1,4 @@
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, useMediaQuery } from '@mui/material';
 import StopIcon from '@mui/icons-material/Stop';
 import { NoArgsProc, PlaybackState, Styles } from '../lib/types';
 // import { RestartAlt } from '@mui/icons-material';
@@ -27,7 +27,6 @@ const SX: Record<string, Styles> = {
   box: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: ['center', 'space-evenly'],
   },
   btn: {
     color: 'black',
@@ -63,9 +62,10 @@ export default function PlaybackPanel({
 }: PlaybackPanelParam) {
   const stopEnabled = !!status && status !== 'stopped';
   const pauseEnabled = status === 'playing';
+  const justifyContent = useMediaQuery(`(min-width:475px)`, { noSsr: true }) ? 'space-evenly' : 'center';
 
   return (
-    <Box sx={{ ...BORDER, ...SX.box }}>
+    <Box sx={{ ...BORDER, ...SX.box, justifyContent }}>
       <IconButton disabled={disabled} sx={SX.btn} component={Link} to="/trackList">
         <SubjectIcon sx={SX.pl} />
       </IconButton>
