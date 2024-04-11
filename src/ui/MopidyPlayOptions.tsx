@@ -9,7 +9,7 @@ import ShuffleIcon from '@mui/icons-material/Shuffle';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
-import { Box, Box, ToggleButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, ToggleButton, Tooltip } from '@mui/material';
 import { BORDER, iconFontSize } from './VolumePage-styles';
 import { useSmDown } from '../lib/hooks';
 
