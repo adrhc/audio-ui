@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './App';
 import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from './lib/mpc';
-import { Button, List, ListItemButton, ListItemText, Stack } from '@mui/material';
+import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
@@ -125,6 +125,11 @@ const TrackListPage = () => {
               sx={{ px: 0.5, py: [1.2, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
               onClick={() => handleSelection(sa)}
             >
+              {
+                track.albumArtUri && (<ListItemAvatar>
+                  <img src={track.albumArtUri} alt="Album Art" />
+                </ListItemAvatar>)
+              }
               <ListItemText
                 sx={{ wordBreak: 'break-all' }}
                 primary={sa.song}
