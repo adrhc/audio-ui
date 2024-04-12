@@ -5,18 +5,24 @@ export type SongAndArtists = {
   tlid?: number;
   song?: string | null;
   artists?: string | null;
-  albumArtUri?: string | null;
+  uri?: string | null;
+  imgUri?: string | null;
 };
 
 export function toSongAndArtists(tlt: models.TlTrack | null) {
   // logTlTrack(tlt);
   const song = tlt?.track?.name ?? tlt?.track?.comment ?? tlt?.track?.uri;
+  const uri = tlt?.track?.uri ?? tlt?.track?.album?.uri;
   const artists = getArtists(tlt?.track);
-  return { tlid: tlt?.tlid, song, artists } as SongAndArtists;
+  return { tlid: tlt?.tlid, song, artists, uri } as SongAndArtists;
 }
 
 export function getTrackList(mopidy: Mopidy) {
   return getTlTracks(mopidy)?.then((tlt) => tlt.map(toSongAndArtists));
+}
+
+export function getImages(mopidy: Mopidy, uris: string[]) {
+  return mopidy.library?.getImages({uris}).catch((reason) => alert(formatErr(reason)));
 }
 
 export function getSongAndArtists(mopidy: Mopidy) {
@@ -24,33 +30,23 @@ export function getSongAndArtists(mopidy: Mopidy) {
 }
 
 export function previous(mopidy: Mopidy) {
-  return mopidy.playback?.previous().catch((reason) => {
-    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-  });
+  return mopidy.playback?.previous().catch((reason) => alert(formatErr(reason)));
 }
 
 export function next(mopidy: Mopidy) {
-  return mopidy.playback?.next().catch((reason) => {
-    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-  });
+  return mopidy.playback?.next().catch((reason) => alert(formatErr(reason)));
 }
 
 export function stop(mopidy: Mopidy) {
-  return mopidy.playback?.stop().catch((reason) => {
-    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-  });
+  return mopidy.playback?.stop().catch((reason) => alert(formatErr(reason)));
 }
 
 export function pause(mopidy: Mopidy) {
-  return mopidy.playback?.pause().catch((reason) => {
-    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-  });
+  return mopidy.playback?.pause().catch((reason) => alert(formatErr(reason)));
 }
 
 export function resume(mopidy: Mopidy) {
-  return mopidy.playback?.resume().catch((reason) => {
-    alert(typeof reason === 'string' ? reason : JSON.stringify(reason));
-  });
+  return mopidy.playback?.resume().catch((reason) => alert(formatErr(reason)));
 }
 
 export function play(mopidy: Mopidy, tlid?: number) {
