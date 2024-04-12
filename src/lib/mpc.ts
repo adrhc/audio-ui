@@ -12,14 +12,30 @@ export type SongAndArtists = {
 export function toSongAndArtists(tlt: models.TlTrack | null) {
   // logTlTrack(tlt);
   const track = tlt?.track;
-  const song = track?.name ?? track?.comment ?? track?.uri;
+  const song = track?.name ?? track?.uri ?? track?.comment;
   const artists = getArtists(track);
   const uri = track?.uri ?? track?.album?.uri ?? track?.artists?.[0] ?? track?.artists[0];
   return { tlid: tlt?.tlid, song, artists, uri } as SongAndArtists;
 }
 
 export function getTrackList(mopidy: Mopidy) {
-  return getTlTracks(mopidy)?.then((tlt) => tlt.map(toSongAndArtists));
+  return getTlTracks(mopidy)?.then((tlt) => tlt.map(toSongAndArtists))
+  .then(songs => getImages(mopidy, toSongUris(songs))
+                  ?.then((imgUris) => withImgUri(songs, imgUris)));
+}
+
+function withImgUri(songs: SongAndArtists[], imgUris: void | { [index: string]: models.Image[] }) {
+  if (imgUris && imgUris.length) {
+    songs.forEach(s => {
+      const images = imgUris[s.uri as string];
+      s.imgUri = images?.[0]?.uri;
+    });
+  }
+  return songs;
+}
+
+function toSongUris(songs: SongAndArtists[]) {
+  return songs.map(s => s.uri).filter(it => !!it) as string[];
 }
 
 export function getImages(mopidy: Mopidy, uris: string[]) {
