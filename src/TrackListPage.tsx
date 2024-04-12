@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
-import { useEmptyHistory } from './lib/hooks';
+import { useEmptyHistory, useSmDown } from './lib/hooks';
 import Spinner from './ui/Spinner';
 import ShowIf from './ui/ShowIf';
 
@@ -100,6 +100,7 @@ const TrackListPage = () => {
     !emptyHistory && navigate(-1);
   }
 
+  const primaryTypoFontSize = useSmDown({ fontSize: '1.05rem' });
   const liPx = 0.5;
 
   return (
@@ -130,7 +131,7 @@ const TrackListPage = () => {
               key={i}
               autoFocus={sa.tlid == state.current.tlid}
               selected={sa.tlid == state.current.tlid}
-              sx={{ px: liPx, py: [1.4, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
+              sx={{ px: liPx, py: [1.2, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
               onClick={() => handleSelection(sa)}
             >
               {sa.imgUri && (
@@ -148,7 +149,11 @@ const TrackListPage = () => {
               <ListItemText
                 sx={{ wordBreak: 'break-all' }}
                 primary={sa.song}
-                primaryTypographyProps={{ letterSpacing: 0, lineHeight: sa.artists ? 1.5 : 1 }}
+                primaryTypographyProps={{
+                  letterSpacing: 0,
+                  lineHeight: sa.artists ? 1.5 : 1,
+                  ...primaryTypoFontSize,
+                }}
                 secondary={sa.artists}
                 secondaryTypographyProps={{ letterSpacing: 0, lineHeight: 1 }}
               />
