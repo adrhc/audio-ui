@@ -19,13 +19,13 @@ export type PlaybackPanelParam = {
 };
 
 const btn = { color: 'black', p: 0.35 };
-const pauseBtn = { color: 'black', p: 0.75 };
+const pauseBtn = { color: 'black', p: 0.5 };
 const playBtn = { color: 'black', p: 0 };
-const muteBtn = { color: 'black', p: 0.5 };
+const muteBtn = { color: 'black', p: 0.25 };
 const playFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 1)));
-const iconFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.125 + (i == 0 ? 1 : 1)));
-const pauseFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.125 + (i == 0 ? 0 : 0)));
-const muteFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.5 : 0)));
+const stopFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.375 + (i == 0 ? 0.85 : 0.85)));
+const pauseFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.375 + (i == 0 ? 0 : 0)));
+const muteFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.25)));
 
 export default function PlaybackPanel({
   disabled,
@@ -55,7 +55,7 @@ export default function PlaybackPanel({
         iconFontSize={playFontSize}
       />
       <IconButton disabled={disabled || !stopEnabled} sx={btn} onClick={stop}>
-        <StopIcon sx={{ fontSize: iconFontSize }} />
+        <StopIcon sx={{ fontSize: stopFontSize }} />
       </IconButton>
       <MuteIconButton
         disabled={disabled}
