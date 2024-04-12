@@ -183,6 +183,15 @@ export default function VolumePage() {
           onMute={() => muteMopidy(mopidy, !state.mute)}
           onSlide={doSetMopidyVolume}
         /> */}
+        <PrevNextPanel
+          disabled={!online}
+          previous={() => previous(mopidy)}
+          next={() => next(mopidy)}
+          toggleTune={() => setState((old) => ({ ...old, tuneOn: !state.tuneOn }))}
+        />
+        <ShowIf condition={state.tuneOn}>
+          <MopidyPlayOptions />
+        </ShowIf>
         <VolumeButtons disabled={!online} volume={state.volume} handleExactVolume={doSetMopidyVolume} />
         <PlaybackPanel
           disabled={!online}
@@ -193,15 +202,6 @@ export default function VolumePage() {
           stop={() => stopMopidy(mopidy)}
           play={() => playMopidy(mopidy)}
           resume={() => resumeMopidy(mopidy)}
-        />
-        <ShowIf condition={state.tuneOn}>
-          <MopidyPlayOptions />
-        </ShowIf>
-        <PrevNextPanel
-          disabled={!online}
-          previous={() => previous(mopidy)}
-          next={() => next(mopidy)}
-          toggleTune={() => setState((old) => ({ ...old, tuneOn: !state.tuneOn }))}
         />
       </Stack>
       <Logs logs={logs} />
