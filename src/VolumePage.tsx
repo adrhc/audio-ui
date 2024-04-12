@@ -90,7 +90,7 @@ export default function VolumePage() {
       (params: { tl_track: models.TlTrack }) => {
         // console.log(`[VolumePage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
         // logTlTrack(params.tl_track);
-        toSongAndArtists(params.tl_track).then((sa) => setState((old) => ({ ...old, songAndArtists: sa })));
+        setState((old) => ({ ...old, songAndArtists: toSongAndArtists(params.tl_track) }));
       },
     ]);
 
