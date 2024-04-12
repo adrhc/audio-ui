@@ -1,7 +1,7 @@
 import { ButtonGroup, Button } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { iconFontSize, iconFontSizeMap } from './VolumePage-styles';
+import { iconFontSize } from './VolumePage-styles';
 import { Styles } from '../lib/types';
 import Looks5RoundedIcon from '@mui/icons-material/Looks5Rounded';
 
@@ -20,11 +20,10 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
     }
   }
 
-  const btn5FontSize = iconFontSizeMap((fs) => fs.map((fs) => fs - 1));
   const btn5Style: Styles = {
     flexGrow: 1,
     color: 'black',
-    fontSize: btn5FontSize,
+    fontSize: iconFontSize,
     fontFamily: 'monospace',
     fontWeight: 'bold',
   };
@@ -38,14 +37,13 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
         sx={btn5Style}
         onClick={() => doHandleExactVolume(Math.max(0, volume - 5))}
       >
-        {/* <Chip label="-5" /> */}
-        <Looks5RoundedIcon sx={{ fontSize: btn5FontSize }} />
+        <Looks5RoundedIcon sx={{ fontSize: iconFontSize }} />
       </Button>
       <Button
         disabled={disabled}
         variant="outlined"
         size="large"
-        sx={{ flexGrow: 2, color: 'black' }}
+        sx={{ flexGrow: 1, color: 'black' }}
         onClick={() => doHandleExactVolume(volume - 1)}
       >
         <RemoveIcon sx={{ fontSize: iconFontSize }} />
@@ -54,7 +52,7 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
         disabled={disabled}
         variant="outlined"
         size="large"
-        sx={{ flexGrow: 2, color: 'black' }}
+        sx={{ flexGrow: 1, color: 'black' }}
         onClick={() => doHandleExactVolume(volume + 1)}
       >
         <AddIcon sx={{ fontSize: iconFontSize }} />
@@ -66,7 +64,7 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
         sx={btn5Style}
         onClick={() => doHandleExactVolume(Math.min(100, volume + 5))}
       >
-        <Looks5RoundedIcon sx={{ fontSize: btn5FontSize }} />
+        <Looks5RoundedIcon sx={{ fontSize: iconFontSize }} />
       </Button>
     </ButtonGroup>
   );
