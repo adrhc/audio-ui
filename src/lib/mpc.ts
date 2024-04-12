@@ -18,7 +18,7 @@ export async function toSongAndArtists(tlt: models.TlTrack | null) {
 }
 
 export function getTrackList(mopidy: Mopidy) {
-  return getTlTracks(mopidy)?.then((tlt) => tlt.map(toSongAndArtists)).then;
+  return getTlTracks(mopidy)?.then((tlt) => Promise.all(tlt.map(toSongAndArtists)));
 }
 
 export function getImages(mopidy: Mopidy, uris: string[]) {
