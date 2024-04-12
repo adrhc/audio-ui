@@ -6,14 +6,11 @@ import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
-import { useEmptyHistory, useSmDown } from './lib/hooks';
-import Spinner from './ui/Spinner';
-import ShowIf from './ui/ShowIf';
+import { useEmptyHistory } from './lib/hooks';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
   current: SongAndArtists;
-  loading?: boolean;
 };
 
 const TrackListPage = () => {
@@ -42,16 +39,10 @@ const TrackListPage = () => {
       ({ volume }: { volume: number }) => {
         // console.log(`[TrackListPage:volumeChanged] volume = ${volume}`);
         console.log(`[TrackListPage:volumeChanged] volume = ${volume}`);
-        setState((old) => ({ ...old, loading: true }));
-        getSongAndArtists(mopidy)
-          ?.then((current) => {
-            console.log(`[TrackListPage:volumeChanged] newSongAndArtists:\n`, current);
-            setState((old) => ({ ...old, loading: false, current }));
-          })
-          .catch((reason) => {
-            setState((old) => ({ ...old, loading: false }));
-            alert(formatErr(reason));
-          });
+        getSongAndArtists(mopidy)?.then((current) => {
+          console.log(`[TrackListPage:volumeChanged] newSongAndArtists:\n`, current);
+          setState((old) => ({ ...old, current }));
+        });
       },
     ]);
 
@@ -68,35 +59,26 @@ const TrackListPage = () => {
       return;
     }
     // console.log(`[TrackListPage:online]`);
-    setState((old) => ({ ...old, loading: true }));
     Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy)])
       .then(([current, songs]) => {
         console.log(`[TrackListPage:online] ${songs?.length} songs, current:\n`, current);
-        setState((old) => ({ ...old, loading: false, current: current ?? {}, songs: songs ?? [] }));
+        setState((old) => ({ current: current ?? old.current, songs: songs ?? old.songs }));
       })
-      .catch((reason) => {
-        setState((old) => ({ ...old, loading: false }));
-        alert(formatErr(reason));
-      });
+      .catch((reason) => alert(formatErr(reason)));
   }, [mopidy, online]);
 
   function handleSelection(song: SongAndArtists) {
     // console.log(`[TrackListPage:handleSelection] song:\n`, song);
-    setState((old) => ({ ...old, loading: true }));
-    play(mopidy, song.tlid)
-      ?.catch((reason) => alert(formatErr(reason)))
-      .finally(() => setState((old) => ({ ...old, loading: false })));
+    play(mopidy, song.tlid)?.catch((reason) => alert(formatErr(reason)));
   }
 
   function goBack() {
     !emptyHistory && navigate(-1);
   }
 
-  const primaryTypoFontSize = useSmDown({ fontSize: '1.1rem' });
-
   return (
     <Stack
-      spacing={state.loading ? 0 : 0.5}
+      spacing={1}
       sx={{
         pb: [1.5, 0],
         height: '100%',
@@ -104,16 +86,13 @@ const TrackListPage = () => {
       }}
     >
       <List
-        sx={[
-          {
-            p: 0,
-            overflow: 'auto',
-            maxHeight: '100%',
-            border: 'thin solid rgba(0, 0, 0, 0.2)',
-            borderLeft: 'none',
-          },
-          state.loading ? { display: 'none' } : {},
-        ]}
+        sx={{
+          p: 0,
+          overflow: 'auto',
+          maxHeight: '100%',
+          border: 'thin solid rgba(0, 0, 0, 0.2)',
+          borderLeft: 'none',
+        }}
       >
         {state.songs
           .filter((sa) => !!sa.song)
@@ -122,31 +101,24 @@ const TrackListPage = () => {
               key={i}
               autoFocus={sa.tlid == state.current.tlid}
               selected={sa.tlid == state.current.tlid}
-              sx={{ px: 0.5, py: [1.2, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
+              sx={{ px: 0.5, py: [1.4, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
               onClick={() => handleSelection(sa)}
             >
               {
-                sa.albumArtUri && (<ListItemAvatar>
-                  <img src={sa.albumArtUri} alt="Album Art" />
+                sa.imgUri && (<ListItemAvatar>
+                  <img src={sa.imgUri} alt="Album Art" />
                 </ListItemAvatar>)
               }
               <ListItemText
                 sx={{ wordBreak: 'break-all' }}
                 primary={sa.song}
-                primaryTypographyProps={{
-                  letterSpacing: 0,
-                  lineHeight: sa.artists ? 1.5 : 1,
-                  ...primaryTypoFontSize,
-                }}
+                primaryTypographyProps={{ letterSpacing: 0, lineHeight: sa.artists ? 1.5 : 1 }}
                 secondary={sa.artists}
                 secondaryTypographyProps={{ letterSpacing: 0, lineHeight: 1 }}
               />
             </ListItemButton>
           ))}
       </List>
-      <ShowIf condition={state.loading}>
-        <Spinner />
-      </ShowIf>
       <Button variant="outlined" onClick={goBack} sx={{ py: [2, 1] }}>
         Back
       </Button>
