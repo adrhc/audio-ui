@@ -1,4 +1,4 @@
-import { Tooltip, IconButton } from '@mui/material';
+import { Tooltip, IconButton, Theme } from '@mui/material';
 import { NoArgsProc, PlaybackState, Styles } from '../lib/types';
 // import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
@@ -8,18 +8,26 @@ export type PlayOrResumeButtonParam = {
   status: PlaybackState | undefined;
   play: NoArgsProc;
   resume: NoArgsProc;
-  sx: Record<'btn' | 'icon', Styles>;
+  btnSx: Styles;
+  iconFontSize: (theme: Theme) => string[];
 };
 
-export default function PlayOrResumeButton({ disabled, status, play, resume, sx }: PlayOrResumeButtonParam) {
+export default function PlayOrResumeButton({
+  disabled,
+  status,
+  play,
+  resume,
+  btnSx,
+  iconFontSize,
+}: PlayOrResumeButtonParam) {
   switch (status) {
     case 'paused':
       return (
         <>
           <Tooltip title="Resume">
             <span>
-              <IconButton sx={sx.btn} onClick={() => resume()} disabled={disabled}>
-                <PlayCircleIcon sx={sx.icon} />
+              <IconButton sx={btnSx} onClick={() => resume()} disabled={disabled}>
+                <PlayCircleIcon sx={{ fontSize: iconFontSize }} />
               </IconButton>
             </span>
           </Tooltip>
@@ -30,8 +38,8 @@ export default function PlayOrResumeButton({ disabled, status, play, resume, sx 
         <>
           <Tooltip title="Play">
             <span>
-              <IconButton sx={sx.btn} onClick={() => play()} disabled={disabled}>
-                <PlayCircleIcon sx={sx.icon} />
+              <IconButton sx={btnSx} onClick={() => play()} disabled={disabled}>
+                <PlayCircleIcon sx={{ fontSize: iconFontSize }} />
               </IconButton>
             </span>
           </Tooltip>
@@ -41,8 +49,8 @@ export default function PlayOrResumeButton({ disabled, status, play, resume, sx 
       return (
         <>
           {' '}
-          <IconButton sx={sx.btn} onClick={() => play()} disabled={true}>
-            <PlayCircleIcon sx={sx.icon} />
+          <IconButton sx={btnSx} onClick={() => play()} disabled={true}>
+            <PlayCircleIcon sx={{ fontSize: iconFontSize }} />
           </IconButton>
         </>
       );

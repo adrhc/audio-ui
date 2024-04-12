@@ -188,6 +188,8 @@ export default function VolumePage() {
         <PlaybackPanel
           disabled={!online}
           status={state.pbStatus}
+          mute={state.mute}
+          onMute={() => muteMopidy(mopidy, !state.mute)}
           pause={() => pauseMopidy(mopidy)}
           stop={() => stopMopidy(mopidy)}
           play={() => playMopidy(mopidy)}

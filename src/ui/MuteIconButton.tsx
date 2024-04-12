@@ -5,19 +5,19 @@ import { toArray } from '../lib/array';
 // import { AllSystemCSSProperties } from '@mui/system/styleFunctionSx';
 
 type MuteIconButtonParam = {
-  styles: Styles;
+  sx: Styles;
   disabled?: boolean;
   mute: boolean;
   onClick: () => void;
 };
 
-const MuteIconButton = ({ styles, disabled, mute, onClick }: MuteIconButtonParam) => {
+const MuteIconButton = ({ sx, disabled, mute, onClick }: MuteIconButtonParam) => {
   return (
     <Tooltip title={mute ? 'Unmute' : 'Mute'}>
       <span>
         <IconButton
           disabled={disabled}
-          sx={[{ color: 'black' }, ...toArray(styles), mute && { color: 'red' }]}
+          sx={[{ color: 'black' }, ...toArray(sx), mute && { color: 'red' }]}
           onClick={onClick}
           aria-label="Mute"
         >

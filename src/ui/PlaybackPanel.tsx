@@ -1,10 +1,11 @@
 import { Box, IconButton } from '@mui/material';
 import StopIcon from '@mui/icons-material/Stop';
-import { NoArgsProc, PlaybackState, Styles } from '../lib/types';
+import { NoArgsProc, PlaybackState } from '../lib/types';
 // import { RestartAlt } from '@mui/icons-material';
 import PauseIcon from '@mui/icons-material/Pause';
 import { BORDER, playIconFontSizeMap } from './VolumePage-styles';
 import PlayOrResumeButton from './PlayOrResumeButton';
+import MuteIconButton from './MuteIconButton';
 
 export type PlaybackPanelParam = {
   disabled: boolean;
@@ -13,36 +14,55 @@ export type PlaybackPanelParam = {
   pause: NoArgsProc;
   play: NoArgsProc;
   resume: NoArgsProc;
+  mute: boolean;
+  onMute: NoArgsProc;
 };
 
-const SX: Record<string, Styles> = {
-  // btn is used by PlayOrResumeButton too!
-  btn: {
-    color: 'black',
-    p: 0.35,
-  },
-  // icon is used by PlayOrResumeButton too!
-  icon: {
-    fontSize: playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? 1 : 0.75))),
-  },
-  pause: {
-    fontSize: playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.5 + (i == 0 ? 0 : 0))),
-  },
-};
+const btn = { color: 'black', p: 0.35 };
+const pauseBtn = { color: 'black', p: 0.75 };
+const playBtn = { color: 'black', p: 0 };
+const muteBtn = { color: 'black', p: 0.5 };
+const playFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 1)));
+const iconFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.125 + (i == 0 ? 1 : 1)));
+const pauseFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.125 + (i == 0 ? 0 : 0)));
+const muteFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.5 : 0)));
 
-export default function PlaybackPanel({ disabled, status, stop, pause, play, resume }: PlaybackPanelParam) {
+export default function PlaybackPanel({
+  disabled,
+  status,
+  stop,
+  pause,
+  play,
+  resume,
+  mute,
+  onMute,
+}: PlaybackPanelParam) {
   const stopEnabled = !!status && status !== 'stopped';
   const pauseEnabled = status === 'playing';
+  // const justifyContent = useSpaceEvenly();
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', ...BORDER }}>
-      <IconButton disabled={disabled || !pauseEnabled} sx={{...SX.btn, p: 0.75}} onClick={() => pause()}>
-        <PauseIcon sx={SX.pause} />
+      <IconButton disabled={disabled || !pauseEnabled} sx={pauseBtn} onClick={pause}>
+        <PauseIcon sx={{ fontSize: pauseFontSize }} />
       </IconButton>
-      <PlayOrResumeButton disabled={disabled} status={status} play={play} resume={resume} sx={SX} />
-      <IconButton disabled={disabled || !stopEnabled} sx={SX.btn} onClick={() => stop()}>
-        <StopIcon sx={SX.icon} />
+      <PlayOrResumeButton
+        disabled={disabled}
+        status={status}
+        play={play}
+        resume={resume}
+        btnSx={playBtn}
+        iconFontSize={playFontSize}
+      />
+      <IconButton disabled={disabled || !stopEnabled} sx={btn} onClick={stop}>
+        <StopIcon sx={{ fontSize: iconFontSize }} />
       </IconButton>
+      <MuteIconButton
+        disabled={disabled}
+        sx={{ ...muteBtn, '& .MuiSvgIcon-root': { fontSize: muteFontSize } }}
+        mute={mute}
+        onClick={onMute}
+      />
     </Box>
   );
 }

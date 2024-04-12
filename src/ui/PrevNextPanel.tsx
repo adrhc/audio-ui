@@ -6,7 +6,6 @@ import SubjectIcon from '@mui/icons-material/Subject';
 import TuneIcon from '@mui/icons-material/Tune';
 import { BORDER, playIconFontSizeMap } from './VolumePage-styles';
 import { NoArgsProc, Styles } from '../lib/types';
-import { useSpaceEvenly } from '../lib/hooks';
 
 type PrevNextPanelParam = {
   disabled: boolean;
@@ -31,9 +30,9 @@ const SX: Record<string, Styles> = {
 };
 
 export default function PrevNextPanel({ disabled, previous, next, toggleTune }: PrevNextPanelParam) {
-  const justifyContent = useSpaceEvenly();
+//   const justifyContent = useSpaceEvenly();
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent, ...BORDER }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', ...BORDER }}>
       <IconButton disabled={disabled} sx={SX.btn} component={Link} to="/trackList">
         <SubjectIcon sx={SX.tk} />
       </IconButton>
