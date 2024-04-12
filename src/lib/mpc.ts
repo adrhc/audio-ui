@@ -9,16 +9,17 @@ export type SongAndArtists = {
   imgUri?: string | null;
 };
 
-export async function toSongAndArtists(tlt: models.TlTrack | null) {
+export function toSongAndArtists(tlt: models.TlTrack | null) {
   // logTlTrack(tlt);
-  const song = tlt?.track?.name ?? tlt?.track?.comment ?? tlt?.track?.uri;
-  const uri = tlt?.track?.uri ?? tlt?.track?.album?.uri;
-  const artists = await getArtists(tlt?.track);
+  const track = tlt?.track;
+  const song = track?.name ?? track?.comment ?? track?.uri;
+  const artists = getArtists(track);
+  const uri = track?.uri ?? track?.album?.uri ?? track?.artists?.[0] ?? track?.artists[0];
   return { tlid: tlt?.tlid, song, artists, uri } as SongAndArtists;
 }
 
 export function getTrackList(mopidy: Mopidy) {
-  return getTlTracks(mopidy)?.then((tlt) => Promise.all(tlt.map(toSongAndArtists)));
+  return getTlTracks(mopidy)?.then((tlt) => tlt.map(toSongAndArtists));
 }
 
 export function getImages(mopidy: Mopidy, uris: string[]) {
