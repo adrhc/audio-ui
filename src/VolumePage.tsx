@@ -162,8 +162,12 @@ export default function VolumePage() {
         }}
       >
         <Box sx={{ height: 'auto !important' }}>
-          <Typography variant='h6' sx={TITLE}>{state.songAndArtists.song}</Typography>
-          <Typography variant='h6' sx={TITLE}>{state.songAndArtists.artists}</Typography>
+          <Typography variant="h6" sx={TITLE}>
+            {state.songAndArtists.song}
+          </Typography>
+          <Typography variant="h6" sx={TITLE}>
+            {state.songAndArtists.artists}
+          </Typography>
         </Box>
         <ExactVolumePanel
           disabled={!online}

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from './App';
 import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from './lib/mpc';
-import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack } from '@mui/material';
+import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
@@ -18,6 +18,7 @@ const TrackListPage = () => {
   const { mopidy, online } = useContext(AppContext);
   const [state, setState] = useState<TrackListPageState>({ songs: [], current: {} });
   console.log(`[TrackListPage] online = ${online}, emptyHistory = ${emptyHistory}, state:\n`, state);
+  const theme = useTheme();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const TrackListPage = () => {
         // console.log(`[TrackListPage:volumeChanged] volume = ${volume}`);
         console.log(`[TrackListPage:volumeChanged] volume = ${volume}`);
         getSongAndArtists(mopidy)?.then((current) => {
-          console.log(`[TrackListPage:volumeChanged] newSongAndArtists:\n`, current);
+          // console.log(`[TrackListPage:volumeChanged] newSongAndArtists:\n`, current);
           setState((old) => ({ ...old, current }));
         });
       },
@@ -61,7 +62,8 @@ const TrackListPage = () => {
     // console.log(`[TrackListPage:online]`);
     Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy)])
       .then(([current, songs]) => {
-        console.log(`[TrackListPage:online] ${songs?.length} songs, current:\n`, current);
+        // console.log(`[TrackListPage:online] ${songs?.length} songs, current:\n`, current);
+        // console.log(`[TrackListPage:online] ${songs?.length} songs:\n`, songs);
         setState((old) => ({ current: current ?? old.current, songs: songs ?? old.songs }));
       })
       .catch((reason) => alert(formatErr(reason)));
@@ -104,11 +106,18 @@ const TrackListPage = () => {
               sx={{ px: 0.5, py: [1.4, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
               onClick={() => handleSelection(sa)}
             >
-              {
-                sa.imgUri && (<ListItemAvatar>
-                  <img src={sa.imgUri} alt="Album Art" />
-                </ListItemAvatar>)
-              }
+              {sa.imgUri && (
+                <ListItemAvatar
+                  sx={{
+                    lineHeight: 0,
+                    minWidth: 0,
+                    maxWidth: `min(15%, ${theme.spacing(6)})`,
+                    marginRight: 0.5,
+                  }}
+                >
+                  <img src={sa.imgUri} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                </ListItemAvatar>
+              )}
               <ListItemText
                 sx={{ wordBreak: 'break-all' }}
                 primary={sa.song}

@@ -19,27 +19,30 @@ export function toSongAndArtists(tlt: models.TlTrack | null) {
 }
 
 export function getTrackList(mopidy: Mopidy) {
-  return getTlTracks(mopidy)?.then((tlt) => tlt.map(toSongAndArtists))
-  .then(songs => getImages(mopidy, toSongUris(songs))
-                  ?.then((imgUris) => withImgUri(songs, imgUris)));
+  return getTlTracks(mopidy)
+    ?.then((tlt) => tlt.map(toSongAndArtists))
+    .then((songs) => getImages(mopidy, toSongUris(songs))?.then((imgUris) => withImgUri(songs, imgUris)))
+    .catch((reason) => alert(formatErr(reason)));
 }
 
 function withImgUri(songs: SongAndArtists[], imgUris: void | { [index: string]: models.Image[] }) {
-  if (imgUris && imgUris.length) {
-    songs.forEach(s => {
-      const images = imgUris[s.uri as string];
-      s.imgUri = images?.[0]?.uri;
+  if (imgUris) {
+    // console.log(`imgUris:\n`, imgUris);
+    songs.forEach((s) => {
+      const images = s.uri ? imgUris[s.uri] : [];
+      // images.length && console.log(`images of ${s.uri}:\n`, images);
+      s.imgUri = images[0]?.uri;
     });
   }
   return songs;
 }
 
 function toSongUris(songs: SongAndArtists[]) {
-  return songs.map(s => s.uri).filter(it => !!it) as string[];
+  return songs.map((s) => s.uri).filter((it) => !!it) as string[];
 }
 
 export function getImages(mopidy: Mopidy, uris: string[]) {
-  return mopidy.library?.getImages({uris}).catch((reason) => alert(formatErr(reason)));
+  return mopidy.library?.getImages({ uris });
 }
 
 export function getSongAndArtists(mopidy: Mopidy) {
