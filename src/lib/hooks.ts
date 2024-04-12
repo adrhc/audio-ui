@@ -3,6 +3,10 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { valueAtIndexOrLast } from './array';
 import { useLocation } from 'react-router-dom';
 
+export function useSpaceEvenly() {
+  return useMediaQuery(`(min-width:475px)`, { noSsr: true }) ? 'space-evenly' : 'center';
+}
+
 export function useSmDown<T>(t: T, otherwise?: T | null | undefined): T | null | undefined {
   const theme = useTheme();
   return useMediaQuery(theme.breakpoints.down('sm'), { noSsr: true }) ? t : otherwise;

@@ -25,6 +25,7 @@ import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
 import MopidyPlayOptions from './ui/MopidyPlayOptions';
 import ShowIf from './ui/ShowIf';
+import PrevNextPanel from './ui/PrevNextPanel';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -176,28 +177,31 @@ export default function VolumePage() {
           // setExactVolume={setExactVolume}
           handleExactVolume={doSetMopidyVolume}
         />
-        <VolumeSlider
+        {/* <VolumeSlider
           disabled={!online}
           mute={state.mute}
           volume={state.volume}
           onMute={() => muteMopidy(mopidy, !state.mute)}
           onSlide={doSetMopidyVolume}
-        />
+        /> */}
         <VolumeButtons disabled={!online} volume={state.volume} handleExactVolume={doSetMopidyVolume} />
         <PlaybackPanel
           disabled={!online}
           status={state.pbStatus}
-          previous={() => previous(mopidy)}
-          next={() => next(mopidy)}
           pause={() => pauseMopidy(mopidy)}
           stop={() => stopMopidy(mopidy)}
           play={() => playMopidy(mopidy)}
           resume={() => resumeMopidy(mopidy)}
-          toggleTune={() => setState((old) => ({ ...old, tuneOn: !state.tuneOn }))}
         />
         <ShowIf condition={state.tuneOn}>
           <MopidyPlayOptions />
         </ShowIf>
+        <PrevNextPanel
+          disabled={!online}
+          previous={() => previous(mopidy)}
+          next={() => next(mopidy)}
+          toggleTune={() => setState((old) => ({ ...old, tuneOn: !state.tuneOn }))}
+        />
       </Stack>
       <Logs logs={logs} />
     </Stack>

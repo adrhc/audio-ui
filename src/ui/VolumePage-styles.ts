@@ -7,12 +7,14 @@ export const MAN_WIDTH = '400px';
 
 export const TITLE: Styles = { textAlign: 'center' };
 
-export const YS = [2.5, 1.5]; // available y space
+export const YS = [2.5, 2.5]; // available y space
 
 const FONT_SIZE: Record<'input' | 'icon', number[]> = {
   input: [3, 2.75],
   icon: [4.5, 4.5],
 };
+
+const PLAY_FONT_SIZE = [5.5, 5.5];
 
 export const BORDER = { border: 'solid thin rgba(0, 0, 0, 0.2)', borderRadius: 1 };
 
@@ -24,8 +26,16 @@ export function iconFontSize(theme: Theme) {
   return FONT_SIZE.icon.map((v) => theme.spacing(v));
 }
 
-export function iconFontSizeMap(fontSizeMapper: (fontSize: number[]) => number[]) {
-  return (theme: Theme) => fontSizeMapper(FONT_SIZE.icon).map((v) => theme.spacing(v));
+export function iconFontSizeMap(sizeMapper: (fontSize: number[]) => number[]) {
+  return (theme: Theme) => sizeMapper(FONT_SIZE.icon).map((v) => theme.spacing(v));
+}
+
+export function playIconFontSize(theme: Theme) {
+  return PLAY_FONT_SIZE.map((v) => theme.spacing(v));
+}
+
+export function playIconFontSizeMap(sizeMapper: (fontSize: number[]) => number[]) {
+  return (theme: Theme) => sizeMapper(PLAY_FONT_SIZE).map((v) => theme.spacing(v));
 }
 
 export function ys(theme: Theme) {
