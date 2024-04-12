@@ -147,7 +147,7 @@ const TrackListPage = () => {
                 </ListItemAvatar>
               )}
               <ListItemText
-                sx={{ wordBreak: 'break-all' }}
+                sx={{ wordBreak: 'break-word' }}
                 primary={sa.song}
                 primaryTypographyProps={{
                   letterSpacing: 0,
