@@ -5,6 +5,7 @@ export type SongAndArtists = {
   tlid?: number;
   song?: string | null;
   artists?: string | null;
+  albumArtUri?: string | null;
 };
 
 export function toSongAndArtists(tlt: models.TlTrack | null) {
