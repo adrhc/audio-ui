@@ -126,8 +126,8 @@ const TrackListPage = () => {
               onClick={() => handleSelection(sa)}
             >
               {
-                track.albumArtUri && (<ListItemAvatar>
-                  <img src={track.albumArtUri} alt="Album Art" />
+                sa.albumArtUri && (<ListItemAvatar>
+                  <img src={sa.albumArtUri} alt="Album Art" />
                 </ListItemAvatar>)
               }
               <ListItemText
