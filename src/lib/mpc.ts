@@ -44,8 +44,8 @@ function withImgUri(wantedImgHeight: number, songs: SongAndArtists[], imagesMap:
 
 function sortByDiffToHeight(imgMaxWidth: number, images: models.Image[]) {
   return images.sort((a, b) =>
-    Math.abs(imgMaxWidth - a.height ?? Number.MAX_VALUE) >
-    Math.abs(imgMaxWidth - b.height ?? Number.MAX_VALUE)
+    Math.abs(imgMaxWidth - (a.height != null ? a.height : Number.MAX_VALUE)) >
+    Math.abs(imgMaxWidth - (b.height != null ? a.height : Number.MAX_VALUE))
       ? 1
       : -1
   );
