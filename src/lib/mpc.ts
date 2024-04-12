@@ -18,23 +18,37 @@ export function toSongAndArtists(tlt: models.TlTrack | null) {
   return { tlid: tlt?.tlid, song, artists, uri } as SongAndArtists;
 }
 
-export function getTrackList(mopidy: Mopidy) {
+export function getTrackList(mopidy: Mopidy, wantedImgHeight: number) {
   return getTlTracks(mopidy)
     ?.then((tlt) => tlt.map(toSongAndArtists))
-    .then((songs) => getImages(mopidy, toSongUris(songs))?.then((imgUris) => withImgUri(songs, imgUris)))
+    .then((songs) =>
+      getImages(mopidy, toSongUris(songs))?.then((imagesMap) => withImgUri(wantedImgHeight, songs, imagesMap))
+    )
     .catch((reason) => alert(formatErr(reason)));
 }
 
-function withImgUri(songs: SongAndArtists[], imgUris: void | { [index: string]: models.Image[] }) {
-  if (imgUris) {
-    // console.log(`imgUris:\n`, imgUris);
+type UriImagesMap = { [index: string]: models.Image[] };
+
+function withImgUri(wantedImgHeight: number, songs: SongAndArtists[], imagesMap: void | UriImagesMap) {
+  if (imagesMap) {
+    // console.log(`imagesMap:\n`, imagesMap);
     songs.forEach((s) => {
-      const images = s.uri ? imgUris[s.uri] : [];
+      let images = s.uri ? imagesMap[s.uri] : [];
+      images = sortByDiffToHeight(wantedImgHeight, images);
       // images.length && console.log(`images of ${s.uri}:\n`, images);
       s.imgUri = images[0]?.uri;
     });
   }
   return songs;
+}
+
+function sortByDiffToHeight(imgMaxWidth: number, images: models.Image[]) {
+  return images.sort((a, b) =>
+    Math.abs(imgMaxWidth - a.height ?? Number.MAX_VALUE) >
+    Math.abs(imgMaxWidth - b.height ?? Number.MAX_VALUE)
+      ? 1
+      : -1
+  );
 }
 
 function toSongUris(songs: SongAndArtists[]) {

@@ -20,6 +20,7 @@ const TrackListPage = () => {
   console.log(`[TrackListPage] online = ${online}, emptyHistory = ${emptyHistory}, state:\n`, state);
   const theme = useTheme();
   const navigate = useNavigate();
+  const imgMaxWidth = theme.spacing(6);
 
   useEffect(() => {
     console.log(`[TrackListPage:mopidy]`);
@@ -60,14 +61,14 @@ const TrackListPage = () => {
       return;
     }
     // console.log(`[TrackListPage:online]`);
-    Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy)])
+    Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy, +imgMaxWidth.replace('px', ''))])
       .then(([current, songs]) => {
         // console.log(`[TrackListPage:online] ${songs?.length} songs, current:\n`, current);
         // console.log(`[TrackListPage:online] ${songs?.length} songs:\n`, songs);
         setState((old) => ({ current: current ?? old.current, songs: songs ?? old.songs }));
       })
       .catch((reason) => alert(formatErr(reason)));
-  }, [mopidy, online]);
+  }, [mopidy, online, imgMaxWidth]);
 
   function handleSelection(song: SongAndArtists) {
     // console.log(`[TrackListPage:handleSelection] song:\n`, song);
@@ -77,6 +78,8 @@ const TrackListPage = () => {
   function goBack() {
     !emptyHistory && navigate(-1);
   }
+
+  const liPx = 0.5;
 
   return (
     <Stack
@@ -103,16 +106,16 @@ const TrackListPage = () => {
               key={i}
               autoFocus={sa.tlid == state.current.tlid}
               selected={sa.tlid == state.current.tlid}
-              sx={{ px: 0.5, py: [1.4, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
+              sx={{ px: liPx, py: [1.4, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
               onClick={() => handleSelection(sa)}
             >
               {sa.imgUri && (
                 <ListItemAvatar
                   sx={{
+                    marginRight: liPx,
                     lineHeight: 0,
                     minWidth: 0,
-                    maxWidth: `min(15%, ${theme.spacing(6)})`,
-                    marginRight: 0.5,
+                    maxWidth: `min(15%, ${imgMaxWidth})`,
                   }}
                 >
                   <img src={sa.imgUri} style={{ maxWidth: '100%', maxHeight: '100%' }} />
