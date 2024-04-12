@@ -18,7 +18,7 @@ import {
 } from './lib/mpc';
 import PlaybackPanel from './ui/PlaybackPanel';
 import { CoreListenerEvent, MopidyEvent, PlaybackState } from './lib/types';
-import { MAN_WIDTH, MIN_WIDTH, TITLE, rowHeight } from './ui/VolumePage-styles';
+import { TITLE, rowHeight } from './ui/VolumePage-styles';
 import ExactVolumePanel from './ui/ExactVolumePanel';
 import { AppContext } from './App';
 import Logs from './ui/Logs';
@@ -90,7 +90,7 @@ export default function VolumePage() {
       (params: { tl_track: models.TlTrack }) => {
         // console.log(`[VolumePage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
         // logTlTrack(params.tl_track);
-        setState((old) => ({ ...old, songAndArtists: toSongAndArtists(params.tl_track) }));
+        toSongAndArtists(params.tl_track).then((sa) => setState((old) => ({ ...old, songAndArtists: sa })));
       },
     ]);
 
@@ -156,18 +156,14 @@ export default function VolumePage() {
           width: '100%',
           height: '100%',
           // see https://www.whatismybrowser.com/w/66ZAAY4
-          minWidth: MIN_WIDTH,
-          maxWidth: MAN_WIDTH,
+          minWidth: '310px',
+          maxWidth: '400px',
           '& > div': { height: rowHeight },
         }}
       >
         <Box sx={{ height: 'auto !important' }}>
-          <Typography variant="h6" sx={TITLE}>
-            {state.songAndArtists.song}
-          </Typography>
-          <Typography variant="h6" sx={TITLE}>
-            {state.songAndArtists.artists}
-          </Typography>
+          <Typography variant='h6' sx={TITLE}>{state.songAndArtists.song}</Typography>
+          <Typography variant='h6' sx={TITLE}>{state.songAndArtists.artists}</Typography>
         </Box>
         <ExactVolumePanel
           disabled={!online}
