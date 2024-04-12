@@ -23,7 +23,7 @@ const pauseBtn = { color: 'black', p: 0.5 };
 const playBtn = { color: 'black', p: 0 };
 const muteBtn = { color: 'black', p: 0.25 };
 const playFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 1)));
-const stopFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.4 + (i == 0 ? 1 : 1)));
+const stopFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.39 + (i == 0 ? 1 : 1)));
 const pauseFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.375 + (i == 0 ? 0 : 0)));
 const muteFontSize = playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.25)));
 
