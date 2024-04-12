@@ -36,7 +36,7 @@ const VolumeSlider = ({ disabled, mute, volume: parentVolume, onMute, onSlide }:
     <Stack direction="row" spacing={1} alignItems="center" sx={BORDER}>
       <MuteIconButton
         disabled={disabled}
-        styles={{ '& .MuiSvgIcon-root': { fontSize: iconFontSizeMap(muteBtnFontSizeMapper) } }}
+        sx={{ '& .MuiSvgIcon-root': { fontSize: iconFontSizeMap(muteBtnFontSizeMapper) } }}
         mute={mute}
         onClick={onMute}
       />

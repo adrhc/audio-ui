@@ -1,7 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import Mopidy, { models } from 'mopidy';
 import { useContext, useEffect, useState } from 'react';
-import VolumeSlider from './ui/VolumeSlider';
 import VolumeButtons from './ui/VolumeButtons';
 import {
   setVolume as setMopidyVolume,
