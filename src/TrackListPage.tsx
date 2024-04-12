@@ -100,7 +100,7 @@ const TrackListPage = () => {
     !emptyHistory && navigate(-1);
   }
 
-  const primaryTypoFontSize = useSmDown({ fontSize: '1.2rem' });
+  const primaryTypoFontSize = useSmDown({ fontSize: '1.1rem' });
   const liPx = 0.5;
 
   return (
