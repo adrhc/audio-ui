@@ -30,7 +30,7 @@ const TrackListPage = () => {
         console.log(`[TrackListPage:trackPlaybackStarted]`);
         // console.log(`[TrackListPage:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
         // logTlTrack(params.tl_track);
-        setState((old) => ({ ...old, current: toSongAndArtists(params.tl_track) }));
+        toSongAndArtists(params.tl_track).then((sa) => setState((old) => ({ ...old, current: sa })));
       },
     ]);
 
