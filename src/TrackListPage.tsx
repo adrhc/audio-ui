@@ -20,7 +20,7 @@ const TrackListPage = () => {
   console.log(`[TrackListPage] online = ${online}, emptyHistory = ${emptyHistory}, state:\n`, state);
   const theme = useTheme();
   const navigate = useNavigate();
-  const imgMaxWidth = theme.spacing(6);
+  const wantedImgHeight = theme.spacing(6);
 
   useEffect(() => {
     console.log(`[TrackListPage:mopidy]`);
@@ -61,14 +61,14 @@ const TrackListPage = () => {
       return;
     }
     // console.log(`[TrackListPage:online]`);
-    Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy, +imgMaxWidth.replace('px', ''))])
+    Promise.all([getSongAndArtists(mopidy), getTrackList(mopidy, +wantedImgHeight.replace('px', ''))])
       .then(([current, songs]) => {
         // console.log(`[TrackListPage:online] ${songs?.length} songs, current:\n`, current);
         // console.log(`[TrackListPage:online] ${songs?.length} songs:\n`, songs);
         setState((old) => ({ current: current ?? old.current, songs: songs ?? old.songs }));
       })
       .catch((reason) => alert(formatErr(reason)));
-  }, [mopidy, online, imgMaxWidth]);
+  }, [mopidy, online, wantedImgHeight]);
 
   function handleSelection(song: SongAndArtists) {
     // console.log(`[TrackListPage:handleSelection] song:\n`, song);
@@ -115,7 +115,7 @@ const TrackListPage = () => {
                     marginRight: liPx,
                     lineHeight: 0,
                     minWidth: 0,
-                    maxWidth: `min(15%, ${imgMaxWidth})`,
+                    maxWidth: `min(15%, ${wantedImgHeight})`,
                   }}
                 >
                   <img src={sa.imgUri} style={{ maxWidth: '100%', maxHeight: '100%' }} />
