@@ -20,12 +20,10 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
     }
   }
 
-  const btn5Style: Styles = {
+  const btnStyle: Styles = {
     flexGrow: 1,
     color: 'black',
     fontSize: iconFontSize,
-    fontFamily: 'monospace',
-    fontWeight: 'bold',
   };
 
   return (
@@ -33,8 +31,8 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
       <Button
         disabled={disabled}
         variant="outlined"
-        size="small"
-        sx={btn5Style}
+        // size="small"
+        sx={btnStyle}
         onClick={() => doHandleExactVolume(Math.max(0, volume - 5))}
       >
         <Looks5RoundedIcon sx={{ fontSize: iconFontSize }} />
@@ -42,8 +40,8 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
       <Button
         disabled={disabled}
         variant="outlined"
-        size="large"
-        sx={{ flexGrow: 1, color: 'black' }}
+        // size="large"
+        sx={btnStyle}
         onClick={() => doHandleExactVolume(volume - 1)}
       >
         <RemoveIcon sx={{ fontSize: iconFontSize }} />
@@ -51,8 +49,8 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
       <Button
         disabled={disabled}
         variant="outlined"
-        size="large"
-        sx={{ flexGrow: 1, color: 'black' }}
+        // size="large"
+        sx={btnStyle}
         onClick={() => doHandleExactVolume(volume + 1)}
       >
         <AddIcon sx={{ fontSize: iconFontSize }} />
@@ -60,8 +58,8 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
       <Button
         disabled={disabled}
         variant="outlined"
-        size="small"
-        sx={btn5Style}
+        // size="small"
+        sx={btnStyle}
         onClick={() => doHandleExactVolume(Math.min(100, volume + 5))}
       >
         <Looks5RoundedIcon sx={{ fontSize: iconFontSize }} />
