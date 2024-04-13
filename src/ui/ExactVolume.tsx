@@ -13,7 +13,7 @@ export type ExactVolumeParam = {
 };
 
 const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume }: ExactVolumeParam) => {
-  const xFactor = useBreakpointValue([0.5, 2]);
+  const xFactor = useBreakpointValue(0.5, 2);
   // console.log('xFactor:', xFactor)
   // ExactVolume height is ys, see '& .MuiInputBase-input'.py
   const inputPaddingLeft = YS.map((ys) => ys * xFactor);

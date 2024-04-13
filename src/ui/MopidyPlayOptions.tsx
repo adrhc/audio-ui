@@ -11,9 +11,9 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
 import { Box, Stack, ToggleButton, Tooltip } from '@mui/material';
 import { BORDER, iconFontSize } from './VolumePage-styles';
-import { useSmDown } from '../lib/hooks';
 import Spinner from './Spinner';
 import { toArray } from '../lib/array';
+import { useBreakpointValue } from '../lib/hooks';
 
 const SX: Record<string, Styles> = {
   box: {
@@ -74,7 +74,7 @@ const MopidyPlayOptions = () => {
     };
   }, [mopidy]);
 
-  const btnStyle = useSmDown(SX.btn, { ...SX.btn, p: 0.25 });
+  const btnStyle = useBreakpointValue(SX.btn, { ...SX.btn, p: 0.25 });
 
   return (
     // Only Stack works with Spinner!

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
-import { useEmptyHistory, useSmDown } from './lib/hooks';
+import { useBreakpointValue, useEmptyHistory } from './lib/hooks';
 import Spinner from './ui/Spinner';
 import ShowIf from './ui/ShowIf';
 
@@ -100,7 +100,7 @@ const TrackListPage = () => {
     !emptyHistory && navigate(-1);
   }
 
-  const primaryTypoFontSize = useSmDown({ fontSize: '1.15rem' });
+  const primaryTypoFontSize = useBreakpointValue({ fontSize: '1.15rem' }, { fontSize: '1.35rem' });
   const liPx = 0.5;
 
   return (
