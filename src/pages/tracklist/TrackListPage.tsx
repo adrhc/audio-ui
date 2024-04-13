@@ -173,7 +173,7 @@ export default function TrackListPage() {
       <ShowIf condition={state.loading}>
         <Spinner />
       </ShowIf>
-      <Button variant="outlined" onClick={goBack} sx={{ py: [2, 1] }}>
+      <Button variant="outlined" onClick={goBack} sx={{ py: [2, 1.5] }}>
         Back
       </Button>
       <Logs logs={logs} />
