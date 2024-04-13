@@ -100,7 +100,7 @@ const TrackListPage = () => {
     !emptyHistory && navigate(-1);
   }
 
-  const primaryTypoFontSize = useBreakpointValue({ fontSize: '1.15rem' }, { fontSize: '1.35rem' });
+  const primaryTypoFontSize = useBreakpointValue({ fontSize: '1.15rem' }, { fontSize: '1.25rem' });
   const liPx = 0.5;
 
   return (
