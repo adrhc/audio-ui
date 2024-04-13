@@ -15,14 +15,29 @@ const volumes = [5, 15, 25, 45, 60, 75];
 
 export default function ExactVolumePanel({ disabled, volume, handleExactVolume }: ExactVolumePanelParam) {
   return (
-    <Stack spacing={1} direction="row" sx={{ justifyContent: 'center' }}>
-      <Button sx={btnStyle} disabled={disabled} variant="outlined" onClick={() => handleExactVolume(volumes[0])}>
+    <Stack spacing={[0.5, 1]} direction="row" sx={{ justifyContent: 'center' }}>
+      <Button
+        sx={btnStyle}
+        disabled={disabled}
+        variant="outlined"
+        onClick={() => handleExactVolume(volumes[0])}
+      >
         {volumes[0]}
       </Button>
-      <Button sx={btnStyle} disabled={disabled} variant="outlined" onClick={() => handleExactVolume(volumes[1])}>
+      <Button
+        sx={btnStyle}
+        disabled={disabled}
+        variant="outlined"
+        onClick={() => handleExactVolume(volumes[1])}
+      >
         {volumes[1]}
       </Button>
-      <Button sx={btnStyle} disabled={disabled} variant="outlined" onClick={() => handleExactVolume(volumes[2])}>
+      <Button
+        sx={btnStyle}
+        disabled={disabled}
+        variant="outlined"
+        onClick={() => handleExactVolume(volumes[2])}
+      >
         {volumes[2]}
       </Button>
       <ButtonBase
@@ -48,13 +63,28 @@ export default function ExactVolumePanel({ disabled, volume, handleExactVolume }
         setExactVolume={setExactVolume}
         handleExactVolume={handleExactVolume}
       /> */}
-      <Button sx={btnStyle} disabled={disabled} variant="outlined" onClick={() => handleExactVolume(volumes[3])}>
+      <Button
+        sx={btnStyle}
+        disabled={disabled}
+        variant="outlined"
+        onClick={() => handleExactVolume(volumes[3])}
+      >
         {volumes[3]}
       </Button>
-      <Button sx={btnStyle} disabled={disabled} variant="outlined" onClick={() => handleExactVolume(volumes[4])}>
+      <Button
+        sx={btnStyle}
+        disabled={disabled}
+        variant="outlined"
+        onClick={() => handleExactVolume(volumes[4])}
+      >
         {volumes[4]}
       </Button>
-      <Button sx={btnStyle} disabled={disabled} variant="outlined" onClick={() => handleExactVolume(volumes[5])}>
+      <Button
+        sx={btnStyle}
+        disabled={disabled}
+        variant="outlined"
+        onClick={() => handleExactVolume(volumes[5])}
+      >
         {volumes[5]}
       </Button>
     </Stack>
