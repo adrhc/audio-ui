@@ -24,7 +24,6 @@ const TrackListPage = () => {
   const emptyHistory = useEmptyHistory();
   const { mopidy, online } = useContext(AppContext);
   const [state, setState] = useState<TrackListPageState>({ loading: true, songs: [], current: {} });
-  // console.log(`[TrackListPage] agent:\n`, agent);
   console.log(`[TrackListPage] online = ${online}, emptyHistory = ${emptyHistory}, state:\n`, state);
   const theme = useTheme();
   const navigate = useNavigate();
@@ -102,14 +101,15 @@ const TrackListPage = () => {
   }
 
   function goBack() {
-    !emptyHistory && navigate(-1);
+    emptyHistory ? navigate('/volume') : navigate(-1);
   }
 
+  console.log(`[TrackListPage] isIPhone: ${ifIPhone(true, false)}`);
   const primaryTypoFontSize = useBreakpointValue({ fontSize: '1.15rem' }, { fontSize: '1.25rem' });
   const liPx = 0.5;
 
   return (
-    <Stack className={`stack ${ifIPhone('.iPhone')}`} spacing={state.loading ? 0 : 0.5}>
+    <Stack className={`stack ${ifIPhone('iPhone')}`} spacing={state.loading ? 0 : 0.5}>
       <List
         sx={[
           {
