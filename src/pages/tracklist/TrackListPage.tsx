@@ -115,7 +115,7 @@ export default function TrackListPage() {
 
   // console.log(`[TrackListPage] getUA:\n`, getUA);
   console.log(`[TrackListPage] agent:\n`, agent);
-  console.log(`[TrackListPage] isIPhone = ${ifIPhone(true, false)}, agent.isTablet = ${isTablet}`);
+  console.log(`[TrackListPage] agent.isIPhone = ${ifIPhone(true, false)}, agent.isTablet = ${isTablet}`);
 
   const primaryTypoFontSize = useBreakpointValue({ fontSize: '1.15rem' }, { fontSize: '1.25rem' });
   const liPx = 0.5;
