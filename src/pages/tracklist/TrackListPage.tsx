@@ -34,7 +34,7 @@ export default function TrackListPage() {
   const wantedImgHeight = theme.spacing(6);
 
   function addLog(log: string) {
-    (SHOW_LOGS || true) && setLogs((oldLog) => [log, ...oldLog]);
+    (SHOW_LOGS || false) && setLogs((oldLog) => [log, ...oldLog]);
   }
 
   useEffect(() => {
@@ -141,7 +141,7 @@ export default function TrackListPage() {
               key={i}
               autoFocus={sa.tlid == state.current.tlid}
               selected={sa.tlid == state.current.tlid}
-              sx={{ px: liPx, py: [1.2, 0.25], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
+              sx={{ px: liPx, py: [1.2, 0.75], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
               onClick={() => handleSelection(sa)}
             >
               {sa.imgUri && (
