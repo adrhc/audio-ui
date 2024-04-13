@@ -20,7 +20,7 @@ import { CoreListenerEvent, MopidyEvent, PlaybackState } from '../lib/types';
 import { TITLE, rowHeight } from '../ui/VolumePage-styles';
 import ExactVolumePanel from '../ui/ExactVolumePanel';
 import { AppContext } from '../App';
-import Logs from '../ui/Logs';
+// import Logs from '../ui/Logs';
 // import { SHOW_LOGS } from '../lib/config';
 import MopidyPlayOptions from '../ui/MopidyPlayOptions';
 import ShowIf from '../ui/ShowIf';
@@ -203,7 +203,7 @@ export default function VolumePage() {
           <MopidyPlayOptions />
         </ShowIf>
       </Stack>
-      <Logs logs={logs} />
+      {/* <Logs logs={logs} /> */}
     </Stack>
   );
 }
