@@ -25,7 +25,7 @@ const THEME = createTheme({
     values: {
       mobile: 0,
       tablet: 400,
-      desktop: 1024,
+      desktop: 1481,
     },
   },
   palette: {
