@@ -13,7 +13,7 @@ import { Box, Stack, ToggleButton, Tooltip } from '@mui/material';
 import { BORDER, iconFontSize } from './VolumePage-styles';
 import Spinner from './Spinner';
 import { toArray } from '../lib/array';
-import { useBreakpointValue } from '../lib/hooks';
+import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
 
 const SX: Record<string, Styles> = {
   box: {

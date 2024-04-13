@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { formatErr } from './lib/logging';
 import { CoreListenerEvent, MopidyEvent } from './lib/types';
 import Mopidy, { models } from 'mopidy';
-import { useBreakpointValue, useEmptyHistory } from './lib/hooks';
+import { useBreakpointValue } from './lib/hooks/useBreakpointValue';
 import Spinner from './ui/Spinner';
 import ShowIf from './ui/ShowIf';
+import { useEmptyHistory } from './lib/hooks/useEmptyHistory';
 
 type TrackListPageState = {
   songs: SongAndArtists[];

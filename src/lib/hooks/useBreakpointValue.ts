@@ -1,7 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { fillWithLastElem, valueAtIndexOrLast } from './array';
-import { useLocation } from 'react-router-dom';
+import { fillWithLastElem, valueAtIndexOrLast } from '../array';
 
 export function useSpaceEvenly() {
   return useBreakpointValue('center', 'space-evenly');
@@ -22,9 +21,4 @@ export function useBreakpointValue<T>(...breakpointValues: T[]): T {
     console.log(`[useBreakpointValue] isMobile: true`);
     return valueAtIndexOrLast(breakpointValues, 0); // mobile
   }
-}
-
-export function useEmptyHistory() {
-  const location = useLocation();
-  return location.key === 'default';
 }

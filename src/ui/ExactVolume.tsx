@@ -2,7 +2,7 @@ import { Box, InputBase, IconButton, Tooltip } from '@mui/material';
 import { onEnterKey } from '../lib/keys';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import { BORDER, YS, iconFontSize, inputFontSize } from './VolumePage-styles';
-import { useBreakpointValue } from '../lib/hooks';
+import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 export type ExactVolumeParam = {
