@@ -9,7 +9,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom';
 import VolumePage from './pages/VolumePage.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import App from './App.tsx';
-import TrackListPage from './pages/TrackListPage.tsx';
+import TrackListPage from './pages/tracklist/TrackListPage.tsx';
 import THEME from './config/theme.tsx';
 
 const router = createHashRouter([

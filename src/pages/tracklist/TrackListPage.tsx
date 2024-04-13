@@ -1,18 +1,21 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from '../App';
-import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from '../lib/mpc';
+import { AppContext } from '../../App';
+import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from '../../lib/mpc';
 import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { formatErr } from '../lib/logging';
-import { CoreListenerEvent, MopidyEvent } from '../lib/types';
+import { formatErr } from '../../lib/logging';
+import { CoreListenerEvent, MopidyEvent } from '../../lib/types';
 import Mopidy, { models } from 'mopidy';
-import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
-import Spinner from '../ui/Spinner';
-import ShowIf from '../ui/ShowIf';
-import { useEmptyHistory } from '../lib/hooks/useEmptyHistory';
-// import * as agent from 'react-device-detect';
-import './TrackListPageStyles.scss';
-import { ifIPhone } from '../lib/agent';
+import { useBreakpointValue } from '../../lib/hooks/useBreakpointValue';
+import Spinner from '../../ui/Spinner';
+import ShowIf from '../../ui/ShowIf';
+import { useEmptyHistory } from '../../lib/hooks/useEmptyHistory';
+import * as agent from 'react-device-detect';
+import { ifIPhone } from '../../lib/agent';
+import './styles.scss';
+import { getUA, isTablet } from 'react-device-detect';
+import { SHOW_LOGS } from '../../lib/config';
+import Logs from '../../ui/Logs';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -20,7 +23,8 @@ type TrackListPageState = {
   loading?: boolean;
 };
 
-const TrackListPage = () => {
+export default function TrackListPage() {
+  const [logs, setLogs] = useState<string[]>([]);
   const emptyHistory = useEmptyHistory();
   const { mopidy, online } = useContext(AppContext);
   const [state, setState] = useState<TrackListPageState>({ loading: true, songs: [], current: {} });
@@ -29,7 +33,12 @@ const TrackListPage = () => {
   const navigate = useNavigate();
   const wantedImgHeight = theme.spacing(6);
 
+  function addLog(log: string) {
+    (SHOW_LOGS || true) && setLogs((oldLog) => [log, ...oldLog]);
+  }
+
   useEffect(() => {
+    addLog(getUA);
     console.log(`[TrackListPage:mopidy]`);
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
@@ -104,7 +113,10 @@ const TrackListPage = () => {
     emptyHistory ? navigate('/volume') : navigate(-1);
   }
 
-  console.log(`[TrackListPage] isIPhone: ${ifIPhone(true, false)}`);
+  // console.log(`[TrackListPage] getUA:\n`, getUA);
+  console.log(`[TrackListPage] agent:\n`, agent);
+  console.log(`[TrackListPage] isIPhone = ${ifIPhone(true, false)}, agent.isTablet = ${isTablet}`);
+
   const primaryTypoFontSize = useBreakpointValue({ fontSize: '1.15rem' }, { fontSize: '1.25rem' });
   const liPx = 0.5;
 
@@ -164,8 +176,7 @@ const TrackListPage = () => {
       <Button variant="outlined" onClick={goBack} sx={{ py: [2, 1] }}>
         Back
       </Button>
+      <Logs logs={logs} />
     </Stack>
   );
-};
-
-export default TrackListPage;
+}
