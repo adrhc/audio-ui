@@ -19,7 +19,7 @@ type TrackListPageState = {
 const TrackListPage = () => {
   const emptyHistory = useEmptyHistory();
   const { mopidy, online } = useContext(AppContext);
-  const [state, setState] = useState<TrackListPageState>({ songs: [], current: {} });
+  const [state, setState] = useState<TrackListPageState>({ loading: true, songs: [], current: {} });
   console.log(`[TrackListPage] online = ${online}, emptyHistory = ${emptyHistory}, state:\n`, state);
   const theme = useTheme();
   const navigate = useNavigate();
