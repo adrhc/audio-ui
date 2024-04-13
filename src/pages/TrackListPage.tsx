@@ -12,7 +12,7 @@ import ShowIf from '../ui/ShowIf';
 import { useEmptyHistory } from '../lib/hooks/useEmptyHistory';
 // import * as agent from 'react-device-detect';
 import './TrackListPageStyles.scss';
-import { ifIPhone } from '../lib/device';
+import { ifIPhone } from '../lib/agent';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
