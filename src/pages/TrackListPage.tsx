@@ -1,15 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppContext } from './App';
-import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from './lib/mpc';
+import { AppContext } from '../App';
+import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from '../lib/mpc';
 import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { formatErr } from './lib/logging';
-import { CoreListenerEvent, MopidyEvent } from './lib/types';
+import { formatErr } from '../lib/logging';
+import { CoreListenerEvent, MopidyEvent } from '../lib/types';
 import Mopidy, { models } from 'mopidy';
-import { useBreakpointValue } from './lib/hooks/useBreakpointValue';
-import Spinner from './ui/Spinner';
-import ShowIf from './ui/ShowIf';
-import { useEmptyHistory } from './lib/hooks/useEmptyHistory';
+import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
+import Spinner from '../ui/Spinner';
+import ShowIf from '../ui/ShowIf';
+import { useEmptyHistory } from '../lib/hooks/useEmptyHistory';
+import { mobileVendor } from 'react-device-detect';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -108,7 +109,7 @@ const TrackListPage = () => {
     <Stack
       spacing={state.loading ? 0 : 0.5}
       sx={{
-        pb: [1.5, 0],
+        pb: mobileVendor == 'iPhone' ? 1.5 : 0,
         height: '100%',
         justifyContent: 'center',
       }}
