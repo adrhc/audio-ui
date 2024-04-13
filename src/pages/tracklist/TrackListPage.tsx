@@ -121,7 +121,7 @@ export default function TrackListPage() {
   const liPx = 0.5;
 
   return (
-    <Stack className={`stack ${ifIPhone('iPhone')}`} spacing={state.loading ? 0 : 0.5}>
+    <Stack className={`stack ${ifIPhone('iPhone')}`} spacing={state.loading ? [0] : [0.5, 1]}>
       <List
         sx={[
           {
