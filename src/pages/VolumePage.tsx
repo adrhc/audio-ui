@@ -21,7 +21,7 @@ import { TITLE, rowHeight } from '../ui/VolumePage-styles';
 import ExactVolumePanel from '../ui/ExactVolumePanel';
 import { AppContext } from '../App';
 import Logs from '../ui/Logs';
-import { SHOW_LOGS } from '../lib/config';
+// import { SHOW_LOGS } from '../lib/config';
 import MopidyPlayOptions from '../ui/MopidyPlayOptions';
 import ShowIf from '../ui/ShowIf';
 import PrevNextPanel from '../ui/PrevNextPanel';
@@ -36,7 +36,7 @@ type VolumePageState = {
 
 export default function VolumePage() {
   const { mopidy, online } = useContext(AppContext);
-  const [logs, setLogs] = useState<string[]>([]);
+  // const [logs, setLogs] = useState<string[]>([]);
   const [state, setState] = useState<VolumePageState>({
     tuneOn: false,
     volume: 0,
@@ -46,9 +46,9 @@ export default function VolumePage() {
 
   console.log(`[VolumePage] online = ${online}, state:\n`, state);
 
-  function addLog(log: string) {
+  /* function addLog(log: string) {
     SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
-  }
+  } */
 
   useEffect(() => {
     console.log(`[VolumePage:online] online = ${online}`);
@@ -131,7 +131,6 @@ export default function VolumePage() {
 
     return () => {
       console.log(`[VolumePage:destroy]`);
-      addLog(`[VolumePage:destroy]`);
       events.forEach((e) => mopidy.off(...e));
     };
   }, [mopidy]);
