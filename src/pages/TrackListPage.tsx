@@ -10,8 +10,9 @@ import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
 import Spinner from '../ui/Spinner';
 import ShowIf from '../ui/ShowIf';
 import { useEmptyHistory } from '../lib/hooks/useEmptyHistory';
-import { mobileVendor } from 'react-device-detect';
-import './TrackListPageStyles.scss'
+// import * as agent from 'react-device-detect';
+import './TrackListPageStyles.scss';
+import { ifIPhone } from '../lib/device';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -23,6 +24,7 @@ const TrackListPage = () => {
   const emptyHistory = useEmptyHistory();
   const { mopidy, online } = useContext(AppContext);
   const [state, setState] = useState<TrackListPageState>({ loading: true, songs: [], current: {} });
+  // console.log(`[TrackListPage] agent:\n`, agent);
   console.log(`[TrackListPage] online = ${online}, emptyHistory = ${emptyHistory}, state:\n`, state);
   const theme = useTheme();
   const navigate = useNavigate();
@@ -107,13 +109,7 @@ const TrackListPage = () => {
   const liPx = 0.5;
 
   return (
-    <Stack
-      className='stack'
-      spacing={state.loading ? 0 : 0.5}
-      sx={{
-        pb: mobileVendor == 'iPhone' ? 1.5 : 0,
-      }}
-    >
+    <Stack className={`stack ${ifIPhone('.iPhone')}`} spacing={state.loading ? 0 : 0.5}>
       <List
         sx={[
           {
