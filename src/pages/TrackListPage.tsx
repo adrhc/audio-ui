@@ -11,6 +11,7 @@ import Spinner from '../ui/Spinner';
 import ShowIf from '../ui/ShowIf';
 import { useEmptyHistory } from '../lib/hooks/useEmptyHistory';
 import { mobileVendor } from 'react-device-detect';
+import './TrackListPageStyles.scss'
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -107,11 +108,10 @@ const TrackListPage = () => {
 
   return (
     <Stack
+      className='stack'
       spacing={state.loading ? 0 : 0.5}
       sx={{
         pb: mobileVendor == 'iPhone' ? 1.5 : 0,
-        height: '100%',
-        justifyContent: 'center',
       }}
     >
       <List
