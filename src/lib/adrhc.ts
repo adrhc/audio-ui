@@ -1,3 +1,7 @@
-export function isInsecureAdrhc() {
-  return window.location.hostname == '192.168.1.31' || window.location.hostname == 'localhost';
+export function isAdrhc() {
+  return (
+    window.location.hostname == 'localhost' ||
+    window.location.hostname == '192.168.1.31' ||
+    window.location.hostname == 'adrhc.go.ro'
+  );
 }

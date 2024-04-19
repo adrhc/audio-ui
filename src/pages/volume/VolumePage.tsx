@@ -27,7 +27,7 @@ import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/PrevNextPanel';
 import KefLSXPanel from '../../ui/KefLSXPanel';
 import { setPower } from '../../lib/kef';
-import { isInsecureAdrhc } from '../../lib/adrhc';
+import { isAdrhc } from '../../lib/adrhc';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -47,7 +47,7 @@ export default function VolumePage() {
     songAndArtists: {},
   });
 
-  const isAdrhc = isInsecureAdrhc();
+  const isAdrhc = isAdrhc();
 
   console.log(`[VolumePage] isAdrhc = ${isAdrhc}, online = ${online}, state:\n`, state);
 
