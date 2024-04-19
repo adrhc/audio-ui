@@ -142,7 +142,7 @@ export default function VolumePage() {
 
   function onPlay() {
     playMopidy(mopidy);
-    adrhc && setPower(true).then(unmute);
+    adrhc && setPower(true);
   }
 
   function onVolumeChange(newValue: number) {
