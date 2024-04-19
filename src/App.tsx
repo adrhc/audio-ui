@@ -4,7 +4,7 @@ import { createContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
-import { formatErr } from './lib/logging';
+import { formatErr } from './lib/format';
 
 export const AppContext = createContext<AppContextValue>({} as AppContextValue);
 

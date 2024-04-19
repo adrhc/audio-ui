@@ -3,7 +3,7 @@ import { AppContext } from '../../App';
 import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from '../../lib/mpc';
 import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { formatErr } from '../../lib/logging';
+import { formatErr } from '../../lib/format';
 import { CoreListenerEvent, MopidyEvent } from '../../lib/types';
 import Mopidy, { models } from 'mopidy';
 import { useBreakpointValue } from '../../lib/hooks/useBreakpointValue';

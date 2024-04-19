@@ -25,6 +25,7 @@ import { AppContext } from '../../App';
 import MopidyPlayOptions from '../../ui/MopidyPlayOptions';
 import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/PrevNextPanel';
+import KefLSXPanel from '../../ui/KefLSXPanel';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -201,6 +202,7 @@ export default function VolumePage() {
         />
         <ShowIf condition={state.tuneOn}>
           <MopidyPlayOptions />
+          <KefLSXPanel />
         </ShowIf>
       </Stack>
       {/* <Logs logs={logs} /> */}

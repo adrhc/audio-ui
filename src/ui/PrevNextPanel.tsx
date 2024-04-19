@@ -8,7 +8,7 @@ import { BORDER, playIconFontSizeMap } from '../pages/volume/styles';
 import { NoArgsProc, Styles } from '../lib/types';
 
 type PrevNextPanelParam = {
-  disabled: boolean;
+  disabled?: boolean;
   previous: NoArgsProc;
   next: NoArgsProc;
   toggleTune: NoArgsProc;

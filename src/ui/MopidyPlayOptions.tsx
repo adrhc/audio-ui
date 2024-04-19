@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../lib/mpc';
 import { AppContext } from '../App';
 import { getPlayOptions } from '../lib/mpc';
-import { formatErr } from '../lib/logging';
+import { formatErr } from '../lib/format';
 import { MopidyEvent, Styles } from '../lib/types';
 import Mopidy from 'mopidy';
 import ShuffleIcon from '@mui/icons-material/Shuffle';

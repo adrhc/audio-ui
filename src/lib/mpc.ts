@@ -1,5 +1,5 @@
 import Mopidy, { models } from 'mopidy';
-import { formatErr } from './logging';
+import { formatErr } from './format';
 
 export type SongAndArtists = {
   tlid?: number;
