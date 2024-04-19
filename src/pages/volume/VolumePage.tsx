@@ -49,7 +49,7 @@ export default function VolumePage() {
 
   const isAdrhc = isInsecureAdrhc();
 
-  console.log(`[VolumePage] online = ${online}, state:\n`, state);
+  console.log(`[VolumePage] isAdrhc = ${isAdrhc}, online = ${online}, state:\n`, state);
 
   /* function addLog(log: string) {
     SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
