@@ -26,7 +26,7 @@ import MopidyPlayOptions from '../../ui/MopidyPlayOptions';
 import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/PrevNextPanel';
 import KefLSXPanel from '../../ui/KefLSXPanel';
-import { setPower, unmute } from '../../lib/kef';
+import { setPower } from '../../lib/kef';
 import { isAdrhc } from '../../lib/adrhc';
 
 type VolumePageState = {
