@@ -49,7 +49,7 @@ export default function VolumePage() {
 
   const adrhc = isAdrhc();
 
-  console.log(`[VolumePage] isAdrhc = ${isAdrhc}, online = ${online}, state:\n`, state);
+  console.log(`[VolumePage] isAdrhc = ${adrhc}, online = ${online}, state:\n`, state);
 
   /* function addLog(log: string) {
     SHOW_LOGS && setLogs((oldLog) => [log, ...oldLog]);
