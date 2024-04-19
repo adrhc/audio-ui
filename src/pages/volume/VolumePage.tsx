@@ -26,6 +26,7 @@ import MopidyPlayOptions from '../../ui/MopidyPlayOptions';
 import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/PrevNextPanel';
 import KefLSXPanel from '../../ui/KefLSXPanel';
+import { setPower } from '../../lib/kef';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -136,6 +137,11 @@ export default function VolumePage() {
     };
   }, [mopidy]);
 
+  function onPlay() {
+    setPower(true);
+    playMopidy(mopidy);
+  }
+
   function onVolumeChange(newValue: number) {
     console.log(`[VolumePage:onVolumeChange] newValue = ${newValue}`);
     // addLog(`[VolumePage:onVolumeChange] newValue = ${newValue}`);
@@ -190,7 +196,7 @@ export default function VolumePage() {
           onMute={() => muteMopidy(mopidy, !state.mute)}
           pause={() => pauseMopidy(mopidy)}
           stop={() => stopMopidy(mopidy)}
-          play={() => playMopidy(mopidy)}
+          play={onPlay}
           resume={() => resumeMopidy(mopidy)}
         />
         <VolumeButtons disabled={!online} volume={state.volume} handleExactVolume={onVolumeChange} />
