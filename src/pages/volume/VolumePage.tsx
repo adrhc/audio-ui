@@ -27,6 +27,7 @@ import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/PrevNextPanel';
 import KefLSXPanel from '../../ui/KefLSXPanel';
 import { setPower } from '../../lib/kef';
+import { isInsecureAdrhc } from '../../lib/adrhc';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -45,6 +46,8 @@ export default function VolumePage() {
     mute: false,
     songAndArtists: {},
   });
+
+  const isAdrhc = isInsecureAdrhc();
 
   console.log(`[VolumePage] online = ${online}, state:\n`, state);
 
@@ -138,7 +141,7 @@ export default function VolumePage() {
   }, [mopidy]);
 
   function onPlay() {
-    setPower(true);
+    isAdrhc && setPower(true);
     playMopidy(mopidy);
   }
 
@@ -208,6 +211,8 @@ export default function VolumePage() {
         />
         <ShowIf condition={state.tuneOn}>
           <MopidyPlayOptions />
+        </ShowIf>
+        <ShowIf condition={isAdrhc && state.tuneOn}>
           <KefLSXPanel />
         </ShowIf>
       </Stack>
