@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../App';
-import { SongAndArtists, getSongAndArtists, getTrackList, play, toSongAndArtists } from '../../lib/mpc';
+import { SongAndArtists, getSongAndArtists, getTrackList, toSongAndArtists } from '../../lib/mpc';
 import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { formatErr } from '../../lib/format';
@@ -16,6 +16,7 @@ import './styles.scss';
 import { getUA, isTablet } from 'react-device-detect';
 import { SHOW_LOGS } from '../../lib/config';
 import Logs from '../../ui/Logs';
+import { playSelection } from '../../lib/player';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -103,10 +104,12 @@ export default function TrackListPage() {
 
   function handleSelection(song: SongAndArtists) {
     // console.log(`[TrackListPage:handleSelection] song:\n`, song);
-    setState((old) => ({ ...old, loading: true }));
-    play(mopidy, song.tlid)
-      ?.catch((reason) => alert(formatErr(reason)))
-      .finally(() => setState((old) => ({ ...old, loading: false })));
+    if (song.tlid) {
+      setState((old) => ({ ...old, loading: true }));
+      playSelection(mopidy, song.tlid)
+        ?.catch((reason) => alert(formatErr(reason)))
+        .finally(() => setState((old) => ({ ...old, loading: false })));
+    }
   }
 
   function goBack() {

@@ -2,7 +2,7 @@ import Mopidy, { models } from 'mopidy';
 import { formatErr } from './format';
 
 export type SongAndArtists = {
-  tlid?: number;
+  tlid?: number | null;
   song?: string | null;
   artists?: string | null;
   uri?: string | null;

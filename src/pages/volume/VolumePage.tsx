@@ -8,13 +8,13 @@ import {
   stop as stopMopidy,
   pause as pauseMopidy,
   resume as resumeMopidy,
-  play as playMopidy,
   next,
   previous,
   SongAndArtists,
   toSongAndArtists,
   getSongAndArtists,
 } from '../../lib/mpc';
+import { safelyPlayCurrent } from '../../lib/player';
 import PlaybackPanel from '../../ui/PlaybackPanel';
 import { CoreListenerEvent, MopidyEvent, PlaybackState } from '../../lib/types';
 import { TITLE, rowHeight } from './styles';
@@ -26,7 +26,6 @@ import MopidyPlayOptions from '../../ui/MopidyPlayOptions';
 import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/PrevNextPanel';
 import KefLSXPanel from '../../ui/KefLSXPanel';
-import { setPower } from '../../lib/kef';
 import { isAdrhc } from '../../lib/adrhc';
 
 type VolumePageState = {
@@ -140,11 +139,6 @@ export default function VolumePage() {
     };
   }, [mopidy]);
 
-  function onPlay() {
-    playMopidy(mopidy);
-    adrhc && setPower(true);
-  }
-
   function onVolumeChange(newValue: number) {
     console.log(`[VolumePage:onVolumeChange] newValue = ${newValue}`);
     // addLog(`[VolumePage:onVolumeChange] newValue = ${newValue}`);
@@ -199,7 +193,7 @@ export default function VolumePage() {
           onMute={() => muteMopidy(mopidy, !state.mute)}
           pause={() => pauseMopidy(mopidy)}
           stop={() => stopMopidy(mopidy)}
-          play={onPlay}
+          play={() => safelyPlayCurrent(mopidy)}
           resume={() => resumeMopidy(mopidy)}
         />
         <VolumeButtons disabled={!online} volume={state.volume} handleExactVolume={onVolumeChange} />
