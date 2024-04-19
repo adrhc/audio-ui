@@ -26,7 +26,7 @@ import MopidyPlayOptions from '../../ui/MopidyPlayOptions';
 import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/PrevNextPanel';
 import KefLSXPanel from '../../ui/KefLSXPanel';
-import { setPower } from '../../lib/kef';
+import { setPower, unmute } from '../../lib/kef';
 import { isAdrhc } from '../../lib/adrhc';
 
 type VolumePageState = {
@@ -141,7 +141,7 @@ export default function VolumePage() {
   }, [mopidy]);
 
   function onPlay() {
-    adrhc && setPower(true);
+    adrhc && setPower(true).then(unmute);
     playMopidy(mopidy);
   }
 

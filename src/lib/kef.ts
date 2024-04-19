@@ -11,3 +11,7 @@ export function getState() {
 export function setPower(power: boolean) {
     return post<KefLSXState>(`${ROOT}/${power ? 'start' : 'stop'}`);
 }
+
+export function unmute() {
+    return post<KefLSXState>(`${ROOT}/unmute`);
+}
