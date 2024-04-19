@@ -47,7 +47,7 @@ export default function VolumePage() {
     songAndArtists: {},
   });
 
-  const isAdrhc = isAdrhc();
+  const adrhc = isAdrhc();
 
   console.log(`[VolumePage] isAdrhc = ${isAdrhc}, online = ${online}, state:\n`, state);
 
@@ -141,7 +141,7 @@ export default function VolumePage() {
   }, [mopidy]);
 
   function onPlay() {
-    isAdrhc && setPower(true);
+    adrhc && setPower(true);
     playMopidy(mopidy);
   }
 
@@ -212,7 +212,7 @@ export default function VolumePage() {
         <ShowIf condition={state.tuneOn}>
           <MopidyPlayOptions />
         </ShowIf>
-        <ShowIf condition={isAdrhc && state.tuneOn}>
+        <ShowIf condition={adrhc && state.tuneOn}>
           <KefLSXPanel />
         </ShowIf>
       </Stack>
