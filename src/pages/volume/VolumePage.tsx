@@ -136,14 +136,14 @@ export default function VolumePage() {
     };
   }, [mopidy]);
 
-  function doSetMopidyVolume(newValue: number) {
-    console.log(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
-    // addLog(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
+  function onVolumeChange(newValue: number) {
+    console.log(`[VolumePage:onVolumeChange] newValue = ${newValue}`);
+    // addLog(`[VolumePage:onVolumeChange] newValue = ${newValue}`);
     if (mopidy != null) {
       setMopidyVolume(mopidy, newValue);
     } else {
-      console.error(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`, mopidy);
-      alert(`[VolumePage:doSetMopidyVolume] newValue = ${newValue}`);
+      console.error(`[VolumePage:onVolumeChange] newValue = ${newValue}`, mopidy);
+      alert(`[VolumePage:onVolumeChange] newValue = ${newValue}`);
     }
   }
 
@@ -174,14 +174,14 @@ export default function VolumePage() {
           volume={state.volume}
           // exactVolume={exactVolume}
           // setExactVolume={setExactVolume}
-          handleExactVolume={doSetMopidyVolume}
+          handleExactVolume={onVolumeChange}
         />
         {/* <VolumeSlider
           disabled={!online}
           mute={state.mute}
           volume={state.volume}
           onMute={() => muteMopidy(mopidy, !state.mute)}
-          onSlide={doSetMopidyVolume}
+          onSlide={onVolumeChange}
         /> */}
         <PlaybackPanel
           disabled={!online}
@@ -193,7 +193,7 @@ export default function VolumePage() {
           play={() => playMopidy(mopidy)}
           resume={() => resumeMopidy(mopidy)}
         />
-        <VolumeButtons disabled={!online} volume={state.volume} handleExactVolume={doSetMopidyVolume} />
+        <VolumeButtons disabled={!online} volume={state.volume} handleExactVolume={onVolumeChange} />
         <PrevNextPanel
           disabled={!online}
           previous={() => previous(mopidy)}

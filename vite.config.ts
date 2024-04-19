@@ -9,9 +9,10 @@ export default defineConfig({
         target: "https://adrhc.go.ro",
         changeOrigin: true,
       }, */
-      '/api/keflsx': {
+      '/audio-ui/api/keflsx': {
         target: "http://192.168.1.31:8085",
         changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/audio-ui/, '')
       },
       '/mopidy': {
         target: "ws://192.168.1.32:6680",
