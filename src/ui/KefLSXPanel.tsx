@@ -1,7 +1,7 @@
 import { Box, Icon, Stack } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import Spinner from './Spinner';
-import { BORDER, iconFontSize } from '../pages/volume/styles';
+import { BORDER, iconFontSizeMap } from '../pages/volume/styles';
 import { formatErr } from '../lib/format';
 import kefctrl from '../assets/kef-control-no-bkg.png';
 import kefctrlstop from '../assets/kef-control-stop.png';
@@ -41,9 +41,15 @@ const KefLSXPanel = () => {
   }
 
   const boxStyle = { height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' };
-  const baseBtnStyle: Styles = { lineHeight: 0, cursor: 'pointer', ...BORDER };
+  const baseBtnStyle: Styles = {
+    lineHeight: 0,
+    cursor: 'pointer',
+    ...BORDER,
+    p: 1,
+    ':hover': { bgcolor: 'rgba(0, 0, 0, 0.08)' },
+  };
   const btnStyle = useBreakpointValue(baseBtnStyle, { ...baseBtnStyle, p: 0.25 });
-  const iconStyle = { fontSize: iconFontSize };
+  const iconStyle = { fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0))) };
   const imgStyle = { maxWidth: '100%', maxHeight: '100%' };
 
   return (
