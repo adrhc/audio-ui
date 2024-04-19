@@ -4,7 +4,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import SubjectIcon from '@mui/icons-material/Subject';
 import TuneIcon from '@mui/icons-material/Tune';
-import { BORDER, playIconFontSizeMap } from './VolumePage-styles';
+import { BORDER, playIconFontSizeMap } from '../pages/volume/styles';
 import { NoArgsProc, Styles } from '../lib/types';
 
 type PrevNextPanelParam = {

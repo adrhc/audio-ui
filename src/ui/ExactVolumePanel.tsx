@@ -1,5 +1,5 @@
 import { Stack, Button, ButtonBase } from '@mui/material';
-import { inputFontSize } from './VolumePage-styles';
+import { inputFontSize } from '../pages/volume/styles';
 import { Styles } from '../lib/types';
 
 export type ExactVolumePanelParam = {

@@ -1,7 +1,7 @@
 import { Box, InputBase, IconButton, Tooltip } from '@mui/material';
 import { onEnterKey } from '../lib/keys';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import { BORDER, YS, iconFontSize, inputFontSize } from './VolumePage-styles';
+import { BORDER, YS, iconFontSize, inputFontSize } from '../pages/volume/styles';
 import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
 

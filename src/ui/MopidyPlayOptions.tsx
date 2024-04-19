@@ -10,7 +10,7 @@ import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
 import { Box, Stack, ToggleButton, Tooltip } from '@mui/material';
-import { BORDER, iconFontSize } from './VolumePage-styles';
+import { BORDER, iconFontSize } from '../pages/volume/styles';
 import Spinner from './Spinner';
 import { toArray } from '../lib/array';
 import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';

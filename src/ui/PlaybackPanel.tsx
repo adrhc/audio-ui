@@ -3,7 +3,7 @@ import StopIcon from '@mui/icons-material/Stop';
 import { NoArgsProc, PlaybackState } from '../lib/types';
 // import { RestartAlt } from '@mui/icons-material';
 import PauseIcon from '@mui/icons-material/Pause';
-import { BORDER, playIconFontSizeMap } from './VolumePage-styles';
+import { BORDER, playIconFontSizeMap } from '../pages/volume/styles';
 import PlayOrResumeButton from './PlayOrResumeButton';
 import MuteIconButton from './MuteIconButton';
 

@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material';
-import { zipBreakpoints } from '../lib/styles';
-import { Styles } from '../lib/types';
+import { zipBreakpoints } from '../../lib/styles';
+import { Styles } from '../../lib/types';
 
 export const MIN_WIDTH = '310px';
 export const MAN_WIDTH = '400px';

@@ -6,7 +6,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
-import VolumePage from './pages/VolumePage.tsx';
+import VolumePage from './pages/volume/VolumePage.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import App from './App.tsx';
 import TrackListPage from './pages/tracklist/TrackListPage.tsx';
