@@ -4,89 +4,24 @@ import { Styles } from '../../lib/types';
 
 export type ExactVolumePanelParam = {
   disabled: boolean;
-  volume: number;
   exactVolume?: number;
   setExactVolume?: (volume: number) => void;
   handleExactVolume: (volume: number) => void;
 };
 
-const btnStyle: Styles = { fontSize: inputFontSize, minWidth: 'auto', flexGrow: 1, p: 0 };
-const volumes = [5, 15, 25, 45, 60, 75];
-
-export default function ExactVolumePanel({ disabled, volume, handleExactVolume }: ExactVolumePanelParam) {
+export default function ExactVolumePanel({ disabled, handleExactVolume }: ExactVolumePanelParam) {
   return (
     <Stack direction="row" spacing={[0.25, 0.5]} sx={{ justifyContent: 'center' }}>
-      <Button
-        sx={btnStyle}
-        disabled={disabled}
-        variant="outlined"
-        onClick={() => handleExactVolume(volumes[0])}
-      >
-        {volumes[0]}
-      </Button>
-      <Button
-        sx={btnStyle}
-        disabled={disabled}
-        variant="outlined"
-        onClick={() => handleExactVolume(volumes[1])}
-      >
-        {volumes[1]}
-      </Button>
-      <Button
-        sx={btnStyle}
-        disabled={disabled}
-        variant="outlined"
-        onClick={() => handleExactVolume(volumes[2])}
-      >
-        {volumes[2]}
-      </Button>
-      <ButtonBase
-        sx={{
-          ...btnStyle,
-          fontWeight: 'bold',
-          cursor: 'auto',
-          border: 'thin solid rgba(25, 118, 210, 0.5)',
-          borderRadius: 1,
-        }}
-        disabled={disabled}
-      >
-        {volume}
-      </ButtonBase>
-      {/* <Box sx={[{display: 'flex', alignItems: 'center'}]}>
-        <Typography noWrap={true} fontSize={inputFontSize} fontWeight="bold">
+      {[5, 15, 25, 45, 60, 75].map((volume) => (
+        <Button
+          sx={{ fontSize: inputFontSize, minWidth: 'auto', flexGrow: 1, p: 0 }}
+          disabled={disabled}
+          variant="outlined"
+          onClick={() => handleExactVolume(volume)}
+        >
           {volume}
-        </Typography>
-      </Box> */}
-      {/* <ExactVolume
-        disabled={disabled}
-        exactVolume={exactVolume}
-        setExactVolume={setExactVolume}
-        handleExactVolume={handleExactVolume}
-      /> */}
-      <Button
-        sx={btnStyle}
-        disabled={disabled}
-        variant="outlined"
-        onClick={() => handleExactVolume(volumes[3])}
-      >
-        {volumes[3]}
-      </Button>
-      <Button
-        sx={btnStyle}
-        disabled={disabled}
-        variant="outlined"
-        onClick={() => handleExactVolume(volumes[4])}
-      >
-        {volumes[4]}
-      </Button>
-      <Button
-        sx={btnStyle}
-        disabled={disabled}
-        variant="outlined"
-        onClick={() => handleExactVolume(volumes[5])}
-      >
-        {volumes[5]}
-      </Button>
+        </Button>
+      ))}
     </Stack>
   );
 }

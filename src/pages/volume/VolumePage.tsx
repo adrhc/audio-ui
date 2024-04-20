@@ -165,7 +165,6 @@ export default function VolumePage() {
         </Box>
         <ExactVolumePanel
           disabled={!online}
-          volume={state.volume}
           // exactVolume={exactVolume}
           // setExactVolume={setExactVolume}
           handleExactVolume={onVolumeChange}
