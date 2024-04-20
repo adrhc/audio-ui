@@ -1,5 +1,5 @@
 import { Tooltip, IconButton, Theme } from '@mui/material';
-import { NoArgsProc, PlaybackState, Styles } from '../lib/types';
+import { NoArgsProc, PlaybackState, Styles } from '../../lib/types';
 // import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 

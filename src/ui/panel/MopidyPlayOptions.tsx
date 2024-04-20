@@ -1,18 +1,18 @@
 import { useContext, useEffect, useState } from 'react';
-import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../lib/mpc';
-import { AppContext } from '../App';
-import { getPlayOptions } from '../lib/mpc';
-import { formatErr } from '../lib/format';
-import { MopidyEvent, Styles } from '../lib/types';
+import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../../lib/mpc';
+import { AppContext } from '../../App';
+import { getPlayOptions } from '../../lib/mpc';
+import { formatErr } from '../../lib/format';
+import { MopidyEvent, Styles } from '../../lib/types';
 import Mopidy from 'mopidy';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
 import { Box, Stack, ToggleButton, Tooltip } from '@mui/material';
-import { BORDER, iconFontSizeMap } from '../pages/volume/styles';
-import Spinner from './Spinner';
-import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
+import { BORDER, iconFontSizeMap } from '../../pages/volume/styles';
+import Spinner from '../Spinner';
+import { useBreakpointValue } from '../../lib/hooks/useBreakpointValue';
 
 type MopidyPlayOptionsState = { loading?: boolean } & PlayOptions;
 

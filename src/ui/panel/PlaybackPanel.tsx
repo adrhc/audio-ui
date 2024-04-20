@@ -4,8 +4,8 @@ import { NoArgsProc, PlaybackState } from '../../lib/types';
 // import { RestartAlt } from '@mui/icons-material';
 import PauseIcon from '@mui/icons-material/Pause';
 import { BORDER, playIconFontSizeMap } from '../../pages/volume/styles';
-import PlayOrResumeButton from '../PlayOrResumeButton';
-import MuteIconButton from '../MuteIconButton';
+import PlayOrResumeButton from '../button/PlayOrResumeButton';
+import MuteIconButton from '../button/MuteIconButton';
 
 export type PlaybackPanelParam = {
   disabled: boolean;

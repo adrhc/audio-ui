@@ -1,8 +1,8 @@
 import { Box, InputBase, IconButton, Tooltip } from '@mui/material';
-import { onEnterKey } from '../lib/keyboard';
+import { onEnterKey } from '../../lib/keyboard';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import { BORDER, PANEL_YS, iconFontSize, inputFontSize } from '../pages/volume/styles';
-import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
+import { BORDER, PANEL_YS, iconFontSize, inputFontSize } from '../../pages/volume/styles';
+import { useBreakpointValue } from '../../lib/hooks/useBreakpointValue';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 export type ExactVolumeParam = {

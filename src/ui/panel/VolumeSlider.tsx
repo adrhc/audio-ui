@@ -1,7 +1,7 @@
 import { VolumeUp } from '@mui/icons-material';
 import { IconButton, Slider, Stack, Tooltip, debounce } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import MuteIconButton from '../MuteIconButton';
+import MuteIconButton from '../button/MuteIconButton';
 import { NoArgsProc } from '../../lib/types';
 import { BORDER, iconFontSizeMap } from '../../pages/volume/styles';
 

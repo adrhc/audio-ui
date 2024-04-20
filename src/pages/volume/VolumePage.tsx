@@ -22,7 +22,7 @@ import ExactVolumePanel from '../../ui/panel/ExactVolumePanel';
 import { AppContext } from '../../App';
 // import Logs from '../ui/Logs';
 // import { SHOW_LOGS } from '../lib/config';
-import MopidyPlayOptions from '../../ui/MopidyPlayOptions';
+import MopidyPlayOptions from '../../ui/panel/MopidyPlayOptions';
 import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/panel/PrevNextPanel';
 import KefLSXPanel from '../../ui/panel/KefLSXPanel';

@@ -1,7 +1,7 @@
 import { Tooltip, IconButton } from '@mui/material';
 import DownMuteIcon from './DownMuteIcon';
-import { Styles } from '../lib/types';
-import { toArray } from '../lib/array';
+import { Styles } from '../../lib/types';
+import { toArray } from '../../lib/array';
 // import { AllSystemCSSProperties } from '@mui/system/styleFunctionSx';
 
 type MuteIconButtonParam = {
