@@ -7,7 +7,7 @@ export const MAN_WIDTH = '400px';
 
 export const TITLE: Styles = { textAlign: 'center' };
 
-export const YS = [2.5, 2.5]; // available y space
+export const PANEL_YS = [2.5, 2.5]; // available y space
 
 const FONT_SIZE: Record<'input' | 'icon', number[]> = {
   input: [3, 2.75],
@@ -38,16 +38,19 @@ export function playIconFontSizeMap(sizeMapper: (fontSize: number[]) => number[]
   return (theme: Theme) => sizeMapper(PLAY_FONT_SIZE).map((v) => theme.spacing(v));
 }
 
-export function ys(theme: Theme) {
-  console.log(
-    'YS(theme):',
+export function panelYSpace(theme: Theme) {
+  /* console.log(
+    'panelYSpace(theme):',
     YS.map((v) => theme.spacing(v))
-  );
-  return YS.map((v) => theme.spacing(v));
+  ); */
+  return PANEL_YS.map((v) => theme.spacing(v));
 }
 
-export function rowHeight(theme: Theme) {
-  const breakpointValues = zipBreakpoints(FONT_SIZE.icon, YS, (ic, ys) => ic + 2 * ys);
+/**
+ * @returns FONT_SIZE + 2 * PANEL_YS
+ */
+export function panelHeight(theme: Theme) {
+  const breakpointValues = zipBreakpoints(FONT_SIZE.icon, PANEL_YS, (ic, ys) => ic + 2 * ys);
   // console.log('breakpointValues:', breakpointValues);
   // console.log('breakpointValues(theme):', breakpointValues.map(v => theme.spacing(v));
   return breakpointValues.map((v) => theme.spacing(v));

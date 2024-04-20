@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import Mopidy, { models } from 'mopidy';
 import { useContext, useEffect, useState } from 'react';
-import VolumeButtons from '../../ui/VolumeButtons';
+import VolumeButtons from '../../ui/panel/VolumeButtons';
 import {
   setVolume as setMopidyVolume,
   mute as muteMopidy,
@@ -15,17 +15,17 @@ import {
   getSongAndArtists,
 } from '../../lib/mpc';
 import { safelyPlayCurrent } from '../../lib/player';
-import PlaybackPanel from '../../ui/PlaybackPanel';
+import PlaybackPanel from '../../ui/panel/PlaybackPanel';
 import { CoreListenerEvent, MopidyEvent, PlaybackState } from '../../lib/types';
-import { TITLE, rowHeight } from './styles';
-import ExactVolumePanel from '../../ui/ExactVolumePanel';
+import { TITLE, panelHeight } from './styles';
+import ExactVolumePanel from '../../ui/panel/ExactVolumePanel';
 import { AppContext } from '../../App';
 // import Logs from '../ui/Logs';
 // import { SHOW_LOGS } from '../lib/config';
 import MopidyPlayOptions from '../../ui/MopidyPlayOptions';
 import ShowIf from '../../ui/ShowIf';
-import PrevNextPanel from '../../ui/PrevNextPanel';
-import KefLSXPanel from '../../ui/KefLSXPanel';
+import PrevNextPanel from '../../ui/panel/PrevNextPanel';
+import KefLSXPanel from '../../ui/panel/KefLSXPanel';
 import { isAdrhc } from '../../lib/adrhc';
 
 type VolumePageState = {
@@ -161,7 +161,7 @@ export default function VolumePage() {
           // see https://www.whatismybrowser.com/w/66ZAAY4
           minWidth: '310px',
           maxWidth: '400px',
-          '& > div': { height: rowHeight },
+          '& > div': { height: panelHeight },
         }}
       >
         <Box sx={{ height: 'auto !important' }}>

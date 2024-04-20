@@ -1,9 +1,9 @@
 import { VolumeUp } from '@mui/icons-material';
 import { IconButton, Slider, Stack, Tooltip, debounce } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import MuteIconButton from './MuteIconButton';
-import { NoArgsProc } from '../lib/types';
-import { BORDER, iconFontSizeMap } from '../pages/volume/styles';
+import MuteIconButton from '../MuteIconButton';
+import { NoArgsProc } from '../../lib/types';
+import { BORDER, iconFontSizeMap } from '../../pages/volume/styles';
 
 const fontSizeMapper = (ifs: number[]) => ifs.map((fs, i) => fs + (i == 0 ? 0.5 : 0));
 const muteBtnFontSizeMapper = (ifs: number[]) => fontSizeMapper(ifs).map((s) => s + 0.375);

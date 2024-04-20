@@ -10,25 +10,9 @@ import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
 import { Box, Stack, ToggleButton, Tooltip } from '@mui/material';
-import { BORDER, iconFontSize } from '../pages/volume/styles';
+import { BORDER, iconFontSizeMap } from '../pages/volume/styles';
 import Spinner from './Spinner';
-import { toArray } from '../lib/array';
 import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
-
-const SX: Record<string, Styles> = {
-  box: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-  btn: {
-    color: 'black',
-  },
-  icon: {
-    fontSize: iconFontSize,
-    // fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.75))),
-  },
-};
 
 type MopidyPlayOptionsState = { loading?: boolean } & PlayOptions;
 
@@ -74,13 +58,16 @@ const MopidyPlayOptions = () => {
     };
   }, [mopidy]);
 
-  const btnStyle = useBreakpointValue(SX.btn, { ...SX.btn, p: 0.25 });
+  const boxStyle = { height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' };
+  const baseBtnStyle: Styles = {color: 'black'};
+  const btnStyle = useBreakpointValue(baseBtnStyle, { ...baseBtnStyle, p: 0.25 });
+  const iconStyle = { fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.5))) };
 
   return (
     // Only Stack works with Spinner!
     <Stack sx={{ height: '100%', ...BORDER }}>
       <Spinner hide={!state.loading} />
-      <Box sx={[{ height: '100%' }, ...toArray(SX.box), state.loading ? { display: 'none' } : {}]}>
+      <Box sx={[boxStyle, state.loading ? { display: 'none' } : {}]}>
         <Tooltip title="Repeat">
           <span>
             <ToggleButton
@@ -90,7 +77,7 @@ const MopidyPlayOptions = () => {
               sx={btnStyle}
               onClick={() => setRepeat(mopidy, !state.repeat)}
             >
-              <RepeatIcon sx={SX.icon} />
+              <RepeatIcon sx={iconStyle} />
             </ToggleButton>
           </span>
         </Tooltip>
@@ -103,7 +90,7 @@ const MopidyPlayOptions = () => {
               sx={btnStyle}
               onClick={() => setSingle(mopidy, !state.single)}
             >
-              <TimesOneMobiledataIcon sx={SX.icon} />
+              <TimesOneMobiledataIcon sx={iconStyle} />
             </ToggleButton>
           </span>
         </Tooltip>
@@ -116,7 +103,7 @@ const MopidyPlayOptions = () => {
               sx={btnStyle}
               onClick={() => setRandom(mopidy, !state.random)}
             >
-              <ShuffleIcon sx={SX.icon} />
+              <ShuffleIcon sx={iconStyle} />
             </ToggleButton>
           </span>
         </Tooltip>
@@ -129,7 +116,7 @@ const MopidyPlayOptions = () => {
               sx={btnStyle}
               onClick={() => setConsume(mopidy, !state.consume)}
             >
-              <RestaurantMenuIcon sx={SX.icon} />
+              <RestaurantMenuIcon sx={iconStyle} />
             </ToggleButton>
           </span>
         </Tooltip>

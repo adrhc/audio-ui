@@ -1,7 +1,7 @@
 import { Box, InputBase, IconButton, Tooltip } from '@mui/material';
-import { onEnterKey } from '../lib/keys';
+import { onEnterKey } from '../lib/keyboard';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
-import { BORDER, YS, iconFontSize, inputFontSize } from '../pages/volume/styles';
+import { BORDER, PANEL_YS, iconFontSize, inputFontSize } from '../pages/volume/styles';
 import { useBreakpointValue } from '../lib/hooks/useBreakpointValue';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
 
@@ -16,10 +16,10 @@ const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume 
   const xFactor = useBreakpointValue(0.5, 2);
   // console.log('xFactor:', xFactor)
   // ExactVolume height is ys, see '& .MuiInputBase-input'.py
-  const inputPaddingLeft = YS.map((ys) => ys * xFactor);
+  const inputPaddingLeft = PANEL_YS.map((ys) => ys * xFactor);
   // icon right space = iconPaddingMy + iconMarginRight = inputPaddingLeft
-  const iconPaddingMy = YS.map((ys) => (ys * xFactor) / 4);
-  const iconMarginRight = YS.map((ys) => (3 * ys * xFactor) / 4);
+  const iconPaddingMy = PANEL_YS.map((ys) => (ys * xFactor) / 4);
+  const iconMarginRight = PANEL_YS.map((ys) => (3 * ys * xFactor) / 4);
 
   return (
     <Box
