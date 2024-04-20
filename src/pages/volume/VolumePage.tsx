@@ -17,7 +17,7 @@ import {
 import { safelyPlayCurrent } from '../../lib/player';
 import PlaybackPanel from '../../ui/panel/PlaybackPanel';
 import { CoreListenerEvent, MopidyEvent, PlaybackState } from '../../lib/types';
-import { TITLE, panelHeight } from './styles';
+import { panelHeight } from './styles';
 import ExactVolumePanel from '../../ui/panel/ExactVolumePanel';
 import { AppContext } from '../../App';
 // import Logs from '../ui/Logs';
@@ -28,6 +28,7 @@ import PrevNextPanel from '../../ui/panel/PrevNextPanel';
 import KefLSXPanel from '../../ui/panel/KefLSXPanel';
 import { isAdrhc } from '../../lib/adrhc';
 import '../../ui/panel/panel.scss';
+import styles from './styles.module.scss';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -153,23 +154,12 @@ export default function VolumePage() {
 
   return (
     <Stack sx={{ height: '100%', alignItems: 'center' }}>
-      <Stack
-        spacing={1}
-        sx={{
-          justifyContent: 'center',
-          width: '100%',
-          height: '100%',
-          // see https://www.whatismybrowser.com/w/66ZAAY4
-          minWidth: '310px',
-          maxWidth: '400px',
-          '& > div': { height: panelHeight },
-        }}
-      >
+      <Stack className={styles.container} spacing={1} sx={{ '& > div': { height: panelHeight } }}>
         <Box sx={{ height: 'auto !important' }}>
-          <Typography variant="h6" sx={TITLE}>
+          <Typography variant="h6" className={styles.title}>
             {state.songAndArtists.song}
           </Typography>
-          <Typography variant="h6" sx={TITLE}>
+          <Typography variant="h6" className={styles.title}>
             {state.songAndArtists.artists}
           </Typography>
         </Box>
