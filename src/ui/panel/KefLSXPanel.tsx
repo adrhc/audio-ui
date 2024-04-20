@@ -8,6 +8,7 @@ import kefctrlstop from '../../assets/kef-control-stop.png';
 import { useBreakpointValue } from '../../lib/hooks/useBreakpointValue';
 import { Styles } from '../../lib/types';
 import { KefLSXState, getState, setPower as setKefPower } from '../../lib/kef';
+import ToggleImgButton from '../button/ToggleImgButton';
 
 type KefLSXPanelState = { loading?: boolean } & KefLSXState;
 
@@ -41,21 +42,22 @@ const KefLSXPanel = () => {
   }
 
   const boxStyle = { height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' };
-  const baseBtnStyle: Styles = { lineHeight: 0, p: 1.124 };
-  const btnStyle = useBreakpointValue(baseBtnStyle, { ...baseBtnStyle, p: 0.75 });
+  const btnStyle = useBreakpointValue({ p: 1.124 }, { p: 0.75 });
   const iconStyle = { fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))) };
-  const imgStyle = { maxWidth: '100%', maxHeight: '100%' };
 
   return (
     // Only Stack works with Spinner!
     <Stack sx={{ height: '100%', ...BORDER }}>
       <Spinner hide={!state.loading} />
       <Box sx={[boxStyle, state.loading ? { display: 'none' } : {}]}>
-        <ToggleButton value="kef" sx={btnStyle} onClick={() => setPower(!state.power)}>
-          <Icon sx={iconStyle}>
-            <img style={imgStyle} src={state.power ? kefctrl : kefctrlstop} />
-          </Icon>
-        </ToggleButton>
+        <ToggleImgButton
+          sx={btnStyle}
+          iconSx={iconStyle}
+          offImg={kefctrlstop}
+          onImg={kefctrl}
+          selected={state.power}
+          onClick={() => setPower(!state.power)}
+        />
       </Box>
     </Stack>
   );
