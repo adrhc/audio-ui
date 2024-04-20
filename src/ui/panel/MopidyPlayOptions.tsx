@@ -58,7 +58,7 @@ const MopidyPlayOptions = () => {
     };
   }, [mopidy]);
 
-  const btnStyle = useBreakpointValue({ p: 1 }, { p: 0.75 });
+  const btnStyle = useBreakpointValue({ p: 1.1 }, { p: 0.75 });
   const iconStyle = { fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.5))) };
 
   return (
