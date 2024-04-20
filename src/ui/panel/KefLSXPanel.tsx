@@ -1,6 +1,5 @@
 import { Stack } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import Spinner from '../Spinner';
 import { iconFontSizeMap } from '../../pages/volume/styles';
 import { formatErr } from '../../lib/format';
 import kefctrl from '../../assets/kef-control-no-bkg.png';
@@ -10,6 +9,7 @@ import { KefLSXState, getState, setPower as setKefPower, setVolume } from '../..
 import ToggleImgButton from '../button/ToggleImgButton';
 import VolumeButtons from './VolumeButtons';
 import ShowIf from '../ShowIf';
+import SpinnerPannel from './SpinnerPannel';
 
 type KefLSXPanelState = { loading?: boolean } & KefLSXState;
 
@@ -54,11 +54,7 @@ const KefLSXPanel = () => {
   return (
     // Only < /> or Stack works with Spinner!
     <>
-      <ShowIf condition={state.loading}>
-        <Stack className="panel">
-          <Spinner />
-        </Stack>
-      </ShowIf>
+      <SpinnerPannel loading={state.loading} />
       <ShowIf condition={!state.loading && !state.power}>
         <Stack direction="row" className="panel">
           <ToggleImgButton

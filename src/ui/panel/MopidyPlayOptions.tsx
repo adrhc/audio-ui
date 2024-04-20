@@ -11,8 +11,8 @@ import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
 import { Stack, ToggleButton, Tooltip } from '@mui/material';
 import { iconFontSizeMap } from '../../pages/volume/styles';
-import Spinner from '../Spinner';
 import { useBreakpointValue } from '../../hooks/useBreakpointValue';
+import SpinnerPannel from './SpinnerPannel';
 
 type MopidyPlayOptionsState = { loading?: boolean } & PlayOptions;
 
@@ -64,7 +64,7 @@ const MopidyPlayOptions = () => {
   return (
     // Only < /> or Stack works with Spinner!
     <>
-      <Spinner hide={!state.loading} />
+      <SpinnerPannel loading={state.loading} />
       <Stack direction="row" className="panel" sx={state.loading ? { display: 'none' } : {}}>
         <Tooltip title="Repeat">
           <span>
