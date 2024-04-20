@@ -42,7 +42,7 @@ const KefLSXPanel = () => {
 
   const boxStyle = { height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' };
   const baseBtnStyle: Styles = { lineHeight: 0, p: 1.124 };
-  const btnStyle = useBreakpointValue(baseBtnStyle, { ...baseBtnStyle, p: 0.25 });
+  const btnStyle = useBreakpointValue(baseBtnStyle, { ...baseBtnStyle, p: 0.75 });
   const iconStyle = { fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))) };
   const imgStyle = { maxWidth: '100%', maxHeight: '100%' };
 
