@@ -10,7 +10,8 @@ import VolumePage from './pages/volume/VolumePage.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import App from './App.tsx';
 import TrackListPage from './pages/tracklist/TrackListPage.tsx';
-import THEME from './config/theme.tsx';
+import THEME from './ui/theme.tsx';
+import './main.scss'
 
 const router = createHashRouter([
   {

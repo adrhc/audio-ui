@@ -2,7 +2,7 @@ import { Box, InputBase, IconButton, Tooltip } from '@mui/material';
 import { onEnterKey } from '../../lib/keyboard';
 import GraphicEqIcon from '@mui/icons-material/GraphicEq';
 import { BORDER, PANEL_YS, iconFontSize, inputFontSize } from '../../pages/volume/styles';
-import { useBreakpointValue } from '../../lib/hooks/useBreakpointValue';
+import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 // import EqualizerIcon from '@mui/icons-material/Equalizer';
 
 export type ExactVolumeParam = {
@@ -22,14 +22,7 @@ const ExactVolume = ({ disabled, exactVolume, setExactVolume, handleExactVolume 
   const iconMarginRight = PANEL_YS.map((ys) => (3 * ys * xFactor) / 4);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        width: '100%',
-        ...BORDER,
-      }}
-    >
+    <Box className="panel">
       <InputBase
         fullWidth
         disabled={disabled}

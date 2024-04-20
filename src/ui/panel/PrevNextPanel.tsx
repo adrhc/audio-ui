@@ -1,10 +1,10 @@
-import { Box, IconButton } from '@mui/material';
+import { IconButton, Stack } from '@mui/material';
 import { Link } from 'react-router-dom';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import SubjectIcon from '@mui/icons-material/Subject';
 import TuneIcon from '@mui/icons-material/Tune';
-import { BORDER, playIconFontSizeMap } from '../../pages/volume/styles';
+import { playIconFontSizeMap } from '../../pages/volume/styles';
 import { NoArgsProc, Styles } from '../../lib/types';
 
 type PrevNextPanelParam = {
@@ -14,37 +14,32 @@ type PrevNextPanelParam = {
   toggleTune: NoArgsProc;
 };
 
-const SX: Record<string, Styles> = {
-  btn: {
-    color: 'black',
-  },
-  tk: {
-    fontSize: playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.75 + (i == 0 ? -0.35 : -0.1))),
-  },
-  bf: {
-    fontSize: playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 1.1 + (i == 0 ? 1 : 0.75))),
-  },
-  tune: {
-    fontSize: playIconFontSizeMap((ifs) => ifs.map((n, i) => n + 0.75 + (i == 0 ? -0.35 : -0.1))),
-  },
+const btnStyle: Styles = { color: 'black', p: 0.75 };
+const tkStyle: Styles = {
+  fontSize: playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.4 : 0.65))),
+};
+const bfStyle: Styles = {
+  fontSize: playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 2.1 : 1.85))),
+};
+const tuneStyle: Styles = {
+  fontSize: playIconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.4 : 0.65))),
 };
 
 export default function PrevNextPanel({ disabled, previous, next, toggleTune }: PrevNextPanelParam) {
-//   const justifyContent = useSpaceEvenly();
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', ...BORDER }}>
-      <IconButton disabled={disabled} sx={SX.btn} component={Link} to="/trackList">
-        <SubjectIcon sx={SX.tk} />
+    <Stack direction="row" className="panel">
+      <IconButton disabled={disabled} sx={btnStyle} component={Link} to="/trackList">
+        <SubjectIcon sx={tkStyle} />
       </IconButton>
-      <IconButton disabled={disabled} sx={{ ...SX.btn, p: 0 }} onClick={() => previous()}>
-        <NavigateBeforeIcon sx={SX.bf} />
+      <IconButton disabled={disabled} sx={{ ...btnStyle, p: 0 }} onClick={() => previous()}>
+        <NavigateBeforeIcon sx={bfStyle} />
       </IconButton>
-      <IconButton disabled={disabled} sx={{ ...SX.btn, p: 0 }} onClick={() => next()}>
-        <NavigateNextIcon sx={SX.bf} />
+      <IconButton disabled={disabled} sx={{ ...btnStyle, p: 0 }} onClick={() => next()}>
+        <NavigateNextIcon sx={bfStyle} />
       </IconButton>
-      <IconButton disabled={disabled} sx={SX.btn} onClick={toggleTune}>
-        <TuneIcon sx={SX.tune} />
+      <IconButton disabled={disabled} sx={btnStyle} onClick={toggleTune}>
+        <TuneIcon sx={tuneStyle} />
       </IconButton>
-    </Box>
+    </Stack>
   );
 }

@@ -31,7 +31,6 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
       <Button
         disabled={disabled}
         variant="outlined"
-        // size="small"
         sx={btnStyle}
         onClick={() => doHandleExactVolume(Math.max(0, volume - 5))}
       >
@@ -40,7 +39,6 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
       <Button
         disabled={disabled}
         variant="outlined"
-        // size="large"
         sx={btnStyle}
         onClick={() => doHandleExactVolume(volume - 1)}
       >
@@ -49,7 +47,6 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
       <Button
         disabled={disabled}
         variant="outlined"
-        // size="large"
         sx={btnStyle}
         onClick={() => doHandleExactVolume(volume + 1)}
       >
@@ -58,7 +55,6 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
       <Button
         disabled={disabled}
         variant="outlined"
-        // size="small"
         sx={btnStyle}
         onClick={() => doHandleExactVolume(Math.min(100, volume + 5))}
       >

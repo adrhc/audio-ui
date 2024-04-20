@@ -3,7 +3,8 @@ import { IconButton, Slider, Stack, Tooltip, debounce } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import MuteIconButton from '../button/MuteIconButton';
 import { NoArgsProc } from '../../lib/types';
-import { BORDER, iconFontSizeMap } from '../../pages/volume/styles';
+import { iconFontSizeMap } from '../../pages/volume/styles';
+import './styles.scss';
 
 const fontSizeMapper = (ifs: number[]) => ifs.map((fs, i) => fs + (i == 0 ? 0.5 : 0));
 const muteBtnFontSizeMapper = (ifs: number[]) => fontSizeMapper(ifs).map((s) => s + 0.375);
@@ -33,7 +34,7 @@ const VolumeSlider = ({ disabled, mute, volume: parentVolume, onMute, onSlide }:
   }
 
   return (
-    <Stack direction="row" spacing={1} alignItems="center" sx={BORDER}>
+    <Stack direction="row" className="border" spacing={1} alignItems="center">
       <MuteIconButton
         disabled={disabled}
         sx={{ '& .MuiSvgIcon-root': { fontSize: iconFontSizeMap(muteBtnFontSizeMapper) } }}

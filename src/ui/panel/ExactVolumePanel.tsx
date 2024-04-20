@@ -15,7 +15,7 @@ const volumes = [5, 15, 25, 45, 60, 75];
 
 export default function ExactVolumePanel({ disabled, volume, handleExactVolume }: ExactVolumePanelParam) {
   return (
-    <Stack spacing={[0.25, 0.5]} direction="row" sx={{ justifyContent: 'center' }}>
+    <Stack direction="row" spacing={[0.25, 0.5]} sx={{ justifyContent: 'center' }}>
       <Button
         sx={btnStyle}
         disabled={disabled}

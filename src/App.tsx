@@ -5,13 +5,9 @@ import { Outlet } from 'react-router-dom';
 import Logs from './ui/Logs';
 import { SHOW_LOGS } from './lib/config';
 import { formatErr } from './lib/format';
+import { AppContextValue } from './lib/types';
 
 export const AppContext = createContext<AppContextValue>({} as AppContextValue);
-
-export type AppContextValue = {
-  mopidy: Mopidy;
-  online: boolean;
-};
 
 type AppState = {
   mopidy: Mopidy;

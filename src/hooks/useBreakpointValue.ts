@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { fillWithLastElem, valueAtIndexOrLast } from '../array';
+import { fillWithLastElem, valueAtIndexOrLast } from '../lib/array';
 
 export function useSpaceEvenly() {
   return useBreakpointValue('center', 'space-evenly');

@@ -27,6 +27,7 @@ import ShowIf from '../../ui/ShowIf';
 import PrevNextPanel from '../../ui/panel/PrevNextPanel';
 import KefLSXPanel from '../../ui/panel/KefLSXPanel';
 import { isAdrhc } from '../../lib/adrhc';
+import '../../ui/panel/panel.scss';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;

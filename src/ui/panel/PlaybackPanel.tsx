@@ -1,9 +1,8 @@
-import { Box, IconButton } from '@mui/material';
+import { IconButton, Stack } from '@mui/material';
 import StopIcon from '@mui/icons-material/Stop';
 import { NoArgsProc, PlaybackState } from '../../lib/types';
-// import { RestartAlt } from '@mui/icons-material';
 import PauseIcon from '@mui/icons-material/Pause';
-import { BORDER, playIconFontSizeMap } from '../../pages/volume/styles';
+import { playIconFontSizeMap } from '../../pages/volume/styles';
 import PlayOrResumeButton from '../button/PlayOrResumeButton';
 import MuteIconButton from '../button/MuteIconButton';
 
@@ -39,10 +38,9 @@ export default function PlaybackPanel({
 }: PlaybackPanelParam) {
   const stopEnabled = !!status && status !== 'stopped';
   const pauseEnabled = status === 'playing';
-  // const justifyContent = useSpaceEvenly();
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', ...BORDER }}>
+    <Stack direction="row" className="panel">
       <IconButton disabled={disabled || !pauseEnabled} sx={pauseBtn} onClick={pause}>
         <PauseIcon sx={{ fontSize: pauseFontSize }} />
       </IconButton>
@@ -63,6 +61,6 @@ export default function PlaybackPanel({
         mute={mute}
         onClick={onMute}
       />
-    </Box>
+    </Stack>
   );
 }

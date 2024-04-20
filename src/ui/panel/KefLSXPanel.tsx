@@ -1,12 +1,11 @@
-import { Box, Icon, Stack, ToggleButton } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import Spinner from '../Spinner';
-import { BORDER, iconFontSizeMap } from '../../pages/volume/styles';
+import { iconFontSizeMap } from '../../pages/volume/styles';
 import { formatErr } from '../../lib/format';
 import kefctrl from '../../assets/kef-control-no-bkg.png';
 import kefctrlstop from '../../assets/kef-control-stop.png';
-import { useBreakpointValue } from '../../lib/hooks/useBreakpointValue';
-import { Styles } from '../../lib/types';
+import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 import { KefLSXState, getState, setPower as setKefPower } from '../../lib/kef';
 import ToggleImgButton from '../button/ToggleImgButton';
 
@@ -41,15 +40,14 @@ const KefLSXPanel = () => {
       });
   }
 
-  const boxStyle = { height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' };
   const btnStyle = useBreakpointValue({ p: 1.124 }, { p: 0.75 });
   const iconStyle = { fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))) };
 
   return (
-    // Only Stack works with Spinner!
-    <Stack sx={{ height: '100%', ...BORDER }}>
+    // Only < /> or Stack works with Spinner!
+    <>
       <Spinner hide={!state.loading} />
-      <Box sx={[boxStyle, state.loading ? { display: 'none' } : {}]}>
+      <Stack direction="row" className="panel" sx={state.loading ? { display: 'none' } : {}}>
         <ToggleImgButton
           sx={btnStyle}
           iconSx={iconStyle}
@@ -58,8 +56,8 @@ const KefLSXPanel = () => {
           selected={state.power}
           onClick={() => setPower(!state.power)}
         />
-      </Box>
-    </Stack>
+      </Stack>
+    </>
   );
 };
 

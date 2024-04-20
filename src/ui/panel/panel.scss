@@ -1,0 +1,7 @@
+@use '/src/styles/mixins.scss';
+
+.panel {
+  @include mixins.border;
+  align-items: center;
+  justify-content: space-evenly;
+}

@@ -3,16 +3,16 @@ import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../../
 import { AppContext } from '../../App';
 import { getPlayOptions } from '../../lib/mpc';
 import { formatErr } from '../../lib/format';
-import { MopidyEvent, Styles } from '../../lib/types';
+import { MopidyEvent } from '../../lib/types';
 import Mopidy from 'mopidy';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
 import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
-import { Box, Stack, ToggleButton, Tooltip } from '@mui/material';
-import { BORDER, iconFontSizeMap } from '../../pages/volume/styles';
+import { Stack, ToggleButton, Tooltip } from '@mui/material';
+import { iconFontSizeMap } from '../../pages/volume/styles';
 import Spinner from '../Spinner';
-import { useBreakpointValue } from '../../lib/hooks/useBreakpointValue';
+import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 
 type MopidyPlayOptionsState = { loading?: boolean } & PlayOptions;
 
@@ -58,15 +58,14 @@ const MopidyPlayOptions = () => {
     };
   }, [mopidy]);
 
-  const boxStyle = { height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' };
   const btnStyle = useBreakpointValue({}, { p: 0.75 });
   const iconStyle = { fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.5))) };
 
   return (
-    // Only Stack works with Spinner!
-    <Stack sx={{ height: '100%', ...BORDER }}>
+    // Only < /> or Stack works with Spinner!
+    <>
       <Spinner hide={!state.loading} />
-      <Box sx={[boxStyle, state.loading ? { display: 'none' } : {}]}>
+      <Stack direction="row" className="panel" sx={state.loading ? { display: 'none' } : {}}>
         <Tooltip title="Repeat">
           <span>
             <ToggleButton
@@ -119,8 +118,8 @@ const MopidyPlayOptions = () => {
             </ToggleButton>
           </span>
         </Tooltip>
-      </Box>
-    </Stack>
+      </Stack>
+    </>
   );
 };
 

@@ -16,7 +16,7 @@ const FONT_SIZE: Record<'input' | 'icon', number[]> = {
 
 const PLAY_FONT_SIZE = [5.5, 5.5];
 
-export const BORDER = { border: 'solid thin rgba(0, 0, 0, 0.2)', borderRadius: 1 };
+export const BORDER = { border: 'solid thin rgba(0, 0, 0, 0.2)', borderRadius: 0.5 };
 
 export function inputFontSize(theme: Theme) {
   return FONT_SIZE.input.map((v) => theme.spacing(v));
