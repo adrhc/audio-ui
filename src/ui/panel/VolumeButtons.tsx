@@ -6,12 +6,13 @@ import { Styles } from '../../lib/types';
 import Looks5RoundedIcon from '@mui/icons-material/Looks5Rounded';
 
 export type VolumeButtonsParam = {
+  sx?: Styles;
   disabled?: boolean;
   volume: number;
   handleExactVolume: (v: number) => void;
 };
 
-export default function VolumeButtons({ disabled, volume, handleExactVolume }: VolumeButtonsParam) {
+export default function VolumeButtons({ sx, disabled, volume, handleExactVolume }: VolumeButtonsParam) {
   function doHandleExactVolume(volume: number) {
     if (volume >= 0 && volume <= 100) {
       handleExactVolume(volume);
@@ -27,37 +28,17 @@ export default function VolumeButtons({ disabled, volume, handleExactVolume }: V
   };
 
   return (
-    <ButtonGroup>
-      <Button
-        disabled={disabled}
-        variant="outlined"
-        sx={btnStyle}
-        onClick={() => doHandleExactVolume(Math.max(0, volume - 5))}
-      >
+    <ButtonGroup disabled={disabled} sx={sx}>
+      <Button variant="outlined" sx={btnStyle} onClick={() => doHandleExactVolume(Math.max(0, volume - 5))}>
         <Looks5RoundedIcon sx={{ fontSize: iconFontSize }} />
       </Button>
-      <Button
-        disabled={disabled}
-        variant="outlined"
-        sx={btnStyle}
-        onClick={() => doHandleExactVolume(volume - 1)}
-      >
+      <Button variant="outlined" sx={btnStyle} onClick={() => doHandleExactVolume(volume - 1)}>
         <RemoveIcon sx={{ fontSize: iconFontSize }} />
       </Button>
-      <Button
-        disabled={disabled}
-        variant="outlined"
-        sx={btnStyle}
-        onClick={() => doHandleExactVolume(volume + 1)}
-      >
+      <Button variant="outlined" sx={btnStyle} onClick={() => doHandleExactVolume(volume + 1)}>
         <AddIcon sx={{ fontSize: iconFontSize }} />
       </Button>
-      <Button
-        disabled={disabled}
-        variant="outlined"
-        sx={btnStyle}
-        onClick={() => doHandleExactVolume(Math.min(100, volume + 5))}
-      >
+      <Button variant="outlined" sx={btnStyle} onClick={() => doHandleExactVolume(Math.min(100, volume + 5))}>
         <Looks5RoundedIcon sx={{ fontSize: iconFontSize }} />
       </Button>
     </ButtonGroup>

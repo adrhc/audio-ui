@@ -12,13 +12,13 @@ export function useBreakpointValue<T>(...breakpointValues: T[]): T {
   const isTablet = useMediaQuery(theme.breakpoints.up('tablet'), { noSsr: true });
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'), { noSsr: true });
   if (isDesktop) {
-    console.log(`[useBreakpointValue] isDesktop: true`);
+    // console.log(`[useBreakpointValue] isDesktop: true`);
     return valueAtIndexOrLast(breakpointValues, 2); // desktop
   } else if (isTablet) {
-    console.log(`[useBreakpointValue] isTablet: true`);
+    // console.log(`[useBreakpointValue] isTablet: true`);
     return valueAtIndexOrLast(breakpointValues, 1); // tablet
   } else {
-    console.log(`[useBreakpointValue] isMobile: true`);
+    // console.log(`[useBreakpointValue] isMobile: true`);
     return valueAtIndexOrLast(breakpointValues, 0); // mobile
   }
 }

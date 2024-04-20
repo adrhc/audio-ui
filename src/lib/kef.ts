@@ -2,7 +2,7 @@ import { get, post } from './rest';
 
 const ROOT = '/audio-ui/api/keflsx';
 
-export type KefLSXState = { muted?: boolean; volume?: number; power?: boolean };
+export type KefLSXState = { volume: number; muted?: boolean; power?: boolean };
 
 export function getState() {
   return get<KefLSXState>(ROOT);
@@ -14,6 +14,10 @@ export function setPower(power: boolean) {
   } else {
     return post<KefLSXState>(`${ROOT}/stop`);
   }
+}
+
+export function setVolume(volume: number) {
+  return post<KefLSXState>(`${ROOT}/volume?volume=${volume}`);
 }
 
 export function unmute() {

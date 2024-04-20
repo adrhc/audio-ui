@@ -23,7 +23,7 @@ export default function Spinner({ hide, style }: SpinnerParam) {
       barColor="black"
       ariaLabel="loading ..."
       wrapperStyle={{
-        lineHeight: '1',
+        lineHeight: '0',
         maxWidth: '60%',
         maxHeight: '60%',
         margin: 'auto',
