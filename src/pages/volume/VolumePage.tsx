@@ -187,7 +187,12 @@ export default function VolumePage() {
           play={() => safelyPlayCurrent(mopidy)}
           resume={() => resumeMopidy(mopidy)}
         />
-        <VolumeButtons disabled={!online} volume={state.volume} handleExactVolume={onVolumeChange} />
+        <VolumeButtons
+          disabled={!online}
+          badgeColor="info"
+          volume={state.volume}
+          handleExactVolume={onVolumeChange}
+        />
         <PrevNextPanel
           disabled={!online}
           previous={() => previous(mopidy)}

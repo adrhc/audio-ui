@@ -7,6 +7,7 @@ import { Styles } from '../../lib/types';
 
 export type VolumeButtonsParam = {
   sx?: Styles;
+  badgeColor?: 'primary' | 'secondary' | 'default' | 'error' | 'info' | 'success' | 'warning';
   disabled?: boolean;
   showVolume?: boolean;
   volume: number;
@@ -15,11 +16,14 @@ export type VolumeButtonsParam = {
 
 export default function VolumeButtons({
   sx,
+  badgeColor,
   disabled,
   showVolume,
   volume,
   handleExactVolume,
 }: VolumeButtonsParam) {
+  // console.log(`[VolumeButtons] badgeColor=${badgeColor}, showVolume=${showVolume}`);
+
   function doHandleExactVolume(volume: number) {
     if (volume >= 0 && volume <= 100) {
       handleExactVolume(volume);
@@ -40,7 +44,11 @@ export default function VolumeButtons({
         <Looks5RoundedIcon sx={{ fontSize: iconFontSize }} />
       </Button>
       <Button variant="outlined" sx={btnStyle} onClick={() => doHandleExactVolume(volume - 1)}>
-        <Badge color="secondary" badgeContent={volume} invisible={!showVolume}>
+        <Badge
+          color={badgeColor}
+          badgeContent={volume}
+          invisible={badgeColor == null && showVolume != null && !showVolume}
+        >
           <RemoveIcon sx={{ fontSize: iconFontSize }} />
         </Badge>
       </Button>

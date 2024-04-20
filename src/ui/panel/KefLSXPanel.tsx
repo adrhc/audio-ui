@@ -68,7 +68,7 @@ const KefLSXPanel = () => {
         </Stack>
       </ShowIf>
       <ShowIf condition={!state.loading && state.power}>
-        <VolumeButtons showVolume={true} volume={state.volume} handleExactVolume={onVolumeChange} />
+        <VolumeButtons badgeColor="secondary" volume={state.volume} handleExactVolume={onVolumeChange} />
       </ShowIf>
     </>
   );
