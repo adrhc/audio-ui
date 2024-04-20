@@ -44,6 +44,7 @@ const KefLSXPanel = () => {
 
   function onVolumeChange(volume: number) {
     console.log(`[KefLSXPanel:onVolumeChange] newVolume = ${volume}`);
+    setState((old) => ({ ...old, loading: true }));
     handleServerState(setVolume(volume));
   }
 
