@@ -40,7 +40,7 @@ const KefLSXPanel = () => {
       });
   }
 
-  const btnStyle = useBreakpointValue({ p: 1.124 }, { p: 0.75 });
+  const btnStyle = useBreakpointValue({ p: 0.75 }, { p: 0.75 });
   const iconStyle = { fontSize: iconFontSizeMap((ifs) => ifs.map((n, i) => n + (i == 0 ? 1.5 : 0.5))) };
 
   return (
