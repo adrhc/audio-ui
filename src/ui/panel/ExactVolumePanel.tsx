@@ -13,6 +13,7 @@ export default function ExactVolumePanel({ disabled, handleExactVolume }: ExactV
     <Stack direction="row" spacing={[0.25, 0.5]} sx={{ justifyContent: 'center' }}>
       {[5, 15, 25, 45, 60, 75].map((volume) => (
         <Button
+          key={volume}
           sx={{ fontSize: inputFontSize, minWidth: 'auto', flexGrow: 1, p: 0 }}
           disabled={disabled}
           variant="outlined"
