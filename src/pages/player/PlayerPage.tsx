@@ -157,7 +157,7 @@ export default function PlayerPage() {
   return (
     <>
       <Stack
-        className={pageStyles.page}
+        className={`${pageStyles.page} ${ifIPhone(pageStyles.iphone, '')}`}
         spacing={1}
         sx={{ '& > div:not(.corner)': { height: panelHeight }, position: 'relative' }}
       >
