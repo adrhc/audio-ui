@@ -1,3 +1,4 @@
+@use '/src/components/button/cornerbutton/styles.module.scss';
 @import '/src/styles/vars.scss';
 
 // see https://www.whatismybrowser.com/w/66ZAAY4
@@ -14,6 +15,7 @@
   text-align: center;
 }
 
-.bottomCornerBtn {
+.iPhoneBottomCornerBtn {
   bottom: 1.5 * $spaceRatio !important;
+  border-bottom-left-radius: calc(styles.$height / 2) !important;
 }
