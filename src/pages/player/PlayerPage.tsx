@@ -20,17 +20,16 @@ import { CoreListenerEvent, MopidyEvent, PlaybackState } from '../../lib/types';
 import { panelHeight } from './styles';
 import ExactVolumePanel from '../../components/panel/ExactVolumePanel';
 import { AppContext } from '../../App';
-// import Logs from '../components/Logs';
-// import { SHOW_LOGS } from '../lib/config';
 import MopidyPlayOptions from '../../components/panel/MopidyPlayOptions';
 import ShowIf from '../../components/ShowIf';
 import PrevNextPanel from '../../components/panel/PrevNextPanel';
 import { isAdrhc } from '../../lib/adrhc';
 import '../../components/panel/panel.scss';
-import pageStyles from '../page.module.scss';
 import CornerIconButton from '../../components/button/cornerbutton/CornerIconButton';
 import kefctrl from '../../assets/kef-control-no-bkg.png';
 import { ifIPhone } from '../../lib/agent';
+import pageStyles from '../page.module.scss';
+import cornerBtnStyles from '../../components/button/cornerbutton/styles.module.scss';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -197,7 +196,7 @@ export default function PlayerPage() {
         </ShowIf>
         <ShowIf condition={adrhc}>
           {/* <KefLSXPanel /> */}
-          <CornerIconButton className={ifIPhone(pageStyles.iphoneBottom, 'corner')} to="/keflsx">
+          <CornerIconButton className={ifIPhone(cornerBtnStyles.iphoneBottom, 'corner')} to="/keflsx">
             <img style={{ maxWidth: 36 }} src={kefctrl} />
           </CornerIconButton>
         </ShowIf>

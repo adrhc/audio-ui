@@ -17,6 +17,10 @@ $radius: 95%;
   bottom: 0;
 }
 
+.corner-button.iphone-bottom {
+  border-bottom-left-radius: calc($height / 3.5) !important;
+}
+
 .iconBox {
   height: 95%;
   width: 85%;

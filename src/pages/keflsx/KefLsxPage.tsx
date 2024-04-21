@@ -1,5 +1,4 @@
 import { Stack, Typography } from '@mui/material';
-import pageStyles from '../page.module.scss';
 import { KefLSXState, getState, setPower as setKefPower, setVolume } from '../../services/kef';
 import { useCallback, useEffect, useState } from 'react';
 import { formatErr } from '../../lib/format';
@@ -18,6 +17,8 @@ import CornerIconButton from '../../components/button/cornerbutton/CornerIconBut
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { Styles } from '../../lib/types';
 import { ifIPhone } from '../../lib/agent';
+import pageStyles from '../page.module.scss';
+import cornerBtnStyles from '../../components/button/cornerbutton/styles.module.scss';
 
 type KefLsxPageState = { loading?: boolean } & KefLSXState;
 
@@ -101,7 +102,7 @@ export default function KefLsxPage() {
         </ShowIf>
         <CornerIconButton
           sx={{ minHeight: (th) => th.spacing(9.5) }}
-          className={ifIPhone(pageStyles.iphoneBottom, '')}
+          className={ifIPhone(cornerBtnStyles.iphoneBottom, '')}
           onClick={goBack}
         >
           <ArrowCircleLeftIcon sx={{fontSize: 36}} />
