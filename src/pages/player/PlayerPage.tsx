@@ -1,7 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import Mopidy, { models } from 'mopidy';
 import { useContext, useEffect, useState } from 'react';
-import VolumeButtons from '../../ui/panel/VolumeButtons';
+import VolumeButtons from '../../components/panel/VolumeButtons';
 import {
   setVolume as setMopidyVolume,
   mute as muteMopidy,
@@ -15,19 +15,19 @@ import {
   getSongAndArtists,
 } from '../../services/mpc';
 import { safelyPlayCurrent } from '../../services/player';
-import PlaybackPanel from '../../ui/panel/PlaybackPanel';
+import PlaybackPanel from '../../components/panel/PlaybackPanel';
 import { CoreListenerEvent, MopidyEvent, PlaybackState } from '../../lib/types';
 import { panelHeight } from './styles';
-import ExactVolumePanel from '../../ui/panel/ExactVolumePanel';
+import ExactVolumePanel from '../../components/panel/ExactVolumePanel';
 import { AppContext } from '../../App';
-// import Logs from '../ui/Logs';
+// import Logs from '../components/Logs';
 // import { SHOW_LOGS } from '../lib/config';
-import MopidyPlayOptions from '../../ui/panel/MopidyPlayOptions';
-import ShowIf from '../../ui/ShowIf';
-import PrevNextPanel from '../../ui/panel/PrevNextPanel';
-import KefLSXPanel from '../../ui/panel/KefLSXPanel';
+import MopidyPlayOptions from '../../components/panel/MopidyPlayOptions';
+import ShowIf from '../../components/ShowIf';
+import PrevNextPanel from '../../components/panel/PrevNextPanel';
+import KefLSXPanel from '../../components/panel/KefLSXPanel';
 import { isAdrhc } from '../../lib/adrhc';
-import '../../ui/panel/panel.scss';
+import '../../components/panel/panel.scss';
 import styles from './styles.module.scss';
 
 type VolumePageState = {

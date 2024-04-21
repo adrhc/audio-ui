@@ -2,7 +2,7 @@ import { Container } from '@mui/material';
 import Mopidy from 'mopidy';
 import { createContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Logs from './ui/Logs';
+import Logs from './components/Logs';
 import { SHOW_LOGS } from './constants';
 import { formatErr } from './lib/format';
 import { AppContextValue } from './lib/types';

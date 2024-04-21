@@ -7,15 +7,15 @@ import { formatErr } from '../../lib/format';
 import { CoreListenerEvent, MopidyEvent } from '../../lib/types';
 import Mopidy, { models } from 'mopidy';
 import { useBreakpointValue } from '../../hooks/useBreakpointValue';
-import Spinner from '../../ui/Spinner';
-import ShowIf from '../../ui/ShowIf';
+import Spinner from '../../components/Spinner';
+import ShowIf from '../../components/ShowIf';
 import { useEmptyHistory } from '../../hooks/useEmptyHistory';
 import * as agent from 'react-device-detect';
 import { ifIPhone } from '../../lib/agent';
 import './styles.scss';
 import { getUA, isTablet } from 'react-device-detect';
 import { SHOW_LOGS } from '../../constants';
-import Logs from '../../ui/Logs';
+import Logs from '../../components/Logs';
 import { playSelection } from '../../services/player';
 
 type TrackListPageState = {
