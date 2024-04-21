@@ -98,7 +98,7 @@ export default function KefLsxPage() {
             {/* </Stack> */}
           </ShowIf>
         </ShowIf>
-        <CornerIconButton className={ifIPhone(pageStyles.cornerBottom, '')} onClick={goBack}>
+        <CornerIconButton className={ifIPhone(pageStyles.bottomCornerBtn, '')} onClick={goBack}>
           <ArrowCircleLeftIcon />
         </CornerIconButton>
       </Stack>
