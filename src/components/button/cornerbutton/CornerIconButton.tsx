@@ -15,7 +15,14 @@ type CornerIconButtonParam = {
   children: ReactNode;
 };
 
-const CornerIconButton = ({ className, sx, position, onClick, to, children }: CornerIconButtonParam) => {
+const CornerIconButton = ({
+  className,
+  sx,
+  position = 'left',
+  onClick,
+  to,
+  children,
+}: CornerIconButtonParam) => {
   const navigate = useNavigate();
 
   function handleClick() {
@@ -30,7 +37,7 @@ const CornerIconButton = ({ className, sx, position, onClick, to, children }: Co
 
   return (
     <Box
-      className={`${styles.cornerButton} ${styles[position ?? 'left']} ${className ?? ''}`}
+      className={`${styles.cornerButton} ${styles[position]} ${className ?? ''}`}
       sx={[position == 'right' ? { right: 0 } : { left: 0 }, ...toArray(sx)]}
       onClick={handleClick}
     >
