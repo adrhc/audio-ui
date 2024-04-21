@@ -11,7 +11,7 @@
   max-width: 400px;
 }
 
-.iphone {
+.page.iphone {
   bottom: 1.5 * $spaceRatio !important;
 }
 
@@ -19,6 +19,6 @@
   text-align: center;
 }
 
-.iPhoneBottomCornerBtn {
+.corner-button.iphone-bottom {
   border-bottom-left-radius: calc(styles.$height / 3.5) !important;
 }
