@@ -21,7 +21,7 @@ const ROUTER = createHashRouter([
           element: <TrackListPage />,
         },
         {
-          path: 'volume',
+          path: 'player',
           element: <PlayerPage />,
         },
         {

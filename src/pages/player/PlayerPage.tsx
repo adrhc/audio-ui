@@ -28,6 +28,7 @@ import PrevNextPanel from '../../components/panel/PrevNextPanel';
 import KefLSXPanel from '../../components/panel/KefLSXPanel';
 import { isAdrhc } from '../../lib/adrhc';
 import '../../components/panel/panel.scss';
+import pageStyles from '../page.module.scss';
 import styles from './styles.module.scss';
 import CornerButton from '../../components/button/cornerbutton/CornerButton';
 
@@ -155,62 +156,56 @@ export default function PlayerPage() {
 
   return (
     <>
-      <Stack sx={{ height: '100%', alignItems: 'center' }}>
-        <Stack
-          className={styles.container}
-          spacing={1}
-          sx={{ '& > div:not(.corner)': { height: panelHeight }, position: 'relative' }}
-        >
-          <Box sx={{ height: 'auto !important' }}>
-            <Typography variant="h6" className={styles.title}>
-              {state.songAndArtists.song}
-            </Typography>
-            <Typography variant="h6" className={styles.title}>
-              {state.songAndArtists.artists}
-            </Typography>
-          </Box>
-          <ExactVolumePanel disabled={!online} onChange={onVolumeChange} />
-          <PlaybackPanel
-            disabled={!online}
-            status={state.pbStatus}
-            mute={state.mute}
-            onMute={() => muteMopidy(mopidy, !state.mute)}
-            pause={() => pauseMopidy(mopidy)}
-            stop={() => stopMopidy(mopidy)}
-            play={() => safelyPlayCurrent(mopidy)}
-            resume={() => resumeMopidy(mopidy)}
-          />
-          <VolumeButtons
-            disabled={!online}
-            badgeColor="info"
-            volume={state.volume}
-            handleExactVolume={onVolumeChange}
-          />
-          <PrevNextPanel
-            disabled={!online}
-            previous={() => previous(mopidy)}
-            next={() => next(mopidy)}
-            toggleTune={() => setState((old) => ({ ...old, tuneOn: !state.tuneOn }))}
-          />
-          <ShowIf condition={state.tuneOn}>
-            <MopidyPlayOptions />
-          </ShowIf>
-          <ShowIf condition={state.tuneOn && adrhc}>
-            <KefLSXPanel />
-          </ShowIf>
-          <CornerButton
-            className="corner"
-            sx={{ position: 'absolute', left: 0, bottom: 0 }}
-            to="/keflsx"
-          />
-          {/* <CornerButton
+      <Stack
+        className={pageStyles.page}
+        spacing={1}
+        sx={{ '& > div:not(.corner)': { height: panelHeight }, position: 'relative' }}
+      >
+        <Box sx={{ height: 'auto !important' }}>
+          <Typography variant="h6" className={pageStyles.title}>
+            {state.songAndArtists.song}
+          </Typography>
+          <Typography variant="h6" className={pageStyles.title}>
+            {state.songAndArtists.artists}
+          </Typography>
+        </Box>
+        <ExactVolumePanel disabled={!online} onChange={onVolumeChange} />
+        <PlaybackPanel
+          disabled={!online}
+          status={state.pbStatus}
+          mute={state.mute}
+          onMute={() => muteMopidy(mopidy, !state.mute)}
+          pause={() => pauseMopidy(mopidy)}
+          stop={() => stopMopidy(mopidy)}
+          play={() => safelyPlayCurrent(mopidy)}
+          resume={() => resumeMopidy(mopidy)}
+        />
+        <VolumeButtons
+          disabled={!online}
+          badgeColor="info"
+          volume={state.volume}
+          handleExactVolume={onVolumeChange}
+        />
+        <PrevNextPanel
+          disabled={!online}
+          previous={() => previous(mopidy)}
+          next={() => next(mopidy)}
+          toggleTune={() => setState((old) => ({ ...old, tuneOn: !state.tuneOn }))}
+        />
+        <ShowIf condition={state.tuneOn}>
+          <MopidyPlayOptions />
+        </ShowIf>
+        <ShowIf condition={adrhc}>
+          {/* <KefLSXPanel /> */}
+          <CornerButton className="corner" sx={{ position: 'absolute', left: 0, bottom: 0 }} to="/keflsx" />
+        </ShowIf>
+        {/* <CornerButton
             className="corner"
             sx={{ position: 'absolute', right: 0, bottom: 0 }}
             position="right"
           /> */}
-        </Stack>
-        {/* <Logs logs={logs} /> */}
       </Stack>
+      {/* <Logs logs={logs} /> */}
     </>
   );
 }

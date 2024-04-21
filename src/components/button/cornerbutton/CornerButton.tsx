@@ -16,8 +16,10 @@ const CornerButton = ({ className, sx, position, onClick, to }: CornerButtonPara
 
   function handleClick() {
     if (onClick) {
+      // console.log(`[CornerButton] onClick`);
       onClick();
     } else if (to != null) {
+      // console.log(`[CornerButton] to=${to}`);
       navigate(to);
     }
   }

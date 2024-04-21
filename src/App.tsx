@@ -1,4 +1,4 @@
-import { Container } from '@mui/material';
+import { Stack } from '@mui/material';
 import Mopidy from 'mopidy';
 import { createContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
@@ -71,6 +71,7 @@ export default function App() {
 
     state.mopidy.on('state:online', async () => {
       console.log(`[App:state:online]`);
+      // addLog(`[App:state:online]`);
       setState((old) => ({ ...old, online: true }));
     });
 
@@ -83,11 +84,19 @@ export default function App() {
   }, [state.mopidy]);
 
   return (
-    <Container sx={{ p: [0.5, 1], height: '100%' }}>
+    <Stack
+      sx={{
+        p: [0.5, 1],
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignContent: 'center',
+      }}
+    >
       <Logs logs={state.logs} />
       <AppContext.Provider value={state}>
         <Outlet />
       </AppContext.Provider>
-    </Container>
+    </Stack>
   );
 }

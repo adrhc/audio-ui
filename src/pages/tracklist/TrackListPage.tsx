@@ -12,11 +12,11 @@ import ShowIf from '../../components/ShowIf';
 import { useEmptyHistory } from '../../hooks/useEmptyHistory';
 import * as agent from 'react-device-detect';
 import { ifIPhone } from '../../lib/agent';
-import './styles.scss';
 import { getUA, isTablet } from 'react-device-detect';
 import { SHOW_LOGS } from '../../constants';
 import Logs from '../../components/Logs';
 import { playSelection } from '../../services/player';
+import styles from './styles.module.scss';
 
 type TrackListPageState = {
   songs: SongAndArtists[];
@@ -113,7 +113,7 @@ export default function TrackListPage() {
   }
 
   function goBack() {
-    emptyHistory ? navigate('/volume') : navigate(-1);
+    emptyHistory ? navigate('/player') : navigate(-1);
   }
 
   // console.log(`[TrackListPage] getUA:\n`, getUA);
@@ -124,19 +124,8 @@ export default function TrackListPage() {
   const liPx = 0.5;
 
   return (
-    <Stack className={`stack ${ifIPhone('iPhone')}`} spacing={state.loading ? [0] : [0.5]}>
-      <List
-        sx={[
-          {
-            p: 0,
-            overflow: 'auto',
-            maxHeight: '100%',
-            border: 'thin solid rgba(0, 0, 0, 0.2)',
-            borderLeft: 'none',
-          },
-          state.loading ? { display: 'none' } : {},
-        ]}
-      >
+    <Stack className={`${styles.stack} ${ifIPhone(styles.iPhone, '')}`} spacing={state.loading ? [0] : [0.5]}>
+      <List className={styles.ul} sx={state.loading ? { display: 'none' } : {}}>
         {state.songs
           .filter((sa) => !!sa.song)
           .map((sa, i) => (

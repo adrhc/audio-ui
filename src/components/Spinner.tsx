@@ -6,10 +6,10 @@ export type SpinnerStyle = {
 
 export type SpinnerParam = {
   hide?: boolean | null | undefined;
-  style?: SpinnerStyle | null | undefined;
+  wrapperStyle?: SpinnerStyle | null | undefined;
 };
 
-export default function Spinner({ hide, style }: SpinnerParam) {
+export default function Spinner({ hide, wrapperStyle }: SpinnerParam) {
   if (hide) {
     return <></>;
   }
@@ -27,7 +27,7 @@ export default function Spinner({ hide, style }: SpinnerParam) {
         maxWidth: '60%',
         maxHeight: '60%',
         margin: 'auto',
-        ...style,
+        ...wrapperStyle,
       }}
       visible={true}
     />
