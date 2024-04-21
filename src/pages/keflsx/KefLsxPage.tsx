@@ -68,7 +68,8 @@ export default function KefLsxPage() {
   return (
     <>
       <Stack
-        className={pageStyles.page}
+        // className={pageStyles.page}
+        className={`${pageStyles.page} ${ifIPhone(pageStyles.iphone, '')}`}
         spacing={1}
         sx={[
           { position: 'relative', flexWrap: 'wrap' },
