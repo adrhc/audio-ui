@@ -11,7 +11,7 @@ export type VolumeButtonsParam = {
   disabled?: boolean;
   showVolume?: boolean;
   volume: number;
-  handleExactVolume: (v: number) => void;
+  onChange: (v: number) => void;
 };
 
 export default function VolumeButtons({
@@ -20,13 +20,13 @@ export default function VolumeButtons({
   disabled,
   showVolume,
   volume,
-  handleExactVolume,
+  onChange,
 }: VolumeButtonsParam) {
   // console.log(`[VolumeButtons] badgeColor=${badgeColor}, showVolume=${showVolume}`);
 
   function doHandleExactVolume(volume: number) {
     if (volume >= 0 && volume <= 100) {
-      handleExactVolume(volume);
+      onChange(volume);
     } else {
       console.warn(`[VolumeButtons:doHandleExactVolume] bad volume = ${volume}!`);
     }

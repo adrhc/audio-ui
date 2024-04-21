@@ -183,7 +183,7 @@ export default function PlayerPage() {
           disabled={!online}
           badgeColor="info"
           volume={state.volume}
-          handleExactVolume={onVolumeChange}
+          onChange={onVolumeChange}
         />
         <PrevNextPanel
           disabled={!online}

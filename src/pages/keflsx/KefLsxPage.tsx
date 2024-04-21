@@ -95,7 +95,7 @@ export default function KefLsxPage() {
               KEF LSX Volume
             </Typography>
             <ExactVolumePanel values={[5, 15, 25, 35, 45]} onChange={onVolumeChange} />
-            <VolumeButtons badgeColor="secondary" volume={state.volume} handleExactVolume={onVolumeChange} />
+            <VolumeButtons badgeColor="secondary" volume={state.volume} onChange={onVolumeChange} />
             <ExactVolumePanel values={[55, 65, 75, 85, 95]} onChange={onVolumeChange} />
             {/* </Stack> */}
           </ShowIf>
