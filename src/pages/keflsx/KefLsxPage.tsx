@@ -102,7 +102,7 @@ export default function KefLsxPage() {
         </ShowIf>
         <CornerIconButton
           sx={{ minHeight: (th) => th.spacing(9.5) }}
-          className={ifIPhone(cornerBtnStyles.iphoneBottom, '')}
+          className={ifIPhone(cornerBtnStyles.iphoneBottomLeft, '')}
           onClick={goBack}
         >
           <ArrowCircleLeftIcon sx={{fontSize: 36}} />

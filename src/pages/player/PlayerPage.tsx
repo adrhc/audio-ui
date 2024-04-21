@@ -196,7 +196,7 @@ export default function PlayerPage() {
         </ShowIf>
         <ShowIf condition={adrhc}>
           {/* <KefLSXPanel /> */}
-          <CornerIconButton className={ifIPhone(cornerBtnStyles.iphoneBottom, 'corner')} to="/keflsx">
+          <CornerIconButton className={ifIPhone(cornerBtnStyles.iphoneBottomLeft, 'corner')} to="/keflsx">
             <img style={{ maxWidth: 36 }} src={kefctrl} />
           </CornerIconButton>
         </ShowIf>
