@@ -2,7 +2,7 @@ import { IconButton, Stack } from '@mui/material';
 import StopIcon from '@mui/icons-material/Stop';
 import { NoArgsProc, PlaybackState } from '../../lib/types';
 import PauseIcon from '@mui/icons-material/Pause';
-import { playIconFontSizeMap } from '../../pages/volume/styles';
+import { playIconFontSizeMap } from '../../pages/player/styles';
 import PlayOrResumeButton from '../button/PlayOrResumeButton';
 import MuteIconButton from '../button/MuteIconButton';
 

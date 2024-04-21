@@ -13,8 +13,8 @@ import {
   SongAndArtists,
   toSongAndArtists,
   getSongAndArtists,
-} from '../../lib/mpc';
-import { safelyPlayCurrent } from '../../lib/player';
+} from '../../services/mpc';
+import { safelyPlayCurrent } from '../../services/player';
 import PlaybackPanel from '../../ui/panel/PlaybackPanel';
 import { CoreListenerEvent, MopidyEvent, PlaybackState } from '../../lib/types';
 import { panelHeight } from './styles';
@@ -38,7 +38,7 @@ type VolumePageState = {
   songAndArtists: SongAndArtists;
 };
 
-export default function VolumePage() {
+export default function PlayerPage() {
   const { mopidy, online } = useContext(AppContext);
   // const [logs, setLogs] = useState<string[]>([]);
   const [state, setState] = useState<VolumePageState>({
@@ -167,7 +167,7 @@ export default function VolumePage() {
           disabled={!online}
           // exactVolume={exactVolume}
           // setExactVolume={setExactVolume}
-          handleExactVolume={onVolumeChange}
+          onChange={onVolumeChange}
         />
         {/* <VolumeSlider
           disabled={!online}

@@ -1,11 +1,11 @@
 import { Stack } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import { iconFontSizeMap } from '../../pages/volume/styles';
+import { iconFontSizeMap } from '../../pages/player/styles';
 import { formatErr } from '../../lib/format';
 import kefctrl from '../../assets/kef-control-no-bkg.png';
 import kefctrlstop from '../../assets/kef-control-stop.png';
 import { useBreakpointValue } from '../../hooks/useBreakpointValue';
-import { KefLSXState, getState, setPower as setKefPower, setVolume } from '../../lib/kef';
+import { KefLSXState, getState, setPower as setKefPower, setVolume } from '../../services/kef';
 import ToggleImgButton from '../button/ToggleImgButton';
 import VolumeButtons from './VolumeButtons';
 import ShowIf from '../ShowIf';

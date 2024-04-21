@@ -3,7 +3,7 @@ import { IconButton, Slider, Stack, Tooltip, debounce } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import MuteIconButton from '../button/MuteIconButton';
 import { NoArgsProc } from '../../lib/types';
-import { iconFontSizeMap } from '../../pages/volume/styles';
+import { iconFontSizeMap } from '../../pages/player/styles';
 import './styles.scss';
 
 const fontSizeMapper = (ifs: number[]) => ifs.map((fs, i) => fs + (i == 0 ? 0.5 : 0));

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../App';
-import { SongAndArtists, getSongAndArtists, getTrackList, toSongAndArtists } from '../../lib/mpc';
+import { SongAndArtists, getSongAndArtists, getTrackList, toSongAndArtists } from '../../services/mpc';
 import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { formatErr } from '../../lib/format';
@@ -14,9 +14,9 @@ import * as agent from 'react-device-detect';
 import { ifIPhone } from '../../lib/agent';
 import './styles.scss';
 import { getUA, isTablet } from 'react-device-detect';
-import { SHOW_LOGS } from '../../lib/config';
+import { SHOW_LOGS } from '../../constants';
 import Logs from '../../ui/Logs';
-import { playSelection } from '../../lib/player';
+import { playSelection } from '../../services/player';
 
 type TrackListPageState = {
   songs: SongAndArtists[];

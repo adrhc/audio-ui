@@ -1,8 +1,8 @@
 import Mopidy from 'mopidy';
 import { setPower } from './kef';
 import { play } from './mpc';
-import { isAdrhc } from './adrhc';
-import { formatErr } from './format';
+import { isAdrhc } from '../lib/adrhc';
+import { formatErr } from '../lib/format';
 
 export function playCurrent(mopidy: Mopidy) {
   isAdrhc() && setPower(true);

@@ -5,41 +5,16 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { RouterProvider, createHashRouter } from 'react-router-dom';
-import VolumePage from './pages/volume/VolumePage.tsx';
-import ErrorPage from './pages/ErrorPage.tsx';
-import App from './App.tsx';
-import TrackListPage from './pages/tracklist/TrackListPage.tsx';
+import { RouterProvider } from 'react-router-dom';
 import THEME from './ui/theme.tsx';
-import './main.scss'
-
-const router = createHashRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: '',
-        element: <Dashboard />,
-      },
-      {
-        path: 'trackList',
-        element: <TrackListPage />,
-      },
-      {
-        path: 'volume',
-        element: <VolumePage />,
-      },
-    ],
-  },
-]);
+import './main.scss';
+import ROUTER from './router.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
-    <ThemeProvider theme={THEME}>
-      <CssBaseline />
-      <RouterProvider router={router} />
-    </ThemeProvider>
+  <ThemeProvider theme={THEME}>
+    <CssBaseline />
+    <RouterProvider router={ROUTER} />
+  </ThemeProvider>
   // </React.StrictMode>
 );

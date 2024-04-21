@@ -1,14 +1,14 @@
 import { Stack, Button } from '@mui/material';
-import { inputFontSize } from '../../pages/volume/styles';
+import { inputFontSize } from '../../pages/player/styles';
 
 export type ExactVolumePanelParam = {
   disabled: boolean;
   exactVolume?: number;
   setExactVolume?: (volume: number) => void;
-  handleExactVolume: (volume: number) => void;
+  onChange: (volume: number) => void;
 };
 
-export default function ExactVolumePanel({ disabled, handleExactVolume }: ExactVolumePanelParam) {
+export default function ExactVolumePanel({ disabled, onChange }: ExactVolumePanelParam) {
   return (
     <Stack direction="row" spacing={[0.25, 0.5]} sx={{ justifyContent: 'center' }}>
       {[5, 15, 25, 45, 60, 75].map((volume) => (
@@ -17,7 +17,7 @@ export default function ExactVolumePanel({ disabled, handleExactVolume }: ExactV
           sx={{ fontSize: inputFontSize, minWidth: 'auto', flexGrow: 1, p: 0 }}
           disabled={disabled}
           variant="outlined"
-          onClick={() => handleExactVolume(volume)}
+          onClick={() => onChange(volume)}
         >
           {volume}
         </Button>

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../../lib/mpc';
+import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../../services/mpc';
 import { AppContext } from '../../App';
-import { getPlayOptions } from '../../lib/mpc';
+import { getPlayOptions } from '../../services/mpc';
 import { formatErr } from '../../lib/format';
 import { MopidyEvent } from '../../lib/types';
 import Mopidy from 'mopidy';
@@ -10,7 +10,7 @@ import RepeatIcon from '@mui/icons-material/Repeat';
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 import TimesOneMobiledataIcon from '@mui/icons-material/TimesOneMobiledata';
 import { Stack, ToggleButton, Tooltip } from '@mui/material';
-import { iconFontSizeMap } from '../../pages/volume/styles';
+import { iconFontSizeMap } from '../../pages/player/styles';
 import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 import SpinnerPannel from './SpinnerPannel';
 
