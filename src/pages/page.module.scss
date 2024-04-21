@@ -14,6 +14,6 @@
   text-align: center;
 }
 
-.iPhone {
-  padding-bottom: 2.5 * $spaceRatio;
+.cornerBottom {
+  bottom: 2 * $spaceRatio !important;
 }

@@ -6,11 +6,14 @@ $radius: 95%;
   width: calc($height * 4 / 3);
   // border: thin solid rgba(0, 0, 0, 0.2);
   background-color: rgba(2, 136, 209, 0.75);
-  border-radius: calc($height / 4);;
+  border-radius: calc($height / 4);
   cursor: pointer;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 
 .iconBox {

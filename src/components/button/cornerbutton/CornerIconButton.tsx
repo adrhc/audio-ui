@@ -30,12 +30,8 @@ const CornerIconButton = ({ className, sx, position, onClick, to, children }: Co
 
   return (
     <Box
-      className={`${styles.cornerButton} ${styles[position ?? 'left']} ${className??''}`}
-      sx={[
-        { position: 'absolute', left: 0, bottom: 0 },
-        position == 'right' ? { right: 0 } : { left: 0 },
-        ...toArray(sx),
-      ]}
+      className={`${styles.cornerButton} ${styles[position ?? 'left']} ${className ?? ''}`}
+      sx={[position == 'right' ? { right: 0 } : { left: 0 }, ...toArray(sx)]}
       onClick={handleClick}
     >
       <Box className={styles.iconBox}>{children}</Box>

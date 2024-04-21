@@ -157,7 +157,7 @@ export default function PlayerPage() {
   return (
     <>
       <Stack
-        className={`${pageStyles.page} ${ifIPhone(pageStyles.iPhone, '')}`}
+        className={pageStyles.page}
         spacing={1}
         sx={{ '& > div:not(.corner)': { height: panelHeight }, position: 'relative' }}
       >
@@ -197,7 +197,7 @@ export default function PlayerPage() {
         </ShowIf>
         <ShowIf condition={adrhc}>
           {/* <KefLSXPanel /> */}
-          <CornerIconButton className="corner" to="/keflsx">
+          <CornerIconButton className={`corner ${ifIPhone(pageStyles.cornerBottom, '')}`} to="/keflsx">
             <img style={{ maxWidth: 24 }} src={kefctrl} />
           </CornerIconButton>
         </ShowIf>

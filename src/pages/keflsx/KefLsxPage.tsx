@@ -68,7 +68,7 @@ export default function KefLsxPage() {
   return (
     <>
       <Stack
-        className={`${pageStyles.page} ${ifIPhone(pageStyles.iPhone, '')}`}
+        className={pageStyles.page}
         spacing={1}
         sx={[
           { position: 'relative', flexWrap: 'wrap' },
@@ -98,7 +98,7 @@ export default function KefLsxPage() {
             {/* </Stack> */}
           </ShowIf>
         </ShowIf>
-        <CornerIconButton onClick={goBack}>
+        <CornerIconButton className={ifIPhone(pageStyles.cornerBottom, '')} onClick={goBack}>
           <ArrowCircleLeftIcon />
         </CornerIconButton>
       </Stack>
