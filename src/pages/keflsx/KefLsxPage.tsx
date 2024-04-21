@@ -45,7 +45,7 @@ export default function KefLsxPage() {
 
   function handleServerState(response: Promise<KefLSXState>) {
     response
-      //   .then((s) => setState((old) => ({ ...old, ...s, loading: false })))
+      .then((s) => setState((old) => ({ ...old, ...s, loading: false })))
       .catch((reason) => {
         setState((old) => ({ ...old, loading: false }));
         alert(formatErr(reason));
