@@ -1,7 +1,6 @@
 import { Box } from '@mui/material';
 import { NoArgsProc, Styles } from '../../../lib/types';
 import { useNavigate } from 'react-router-dom';
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import styles from './styles.module.scss';
 import { toArray } from '../../../lib/array';
 
