@@ -6,7 +6,6 @@ import '@fontsource/roboto/700.css';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import THEME from './components/theme.tsx';
-import './main.scss';
 import ROUTER from './router.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
