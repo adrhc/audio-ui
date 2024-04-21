@@ -169,7 +169,7 @@ export default function PlayerPage() {
             {state.songAndArtists.artists}
           </Typography>
         </Box>
-        <ExactVolumePanel disabled={!online} onChange={onVolumeChange} />
+        <ExactVolumePanel disabled={!online} values={[5, 15, 25, 45, 60, 75]} onChange={onVolumeChange} />
         <PlaybackPanel
           disabled={!online}
           status={state.pbStatus}

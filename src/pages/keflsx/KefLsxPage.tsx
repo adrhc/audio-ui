@@ -6,7 +6,7 @@ import { formatErr } from '../../lib/format';
 import kefctrl from '../../assets/kef-control-no-bkg.png';
 import kefctrlstop from '../../assets/kef-control-stop.png';
 import { useBreakpointValue } from '../../hooks/useBreakpointValue';
-import { iconFontSizeMap } from '../player/styles';
+import { iconFontSizeMap, panelHeight } from '../player/styles';
 import Spinner from '../../components/Spinner';
 import ShowIf from '../../components/ShowIf';
 import ToggleImgButton from '../../components/button/ToggleImgButton';
@@ -15,6 +15,7 @@ import CornerButton from '../../components/button/cornerbutton/CornerButton';
 import { useEmptyHistory } from '../../hooks/useEmptyHistory';
 import { useNavigate } from 'react-router-dom';
 import VolumeButtons from '../../components/panel/VolumeButtons';
+import ExactVolumePanel from '../../components/panel/ExactVolumePanel';
 
 type KefLsxPageState = { loading?: boolean } & KefLSXState;
 
@@ -69,7 +70,11 @@ export default function KefLsxPage() {
         <Stack
           className={pageStyles.page}
           spacing={1}
-          sx={{ position: 'relative', flexWrap: state.power ? 'nowrap' : 'wrap' }}
+          sx={{
+            '& > div:not(.corner)': { height: panelHeight },
+            position: 'relative',
+            flexWrap: state.power ? 'nowrap' : 'wrap',
+          }}
         >
           <ShowIf condition={!state.power}>
             <ToggleImgButton
@@ -86,7 +91,9 @@ export default function KefLsxPage() {
             <Typography variant="h6" className={pageStyles.title}>
               KEF LSX Volume
             </Typography>
+            <ExactVolumePanel values={[5, 15, 25, 35, 45]} onChange={onVolumeChange} />
             <VolumeButtons badgeColor="secondary" volume={state.volume} handleExactVolume={onVolumeChange} />
+            <ExactVolumePanel values={[55, 65, 75, 85, 95]} onChange={onVolumeChange} />
             {/* </Stack> */}
           </ShowIf>
           <CornerButton
