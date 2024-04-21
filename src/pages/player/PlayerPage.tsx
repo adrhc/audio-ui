@@ -25,12 +25,12 @@ import { AppContext } from '../../App';
 import MopidyPlayOptions from '../../components/panel/MopidyPlayOptions';
 import ShowIf from '../../components/ShowIf';
 import PrevNextPanel from '../../components/panel/PrevNextPanel';
-import KefLSXPanel from '../../components/panel/KefLSXPanel';
 import { isAdrhc } from '../../lib/adrhc';
 import '../../components/panel/panel.scss';
 import pageStyles from '../page.module.scss';
+import CornerIconButton from '../../components/button/cornerbutton/CornerIconButton';
+import kefctrl from '../../assets/kef-control-no-bkg.png';
 import styles from './styles.module.scss';
-import CornerButton from '../../components/button/cornerbutton/CornerButton';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -197,7 +197,9 @@ export default function PlayerPage() {
         </ShowIf>
         <ShowIf condition={adrhc}>
           {/* <KefLSXPanel /> */}
-          <CornerButton className="corner" to="/keflsx" />
+          <CornerIconButton className="corner" to="/keflsx">
+            <img style={{ maxWidth: 24 }} src={kefctrl} />
+          </CornerIconButton>
         </ShowIf>
         {/* <CornerButton
             className="corner"

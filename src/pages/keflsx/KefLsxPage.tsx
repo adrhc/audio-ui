@@ -14,7 +14,6 @@ import { useEmptyHistory } from '../../hooks/useEmptyHistory';
 import { useNavigate } from 'react-router-dom';
 import VolumeButtons from '../../components/panel/VolumeButtons';
 import ExactVolumePanel from '../../components/panel/ExactVolumePanel';
-import CornerButton from '../../components/button/cornerbutton/CornerButton';
 import CornerIconButton from '../../components/button/cornerbutton/CornerIconButton';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { Styles } from '../../lib/types';
@@ -67,17 +66,16 @@ export default function KefLsxPage() {
 
   return (
     <>
-      <Spinner hide={!state.loading} />
-      <ShowIf condition={!state.loading}>
-        <Stack
-          className={pageStyles.page}
-          spacing={1}
-          sx={{
-            '& > div:not(.corner)': { height: panelHeight },
-            position: 'relative',
-            flexWrap: state.power ? 'nowrap' : 'wrap',
-          }}
-        >
+      <Stack
+        className={pageStyles.page}
+        spacing={1}
+        sx={[
+          { position: 'relative', flexWrap: 'wrap' },
+          state.power ? { '& > div:not(.corner)': { height: panelHeight }, flexWrap: 'nowrap' } : {},
+        ]}
+      >
+        <Spinner hide={!state.loading} />
+        <ShowIf condition={!state.loading}>
           <ShowIf condition={!state.power}>
             <ToggleImgButton
               sx={[btnStyle, { maxWidth: (th) => th.spacing(8), maxHeight: (th) => th.spacing(8) }]}
@@ -98,11 +96,11 @@ export default function KefLsxPage() {
             <ExactVolumePanel values={[55, 65, 75, 85, 95]} onChange={onVolumeChange} />
             {/* </Stack> */}
           </ShowIf>
-          <CornerIconButton onClick={goBack}>
-            <ArrowCircleLeftIcon />
-          </CornerIconButton>
-        </Stack>
-      </ShowIf>
+        </ShowIf>
+        <CornerIconButton onClick={goBack}>
+          <ArrowCircleLeftIcon />
+        </CornerIconButton>
+      </Stack>
     </>
   );
 }

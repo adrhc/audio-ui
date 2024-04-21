@@ -8,6 +8,7 @@ import { toArray } from '../../../lib/array';
 type CornerIconButtonParam = {
   className?: string;
   sx?: Styles;
+  sxIcon?: Styles;
   position?: 'left' | 'right';
   onClick?: NoArgsProc;
   to?: string;
