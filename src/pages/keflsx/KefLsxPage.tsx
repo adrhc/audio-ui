@@ -45,7 +45,7 @@ export default function KefLsxPage() {
 
   function handleServerState(response: Promise<KefLSXState>) {
     response
-      .then((s) => setState((old) => ({ ...old, ...s, loading: false })))
+      //   .then((s) => setState((old) => ({ ...old, ...s, loading: false })))
       .catch((reason) => {
         setState((old) => ({ ...old, loading: false }));
         alert(formatErr(reason));
@@ -98,7 +98,11 @@ export default function KefLsxPage() {
             {/* </Stack> */}
           </ShowIf>
         </ShowIf>
-        <CornerIconButton className={ifIPhone(pageStyles.bottomCornerBtn, '')} onClick={goBack}>
+        <CornerIconButton
+          sx={{ minHeight: (th) => th.spacing(9.5) }}
+          className={ifIPhone(pageStyles.bottomCornerBtn, '')}
+          onClick={goBack}
+        >
           <ArrowCircleLeftIcon />
         </CornerIconButton>
       </Stack>
