@@ -4,9 +4,22 @@ $radius: 95%;
 .corner-button {
   height: 48px;
   width: calc($height * 4 / 3);
-  //   border: thin solid rgba(0, 0, 0, 0.2);
+  // border: thin solid rgba(0, 0, 0, 0.2);
   background-color: rgba(2, 136, 209, 0.75);
+  border-radius: calc($height / 4);;
   cursor: pointer;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.iconBox {
+  height: 95%;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
 }
 
 .left {

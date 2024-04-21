@@ -197,11 +197,10 @@ export default function PlayerPage() {
         </ShowIf>
         <ShowIf condition={adrhc}>
           {/* <KefLSXPanel /> */}
-          <CornerButton className="corner" sx={{ position: 'absolute', left: 0, bottom: 0 }} to="/keflsx" />
+          <CornerButton className="corner" to="/keflsx" />
         </ShowIf>
         {/* <CornerButton
             className="corner"
-            sx={{ position: 'absolute', right: 0, bottom: 0 }}
             position="right"
           /> */}
       </Stack>

@@ -10,12 +10,14 @@ import { iconFontSizeMap, panelHeight } from '../player/styles';
 import Spinner from '../../components/Spinner';
 import ShowIf from '../../components/ShowIf';
 import ToggleImgButton from '../../components/button/ToggleImgButton';
-import { Styles } from '../../lib/types';
-import CornerButton from '../../components/button/cornerbutton/CornerButton';
 import { useEmptyHistory } from '../../hooks/useEmptyHistory';
 import { useNavigate } from 'react-router-dom';
 import VolumeButtons from '../../components/panel/VolumeButtons';
 import ExactVolumePanel from '../../components/panel/ExactVolumePanel';
+import CornerButton from '../../components/button/cornerbutton/CornerButton';
+import CornerIconButton from '../../components/button/cornerbutton/CornerIconButton';
+import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
+import { Styles } from '../../lib/types';
 
 type KefLsxPageState = { loading?: boolean } & KefLSXState;
 
@@ -96,11 +98,9 @@ export default function KefLsxPage() {
             <ExactVolumePanel values={[55, 65, 75, 85, 95]} onChange={onVolumeChange} />
             {/* </Stack> */}
           </ShowIf>
-          <CornerButton
-            className="corner"
-            sx={{ position: 'absolute', left: 0, bottom: 0 }}
-            onClick={goBack}
-          />
+          <CornerIconButton onClick={goBack}>
+            <ArrowCircleLeftIcon />
+          </CornerIconButton>
         </Stack>
       </ShowIf>
     </>

@@ -1,27 +1,28 @@
 import { Box } from '@mui/material';
 import { NoArgsProc, Styles } from '../../../lib/types';
 import { useNavigate } from 'react-router-dom';
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import styles from './styles.module.scss';
+import { ReactNode } from 'react';
 import { toArray } from '../../../lib/array';
 
-type CornerButtonParam = {
+type CornerIconButtonParam = {
   className?: string;
   sx?: Styles;
   position?: 'left' | 'right';
   onClick?: NoArgsProc;
   to?: string;
+  children: ReactNode;
 };
 
-const CornerButton = ({ className, sx, position, onClick, to }: CornerButtonParam) => {
+const CornerIconButton = ({ className, sx, position, onClick, to, children }: CornerIconButtonParam) => {
   const navigate = useNavigate();
 
   function handleClick() {
     if (onClick) {
-      // console.log(`[CornerButton] onClick`);
+      // console.log(`[CornerIconButton] onClick`);
       onClick();
     } else if (to != null) {
-      // console.log(`[CornerButton] to=${to}`);
+      // console.log(`[CornerIconButton] to=${to}`);
       navigate(to);
     }
   }
@@ -35,8 +36,10 @@ const CornerButton = ({ className, sx, position, onClick, to }: CornerButtonPara
         ...toArray(sx),
       ]}
       onClick={handleClick}
-    />
+    >
+      <Box className={styles.iconBox}>{children}</Box>
+    </Box>
   );
 };
 
-export default CornerButton;
+export default CornerIconButton;
