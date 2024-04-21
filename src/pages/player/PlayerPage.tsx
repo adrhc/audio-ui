@@ -30,7 +30,6 @@ import '../../components/panel/panel.scss';
 import pageStyles from '../page.module.scss';
 import CornerIconButton from '../../components/button/cornerbutton/CornerIconButton';
 import kefctrl from '../../assets/kef-control-no-bkg.png';
-import styles from './styles.module.scss';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
