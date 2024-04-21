@@ -17,7 +17,7 @@ export function setPower(power: boolean) {
 }
 
 export function setVolume(volume: number) {
-  return post<KefLSXState>(`${ROOT}/player?volume=${volume}`);
+  return post<KefLSXState>(`${ROOT}/volume?volume=${volume}`);
 }
 
 export function unmute() {
