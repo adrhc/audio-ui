@@ -134,7 +134,11 @@ export default function TrackListPage() {
   const liPx = 0.5;
 
   return (
-    <Stack className={`${styles.stack} ${ifIPhone(styles.iPhone, '')}`} spacing={state.loading ? [0] : [0.5]}>
+    <Stack
+      className={`${pageStyles.page} ${ifIPhone(pageStyles.iphone, '')}`}
+      // className={`${styles.stack} ${ifIPhone(styles.iPhone, '')}`}
+      spacing={state.loading ? [0] : [0.5]}
+    >
       <ShowIf condition={!state.loading}>
         <ShowIf condition={!state.songs.length}>
           <Typography variant="h6" className={pageStyles.title}>
