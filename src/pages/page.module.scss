@@ -8,9 +8,11 @@
   height: 100%;
   min-width: 310px;
   max-width: 400px;
+  position: relative;
 }
 
 .page.iphone {
+  // requires "position: relative"
   bottom: 1.5 * $spaceRatio !important;
 }
 

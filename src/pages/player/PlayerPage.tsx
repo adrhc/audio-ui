@@ -158,7 +158,7 @@ export default function PlayerPage() {
       <Stack
         className={`${pageStyles.page} ${ifIPhone(pageStyles.iphone, '')}`}
         spacing={1}
-        sx={{ '& > div:not(.corner)': { height: panelHeight }, position: 'relative' }}
+        sx={{ '& > div:not(.corner)': { height: panelHeight } }}
       >
         <Box sx={{ height: 'auto !important' }}>
           <Typography variant="h6" className={pageStyles.title}>

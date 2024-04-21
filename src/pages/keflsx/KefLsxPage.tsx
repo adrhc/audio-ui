@@ -73,8 +73,8 @@ export default function KefLsxPage() {
         className={`${pageStyles.page} ${ifIPhone(pageStyles.iphone, '')}`}
         spacing={1}
         sx={[
-          { position: 'relative', flexWrap: 'wrap' },
-          state.power ? { '& > div:not(.corner)': { height: panelHeight }, flexWrap: 'nowrap' } : {},
+          { flexWrap: 'wrap' },
+          state.power ? { flexWrap: 'nowrap', '& > div:not(.corner)': { height: panelHeight } } : {},
         ]}
       >
         <Spinner hide={!state.loading} />
@@ -105,7 +105,7 @@ export default function KefLsxPage() {
           className={ifIPhone(cornerBtnStyles.iphoneBottomLeft, '')}
           onClick={goBack}
         >
-          <ArrowCircleLeftIcon sx={{fontSize: 36}} />
+          <ArrowCircleLeftIcon sx={{ fontSize: 36 }} />
         </CornerIconButton>
       </Stack>
     </>
