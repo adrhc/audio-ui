@@ -1,7 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../App';
 import { SongAndArtists, getSongAndArtists, getTrackList, toSongAndArtists } from '../../services/mpc';
-import { Button, List, ListItemButton, ListItemAvatar, ListItemText, Stack, useTheme } from '@mui/material';
+import {
+  Button,
+  List,
+  ListItemButton,
+  ListItemAvatar,
+  ListItemText,
+  Stack,
+  useTheme,
+  Typography,
+} from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { formatErr } from '../../lib/format';
 import { CoreListenerEvent, MopidyEvent } from '../../lib/types';
@@ -16,6 +25,7 @@ import { getUA, isTablet } from 'react-device-detect';
 import { SHOW_LOGS } from '../../constants';
 import Logs from '../../components/Logs';
 import { playSelection } from '../../services/player';
+import pageStyles from '../page.module.scss';
 import styles from './styles.module.scss';
 
 type TrackListPageState = {
@@ -125,43 +135,52 @@ export default function TrackListPage() {
 
   return (
     <Stack className={`${styles.stack} ${ifIPhone(styles.iPhone, '')}`} spacing={state.loading ? [0] : [0.5]}>
-      <List className={styles.ul} sx={state.loading ? { display: 'none' } : {}}>
-        {state.songs
-          .filter((sa) => !!sa.song)
-          .map((sa, i) => (
-            <ListItemButton
-              key={i}
-              autoFocus={sa.tlid == state.current.tlid}
-              selected={sa.tlid == state.current.tlid}
-              sx={{ px: liPx, py: [1.2, 0.75], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
-              onClick={() => handleSelection(sa)}
-            >
-              {sa.imgUri && (
-                <ListItemAvatar
-                  sx={{
-                    marginRight: liPx,
-                    lineHeight: 0,
-                    minWidth: 0,
-                    maxWidth: `min(15%, ${wantedImgHeight})`,
-                  }}
+      <ShowIf condition={!state.loading}>
+        <ShowIf condition={!state.songs.length}>
+          <Typography variant="h6" className={pageStyles.title}>
+            The list is empty!
+          </Typography>
+        </ShowIf>
+        <ShowIf condition={!!state.songs.length}>
+          <List className={styles.ul} sx={state.loading ? { display: 'none' } : {}}>
+            {state.songs
+              .filter((sa) => !!sa.song)
+              .map((sa, i) => (
+                <ListItemButton
+                  key={i}
+                  autoFocus={sa.tlid == state.current.tlid}
+                  selected={sa.tlid == state.current.tlid}
+                  sx={{ px: liPx, py: [1.2, 0.75], border: 'solid thin rgba(0, 0, 0, 0.2)' }}
+                  onClick={() => handleSelection(sa)}
                 >
-                  <img src={sa.imgUri} style={{ maxWidth: '100%', maxHeight: '100%' }} />
-                </ListItemAvatar>
-              )}
-              <ListItemText
-                sx={{ wordBreak: 'break-word' }}
-                primary={sa.song}
-                primaryTypographyProps={{
-                  letterSpacing: 0,
-                  lineHeight: sa.artists ? 1.5 : 1,
-                  ...primaryTypoFontSize,
-                }}
-                secondary={sa.artists}
-                secondaryTypographyProps={{ letterSpacing: 0, lineHeight: 1 }}
-              />
-            </ListItemButton>
-          ))}
-      </List>
+                  {sa.imgUri && (
+                    <ListItemAvatar
+                      sx={{
+                        marginRight: liPx,
+                        lineHeight: 0,
+                        minWidth: 0,
+                        maxWidth: `min(15%, ${wantedImgHeight})`,
+                      }}
+                    >
+                      <img src={sa.imgUri} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                    </ListItemAvatar>
+                  )}
+                  <ListItemText
+                    sx={{ wordBreak: 'break-word' }}
+                    primary={sa.song}
+                    primaryTypographyProps={{
+                      letterSpacing: 0,
+                      lineHeight: sa.artists ? 1.5 : 1,
+                      ...primaryTypoFontSize,
+                    }}
+                    secondary={sa.artists}
+                    secondaryTypographyProps={{ letterSpacing: 0, lineHeight: 1 }}
+                  />
+                </ListItemButton>
+              ))}
+          </List>
+        </ShowIf>
+      </ShowIf>
       <ShowIf condition={state.loading}>
         <Spinner />
       </ShowIf>
