@@ -30,6 +30,7 @@ import '../../components/panel/panel.scss';
 import pageStyles from '../page.module.scss';
 import CornerIconButton from '../../components/button/cornerbutton/CornerIconButton';
 import kefctrl from '../../assets/kef-control-no-bkg.png';
+import { ifIPhone } from '../../lib/agent';
 
 type VolumePageState = {
   pbStatus?: PlaybackState;
@@ -156,7 +157,7 @@ export default function PlayerPage() {
   return (
     <>
       <Stack
-        className={pageStyles.page}
+        className={`${pageStyles.page} ${ifIPhone(pageStyles.iPhone, '')}`}
         spacing={1}
         sx={{ '& > div:not(.corner)': { height: panelHeight }, position: 'relative' }}
       >

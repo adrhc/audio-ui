@@ -17,6 +17,7 @@ import ExactVolumePanel from '../../components/panel/ExactVolumePanel';
 import CornerIconButton from '../../components/button/cornerbutton/CornerIconButton';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { Styles } from '../../lib/types';
+import { ifIPhone } from '../../lib/agent';
 
 type KefLsxPageState = { loading?: boolean } & KefLSXState;
 
@@ -67,7 +68,7 @@ export default function KefLsxPage() {
   return (
     <>
       <Stack
-        className={pageStyles.page}
+        className={`${pageStyles.page} ${ifIPhone(pageStyles.iPhone, '')}`}
         spacing={1}
         sx={[
           { position: 'relative', flexWrap: 'wrap' },

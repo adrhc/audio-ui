@@ -16,6 +16,7 @@ import { getUA, isTablet } from 'react-device-detect';
 import { SHOW_LOGS } from '../../constants';
 import Logs from '../../components/Logs';
 import { playSelection } from '../../services/player';
+import pageStyles from '../page.module.scss';
 import styles from './styles.module.scss';
 
 type TrackListPageState = {
@@ -124,7 +125,7 @@ export default function TrackListPage() {
   const liPx = 0.5;
 
   return (
-    <Stack className={`${styles.stack} ${ifIPhone(styles.iPhone, '')}`} spacing={state.loading ? [0] : [0.5]}>
+    <Stack className={`${styles.stack} ${ifIPhone(pageStyles.iPhone, '')}`} spacing={state.loading ? [0] : [0.5]}>
       <List className={styles.ul} sx={state.loading ? { display: 'none' } : {}}>
         {state.songs
           .filter((sa) => !!sa.song)

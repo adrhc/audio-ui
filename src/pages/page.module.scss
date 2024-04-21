@@ -1,3 +1,5 @@
+@import '/src/styles/vars.scss';
+
 // see https://www.whatismybrowser.com/w/66ZAAY4
 .page {
   justify-content: center;
@@ -10,4 +12,8 @@
 
 .title {
   text-align: center;
+}
+
+.iPhone {
+  padding-bottom: 1.5 * $spaceRatio;
 }
