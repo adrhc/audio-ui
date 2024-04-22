@@ -18,7 +18,7 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { Styles } from '../../lib/types';
 import { ifIPhone } from '../../lib/agent';
 import pageStyles from '../page.module.scss';
-import cornerBtnStyles from '../../components/button/cornerbutton/styles.module.scss';
+// import cornerBtnStyles from '../../components/button/cornerbutton/styles.module.scss';
 
 type KefLsxPageState = { loading?: boolean } & KefLSXState;
 
