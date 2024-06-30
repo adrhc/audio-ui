@@ -33,9 +33,7 @@ const MopidyPlayOptions = () => {
 
   useEffect(() => {
     // console.log(`[MopidyPlayOptions:online] online = ${online}`);
-    if (online) {
-      loadOptions(mopidy);
-    }
+    online && loadOptions(mopidy);
   }, [loadOptions, mopidy, online]);
 
   useEffect(() => {
