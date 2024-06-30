@@ -24,19 +24,18 @@ type HistoryCache = { scrollTop: number } & RawPlaybackHistoryPageState;
 
 function PlaybackHistoryPage() {
   const { getCache, mergeCache } = useContext(AppContext);
-  const [
+  const {
     state,
     sustain,
     setState,
     handleSelection,
     handleAdd,
-    ,
     handleInsert,
     listRef,
-    scrollTo,
     scrollObserver,
+    scrollTo,
     currentSong,
-  ] = useSongsList<RawPlaybackHistoryPageState>('history');
+  } = useSongsList<RawPlaybackHistoryPageState>('history');
   const cache = getCache('history') as HistoryCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

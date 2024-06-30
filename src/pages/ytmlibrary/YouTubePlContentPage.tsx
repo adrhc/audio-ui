@@ -16,7 +16,7 @@ function YouTubePlContentPage() {
   const { uri } = useParams();
   const cacheName = `ytplcontent/${uri}`;
   const { getCache, mergeCache } = useContext(AppContext);
-  const [
+  const {
     state,
     sustain,
     setState,
@@ -25,10 +25,10 @@ function YouTubePlContentPage() {
     handleAddAll,
     handleInsert,
     listRef,
-    scrollTo,
     scrollObserver,
+    scrollTo,
     currentSong,
-  ] = useSongsList<RawSongsPageState>(cacheName);
+  } = useSongsList<RawSongsPageState>(cacheName);
   const cache = getCache(cacheName) as YouTubePlContentCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

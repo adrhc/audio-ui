@@ -34,20 +34,20 @@ export function pickRawSongsPageState(state?: RawSongsPageState | null) {
       } as RawSongsPageState);
 }
 
-export type UseSongsList<P extends RawSongsPageState> = [
-  state: LoadingState<P>,
-  sustain: SustainVoidFn<P>,
-  setState: SetLoadingState<P>,
-  handleSelection: (song: Song) => void,
-  handleAdd: (song: Song) => void,
-  handleAddAll: AddAllSongsFn,
-  handleInsert: (song: Song) => void,
-  listRef: RefObject<HTMLUListElement>,
-  scrollTo: ScrollToFn,
-  scrollObserver: (e: React.UIEvent<HTMLUListElement>) => void,
-  currentSong?: TrackSong,
-  mopidy?: Mopidy,
-];
+export interface UseSongsList<P extends RawSongsPageState> {
+  state: LoadingState<P>;
+  sustain: SustainVoidFn<P>;
+  setState: SetLoadingState<P>;
+  handleSelection: (song: Song) => void;
+  handleAdd: (song: Song) => void;
+  handleAddAll: AddAllSongsFn;
+  handleInsert: (song: Song) => void;
+  listRef: RefObject<HTMLUListElement>;
+  scrollObserver: (e: React.UIEvent<HTMLUListElement>) => void;
+  scrollTo: ScrollToFn;
+  currentSong?: TrackSong;
+  mopidy?: Mopidy;
+}
 
 export default function useSongsList<P extends RawSongsPageState>(
   cacheName: string,
@@ -123,7 +123,7 @@ export default function useSongsList<P extends RawSongsPageState>(
     [mopidy, sustain, currentSong]
   );
 
-  return [
+  return {
     state,
     sustain,
     setState,
@@ -136,5 +136,5 @@ export default function useSongsList<P extends RawSongsPageState>(
     scrollObserver,
     currentSong,
     mopidy,
-  ];
+  };
 }

@@ -27,19 +27,18 @@ function SongSearchPage() {
   const { text: searchExpression, rand } = useURLQueryParams('text', 'rand');
   const { getCache, mergeCache } = useContext(AppContext);
   const cache = getCache('songs-search') as SongSearchCache;
-  const [
+  const {
     state,
     sustain,
     setState,
     handleSelection,
     handleAdd,
-    ,
     handleInsert,
     listRef,
-    scrollTo,
     scrollObserver,
+    scrollTo,
     currentSong,
-  ] = useSongsList<RawSongsSearchPageState>('songs-search', {
+  } = useSongsList<RawSongsSearchPageState>('songs-search', {
     draftExpression: cache?.draftExpression
       ? cache?.draftExpression
       : cache?.searchExpression ?? searchExpression,

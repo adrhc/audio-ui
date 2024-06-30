@@ -17,19 +17,17 @@ type YouTubePlaylistsCache = { scrollTop: number } & RawSongsPageState;
 function YTMusicLibraryPage() {
   const navigate = useNavigate();
   const { getCache, mergeCache } = useContext(AppContext);
-  const [
+  const {
     state,
     sustain,
     setState,
-    ,
     handleAdd,
-    ,
     handleInsert,
     listRef,
-    scrollTo,
     scrollObserver,
+    scrollTo,
     currentSong,
-  ] = useSongsList<RawSongsPageState>('ytmlibrary');
+  } = useSongsList<RawSongsPageState>('ytmlibrary');
   const cache = getCache('ytmlibrary') as YouTubePlaylistsCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

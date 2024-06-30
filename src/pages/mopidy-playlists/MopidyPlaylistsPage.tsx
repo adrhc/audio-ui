@@ -23,7 +23,7 @@ type MopidyPlaylistsCache = { scrollTop: number } & RawSongsPageState;
 function MopidyPlaylistsPage() {
   const navigate = useNavigate();
   const { mopidy, getCache, mergeCache } = useContext(AppContext);
-  const [state, sustain, setState, , , , , listRef, scrollTo, scrollObserver, currentSong] =
+  const { state, sustain, setState, listRef, scrollObserver, scrollTo, currentSong } =
     useSongsList<RawSongsPageState>('mopidy-playlists');
   const cache = getCache('mopidy-playlists') as MopidyPlaylistsCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
