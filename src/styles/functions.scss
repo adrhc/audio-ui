@@ -1,0 +1,5 @@
+@use './vars.scss' as *;
+
+@function spacing($size) {
+  @return calc($spaceRatio * $size);
+}

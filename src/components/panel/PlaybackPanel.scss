@@ -1,0 +1,15 @@
+@use '/src/styles/vars.scss' as *;
+
+.playback-panel {
+  button {
+    flex-grow: 1;
+  }
+
+  button:enabled {
+    border-right-color: $btnBorderColor;
+    // border-right-color: #42a5f5;
+    &:not(button:last-of-type) {
+      color: black;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.login-page {
+  form {
+    align-items: center;
+    margin-top: spacing(1.25) !important;
+    > div,
+    > button {
+      width: 75%;
+    }
+    .MuiButtonBase-root {
+      flex-grow: 1;
+      width: 50%;
+      height: spacing(7); // same as the input fields
+      color: rgba(0, 0, 0, 0.8);
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}

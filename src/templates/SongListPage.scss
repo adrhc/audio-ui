@@ -1,0 +1,26 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.song-list-page {
+  max-width: 100%;
+
+  .content {
+    flex-grow: 1;
+
+    .text-search-button {
+      background-color: $background;
+    }
+
+    .songs-wrapper {
+      justify-content: center;
+      text-align: center;
+      flex-grow: 1;
+      height: 0; // solves the list overflow issue
+    }
+  }
+
+  .bottom {
+    justify-content: center;
+    height: auto;
+  }
+}

@@ -1,0 +1,38 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.kefl-lsx-page {
+  .content {
+    > div:not(.ignored) {
+      height: $panelHeight;
+    }
+    .kef-btn-wrapper {
+      justify-content: center;
+      .MuiIcon-root {
+        line-height: 0;
+        img {
+          max-width: 100%;
+          max-height: 100%;
+        }
+      }
+    }
+  }
+}
+
+@mixin styles($padding, $iconSize) {
+  // @debug "[kefl-lsx-page] padding: #{$padding}";
+  .kef-btn {
+    padding: spacing($padding);
+    .MuiIcon-root {
+      font-size: spacing($iconSize);
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  @include styles(1, 8);
+}
+
+@media (min-width: $tablet) {
+  @include styles(0.8, 7);
+}

@@ -1,0 +1,31 @@
+@use '/src/styles/vars.scss' as *;
+
+.player-button-group-menu {
+  justify-content: space-between;
+  align-items: center;
+  height: $panelHeight;
+  .corner-button {
+    height: 100%;
+  }
+  .corner-button {
+    &.left img {
+      max-width: 32px;
+    }
+    &.right img {
+      max-width: 36px;
+    }
+  }
+  .center {
+    border: thin solid rgb(105 105 105 / 18%);
+    // background-color: rgb(231 224 17 / 38%);
+    background-color: cadetblue;
+    color: rgb(231 182 48 / 75%);
+    // color: rgb(255 225 48 / 72%);
+    // color: rgb(31 227 169 / 75%);
+    .MuiSvgIcon-root {
+      width: 34px;
+      height: 34px;
+      // width: cb.$width;
+    }
+  }
+}

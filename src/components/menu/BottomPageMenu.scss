@@ -1,0 +1,43 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.button-group-menu {
+  $svgHeight: 2.35rem;
+  justify-content: center;
+  .MuiButtonGroup-grouped {
+    flex-grow: 1;
+    color: rgba(0, 0, 0, 0.8);
+    .MuiSvgIcon-root {
+      font-size: $svgHeight;
+    }
+    .btn-img-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: $svgHeight;
+      height: $svgHeight;
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}
+
+@mixin bottomPageMenu($btnPY) {
+  $btnPYpx: spacing($btnPY);
+  .button-group-menu {
+    .MuiButtonGroup-grouped {
+      padding-top: $btnPYpx;
+      padding-bottom: $btnPYpx;
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  @include bottomPageMenu(1.23);
+}
+
+@media (min-width: $tablet) {
+  @include bottomPageMenu(0.732);
+}

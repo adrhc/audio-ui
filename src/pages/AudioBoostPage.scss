@@ -1,0 +1,22 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.audio-boost-page {
+  .content {
+    > div:not(.ignored) {
+      height: $panelHeight;
+    }
+    
+    > button {
+      // height: $panelHeight;
+      padding-top: spacing(1.766);
+      padding-bottom: spacing(1.766);
+    }
+  }
+
+  .bottom {
+    .corner-button.right img {
+      max-width: 30px;
+    }
+  }
+}

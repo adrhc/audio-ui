@@ -1,0 +1,11 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.button-group-menu {
+  .back-btn {
+    img {
+      width: 26px;
+      height: 26px;
+    }
+  }
+}

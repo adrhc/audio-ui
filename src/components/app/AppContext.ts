@@ -1,0 +1,42 @@
+import { createContext } from 'react';
+import { VolumeBoost } from '../../services/boost';
+import { GetCacheFn, SetCacheFn, ClearCacheFn, CacheContainsFn, MergeCacheFn } from '../../hooks/useCache';
+import {
+  AppState,
+  DEFAULT_APP_STATE_WTHOUT_MOPIDY,
+  SetCredentialsFn,
+  SetNotificationFn,
+} from './useAppState';
+import { Credentials } from '../../domain/credentials';
+
+type AppContextValue = AppState & {
+  getBaseVolume: () => number | null | undefined;
+  setBaseVolume: (baseVolume: number) => void;
+  incrementBaseVolume: (increment: number) => void;
+  setBoost: (vb: VolumeBoost) => void;
+  getCache: GetCacheFn;
+  setCache: SetCacheFn;
+  mergeCache: MergeCacheFn;
+  clearCache: ClearCacheFn;
+  cacheContains: CacheContainsFn;
+  setNotification: SetNotificationFn;
+  reloadState: () => void;
+  setCredentials: SetCredentialsFn;
+};
+
+export const AppContext = createContext<AppContextValue>({
+  getBaseVolume: () => undefined,
+  setBaseVolume: () => {},
+  incrementBaseVolume: () => {},
+  setBoost: () => {},
+  getCache: () => undefined,
+  setCache: () => {},
+  mergeCache: () => {},
+  clearCache: () => {},
+  cacheContains: () => false,
+  setNotification: () => {},
+  reloadState: () => {},
+  setCredentials: () => {},
+  credentials: new Credentials(),
+  ...DEFAULT_APP_STATE_WTHOUT_MOPIDY,
+});

@@ -1,0 +1,88 @@
+@use '/src/styles/functions.scss' as *;
+
+@mixin liButton($btnPX, $fontSize) {
+  .MuiListItemButton-root {
+    padding-left: $btnPX;
+    padding-right: $btnPX;
+    padding-top: 0;
+    padding-bottom: 0;
+    .MuiListItemText-root {
+      word-break: break-all;
+      .MuiListItemText-primary {
+        font-size: $fontSize;
+      }
+      .MuiTypography-root {
+        letter-spacing: 0;
+      }
+    }
+  }
+}
+
+@mixin liAction($iconSize, $actBtnCount) {
+  $iconSizePx: spacing($iconSize);
+  .MuiListItemSecondaryAction-root {
+    right: 0;
+    .MuiButtonBase-root {
+      img {
+        width: $iconSizePx;
+        height: $iconSizePx;
+      }
+    }
+  }
+  .MuiListItemButton-root {
+    // each action btn has a height of $iconSize + 2 (i.e. padding top + bottom)
+    // also adding some overall padding top & bottom
+    min-height: spacing($actBtnCount * ($iconSize + 2) + 1.5);
+    .MuiListItemText-root {
+      padding-right: spacing($iconSize + 1);
+    }
+  }
+}
+
+@mixin liAvatar() {
+  .MuiListItemAvatar-root {
+    padding-left: 0;
+    line-height: 0;
+    min-width: 0;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+}
+
+@mixin liAvatarAtLeft($avatarMaxWidth, $avtPR) {
+  .MuiListItemButton-root {
+    @include liAvatar();
+    .MuiListItemAvatar-root {
+      max-width: $avatarMaxWidth;
+      padding-right: $avtPR;
+    }
+  }
+}
+
+@mixin liAvatarOnTop($avatarMaxWidth) {
+  .MuiListItemButton-root {
+    @include liAvatar();
+    flex-direction: column;
+    justify-content: center;
+    .MuiListItemAvatar-root {
+      max-width: $avatarMaxWidth;
+      padding-right: 0;
+      margin-top: spacing(0.75); // same as .MuiListItemText-root
+    }
+    .MuiListItemText-root {
+      flex-grow: 0;
+      width: 100%;
+    }
+  }
+}
+
+@mixin liMenu() {
+  > li.MENU > .MuiButtonGroup-root {
+    width: 100%;
+    > button {
+      flex-grow: 1;
+    }
+  }
+}

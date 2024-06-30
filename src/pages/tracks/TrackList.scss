@@ -1,0 +1,26 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+@use '/src/styles/list/list-mixins.scss' as *;
+
+@mixin tracksListItem($btnPX, $fontSize, $iconSize) {
+  @include liButton($btnPX, $fontSize);
+  @include liAction($iconSize, 2);
+  @include liAvatarAtLeft(25%, $btnPX);
+}
+
+$liPX: spacing(0.5);
+
+.track-list {
+  > li {
+    /* .upsert-btn {
+      width: 23px !important;
+      height: 23px !important;
+    } */
+    @media (max-width: $tablet) {
+      @include tracksListItem($liPX, 1.15rem, 3.5);
+    }
+    @media (min-width: $tablet) {
+      @include tracksListItem($liPX, 1rem, 2.75);
+    }
+  }
+}

@@ -1,0 +1,12 @@
+table.preset-view {
+  width: fit-content;
+  align-self: center;
+
+  tr > td:first-of-type {
+    font-weight: bold;
+  }
+
+  tr.action > td {
+    border-bottom: none;
+  }
+}

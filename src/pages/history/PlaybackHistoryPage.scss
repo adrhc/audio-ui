@@ -1,0 +1,22 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+@mixin historyPage($btnPY) {
+  $btnPYpx: spacing($btnPY);
+  .song-list {
+    > li.MENU > .MuiButtonGroup-root {
+      .MuiButtonGroup-grouped {
+        padding-top: $btnPYpx;
+        padding-bottom: $btnPYpx;
+      }
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  @include historyPage(1.6);
+}
+
+/* @media (min-width: $tablet) {
+  @include historyPage(0.732);
+} */

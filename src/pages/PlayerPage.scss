@@ -1,0 +1,28 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+@use '/src/components/button/cornerbutton/CornerIconButton.scss' as cb;
+
+.player-page {
+  .content {
+    > div:not(.ignored) {
+      height: $panelHeight;
+    }
+
+    .MuiTypography-root {
+      .MuiBadge-root {
+        vertical-align: unset;
+        .MuiBadge-badge {
+          top: -4px;
+        }
+      }
+    }
+
+    a {
+      cursor: pointer;
+      text-decoration: none;
+      svg {
+        vertical-align: sub;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+.menu-page {
+  .content {
+    align-items: center;
+
+    [role='menu'] {
+      width: 100%;
+      max-width: 100%;
+      .history {
+        color: black;
+      }
+      img.search {
+        width: 20px;
+        height: 20px;
+      }
+      img.mopidy-playlists {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}

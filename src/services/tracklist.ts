@@ -1,0 +1,103 @@
+import Mopidy from 'mopidy';
+import { addUris, addUrisAfter } from './mpc';
+import { addToHistory, getYTPlContent } from './audio-db/audio-db';
+import { TrackSong } from '../domain/track-song';
+import { Song } from '../domain/song';
+import { play } from './player';
+import { getMopidyPlItems } from './pl-content';
+
+/**
+ * Get the playlist content from audio-db.
+ */
+export function addYtMusicPlAfterAndRemember(
+  mopidy: Mopidy | undefined,
+  after: TrackSong | undefined | null,
+  ytm: Song
+) {
+  console.log(`[addYtMusicPlAfterAndRemember] playlist:`, ytm);
+  return getYTPlContent(ytm.uri).then((songs) => {
+    if (songs.length) {
+      addSongsAfterAndRemember(mopidy, after, ...songs);
+    } else {
+      return Promise.reject(`The playlist ${ytm.title} is empty!`);
+    }
+  });
+}
+
+/**
+ * Get the playlist content from audio-db.
+ */
+export function addYtMusicPlAndRemember(mopidy: Mopidy | undefined, ytm: Song) {
+  console.log(`[addYtMusicPlAndRemember] playlist:`, ytm);
+  return getYTPlContent(ytm.uri).then((songs) => {
+    if (songs.length) {
+      addSongsAndRemember(mopidy, ...songs);
+    } else {
+      return Promise.reject(`The playlist ${ytm.title} is empty!`);
+    }
+  });
+}
+
+/**
+ * Get the playlist content from Mopidy WebSocket.
+ */
+export function addMopidyPlAfterAndRemember(
+  mopidy: Mopidy | undefined,
+  after: TrackSong | undefined | null,
+  playlist: Song
+) {
+  console.log(`[addMopidyPlAfterAndRemember] playlist:`, playlist);
+  return getMopidyPlItems(mopidy, playlist.uri).then((songs) => {
+    if (songs.length) {
+      addSongsAfterAndRemember(mopidy, after, ...songs);
+    } else {
+      return Promise.reject(`The playlist ${playlist.title} is empty!`);
+    }
+  });
+}
+
+/**
+ * Get the playlist content from Mopidy WebSocket.
+ */
+export function addMopidyPlAndRemember(mopidy: Mopidy | undefined, playlist: Song) {
+  console.log(`[addMopidyPlAndRemember] playlist:`, playlist);
+  return getMopidyPlItems(mopidy, playlist.uri).then((songs) => {
+    if (songs.length) {
+      addSongsAndRemember(mopidy, ...songs);
+    } else {
+      return Promise.reject(`The playlist ${playlist.title} is empty!`);
+    }
+  });
+}
+
+export function addSongsAfterAndRemember(
+  mopidy: Mopidy | undefined,
+  after: TrackSong | undefined | null,
+  ...song: Song[]
+) {
+  if (after?.tlid == null) {
+    return addSongsAndRemember(mopidy, ...song);
+  } else {
+    const uris = song.map((it) => it.uri);
+    return addUrisAfter(mopidy, after.tlid, ...uris)?.then(addToHistory);
+  }
+}
+
+export function addSongsAndRemember(mopidy: Mopidy | undefined, ...song: Song[]) {
+  const uris = song.map((it) => it.uri);
+  return addUrisAndRemember(mopidy, ...uris);
+}
+
+export function addUrisAndRemember(mopidy: Mopidy | undefined, ...uris: string[]) {
+  return addUris(mopidy, ...uris)?.then(addToHistory);
+}
+
+export function addSongThenPlay(mopidy: Mopidy | undefined, song: Song) {
+  return addUrisThenPlay(mopidy, song.uri);
+}
+
+export function addUrisThenPlay(mopidy: Mopidy | undefined, ...uris: string[]) {
+  return addUris(mopidy, ...uris)?.then((tk) => {
+    tk.length && play(mopidy, tk[0].tlid);
+  });
+}

@@ -1,0 +1,48 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.presets-list {
+  flex-grow: unset !important;
+
+  > li {
+    border-right: unset !important; // otherwise double border when the scroll bar is not present
+    .MuiListItemSecondaryAction-root {
+      right: spacing(1.25);
+    }
+  }
+}
+
+@mixin presetsList($iconSize) {
+  // @debug "[presets-list] iconSize: #{$iconSize}";
+  .presets-list {
+    > li {
+      .MuiListItemButton-root {
+        // 7.5 = (3 * 2 * PX - (2 * 0.25 for view & del)) + 1.25 (action's right margin) + 0.75 (action's left space)
+        padding-right: spacing($iconSize * 3 + 7.5);
+        // 2.2 is for iconPT+0.1 and iconPB+0.1
+        height: spacing($iconSize + 2.2);
+      }
+      .view-btn,
+      .del-btn {
+        img {
+          width: spacing($iconSize - 0.25);
+          height: spacing($iconSize - 0.25);
+        }
+      }
+      .edit-btn {
+        img {
+          width: spacing($iconSize);
+          height: spacing($iconSize);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  @include presetsList(3.75);
+}
+
+@media (min-width: $tablet) {
+  @include presetsList(3);
+}

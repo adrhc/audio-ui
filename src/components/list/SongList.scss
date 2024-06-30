@@ -1,0 +1,27 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+@use '/src/styles/list/list-mixins.scss' as *;
+
+$liPX: spacing(0.5);
+
+.song-list {
+  > li.last-used-song .MuiListItemText-primary {
+    font-weight: bold;
+  }
+  > li.YOUTUBE:not(.Mui-selected, .Mui-focusVisible) {
+    background-color: #f1e38236;
+  }
+  @include liMenu();
+  > li {
+    @media (max-width: $tablet) {
+      @include liButton($liPX, 1.1rem);
+      @include liAction(4, 2);
+      @include liAvatarOnTop(60%);
+    }
+    @media (min-width: $tablet) {
+      @include liButton($liPX, 0.95rem);
+      @include liAction(3, 2);
+      @include liAvatarAtLeft(25%, $liPX);
+    }
+  }
+}
