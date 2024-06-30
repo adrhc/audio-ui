@@ -24,7 +24,7 @@
   }
 }
 
-@mixin bottomPageMenu($btnPY) {
+@mixin bottomGroupMenu($btnPY) {
   $btnPYpx: spacing($btnPY);
   .button-group-menu {
     .MuiButtonGroup-grouped {
@@ -35,9 +35,9 @@
 }
 
 @media (max-width: $tablet) {
-  @include bottomPageMenu(1.23);
+  @include bottomGroupMenu(1.23);
 }
 
 @media (min-width: $tablet) {
-  @include bottomPageMenu(0.732);
+  @include bottomGroupMenu(0.732);
 }
