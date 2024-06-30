@@ -24,28 +24,21 @@ function SongPlaylistsEditorPage() {
   const decodedUri = uri ? decodeURIComponent(uri) : uri;
   const decodedTitle = title ? decodeURIComponent(title) : title;
   const { online } = useContext(AppContext);
-  const [state, sustain, setState] = useSustainableState<SongPlaylistsEditorPageState>({
-    selections: [],
-    loading: true,
-  });
+  const [state, sustain, setState] = useSustainableState<SongPlaylistsEditorPageState>({ selections: [] });
   /* console.log(
     `[SongPlaylistsEditorPage]\nuri: ${uri}\ndecodedUri: ${decodedUri}\ntitle: ${title}\ndecodedTitle: ${decodedTitle}`
   ); */
 
   useEffect(() => {
-    if (!decodedUri) {
+    if (!decodedUri || !online) {
       return;
     }
-    if (online) {
-      console.log(`[TrackListPage:online] loading the track list`);
-      sustain(
-        getDiskPlaylists(decodedUri)?.then((selections) => ({ selections })),
-        "Can't load the locations!"
-      );
-    } else {
-      setState((old) => ({ ...old, loading: true }));
-    }
-  }, [online, setState, sustain, decodedUri]);
+    console.log(`[TrackListPage:online] loading the track list`);
+    sustain(
+      getDiskPlaylists(decodedUri)?.then((selections) => ({ selections })),
+      "Can't load the locations!"
+    );
+  }, [decodedUri, online, sustain]);
 
   const selectLocation = useCallback(
     (pl: MediaLocation) => {
@@ -90,7 +83,11 @@ function SongPlaylistsEditorPage() {
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={
-        <CreateConfirmButtonMenu addPage="/add-playlist" onAccept={allocate} acceptDisabled={!decodedUri} />
+        <CreateConfirmButtonMenu
+          addPage="/add-playlist"
+          onAccept={allocate}
+          acceptDisabled={!decodedUri || !online}
+        />
       }
     >
       <Stack className="songs-wrapper">

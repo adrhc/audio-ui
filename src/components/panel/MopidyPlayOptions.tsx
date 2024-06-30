@@ -13,14 +13,14 @@ import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 import SpinnerPannel from './SpinnerPannel';
 import { LoadingState } from '../../lib/sustain';
 import { AppContext } from '../app/AppContext';
-import './MopidyPlayOptions.scss';
 import { useSustainableState } from '../../hooks/useSustainableState';
+import './MopidyPlayOptions.scss';
 
 type MopidyPlayOptionsState = LoadingState<PlayOptions>;
 
 const MopidyPlayOptions = () => {
   const { mopidy, online } = useContext(AppContext);
-  const [state, sustain, setState] = useSustainableState<MopidyPlayOptionsState>({ loading: true });
+  const [state, sustain] = useSustainableState<MopidyPlayOptionsState>({});
   // console.log(`[MopidyPlayOptions] online = ${online}, state:`, state);
 
   const loadOptions = useCallback(
@@ -32,16 +32,14 @@ const MopidyPlayOptions = () => {
   );
 
   useEffect(() => {
-    console.log(`[MopidyPlayOptions:online] online = ${online}`);
+    // console.log(`[MopidyPlayOptions:online] online = ${online}`);
     if (online) {
       loadOptions(mopidy);
-    } else {
-      setState((old) => ({ ...old, loading: true }));
     }
-  }, [loadOptions, mopidy, online, setState]);
+  }, [loadOptions, mopidy, online]);
 
   useEffect(() => {
-    console.log(`[MopidyPlayOptions:mopidy]`);
+    // console.log(`[MopidyPlayOptions:mopidy]`);
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push(['event:optionsChanged', () => loadOptions(mopidy)]);
@@ -59,7 +57,7 @@ const MopidyPlayOptions = () => {
   const iconStyle = { fontSize: iconFontSize((ifs) => ifs.map((n, i) => n + (i == 0 ? 1 : 0.5))) };
 
   return (
-    <ButtonGroup className="mopidy-play-options">
+    <ButtonGroup className="mopidy-play-options" disabled={!online}>
       <SpinnerPannel show={state.loading} />
       <ToggleButton
         value="repeat"

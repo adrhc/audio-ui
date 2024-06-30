@@ -2,6 +2,8 @@ import { Button, Theme } from '@mui/material';
 import DownMuteIcon from './DownMuteIcon';
 import { Styles } from '../../domain/types';
 import { toArray } from '../../lib/array';
+import { useContext } from 'react';
+import { AppContext } from '../app/AppContext';
 // import { AllSystemCSSProperties } from '@mui/system/styleFunctionSx';
 
 type MuteIconButtonParam = {
@@ -12,19 +14,21 @@ type MuteIconButtonParam = {
   iconFontSize: (theme: Theme) => string[];
 };
 
-const MuteIconButton = ({ sx, disabled = false, mute, onClick, iconFontSize }: MuteIconButtonParam) => {
+const MuteIconButton = ({ sx, disabled, mute, onClick, iconFontSize }: MuteIconButtonParam) => {
+  const { online } = useContext(AppContext);
   return (
     // <Tooltip title={mute ? 'Unmute' : 'Mute'}>
-      // <span>
-        <Button variant="outlined"
-          disabled={disabled}
-          sx={[{ color: 'black' }, ...toArray(sx), mute && { color: 'red' }]}
-          onClick={onClick}
-          aria-label="Mute"
-        >
-          <DownMuteIcon sx={{ fontSize: iconFontSize }} mute={mute} />
-        </Button>
-      // </span>
+    // <span>
+    <Button
+      variant="outlined"
+      disabled={disabled ?? !online}
+      sx={[{ color: 'black' }, ...toArray(sx), mute && { color: 'red' }]}
+      onClick={onClick}
+      aria-label="Mute"
+    >
+      <DownMuteIcon sx={{ fontSize: iconFontSize }} mute={mute} />
+    </Button>
+    // </span>
     // </Tooltip>
   );
 };

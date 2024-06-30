@@ -5,6 +5,8 @@ import Looks5RoundedIcon from '@mui/icons-material/Looks5Rounded';
 import { iconFontSize } from '../../pages/styles';
 import { Styles } from '../../domain/types';
 import './VolumeButtonsPanel.scss';
+import { useCallback, useContext } from 'react';
+import { AppContext } from '../app/AppContext';
 
 export type VolumeButtonsParam = {
   sx?: Styles;
@@ -23,20 +25,24 @@ export default function VolumeButtonsPanel({
   volume,
   onChange,
 }: VolumeButtonsParam) {
+  const { online } = useContext(AppContext);
   // console.log(`[VolumeButtons] badgeColor=${badgeColor}, hideBadge=${hideBadge}`);
 
-  function doHandleExactVolume(volume: number) {
-    if (volume >= 0 && volume <= 100) {
-      onChange(volume);
-    } else {
-      console.warn(`[VolumeButtons:doHandleExactVolume] bad volume = ${volume}!`);
-    }
-  }
+  const doHandleExactVolume = useCallback(
+    (volume: number) => {
+      if (volume >= 0 && volume <= 100) {
+        onChange(volume);
+      } else {
+        console.warn(`[VolumeButtons:doHandleExactVolume] bad volume = ${volume}!`);
+      }
+    },
+    [onChange]
+  );
 
-  const fontSize = iconFontSize(fs => fs.map(n => n + 1));
+  const fontSize = iconFontSize((fs) => fs.map((n) => n + 1));
 
   return (
-    <ButtonGroup className="volume-buttons-panel" disabled={disabled} sx={sx}>
+    <ButtonGroup className="volume-buttons-panel" disabled={disabled ?? !online} sx={sx}>
       <Button variant="outlined" onClick={() => doHandleExactVolume(Math.max(0, volume - 5))}>
         <Looks5RoundedIcon sx={{ fontSize }} />
       </Button>

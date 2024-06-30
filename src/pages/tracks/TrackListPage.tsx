@@ -20,7 +20,7 @@ type TrackListPageState = {
 
 export default function TrackListPage() {
   const { mopidy, online, currentSong } = useContext(AppContext);
-  const [state, sustain, setState] = useSustainableState<TrackListPageState>({ songs: [], loading: true });
+  const [state, sustain, setState] = useSustainableState<TrackListPageState>({ songs: [] });
   // console.log(`[TrackListPage] online = ${online}, currentSong:`, currentSong);
   // console.log(`[TrackListPage] online = ${online}, state:`, state);
   const imgMaxEdge = useMaxEdge();
@@ -58,10 +58,8 @@ export default function TrackListPage() {
         getTrackSongs(mopidy, imgMaxEdge)?.then((songs) => ({ songs })),
         "Can't load the track list!"
       );
-    } else {
-      setState((old) => ({ ...old, loading: true }));
     }
-  }, [imgMaxEdge, mopidy, online, setState, sustain]);
+  }, [imgMaxEdge, mopidy, online, sustain]);
 
   // console.log(`[TrackListPage] getUA:\n`, getUA);
   // console.log(`[TrackListPage] agent:\n`, agent);

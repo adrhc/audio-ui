@@ -17,7 +17,6 @@ const AudioBoostPage = () => {
   const goBackFn = useGoBack();
   const {
     mopidy,
-    online,
     currentSong,
     boost: oldBoost,
     volume,
@@ -37,14 +36,17 @@ const AudioBoostPage = () => {
     draftBoost: boost?.boost,
   }); */
 
-  function onVolumeChange(draftVolume: number) {
-    console.log(`[AudioBoostPage:onVolumeChange] draftVolume = ${draftVolume}`);
-    sustain(
-      setMopidyVolume(mopidy, draftVolume)?.then(() => ({ draftVolume })),
-      `Can't change the volume to ${draftVolume}!`,
-      true
-    );
-  }
+  const onVolumeChange = useCallback(
+    (draftVolume: number) => {
+      console.log(`[AudioBoostPage:onVolumeChange] draftVolume = ${draftVolume}`);
+      sustain(
+        setMopidyVolume(mopidy, draftVolume)?.then(() => ({ draftVolume })),
+        `Can't change the volume to ${draftVolume}!`,
+        true
+      );
+    },
+    [mopidy, sustain]
+  );
 
   const goBack = useCallback(() => {
     draftVolume != null && setBaseVolume(draftVolume - (oldBoost ?? 0));
@@ -83,16 +85,11 @@ const AudioBoostPage = () => {
       }
       bottom={<ConfirmationButtonMenu goBack={goBack} onAccept={saveBoost} />}
     >
-      <ExactVolumePanel disabled={!online} values={[0, 5, 10, 15, 20]} onChange={onVolumeChange} />
-      <ExactVolumePanel disabled={!online} values={[25, 30, 35, 40, 45]} onChange={onVolumeChange} />
-      <VolumeButtonsPanel
-        disabled={!online}
-        badgeColor="secondary"
-        volume={volume}
-        onChange={onVolumeChange}
-      />
-      <ExactVolumePanel disabled={!online} values={[50, 55, 60, 65, 70]} onChange={onVolumeChange} />
-      <ExactVolumePanel disabled={!online} values={[75, 80, 85, 90, 100]} onChange={onVolumeChange} />
+      <ExactVolumePanel values={[0, 5, 10, 15, 20]} onChange={onVolumeChange} />
+      <ExactVolumePanel values={[25, 30, 35, 40, 45]} onChange={onVolumeChange} />
+      <VolumeButtonsPanel badgeColor="secondary" volume={volume} onChange={onVolumeChange} />
+      <ExactVolumePanel values={[50, 55, 60, 65, 70]} onChange={onVolumeChange} />
+      <ExactVolumePanel values={[75, 80, 85, 90, 100]} onChange={onVolumeChange} />
     </PageTemplate>
   );
 };

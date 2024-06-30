@@ -31,22 +31,12 @@ type PlayerPageState = {
 };
 
 export default function PlayerPage() {
-  const {
-    mopidy,
-    online,
-    pbStatus,
-    currentSong,
-    streamTitle,
-    volume,
-    boost,
-    mute,
-    setBaseVolume,
-    setNotification,
-  } = useContext(AppContext);
+  const { mopidy, pbStatus, currentSong, streamTitle, volume, boost, mute, setBaseVolume, setNotification } =
+    useContext(AppContext);
   // const [logs, setLogs] = useState<string[]>([]);
   const [state, sustain, setState] = useSustainableState<PlayerPageState>({ tuneOn: false });
 
-  console.log(`[PlayerPage] online = ${online}, state:\n`, state);
+  console.log(`[PlayerPage] state:\n`, state);
 
   const onVolumeChange = useCallback(
     (boostedVolume: number) => {
@@ -90,9 +80,8 @@ export default function PlayerPage() {
             </Typography>
           </Box>
         </ShowIf>
-        <ExactVolumePanel disabled={!online} values={[5, 15, 25, 45, 65, 80]} onChange={onVolumeChange} />
+        <ExactVolumePanel values={[5, 15, 25, 45, 65, 80]} onChange={onVolumeChange} />
         <PlaybackPanel
-          disabled={!online}
           status={pbStatus}
           mute={mute}
           onMute={() => sustain(muteMopidy(mopidy, !mute), 'Failed to mute!', true)}
@@ -101,16 +90,13 @@ export default function PlayerPage() {
           play={() => sustain(play(mopidy), 'Failed to play!', true)}
           resume={() => sustain(resume(mopidy), 'Failed to resume!', true)}
         />
-        <VolumeButtonsPanel disabled={!online} badgeColor="info" volume={volume} onChange={onVolumeChange} />
+        <VolumeButtonsPanel badgeColor="info" volume={volume} onChange={onVolumeChange} />
         <PrevNextPanel
-          disabled={!online}
           previous={() => sustain(previous(mopidy), 'Failed to go previous!', true)}
           next={() => sustain(next(mopidy), 'Failed to go next!', true)}
           toggleTune={() => setState((old) => ({ ...old, tuneOn: !state.tuneOn }))}
         />
-        <ShowIf condition={state.tuneOn}>
-          <MopidyPlayOptions />
-        </ShowIf>
+        {state.tuneOn && <MopidyPlayOptions />}
       </PageTemplate>
       {/* <Logs logs={logs} /> */}
     </>

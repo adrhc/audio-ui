@@ -6,6 +6,8 @@ import { iconFontSize } from '../../pages/styles';
 import PlayOrResumeButton from '../button/PlayOrResumeButton';
 import MuteIconButton from '../button/MuteIconButton';
 import './PlaybackPanel.scss';
+import { useContext } from 'react';
+import { AppContext } from '../app/AppContext';
 
 export type PlaybackPanelParam = {
   sx?: Styles;
@@ -29,7 +31,7 @@ const pauseFontSize = playIconFontSize((ifs) => ifs.map((n, i) => n + 0.375 + (i
 const muteFontSize = playIconFontSize((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.75 : 0.25))); */
 
 export default function PlaybackPanel({
-  disabled = false,
+  disabled,
   status,
   stop,
   pause,
@@ -39,12 +41,13 @@ export default function PlaybackPanel({
   onMute,
   sx,
 }: PlaybackPanelParam) {
+  const { online } = useContext(AppContext);
   const stopEnabled = !!status && status !== 'stopped';
   const pauseEnabled = status === 'playing';
   const fontSize = iconFontSize((fs) => fs.map((n) => n + 1));
 
   return (
-    <ButtonGroup className="playback-panel" disabled={disabled} sx={sx}>
+    <ButtonGroup className="playback-panel" disabled={disabled ?? !online} sx={sx}>
       <Button variant="outlined" disabled={!pauseEnabled} onClick={pause}>
         <PauseIcon sx={{ fontSize }} />
       </Button>

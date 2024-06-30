@@ -66,6 +66,11 @@ export default function App() {
     );
   }, [handleServerState, sustain]);
 
+  const handleStateOffline = useCallback(() => {
+    console.warn(`[App:state:offline]`);
+    setState((old) => ({ ...old, online: false, severity: 'warning', notification: 'Mopidy went offline!' }));
+  }, [setState]);
+
   const handleWebsocketError = useCallback(
     (e: object | string) => {
       console.error(`[App:websocket:error]`, e);
@@ -85,17 +90,6 @@ export default function App() {
       severity: 'error',
       notification: 'Mopidy communication failed (websocket closed)!',
     }));
-  }, [setState]);
-
-  const handleStateOffline = useCallback(() => {
-    console.warn(`[App:state:offline]`);
-    setState((old) => ({ ...old, severity: 'warning', notification: 'Mopidy went offline!' }));
-    // stop the annoying page reloading when getting back online
-    /* setState((old) => ({
-      ...old,
-      // online: false,
-      logs: SHOW_LOGS ? [`[App:state:offline]`, ...old.logs] : old.logs,
-    })); */
   }, [setState]);
 
   const handleMuteChanged = useCallback(
@@ -380,10 +374,7 @@ export default function App() {
         }}
       >
         {/* <Logs logs={logs} /> */}
-        <CloseableAlert
-          message={state?.error}
-          onClose={() => setState((old) => ({ ...old, error: '' }))}
-        />
+        <CloseableAlert message={state?.error} onClose={() => setState((old) => ({ ...old, error: '' }))} />
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           open={!!notification}

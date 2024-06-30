@@ -2,6 +2,8 @@ import { Theme, Button } from '@mui/material';
 import { NoArgsProc, PlaybackState, Styles } from '../../domain/types';
 // import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import { useContext } from 'react';
+import { AppContext } from '../app/AppContext';
 
 export type PlayOrResumeButtonParam = {
   sx?: Styles;
@@ -14,19 +16,21 @@ export type PlayOrResumeButtonParam = {
 
 export default function PlayOrResumeButton({
   sx,
-  disabled = false,
+  disabled,
   status,
   play,
   resume,
   iconFontSize,
 }: PlayOrResumeButtonParam) {
+  const { online } = useContext(AppContext);
+  const disabledBtn = disabled ?? !online;
   switch (status) {
     case 'paused':
       return (
         <>
           {/* <Tooltip title="Resume"> */}
           {/* <span> */}
-          <Button variant="outlined" sx={sx} onClick={resume} disabled={disabled} aria-label="Resume">
+          <Button variant="outlined" sx={sx} onClick={resume} disabled={disabledBtn} aria-label="Resume">
             <PlayCircleIcon sx={{ fontSize: iconFontSize }} />
           </Button>
           {/* </span> */}
@@ -38,7 +42,7 @@ export default function PlayOrResumeButton({
         <>
           {/* <Tooltip title="Play"> */}
           {/* <span> */}
-          <Button variant="outlined" sx={sx} onClick={play} disabled={disabled} aria-label="Play">
+          <Button variant="outlined" sx={sx} onClick={play} disabled={disabledBtn} aria-label="Play">
             <PlayCircleIcon sx={{ fontSize: iconFontSize }} />
           </Button>
           {/* </span> */}

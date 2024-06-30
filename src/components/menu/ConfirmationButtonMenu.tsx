@@ -6,7 +6,7 @@ import BackButtonMenu, { BackButtonMenuParam } from './BackButtonMenu';
 
 export interface ConfirmationButtonMenuParam extends BackButtonMenuParam {
   onAccept: () => void;
-  acceptDisabled?: boolean;
+  acceptDisabled?: boolean | null;
 }
 
 function ConfirmationButtonMenu({ goBack, onAccept, acceptDisabled, children }: ConfirmationButtonMenuParam) {

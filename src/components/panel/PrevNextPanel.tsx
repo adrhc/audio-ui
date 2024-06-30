@@ -7,6 +7,8 @@ import TuneIcon from '@mui/icons-material/Tune';
 import { iconFontSize } from '../../pages/styles';
 import { NoArgsProc, Styles } from '../../domain/types';
 import './PrevNextPanel.scss';
+import { useContext } from 'react';
+import { AppContext } from '../app/AppContext';
 
 type PrevNextPanelParam = {
   sx?: Styles;
@@ -27,16 +29,11 @@ const tuneStyle: Styles = {
   fontSize: playIconFontSize((ifs) => ifs.map((n, i) => n + (i == 0 ? 0.4 : 0.65))),
 }; */
 
-export default function PrevNextPanel({
-  disabled = false,
-  previous,
-  next,
-  toggleTune,
-  sx,
-}: PrevNextPanelParam) {
-  const fontSize = iconFontSize(fs => fs.map(n => n + 1));
+export default function PrevNextPanel({ disabled, previous, next, toggleTune, sx }: PrevNextPanelParam) {
+  const { online } = useContext(AppContext);
+  const fontSize = iconFontSize((fs) => fs.map((n) => n + 1));
   return (
-    <ButtonGroup className="prev-next-panel" disabled={disabled} sx={sx}>
+    <ButtonGroup className="prev-next-panel" disabled={disabled ?? !online} sx={sx}>
       <Button variant="outlined" component={Link} to="/trackList">
         <SubjectIcon sx={{ fontSize }} />
       </Button>
