@@ -8,7 +8,7 @@ import { AppContext } from '../../components/app/AppContext';
 import { removeTlid } from '../../services/mpc';
 import TrackList from './TrackList';
 import { useMaxEdge } from '../../constants';
-import { TrackSong } from '../../domain/track-song';
+import { TrackSong, removeSong } from '../../domain/track-song';
 import TrackListMenu from '../../components/menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain';
 import './TrackListPage.scss';
@@ -25,34 +25,19 @@ export default function TrackListPage() {
   // console.log(`[TrackListPage] online = ${online}, state:`, state);
   const imgMaxEdge = useMaxEdge();
 
-  const removeSong = useCallback(
-    (song: TrackSong) => {
-      const idxToRemove = state.songs.indexOf(song);
-      const newSongs = state.songs.filter((it) => it.tlid != song.tlid);
-      let songCloseToLastRemoved;
-      if (newSongs.length > idxToRemove) {
-        songCloseToLastRemoved = newSongs[idxToRemove];
-      } else if (newSongs.length > 0) {
-        songCloseToLastRemoved = newSongs[idxToRemove - 1];
-      }
-      return { songs: newSongs, songCloseToLastRemoved };
-    },
-    [state.songs]
-  );
-
   const handleRemove = useCallback(
     (song: TrackSong) => {
       // console.log(`[TrackListPage:onRemove] song:\n`, song);
       if (song.tlid) {
         sustain(
-          removeTlid(mopidy, song.tlid)?.then(() => removeSong(song)),
+          removeTlid(mopidy, song.tlid)?.then(() => removeSong(state.songs, song)),
           { error: `Failed to remove ${song.title}!`, songCloseToLastRemoved: song }
         );
       } else {
         setState((old) => ({ ...old, error: 'Something is wrong with the song to remove!' }));
       }
     },
-    [sustain, mopidy, removeSong, setState]
+    [mopidy, setState, state.songs, sustain]
   );
 
   const handleSelection = useCallback(

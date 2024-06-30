@@ -1,6 +1,18 @@
 import { models } from 'mopidy';
 import { Song, formatUri } from './song';
 
+export function removeSong(songs: TrackSong[], song: TrackSong) {
+  const idxToRemove = songs.indexOf(song);
+  const newSongs = songs.filter((it) => it.tlid != song.tlid);
+  let songCloseToLastRemoved;
+  if (newSongs.length > idxToRemove) {
+    songCloseToLastRemoved = newSongs[idxToRemove];
+  } else if (newSongs.length > 0) {
+    songCloseToLastRemoved = newSongs[idxToRemove - 1];
+  }
+  return { songs: newSongs, songCloseToLastRemoved };
+}
+
 export type TrackSong = Song & {
   tlid: number;
   artists?: string | null;
