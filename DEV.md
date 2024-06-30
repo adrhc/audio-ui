@@ -17,6 +17,7 @@ backgroundColor: (th) => alpha(th.palette.primary.main, th.palette.action.select
 
 # Free Icons
 https://uxwing.com/
+https://icomoon.io/app/#/select
 
 # scripts
 clear; git pull; ./build-deploy.sh && ./deploy-pi.sh
