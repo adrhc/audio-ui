@@ -4,7 +4,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongsList, { RawSongsListState, pickRawSongsListState } from '../songssearch/useSongsList';
+import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../songssearch/useSongsList';
 import { getYTPlaylists } from '../../services/audio-db/audio-db';
 import { Song } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { scrollTop } from '../../domain/scroll';
 import '../../templates/SongListPage.scss';
 import { SetFeedbackState } from '../../lib/sustain';
 
-type YouTubePlaylistsCache = { scrollTop: number } & RawSongsListState;
+type YouTubePlaylistsCache = { scrollTop: number } & RawSongsPageState;
 
 function YTMusicLibraryPage() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function YTMusicLibraryPage() {
     scrollTo,
     scrollObserver,
     currentSong,
-  ] = useSongsList<RawSongsListState>('ytmlibrary');
+  ] = useSongsList<RawSongsPageState>('ytmlibrary');
   const cache = getCache('ytmlibrary') as YouTubePlaylistsCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -71,7 +71,7 @@ function YTMusicLibraryPage() {
       return;
     }
     mergeCache('ytmlibrary', (old) => {
-      const backup = { ...pickRawSongsListState(state), scrollTop: scrollTop(old) };
+      const backup = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
       console.log(`[YTMusicLibraryPage] stateBackup:`, backup);
       return backup;
     });

@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongsList, { RawSongsListState, pickRawSongsListState } from '../songssearch/useSongsList';
+import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../songssearch/useSongsList';
 import { useParams } from 'react-router-dom';
 import { getYTPlContent } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
@@ -10,7 +10,7 @@ import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
 
-type YouTubePlContentCache = { scrollTop: number } & RawSongsListState;
+type YouTubePlContentCache = { scrollTop: number } & RawSongsPageState;
 
 function YouTubePlContentPage() {
   const { uri } = useParams();
@@ -28,7 +28,7 @@ function YouTubePlContentPage() {
     scrollTo,
     scrollObserver,
     currentSong,
-  ] = useSongsList<RawSongsListState>(cacheName);
+  ] = useSongsList<RawSongsPageState>(cacheName);
   const cache = getCache(cacheName) as YouTubePlContentCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -78,7 +78,7 @@ function YouTubePlContentPage() {
       return;
     }
     mergeCache(cacheName, (old) => {
-      const backup = { ...pickRawSongsListState(state), scrollTop: scrollTop(old) };
+      const backup = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
       console.log(`[YouTubePlContentPage.backup] ${uri}:`, backup);
       return backup;
     });

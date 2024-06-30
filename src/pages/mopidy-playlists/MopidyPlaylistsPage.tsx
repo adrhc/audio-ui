@@ -4,7 +4,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongsList, { RawSongsListState, pickRawSongsListState } from '../songssearch/useSongsList';
+import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../songssearch/useSongsList';
 import { Song, isYtMusicPl } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { scrollTop } from '../../domain/scroll';
@@ -18,13 +18,13 @@ import { getMopidyPlaylists } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
 import '../../templates/SongListPage.scss';
 
-type MopidyPlaylistsCache = { scrollTop: number } & RawSongsListState;
+type MopidyPlaylistsCache = { scrollTop: number } & RawSongsPageState;
 
 function MopidyPlaylistsPage() {
   const navigate = useNavigate();
   const { mopidy, getCache, mergeCache } = useContext(AppContext);
   const [state, sustain, setState, , , , , listRef, scrollTo, scrollObserver, currentSong] =
-    useSongsList<RawSongsListState>('mopidy-playlists');
+    useSongsList<RawSongsPageState>('mopidy-playlists');
   const cache = getCache('mopidy-playlists') as MopidyPlaylistsCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -66,7 +66,7 @@ function MopidyPlaylistsPage() {
       return;
     }
     mergeCache('mopidy-playlists', (old) => {
-      const backup = { ...pickRawSongsListState(state), scrollTop: scrollTop(old) };
+      const backup = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
       console.log(`[MopidyPlaylistsPage] stateBackup:`, backup);
       return backup;
     });

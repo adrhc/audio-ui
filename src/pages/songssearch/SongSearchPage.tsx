@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import SongList from '../../components/list/SongList';
 import { useMaxEdge } from '../../constants';
-import useSongsList, { RawSongsListState } from './useSongsList';
+import useSongsList, { RawSongsPageState } from './useSongsList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { AppContext } from '../../components/app/AppContext';
 import { ScrollPosition } from '../../domain/scroll';
@@ -17,7 +17,7 @@ import '../../templates/SongListPage.scss';
 
 type RawSongsSearchPageState = {
   draftExpression?: string | null;
-} & RawSongsListState;
+} & RawSongsPageState;
 
 type SongSearchCache = { searchExpression: string } & ScrollPosition & RawSongsSearchPageState;
 

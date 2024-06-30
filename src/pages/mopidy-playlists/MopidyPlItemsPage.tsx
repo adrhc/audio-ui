@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongsList, { RawSongsListState, pickRawSongsListState } from '../songssearch/useSongsList';
+import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../songssearch/useSongsList';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import { Stack } from '@mui/material';
@@ -10,7 +10,7 @@ import { scrollTop } from '../../domain/scroll';
 import { getPlaylistItems } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
 
-type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsListState;
+type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsPageState;
 
 function MopidyPlItemsPage() {
   const { uri } = useParams();
@@ -28,7 +28,7 @@ function MopidyPlItemsPage() {
     scrollTo,
     scrollObserver,
     currentSong,
-  ] = useSongsList<RawSongsListState>(cacheName);
+  ] = useSongsList<RawSongsPageState>(cacheName);
   const cache = getCache(cacheName) as MopidyPlItemsPageCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -78,7 +78,7 @@ function MopidyPlItemsPage() {
       return;
     }
     mergeCache(cacheName, (old) => {
-      const backup = { ...pickRawSongsListState(state), scrollTop: scrollTop(old) };
+      const backup = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
       console.log(`[MopidyPlItemsPage.backup] ${uri}:`, backup);
       return backup;
     });

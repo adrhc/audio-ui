@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
-import useSongsList, { RawSongsListState } from '../songssearch/useSongsList';
+import useSongsList, { RawSongsPageState } from '../songssearch/useSongsList';
 import { getHistory, getHistoryAfter, getHistoryBefore } from '../../services/audio-db/audio-db';
 import { Stack } from '@mui/material';
 import PageTemplate from '../../templates/PageTemplate';
@@ -18,7 +18,7 @@ export type RawPlaybackHistoryPageState = {
   after?: HistoryPosition;
   completePageSize: number;
   prevSongsCount: number;
-} & RawSongsListState;
+} & RawSongsPageState;
 
 type HistoryCache = { scrollTop: number } & RawPlaybackHistoryPageState;
 

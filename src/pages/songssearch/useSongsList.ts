@@ -16,14 +16,14 @@ import Mopidy from 'mopidy';
 import { AddAllSongsFn } from '../../components/list/navigator-commons';
 import { ScrollToFn } from '../../domain/scroll';
 
-export type RawSongsListState = {
+export type RawSongsPageState = {
   songs: Song[];
   lastUsed?: Song | null;
   pageBeforeExists?: boolean;
   pageAfterExists?: boolean;
 };
 
-export function pickRawSongsListState(state?: RawSongsListState | null) {
+export function pickRawSongsPageState(state?: RawSongsPageState | null) {
   return state == null
     ? state
     : ({
@@ -31,10 +31,10 @@ export function pickRawSongsListState(state?: RawSongsListState | null) {
         lastUsed: state.lastUsed,
         pageBeforeExists: state.pageBeforeExists,
         pageAfterExists: state.pageAfterExists,
-      } as RawSongsListState);
+      } as RawSongsPageState);
 }
 
-export type UseSongsList<P extends RawSongsListState> = [
+export type UseSongsList<P extends RawSongsPageState> = [
   state: LoadingState<P>,
   sustain: SustainVoidFn<P>,
   setState: SetLoadingState<P>,
@@ -49,7 +49,7 @@ export type UseSongsList<P extends RawSongsListState> = [
   mopidy?: Mopidy,
 ];
 
-export default function useSongsList<P extends RawSongsListState>(
+export default function useSongsList<P extends RawSongsPageState>(
   cacheName: string,
   defaultState?: Partial<LoadingState<P>> | null
 ): UseSongsList<P> {
