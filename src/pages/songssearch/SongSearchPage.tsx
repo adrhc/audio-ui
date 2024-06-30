@@ -34,10 +34,9 @@ function SongSearchPage() {
     handleSelection,
     handleAdd,
     handleInsert,
-    listRef,
     scrollObserver,
     scrollTo,
-    currentSong,
+    ...partialSongsListParam
   } = useSongsList<RawSongsSearchPageState>('songs-search', {
     draftExpression: cache?.draftExpression
       ? cache?.draftExpression
@@ -45,7 +44,7 @@ function SongSearchPage() {
   });
 
   /* console.log(
-    `[SongsSearchPage] searchExpression = ${searchExpression}, currentSong = ${currentSong.song}, state:`,
+    `[SongsSearchPage] searchExpression = ${searchExpression}, state:`,
     state
   );
   console.log(`[SongsSearchPage] cache:`, cache); */
@@ -157,13 +156,12 @@ function SongSearchPage() {
       <Stack className="songs-wrapper">
         <SongList
           songs={state.songs}
-          currentSong={currentSong}
+          lastUsed={state.lastUsed}
           onAdd={handleAdd}
           onInsert={handleInsert}
           onClick={handleSelection}
-          lastUsed={state.lastUsed}
           onScroll={scrollObserver}
-          listRef={listRef}
+          {...partialSongsListParam}
         />
       </Stack>
     </PageTemplate>
