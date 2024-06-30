@@ -4,7 +4,7 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import VerticalAlignBottomOutlinedIcon from '@mui/icons-material/VerticalAlignBottomOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import { SongListTopNavigatorParam } from './SongListTopNavigator';
+import { SongListNavigatorParam } from './navigator-commons';
 
 function SongListTopNavigator({
   songs,
@@ -16,20 +16,20 @@ function SongListTopNavigator({
   scrollTo,
   onRealoadList,
   onAddAllSongs,
-}: SongListTopNavigatorParam) {
+}: SongListNavigatorParam) {
   return (
     <ButtonGroup>
-      {pageBeforeExists && (
+      {pageBeforeExists && goToPreviousPage && (
         <Button variant="outlined" onClick={goToPreviousPage}>
           <ArrowBackIosNewOutlinedIcon />
         </Button>
       )}
-      {scrollTo && songs.length && (
+      {scrollTo && listRef && songs.length && (
         <Button variant="outlined" onClick={() => scrollTo(listRef?.current?.scrollHeight)}>
           <VerticalAlignBottomOutlinedIcon />
         </Button>
       )}
-      {pageAfterExists && (
+      {pageAfterExists && goToNextPage && (
         <Button variant="outlined" onClick={goToNextPage}>
           <ArrowForwardIosOutlinedIcon />
         </Button>

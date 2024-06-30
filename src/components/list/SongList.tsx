@@ -2,17 +2,17 @@ import { List, ListItem } from '@mui/material';
 import EmptyList from '../EmptyList';
 import { NoArgsProc } from '../../domain/types';
 import SongListTopNavigator from './SongListTopNavigator.tsx';
-import SongListBottomNavigator from './SongListBottomNavigator';
+import SongListBottomNavigator from './SongListBottomNavigator.tsx';
 import SongListItem from './SongListItem';
 import { Song } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
-import { AddAllSongsFn } from './navigator-commons';
+import { AddAllSongsFn, shouldShowNavigator, shouldShowTopNavigator } from './navigator-commons';
 import { ScrollToFn } from '../../domain/scroll';
-import { shouldShowTopNavigator } from './SongListTopNavigator.ts';
 import '/src/styles/list/list.scss';
 import './SongList.scss';
 
 type SongHandler = (song: Song) => void;
+
 type SongsListParam = {
   prevSongsCount?: number;
   songs: Song[];
@@ -64,28 +64,23 @@ function SongList({
     return <EmptyList />;
   }
 
+  const navParam = {
+    songs,
+    listRef,
+    scrollTo,
+    pageBeforeExists,
+    pageAfterExists,
+    goToPreviousPage,
+    goToNextPage,
+    onRealoadList,
+    onAddAllSongs,
+  };
+
   return (
     <List className="list song-list" onScroll={onScroll} ref={listRef}>
-      {shouldShowTopNavigator({
-        songs,
-        scrollTo,
-        pageBeforeExists,
-        pageAfterExists,
-        onRealoadList,
-        onAddAllSongs,
-      }) && (
+      {shouldShowTopNavigator(navParam) && (
         <ListItem key="SongListTopNavigator" className="MENU" disablePadding>
-          <SongListTopNavigator
-            songs={songs}
-            listRef={listRef}
-            pageBeforeExists={pageBeforeExists}
-            pageAfterExists={pageAfterExists}
-            goToPreviousPage={goToPreviousPage}
-            goToNextPage={goToNextPage}
-            scrollTo={scrollTo}
-            onRealoadList={onRealoadList}
-            onAddAllSongs={onAddAllSongs}
-          />
+          <SongListTopNavigator {...navParam} />
         </ListItem>
       )}
 
@@ -109,18 +104,9 @@ function SongList({
         />
       ))}
 
-      {(pageBeforeExists || songs.length || pageAfterExists) && (
+      {shouldShowNavigator(navParam) && (
         <ListItem key="SongListBottomNavigator" className="MENU" disablePadding>
-          <SongListBottomNavigator
-            songs={songs}
-            pageBeforeExists={pageBeforeExists}
-            pageAfterExists={pageAfterExists}
-            goToPreviousPage={goToPreviousPage}
-            goToNextPage={goToNextPage}
-            scrollTo={scrollTo}
-            onRealoadList={onRealoadList}
-            onAddAllSongs={onAddAllSongs}
-          />
+          <SongListBottomNavigator {...navParam} />
         </ListItem>
       )}
     </List>

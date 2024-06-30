@@ -4,21 +4,7 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import VerticalAlignTopOutlinedIcon from '@mui/icons-material/VerticalAlignTopOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import { NoArgsProc } from '../../domain/types';
-import { Song } from '../../domain/song';
-import { AddAllSongsFn } from './navigator-commons';
-import { ScrollToFn } from '../../domain/scroll';
-
-type SongListBottomNavigatorParam = {
-  songs: Song[];
-  pageBeforeExists?: boolean | null;
-  pageAfterExists?: boolean | null;
-  goToPreviousPage?: NoArgsProc;
-  goToNextPage?: NoArgsProc;
-  scrollTo?: ScrollToFn;
-  onRealoadList?: NoArgsProc;
-  onAddAllSongs?: AddAllSongsFn;
-};
+import { SongListNavigatorParam } from './navigator-commons';
 
 function SongListBottomNavigator({
   songs,
@@ -29,7 +15,7 @@ function SongListBottomNavigator({
   scrollTo,
   onRealoadList,
   onAddAllSongs,
-}: SongListBottomNavigatorParam) {
+}: SongListNavigatorParam) {
   return (
     <ButtonGroup>
       {pageBeforeExists && (
