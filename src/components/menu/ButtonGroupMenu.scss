@@ -35,9 +35,9 @@
 }
 
 @media (max-width: $tablet) {
-  @include bottomGroupMenu(1.23);
+  @include bottomGroupMenu(1.3);
 }
 
 @media (min-width: $tablet) {
-  @include bottomGroupMenu(0.732);
+  @include bottomGroupMenu(0.8);
 }

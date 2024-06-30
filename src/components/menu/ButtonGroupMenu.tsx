@@ -1,6 +1,6 @@
 import { ButtonGroup } from '@mui/material';
 import { ReactNode } from 'react';
-import './BottomPageMenu.scss';
+import './ButtonGroupMenu.scss';
 
 export interface ButtonGroupMenuParam {
   children?: ReactNode;
