@@ -9,21 +9,24 @@ import { toPartialState } from './history-utils';
 import { AppContext } from '../../components/app/AppContext';
 import { HistoryPosition } from '../../domain/history';
 import { scrollTop } from '../../domain/scroll';
+import { SetFeedbackState } from '../../lib/sustain';
 import '../../templates/SongListPage.scss';
 import './PlaybackHistoryPage.scss';
-import { SetFeedbackState } from '../../lib/sustain';
 
 export type RawPlaybackHistoryPageState = {
-  before?: HistoryPosition;
-  after?: HistoryPosition;
   completePageSize: number;
   prevSongsCount: number;
+  before?: HistoryPosition;
+  after?: HistoryPosition;
+  pageBeforeExists?: boolean;
+  pageAfterExists?: boolean;
 } & RawSongsPageState;
 
 type HistoryCache = { scrollTop: number } & RawPlaybackHistoryPageState;
 
 function PlaybackHistoryPage() {
   const { getCache, mergeCache } = useContext(AppContext);
+  const cache = getCache('history') as HistoryCache;
   const {
     state,
     sustain,
@@ -35,8 +38,10 @@ function PlaybackHistoryPage() {
     scrollObserver,
     scrollTo,
     currentSong,
-  } = useSongsList<RawPlaybackHistoryPageState>('history');
-  const cache = getCache('history') as HistoryCache;
+  } = useSongsList<RawPlaybackHistoryPageState>('history', {
+    pageBeforeExists: cache?.pageBeforeExists,
+    pageAfterExists: cache?.pageAfterExists,
+  });
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
   console.log(`[PlaybackHistoryPage] cachedScrollTop = ${cachedScrollTop}:`, { currentSong, ...state });

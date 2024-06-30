@@ -1,3 +1,4 @@
+import Mopidy from 'mopidy';
 import { RefObject, useCallback, useContext } from 'react';
 import { AppContext } from '../../components/app/AppContext';
 import { SustainVoidFn, useSustainableState } from '../../hooks/useSustainableState';
@@ -12,25 +13,20 @@ import { LoadingState, SetLoadingState } from '../../lib/sustain';
 import useScroll from '../../hooks/useScroll';
 import { Song, isYtMusicPl } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
-import Mopidy from 'mopidy';
 import { AddAllSongsFn } from '../../components/list/navigator-commons';
 import { ScrollToFn } from '../../domain/scroll';
 
 export type RawSongsPageState = {
   songs: Song[];
   lastUsed?: Song | null;
-  pageBeforeExists?: boolean;
-  pageAfterExists?: boolean;
 };
 
-export function pickRawSongsPageState(state?: RawSongsPageState | null) {
-  return state == null
-    ? state
+export function pickRawSongsPageState(rawState?: RawSongsPageState | null) {
+  return rawState == null
+    ? rawState
     : ({
-        songs: state.songs,
-        lastUsed: state.lastUsed,
-        pageBeforeExists: state.pageBeforeExists,
-        pageAfterExists: state.pageAfterExists,
+        songs: rawState.songs,
+        lastUsed: rawState.lastUsed,
       } as RawSongsPageState);
 }
 
