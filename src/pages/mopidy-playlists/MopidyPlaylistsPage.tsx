@@ -15,8 +15,8 @@ import {
   addYtMusicPlAndRemember,
 } from '../../services/tracklist';
 import { getMopidyPlaylists } from '../../services/pl-content';
-import '../../templates/SongListPage.scss';
 import { SetFeedbackState } from '../../lib/sustain';
+import '../../templates/SongListPage.scss';
 
 type MopidyPlaylistsCache = { scrollTop: number } & RawSongsListState;
 
