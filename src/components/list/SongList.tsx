@@ -1,36 +1,25 @@
 import { List, ListItem } from '@mui/material';
 import EmptyList from '../EmptyList';
-import { NoArgsProc } from '../../domain/types';
 import SongListTopNavigator from './SongListTopNavigator.tsx';
 import SongListBottomNavigator from './SongListBottomNavigator.tsx';
 import SongListItem from './SongListItem';
 import { Song } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
-import { AddAllSongsFn, shouldShowNavigator, shouldShowTopNavigator } from './navigator-commons';
-import { ScrollToFn } from '../../domain/scroll';
+import { SongListNavigatorParam, shouldShowNavigator, shouldShowTopNavigator } from './navigator-commons';
 import '/src/styles/list/list.scss';
 import './SongList.scss';
 
 type SongHandler = (song: Song) => void;
 
-type SongsListParam = {
+interface SongsListParam extends SongListNavigatorParam {
   prevSongsCount?: number;
-  songs: Song[];
   currentSong?: TrackSong;
   onAdd?: SongHandler;
   onInsert?: SongHandler;
   onClick?: SongHandler;
   lastUsed?: Song | null;
   onScroll?: (e: React.UIEvent<HTMLUListElement>) => void;
-  listRef?: React.RefObject<HTMLUListElement>;
-  pageBeforeExists?: boolean;
-  pageAfterExists?: boolean;
-  goToPreviousPage?: NoArgsProc;
-  goToNextPage?: NoArgsProc;
-  scrollTo?: ScrollToFn;
-  onAddAllSongs?: AddAllSongsFn;
-  onRealoadList?: NoArgsProc;
-};
+}
 
 function SongList({
   prevSongsCount = 0,
@@ -42,13 +31,7 @@ function SongList({
   lastUsed,
   onScroll,
   listRef,
-  pageBeforeExists,
-  pageAfterExists,
-  goToPreviousPage,
-  goToNextPage,
-  scrollTo,
-  onRealoadList,
-  onAddAllSongs,
+  ...partialNavParam
 }: SongsListParam) {
   // console.log(`[SongsList] lastUsed:`, lastUsed);
 
@@ -64,17 +47,7 @@ function SongList({
     return <EmptyList />;
   }
 
-  const navParam = {
-    songs,
-    listRef,
-    scrollTo,
-    pageBeforeExists,
-    pageAfterExists,
-    goToPreviousPage,
-    goToNextPage,
-    onRealoadList,
-    onAddAllSongs,
-  };
+  const navParam = { songs, listRef, ...partialNavParam };
 
   return (
     <List className="list song-list" onScroll={onScroll} ref={listRef}>

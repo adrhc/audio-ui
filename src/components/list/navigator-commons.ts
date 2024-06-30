@@ -12,8 +12,8 @@ export interface SongListNavigatorParam {
   pageAfterExists?: boolean | null;
   goToPreviousPage?: NoArgsProc;
   goToNextPage?: NoArgsProc;
-  onRealoadList?: NoArgsProc;
   onAddAllSongs?: AddAllSongsFn;
+  onRealoadList?: NoArgsProc;
 }
 
 export function shouldShowTopNavigator(param: SongListNavigatorParam) {
@@ -29,8 +29,8 @@ export function shouldShowNavigator(
     pageAfterExists,
     goToPreviousPage,
     goToNextPage,
-    onRealoadList,
     onAddAllSongs,
+    onRealoadList,
   }: SongListNavigatorParam,
   isTop?: boolean
 ) {
