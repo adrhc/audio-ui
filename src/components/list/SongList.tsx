@@ -1,13 +1,14 @@
 import { List, ListItem } from '@mui/material';
 import EmptyList from '../EmptyList';
 import { NoArgsProc } from '../../domain/types';
-import SongListTopNavigator from './SongListTopNavigator';
+import SongListTopNavigator from './SongListTopNavigator.tsx';
 import SongListBottomNavigator from './SongListBottomNavigator';
 import SongListItem from './SongListItem';
 import { Song } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
 import { AddAllSongsFn } from './navigator-commons';
 import { ScrollToFn } from '../../domain/scroll';
+import { shouldShowTopNavigator } from './SongListTopNavigator.ts';
 import '/src/styles/list/list.scss';
 import './SongList.scss';
 
@@ -65,7 +66,14 @@ function SongList({
 
   return (
     <List className="list song-list" onScroll={onScroll} ref={listRef}>
-      {(pageBeforeExists || songs.length || pageAfterExists) && (
+      {shouldShowTopNavigator({
+        songs,
+        scrollTo,
+        pageBeforeExists,
+        pageAfterExists,
+        onRealoadList,
+        onAddAllSongs,
+      }) && (
         <ListItem key="SongListTopNavigator" className="MENU" disablePadding>
           <SongListTopNavigator
             songs={songs}

@@ -4,23 +4,7 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import VerticalAlignBottomOutlinedIcon from '@mui/icons-material/VerticalAlignBottomOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import { NoArgsProc } from '../../domain/types';
-import { Song } from '../../domain/song';
-import { AddAllSongsFn } from './navigator-commons';
-import { ScrollToFn } from '../../domain/scroll';
-
-type SongListTopNavigatorParam = {
-  songs: Song[];
-  listRef?: React.RefObject<HTMLUListElement>;
-  onScroll?: (e: React.UIEvent<HTMLUListElement>) => void;
-  pageBeforeExists?: boolean | null;
-  pageAfterExists?: boolean | null;
-  goToPreviousPage?: NoArgsProc;
-  goToNextPage?: NoArgsProc;
-  scrollTo?: ScrollToFn;
-  onRealoadList?: NoArgsProc;
-  onAddAllSongs?: AddAllSongsFn;
-};
+import { SongListTopNavigatorParam } from './SongListTopNavigator';
 
 function SongListTopNavigator({
   songs,
