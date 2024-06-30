@@ -157,9 +157,9 @@ function SongSearchPage() {
         <SongList
           songs={state.songs}
           lastUsed={state.lastUsed}
+          onClick={handleSelection}
           onAdd={handleAdd}
           onInsert={handleInsert}
-          onClick={handleSelection}
           onScroll={scrollObserver}
           {...partialSongsListParam}
         />
