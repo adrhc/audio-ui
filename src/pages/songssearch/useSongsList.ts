@@ -63,7 +63,7 @@ export default function useSongsList<P extends RawSongsPageState>(
   const scrollObserver = useCallback(
     (e: React.UIEvent<HTMLUListElement>) => {
       const scrollTop = e.currentTarget.scrollTop;
-      // console.log(`[scrollObserver] new scrollTop:`, scrollTop);
+      // console.log(`[useSongsList:scrollObserver] new scrollTop:`, scrollTop);
       mergeCache(cacheName, (old) => {
         // console.log(`[scrollObserver] old scrollTop = ${getScrollTop(old)}, new scrollTop = ${scrollTop}`);
         return { ...(old as object), scrollTop };
@@ -74,7 +74,7 @@ export default function useSongsList<P extends RawSongsPageState>(
 
   const handleSelection = useCallback(
     (song: Song) => {
-      // console.log(`[SongsSearchPage:handleSelection] song:\n`, song);
+      // console.log(`[useSongsList:handleSelection] song:\n`, song);
       sustain(
         addSongThenPlay(mopidy, song)?.then(() => ({ lastUsed: song }) as Partial<P>),
         { error: `Failed to start ${song.title}!`, lastUsed: song } as Partial<LoadingState<P>>
@@ -85,7 +85,7 @@ export default function useSongsList<P extends RawSongsPageState>(
 
   const handleAddAll = useCallback(
     (songs: Song[]) => {
-      // console.log(`[SongsSearchPage:handleAddAll] songs:\n`, songs);
+      // console.log(`[useSongsList:handleAddAll] songs:\n`, songs);
       sustain(addSongsAndRemember(mopidy, ...songs), {
         error: `Failed to add ${songs.length} songs!`,
       } as Partial<LoadingState<P>>);
@@ -95,7 +95,7 @@ export default function useSongsList<P extends RawSongsPageState>(
 
   const handleAdd = useCallback(
     (song: Song) => {
-      console.log(`[SongsSearchPage:onAdd] isYtMusicPl=${isYtMusicPl(song)}, song:\n`, song);
+      console.log(`[useSongsList:onAdd] isYtMusicPl=${isYtMusicPl(song)}, song:\n`, song);
       // addYTMPlAndRemember uses /playlist/content instead of Mopidy to replace "ytmusic:" with "youtube:"
       const addFn = isYtMusicPl(song) ? addYtMusicPlAndRemember : addSongsAndRemember;
       sustain(
@@ -109,7 +109,7 @@ export default function useSongsList<P extends RawSongsPageState>(
   const handleInsert = useCallback(
     (song: Song) => {
       // song.location.uri = 'ytmusic:track:sk_K10Modes';
-      // console.log(`[SongsSearchPage:onAdd] song:\n`, song);
+      // console.log(`[useSongsList:onAdd] song:\n`, song);
       const addAfterFn = isYtMusicPl(song) ? addYtMusicPlAfterAndRemember : addSongsAfterAndRemember;
       sustain(
         addAfterFn(mopidy, currentSong, song)?.then(() => ({ lastUsed: song }) as Partial<P>),
