@@ -19,7 +19,7 @@
   }
 }
 
-@mixin styles($padding, $iconSize) {
+@mixin kefLsxPage($padding, $iconSize) {
   // @debug "[kefl-lsx-page] padding: #{$padding}";
   .kef-btn {
     padding: spacing($padding);
@@ -30,9 +30,9 @@
 }
 
 @media (max-width: $tablet) {
-  @include styles(1, 8);
+  @include kefLsxPage(1, 10);
 }
 
 @media (min-width: $tablet) {
-  @include styles(0.8, 7);
+  @include kefLsxPage(0.8, 9);
 }
