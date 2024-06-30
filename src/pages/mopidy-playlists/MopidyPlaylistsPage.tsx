@@ -22,7 +22,7 @@ type MopidyPlaylistsCache = { scrollTop: number } & RawSongsPageState;
 
 function MopidyPlaylistsPage() {
   const navigate = useNavigate();
-  const { mopidy, getCache, mergeCache } = useContext(AppContext);
+  const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
   const { state, sustain, setState, listRef, scrollObserver, scrollTo, currentSong } =
     useSongsList<RawSongsPageState>('mopidy-playlists');
   const cache = getCache('mopidy-playlists') as MopidyPlaylistsCache;
@@ -44,8 +44,8 @@ function MopidyPlaylistsPage() {
       console.log(`[MopidyPlaylistsPage.useEffect] the Mopidy playlists are already loaded!`);
       return;
     }
-    handleReaload();
-  }, [handleReaload, songsIsEmpty]);
+    online && handleReaload();
+  }, [handleReaload, online, songsIsEmpty]);
 
   // scroll after loading the library
   useEffect(() => {

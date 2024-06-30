@@ -15,7 +15,7 @@ type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsPageState;
 function MopidyPlItemsPage() {
   const { uri } = useParams();
   const cacheName = `mopidy-playlist/${uri}`;
-  const { mopidy, getCache, mergeCache } = useContext(AppContext);
+  const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
   const {
     state,
     sustain,
@@ -56,8 +56,8 @@ function MopidyPlItemsPage() {
       console.log(`[MopidyPlItemsPage.useEffect] ${uri} is already loaded!`);
       return;
     }
-    handleReaload();
-  }, [handleReaload, songsIsEmpty, uri]);
+    online && handleReaload();
+  }, [handleReaload, online, songsIsEmpty, uri]);
 
   // scroll after loading the playlist
   useEffect(() => {
