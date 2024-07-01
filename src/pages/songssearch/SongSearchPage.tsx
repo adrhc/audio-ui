@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import SongList from '../../components/list/SongList';
 import { useMaxEdge } from '../../constants';
-import useSongList, { RawSongsPageState } from '../../hooks/list/useSongsList';
+import useSongList, { RawSongsPageState } from '../../hooks/list/useSongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { AppContext } from '../../components/app/AppContext';
 import { ScrollPosition } from '../../domain/scroll';
