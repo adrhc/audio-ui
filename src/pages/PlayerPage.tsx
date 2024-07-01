@@ -1,4 +1,4 @@
-import { Badge, Box, Typography } from '@mui/material';
+import { Badge, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { useSustainableState } from '../hooks/useSustainableState';

@@ -11,8 +11,8 @@ import CreateConfirmButtonMenu from '../components/menu/CreateConfirmButtonMenu'
 import { useURLQueryParams } from '../hooks/useURLSearchParams';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
-import '/src/styles/wide-list-page.scss';
 import PageTitle from '../components/PageTitle';
+import '/src/styles/wide-list-page.scss';
 
 interface SongPlaylistsEditorPageState {
   selections: LocationSelection[];

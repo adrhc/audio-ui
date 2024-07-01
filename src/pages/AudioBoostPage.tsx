@@ -9,9 +9,8 @@ import { useGoBack } from '../hooks/useGoBack';
 import { AppContext } from '../components/app/AppContext';
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
 import { SetFeedbackState } from '../lib/sustain';
-import { Typography } from '@mui/material';
-import './AudioBoostPage.scss';
 import PageTitle from '../components/PageTitle';
+import './AudioBoostPage.scss';
 
 type AudioBoostPageState = { draftVolume?: number };
 
