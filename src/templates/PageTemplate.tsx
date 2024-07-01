@@ -22,6 +22,7 @@ export interface PageTemplateParam {
   contentSpacing?: ResponsiveStyleValue<number | string>;
   bottom?: ReactNode;
   children: ReactNode;
+  disableSpinner?: boolean;
 }
 
 const PageTemplate = ({
@@ -37,10 +38,11 @@ const PageTemplate = ({
   contentSpacing = 0.5,
   bottom,
   children,
+  disableSpinner,
 }: PageTemplateParam) => {
   return (
     <>
-      <Spinner show={state?.loading} />
+      <Spinner show={!disableSpinner && state?.loading} />
       <Stack className={`page ${className ?? ''}`} spacing={pageSpacing}>
         {!hideTop && <Stack className="top"></Stack>}
         <Stack className="content" spacing={contentSpacing}>
