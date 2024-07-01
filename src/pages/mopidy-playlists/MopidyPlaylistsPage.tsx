@@ -16,7 +16,7 @@ import {
 } from '../../services/tracklist';
 import { getMopidyPlaylists } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
-import '../../templates/SongListPage.scss';
+import '/src/styles/list-page.scss';
 
 type MopidyPlaylistsCache = { scrollTop: number } & RawSongsPageState;
 
@@ -113,14 +113,14 @@ function MopidyPlaylistsPage() {
 
   return (
     <PageTemplate
-      className="song-list-page"
+      className="list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TracksAccessMenu />}
       disableSpinner={true}
     >
-      <Stack className="song-list-wrapper">
+      <Stack className="list-wrapper">
         <SongList
           songs={state.songs}
           loading={state.loading}

@@ -1,0 +1,6 @@
+@use 'list/list-wrapper.scss' as *;
+
+.list-page {
+  max-width: 100%;
+  @include pageContentWithListWrapper;
+}

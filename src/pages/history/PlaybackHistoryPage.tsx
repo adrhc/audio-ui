@@ -10,7 +10,7 @@ import { AppContext } from '../../components/app/AppContext';
 import { HistoryPosition } from '../../domain/history';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
-import '../../templates/SongListPage.scss';
+import '/src/styles/list-page.scss';
 import './PlaybackHistoryPage.scss';
 
 export type RawPlaybackHistoryPageState = {
@@ -162,14 +162,14 @@ function PlaybackHistoryPage() {
 
   return (
     <PageTemplate
-      className="song-list-page"
+      className="list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TracksAccessMenu />}
       disableSpinner={true}
     >
-      <Stack className="song-list-wrapper">
+      <Stack className="list-wrapper">
         <SongList
           prevSongsCount={state.prevSongsCount}
           songs={state.songs}

@@ -1,9 +1,7 @@
 @use '/src/styles/vars.scss' as *;
 @use '/src/styles/functions.scss' as *;
 
-.presets-list {
-  flex-grow: unset !important;
-
+.preset-list {
   > li {
     border-right: unset !important; // otherwise double border when the scroll bar is not present
     .MuiListItemSecondaryAction-root {
@@ -12,9 +10,9 @@
   }
 }
 
-@mixin presetsList($iconSize) {
-  // @debug "[presets-list] iconSize: #{$iconSize}";
-  .presets-list {
+@mixin presetList($iconSize) {
+  // @debug "[preset-list] iconSize: #{$iconSize}";
+  .preset-list {
     > li {
       .MuiListItemButton-root {
         // 7.5 = (3 * 2 * PX - (2 * 0.25 for view & del)) + 1.25 (action's right margin) + 0.75 (action's left space)
@@ -40,9 +38,9 @@
 }
 
 @media (max-width: $tablet) {
-  @include presetsList(3.75);
+  @include presetList(3.75);
 }
 
 @media (min-width: $tablet) {
-  @include presetsList(3);
+  @include presetList(3);
 }

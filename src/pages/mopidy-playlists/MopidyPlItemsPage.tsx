@@ -86,14 +86,14 @@ function MopidyPlItemsPage() {
 
   return (
     <PageTemplate
-      className="song-list-page"
+      className="list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TracksAccessMenu />}
       disableSpinner={true}
     >
-      <Stack className="song-list-wrapper">
+      <Stack className="list-wrapper">
         <SongList
           songs={state.songs}
           loading={state.loading}

@@ -1,14 +1,13 @@
-import { Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import { useCallback, useEffect } from 'react';
-import ShowIf from '../../components/ShowIf';
 import { getLastUsed, getPresets, loadPreset } from '../../services/easyeffects';
 import _ from 'lodash';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import { useNavigate } from 'react-router-dom';
-import PresetsList from './PresetsList';
+import PresetList from './PresetList';
 import PageTemplate from '../../templates/PageTemplate';
-import './EasyEffectsPage.scss';
 import { SetFeedbackState } from '../../lib/sustain';
+import './EasyEffectsPage.scss';
 
 type EasyEffectsState = {
   current?: string;
@@ -68,25 +67,19 @@ export default function EasyEffectsPage() {
       setState={setState as SetFeedbackState}
       title="EasyEffects presets"
       hideTop={true}
+      disableSpinner={true}
     >
-      <ShowIf condition={!state.error && !state.presets.length}>
-        <Typography variant="h6" className="title">
-          {!state.presets.length ? 'No presets found!' : ''}
-        </Typography>
-      </ShowIf>
-      <ShowIf condition={!!state.presets.length}>
-        <Stack className="effects-wrapper">
-          <PresetsList
-            sx={{ flexGrow: 1 }}
-            current={state.current}
-            presets={state.presets}
-            onView={handleView}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onSelection={handleSelection}
-          />
-        </Stack>
-      </ShowIf>
+      <Stack className="list-wrapper">
+        <PresetList
+          loading={state.loading}
+          current={state.current}
+          presets={state.presets}
+          onView={handleView}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onSelection={handleSelection}
+        />
+      </Stack>
     </PageTemplate>
   );
 }

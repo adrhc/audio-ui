@@ -13,7 +13,7 @@ import { AppContext } from '../../components/app/AppContext';
 import { ScrollPosition } from '../../domain/scroll';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { SetFeedbackState } from '../../lib/sustain';
-import '../../templates/SongListPage.scss';
+import '/src/styles/list-page.scss';
 import './SongSearchPage.scss';
 
 type RawSongsSearchPageState = {
@@ -139,7 +139,7 @@ function SongSearchPage() {
 
   return (
     <PageTemplate
-      className="song-list-page"
+      className="list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
@@ -155,7 +155,7 @@ function SongSearchPage() {
         autoFocus={state.songs.length == 0}
         searchRef={searchRef}
       />
-      <Stack className="song-list-wrapper">
+      <Stack className="list-wrapper">
         <SongList
           songs={state.songs}
           loading={state.loading}

@@ -6,12 +6,12 @@ import { LoadingStateOrProvider, useSustainableState } from '../hooks/useSustain
 import { getDiskPlaylists, updateUriPlaylists } from '../services/audio-db/audio-db';
 import { Stack, Typography } from '@mui/material';
 import PageTemplate from '../templates/PageTemplate';
-import LocationsSelectionList from '../components/list/LocationsSelectionList';
+import LocationSelectionList from '../components/list/LocationSelectionList';
 import CreateConfirmButtonMenu from '../components/menu/CreateConfirmButtonMenu';
 import { useURLQueryParams } from '../hooks/useURLSearchParams';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
-import '../templates/SongListPage.scss';
+import '/src/styles/list-page.scss';
 
 interface SongPlaylistsEditorPageState {
   selections: LocationSelection[];
@@ -78,7 +78,7 @@ function SongPlaylistsEditorPage() {
 
   return (
     <PageTemplate
-      className="song-list-page"
+      className="list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
@@ -86,12 +86,17 @@ function SongPlaylistsEditorPage() {
         <CreateConfirmButtonMenu
           addPage="/add-playlist"
           onAccept={allocate}
-          acceptDisabled={!decodedUri || !online}
+          acceptDisabled={!decodedUri || !online || !state.selections.length}
         />
       }
+      disableSpinner={true}
     >
-      <Stack className="song-list-wrapper">
-        <LocationsSelectionList selections={state.selections} onClick={selectLocation} />
+      <Stack className="list-wrapper">
+        <LocationSelectionList
+          loading={state.loading}
+          selections={state.selections}
+          onClick={selectLocation}
+        />
       </Stack>
     </PageTemplate>
   );

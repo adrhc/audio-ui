@@ -1,16 +1,23 @@
-import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import { LocationSelection, MediaLocation } from '../../domain/media-location';
+import LoadingList from './LoadingList';
+import { LoadingState } from '../../lib/sustain';
 import '/src/styles/list/list.scss';
+import './LocationSelectionList.scss';
 
 interface LocationsSelectionListParam {
   selections: LocationSelection[];
   onClick: (pl: MediaLocation) => void;
 }
 
-function LocationsSelectionList({ selections: playlists, onClick }: LocationsSelectionListParam) {
+function LocationSelectionList({
+  selections: playlists,
+  loading,
+  onClick,
+}: LoadingState<LocationsSelectionListParam>) {
   return (
-    <List className="list playlists-list" sx={{ '.MuiListItemSecondaryAction-root': { lineHeight: 0 } }}>
+    <LoadingList className="list location-list" length={playlists.length} loading={loading}>
       {playlists.map((pl, index) => (
         <ListItem
           disablePadding
@@ -30,8 +37,8 @@ function LocationsSelectionList({ selections: playlists, onClick }: LocationsSel
           </ListItemButton>
         </ListItem>
       ))}
-    </List>
+    </LoadingList>
   );
 }
 
-export default LocationsSelectionList;
+export default LocationSelectionList;

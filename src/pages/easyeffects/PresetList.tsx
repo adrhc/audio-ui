@@ -1,11 +1,11 @@
-import { IconButton, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
+import { IconButton, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import EditIconButton from '../../components/button/EditIconButton';
-import { Styles } from '../../domain/types';
+import LoadingList from '../../components/list/LoadingList';
+import { LoadingState } from '../../lib/sustain';
 import '/src/styles/list/list.scss';
-import './PresetsList.scss';
+import './PresetList.scss';
 
 type PresetsListState = {
-  sx?: Styles;
   current?: string;
   presets: string[];
   onView: (preset: string) => void;
@@ -14,9 +14,17 @@ type PresetsListState = {
   onSelection: (preset: string) => void;
 };
 
-const PresetsList = ({ sx, current, presets, onView, onEdit, onDelete, onSelection }: PresetsListState) => {
+const PresetList = ({
+  current,
+  presets,
+  loading,
+  onView,
+  onEdit,
+  onDelete,
+  onSelection,
+}: LoadingState<PresetsListState>) => {
   return (
-    <List className="list presets-list" sx={sx}>
+    <LoadingList className="list preset-list" length={presets.length} loading={loading}>
       {presets.map((it) => (
         <ListItem
           disablePadding
@@ -38,8 +46,8 @@ const PresetsList = ({ sx, current, presets, onView, onEdit, onDelete, onSelecti
           </ListItemButton>
         </ListItem>
       ))}
-    </List>
+    </LoadingList>
   );
 };
 
-export default PresetsList;
+export default PresetList;
