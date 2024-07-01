@@ -18,7 +18,7 @@ function SongListBottomNavigator({
 }: SongListNavigatorParam) {
   return (
     <ButtonGroup>
-      {pageBeforeExists && (
+      {pageBeforeExists && goToPreviousPage && (
         <Button variant="outlined" onClick={goToPreviousPage}>
           <ArrowBackIosNewOutlinedIcon />
         </Button>
@@ -28,7 +28,7 @@ function SongListBottomNavigator({
           <VerticalAlignTopOutlinedIcon />
         </Button>
       )}
-      {pageAfterExists && (
+      {pageAfterExists && goToNextPage && (
         <Button variant="outlined" onClick={goToNextPage}>
           <ArrowForwardIosOutlinedIcon />
         </Button>
@@ -38,7 +38,7 @@ function SongListBottomNavigator({
           <CachedOutlinedIcon />
         </Button>
       )}
-      {onAddAllSongs && (
+      {onAddAllSongs && songs.length && (
         <Button variant="outlined" onClick={() => onAddAllSongs(songs)}>
           <AddBoxOutlinedIcon />
         </Button>

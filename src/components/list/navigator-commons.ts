@@ -39,6 +39,6 @@ export function shouldShowNavigator(
     (scrollTo && (isTop ? listRef : true) && songs.length) ||
     (pageAfterExists && goToNextPage) ||
     onRealoadList ||
-    onAddAllSongs
+    (onAddAllSongs && songs.length)
   );
 }

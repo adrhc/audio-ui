@@ -39,7 +39,7 @@ function SongListTopNavigator({
           <CachedOutlinedIcon />
         </Button>
       )}
-      {onAddAllSongs && (
+      {onAddAllSongs && songs.length && (
         <Button variant="outlined" onClick={() => onAddAllSongs(songs)}>
           <AddBoxOutlinedIcon />
         </Button>
