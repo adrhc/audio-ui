@@ -1,5 +1,8 @@
 @use '/src/styles/vars.scss' as *;
 @use '/src/styles/functions.scss' as *;
+@use '/src/styles/list-page.scss' as *;
+
+@include listPage;
 
 .text-search-button {
   background-color: $background !important;

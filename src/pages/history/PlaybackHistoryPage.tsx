@@ -10,8 +10,6 @@ import { AppContext } from '../../components/app/AppContext';
 import { HistoryPosition } from '../../domain/history';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/list-page.scss';
-import './PlaybackHistoryPage.scss';
 
 export type RawPlaybackHistoryPageState = {
   completePageSize: number;

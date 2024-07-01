@@ -1,6 +1,14 @@
 @use 'list/list-wrapper.scss' as *;
 
-.list-page {
-  max-width: 100%;
-  @include pageContentWithListWrapper;
+@mixin namedListPage($listSelector) {
+  #{$listSelector} {
+    max-width: 100%;
+    @include pageContentWithListWrapper;
+  }
 }
+
+@mixin listPage {
+  @include namedListPage('.list-page');
+}
+
+@include listPage;

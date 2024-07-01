@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import PresetList from './PresetList';
 import PageTemplate from '../../templates/PageTemplate';
 import { SetFeedbackState } from '../../lib/sustain';
-import './EasyEffectsPage.scss';
+import '/src/styles/list/list-wrapper.scss';
 
 type EasyEffectsState = {
   current?: string;

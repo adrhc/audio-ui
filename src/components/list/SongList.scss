@@ -11,7 +11,7 @@ $liPX: spacing(0.5);
   > li.YOUTUBE:not(.Mui-selected, .Mui-focusVisible) {
     background-color: #f1e38236;
   }
-  @include liMenu();
+  @include liMenu;
   > li {
     @media (max-width: $tablet) {
       @include liButton($liPX, 1.1rem);

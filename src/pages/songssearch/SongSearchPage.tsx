@@ -13,7 +13,6 @@ import { AppContext } from '../../components/app/AppContext';
 import { ScrollPosition } from '../../domain/scroll';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/list-page.scss';
 import './SongSearchPage.scss';
 
 type RawSongsSearchPageState = {
@@ -106,10 +105,10 @@ function SongSearchPage() {
       searchExpression,
     };
     mergeCache('songs-search', (old) => {
-      console.log(
+      /* console.log(
         `[SongsSearchPage:backup] scrollTop = ${(old as SongSearchCache)?.scrollTop}, backup:`,
         stateBackup
-      );
+      ); */
       return { ...(old as object), ...stateBackup };
     });
   }, [mergeCache, searchExpression, state.draftExpression, state.lastUsed, state.songs]);

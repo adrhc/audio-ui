@@ -9,8 +9,8 @@ import { getYTPlaylists } from '../../services/audio-db/audio-db';
 import { Song } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { scrollTop } from '../../domain/scroll';
-import '/src/styles/list-page.scss';
 import { SetFeedbackState } from '../../lib/sustain';
+import '/src/styles/list-page.scss';
 
 type YouTubePlaylistsCache = { scrollTop: number } & RawSongsPageState;
 

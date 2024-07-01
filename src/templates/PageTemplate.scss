@@ -9,13 +9,18 @@
   max-width: 400px;
   flex-wrap: nowrap;
 
+  .top {
+    flex-grow: 1;
+  }
+
   .content {
+    flex-grow: 1;
     .title {
       text-align: center;
     }
 
     margin-top: 0;
-    justify-content: space-between;
+    // justify-content: space-between;
     // align-content: center; -> disabled by "flex-wrap: nowrap"
     // align-items: center; -> shrinks the content toward the middle
     // position: relative; // necessary for corner buttons

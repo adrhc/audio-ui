@@ -78,7 +78,7 @@
   }
 }
 
-@mixin liMenu() {
+@mixin liMenu {
   > li.MENU > .MuiButtonGroup-root {
     width: 100%;
     > button {
