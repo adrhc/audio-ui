@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 import { toQueryParams } from '../../lib/path-param-utils';
 import '/src/styles/list/list.scss';
 import './TrackList.scss';
+import { LoadingState } from '../../lib/sustain';
+import SpinnerPannel from '../../components/panel/SpinnerPannel';
 
 type TrackListParam = {
   songs: TrackSong[];
@@ -17,7 +19,14 @@ type TrackListParam = {
   songCloseToLastRemoved?: TrackSong;
 };
 
-function TrackList({ songs, currentSong, onRemove, onClick, songCloseToLastRemoved }: TrackListParam) {
+function TrackList({
+  songs,
+  loading,
+  currentSong,
+  onRemove,
+  onClick,
+  songCloseToLastRemoved,
+}: LoadingState<TrackListParam>) {
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
   const shouldAutoFocus = useCallback(
     (sa: TrackSong) => {
@@ -25,45 +34,54 @@ function TrackList({ songs, currentSong, onRemove, onClick, songCloseToLastRemov
     },
     [songCloseToLastRemoved, currentSong?.tlid]
   );
+
   if (songs.length == 0) {
-    return <EmptyList />;
+    if (loading) {
+      return <SpinnerPannel show={loading} />;
+    } else {
+      return <EmptyList />;
+    }
   }
+
   return (
-    <List className="list track-list">
-      {songs.map((track, index) => (
-        <ListItem
-          disablePadding
-          key={track.tlid}
-          secondaryAction={
-            <Stack className="action">
-              <IconButton
-                className="upsert-pl"
-                component={Link}
-                to={`/song-playlists-editor/${encodeURIComponent(track.uri)}?${toQueryParams(['title', encodeURIComponent(track.title)])}`}
-              >
-                {/* <svg fill="grey">
+    <>
+      <SpinnerPannel show={loading} />
+      <List className="list track-list">
+        {songs.map((track, index) => (
+          <ListItem
+            disablePadding
+            key={track.tlid}
+            secondaryAction={
+              <Stack className="action">
+                <IconButton
+                  className="upsert-pl"
+                  component={Link}
+                  to={`/song-playlists-editor/${encodeURIComponent(track.uri)}?${toQueryParams(['title', encodeURIComponent(track.title)])}`}
+                >
+                  {/* <svg fill="grey">
                   <image xlink:href="https://svgur.com/i/AFM.svg" src="btn/audio-playlist-icon.svg" />
                 </svg> */}
-                {/* <QueueMusicIcon /> */}
-                <img src="btn/audio-playlist-icon-70.svg" />
-              </IconButton>
-              <IconButton className="del-btn" onClick={() => onRemove(track)}>
-                <img src="btn/recycle-bin-line-icon.svg" />
-              </IconButton>
-            </Stack>
-          }
-        >
-          <ListItemButton
-            autoFocus={shouldAutoFocus(track)}
-            selected={track.tlid == currentSong?.tlid}
-            onClick={() => onClick(track)}
+                  {/* <QueueMusicIcon /> */}
+                  <img src="btn/audio-playlist-icon-70.svg" />
+                </IconButton>
+                <IconButton className="del-btn" onClick={() => onRemove(track)}>
+                  <img src="btn/recycle-bin-line-icon.svg" />
+                </IconButton>
+              </Stack>
+            }
           >
-            <SongListItemAvatar song={track} />
-            <TrackListItemText track={track} index={index + 1} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
+            <ListItemButton
+              autoFocus={shouldAutoFocus(track)}
+              selected={track.tlid == currentSong?.tlid}
+              onClick={() => onClick(track)}
+            >
+              <SongListItemAvatar song={track} />
+              <TrackListItemText track={track} index={index + 1} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </>
   );
 }
 

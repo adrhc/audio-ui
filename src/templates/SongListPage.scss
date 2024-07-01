@@ -6,11 +6,6 @@
 
   .content {
     flex-grow: 1;
-
-    .text-search-button {
-      background-color: $background;
-    }
-
     .song-list-wrapper {
       position: relative;
       justify-content: center;
@@ -18,10 +13,5 @@
       flex-grow: 1;
       height: 0; // solves the list overflow issue
     }
-  }
-
-  .bottom {
-    justify-content: center;
-    height: auto;
   }
 }

@@ -1,0 +1,6 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.text-search-button {
+  background-color: $background;
+}

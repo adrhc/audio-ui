@@ -14,6 +14,7 @@ import { ScrollPosition } from '../../domain/scroll';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { SetFeedbackState } from '../../lib/sustain';
 import '../../templates/SongListPage.scss';
+import './SongSearchPage.scss';
 
 type RawSongsSearchPageState = {
   draftExpression?: string | null;

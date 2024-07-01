@@ -11,7 +11,7 @@ import { useMaxEdge } from '../../constants';
 import { TrackSong, removeSong } from '../../domain/track-song';
 import TrackListMenu from '../../components/menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain';
-import './TrackListPage.scss';
+import '../../templates/SongListPage.scss';
 
 type TrackListPageState = {
   songs: TrackSong[];
@@ -67,15 +67,17 @@ export default function TrackListPage() {
 
   return (
     <PageTemplate
-      className="track-list-page"
+      className="song-list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TrackListMenu sustain={sustain} />}
+      disableSpinner={true}
     >
       <Stack className="song-list-wrapper">
         <TrackList
           songs={state.songs}
+          loading={state.loading}
           currentSong={currentSong}
           onRemove={handleRemove}
           onClick={handleSelection}
