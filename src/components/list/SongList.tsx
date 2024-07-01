@@ -1,4 +1,4 @@
-import { ListItem } from '@mui/material';
+import { ListItem, ListItemText } from '@mui/material';
 import SongListTopNavigator from './SongListTopNavigator.tsx';
 import SongListBottomNavigator from './SongListBottomNavigator.tsx';
 import SongListItem from './SongListItem';
@@ -74,6 +74,12 @@ function SongList({
           onClick={onClick}
         />
       ))}
+
+      {(showTopNav || showBottomNav) && !songs.length && (
+        <ListItem key="empty" className="empty">
+          <ListItemText primary="The list is empty!" />
+        </ListItem>
+      )}
 
       {showBottomNav && (
         <ListItem key="SongListBottomNavigator" className="MENU" disablePadding>

@@ -29,7 +29,11 @@ function LoadingList({
       <Stack className="list-wrapper">
         <SpinnerPannel show={loading} />
         {((length ?? 0 > 0) || !loading) && (
-          <List className={`list ${className ?? ''}`} onScroll={onScroll} ref={listRef}>
+          <List
+            className={`list ${className ?? ''} ${length == 0 ? 'zero-length' : ''}`}
+            onScroll={onScroll}
+            ref={listRef}
+          >
             {!empty && children}
           </List>
         )}
