@@ -2,7 +2,9 @@ import { ReactNode } from 'react';
 import { LoadingState } from '../../lib/sustain';
 import SpinnerPannel from '../panel/SpinnerPannel';
 import EmptyList from '../EmptyList';
-import { List } from '@mui/material';
+import { List, Stack } from '@mui/material';
+import '/src/styles/list/list-wrapper.scss';
+import '/src/styles/list/list.scss';
 
 interface LoadingListParam {
   length?: number | null;
@@ -22,20 +24,24 @@ function LoadingList({
   onScroll,
   children,
 }: LoadingState<LoadingListParam>) {
-  if (!loading && empty) {
-    return <EmptyList />;
+  if (loading || !empty) {
+    return (
+      <Stack className="list-wrapper">
+        <SpinnerPannel show={loading} />
+        {((length ?? 0 > 0) || !loading) && (
+          <List className={`list ${className ?? ''}`} onScroll={onScroll} ref={listRef}>
+            {!empty && children}
+          </List>
+        )}
+      </Stack>
+    );
+  } else {
+    return (
+      <Stack className="list-wrapper">
+        <EmptyList />
+      </Stack>
+    );
   }
-
-  return (
-    <>
-      <SpinnerPannel show={loading} />
-      {((length ?? 0 > 0) || !loading) && (
-        <List className={className} onScroll={onScroll} ref={listRef}>
-          {!empty && children}
-        </List>
-      )}
-    </>
-  );
 }
 
 export default LoadingList;

@@ -2,7 +2,7 @@ import { ResponsiveStyleValue } from '@mui/system';
 import { Stack, Typography } from '@mui/material';
 import ShowIf from '../components/ShowIf';
 import { Loading, SetFeedbackState } from '../lib/sustain';
-import { NoArgsProc } from '../domain/types';
+import { NoArgsProc, Styles } from '../domain/types';
 import Spinner from '../components/Spinner';
 import CloseableAlert from '../components/feedback/ErrorAlert';
 import BackAndHomeButtonsMenu from '../components/menu/BackAndHomeButtonsMenu';
@@ -10,6 +10,7 @@ import { ReactNode } from 'react';
 import './PageTemplate.scss';
 
 export interface PageTemplateParam {
+  sx?: Styles;
   state?: Loading;
   setState: SetFeedbackState;
   title?: string | ReactNode | null;
@@ -26,6 +27,7 @@ export interface PageTemplateParam {
 }
 
 const PageTemplate = ({
+  sx,
   state,
   setState,
   title,
@@ -43,7 +45,7 @@ const PageTemplate = ({
   return (
     <>
       <Spinner show={!disableSpinner && state?.loading} />
-      <Stack className={`page ${className ?? ''}`} spacing={pageSpacing}>
+      <Stack className={`page ${className ?? ''}`} spacing={pageSpacing} sx={sx}>
         {!hideTop && <Stack className="top"></Stack>}
         <Stack className="content" spacing={contentSpacing}>
           <CloseableAlert className="ignored" message={state?.error} onClose={onErrorClose} />

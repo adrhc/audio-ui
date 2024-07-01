@@ -2,7 +2,6 @@ import { IconButton, ListItem, ListItemButton, ListItemText } from '@mui/materia
 import EditIconButton from '../../components/button/EditIconButton';
 import LoadingList from '../../components/list/LoadingList';
 import { LoadingState } from '../../lib/sustain';
-import '/src/styles/list/list.scss';
 import './PresetList.scss';
 
 type PresetsListState = {
@@ -24,7 +23,7 @@ const PresetList = ({
   onSelection,
 }: LoadingState<PresetsListState>) => {
   return (
-    <LoadingList className="list preset-list" length={presets.length} loading={loading}>
+    <LoadingList className="preset-list" length={presets.length} loading={loading}>
       {presets.map((it) => (
         <ListItem
           disablePadding

@@ -1,4 +1,3 @@
-import { Stack } from '@mui/material';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
@@ -10,7 +9,7 @@ import { Song } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/list-page.scss';
+import '/src/styles/wide-list-page.scss';
 
 type YouTubePlaylistsCache = { scrollTop: number } & RawSongsPageState;
 
@@ -90,28 +89,26 @@ function YTMusicLibraryPage() {
 
   return (
     <PageTemplate
-      className="list-page"
+      className="wide-list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TracksAccessMenu />}
       disableSpinner={true}
     >
-      <Stack className="list-wrapper">
-        <SongList
-          songs={state.songs}
-          loading={state.loading}
-          currentSong={currentSong}
-          onAdd={handleAdd}
-          onInsert={handleInsert}
-          onClick={handleSelectionProxy}
-          onRealoadList={handleReaload}
-          lastUsed={state.lastUsed}
-          onScroll={scrollObserver}
-          listRef={listRef}
-          scrollTo={scrollTo}
-        />
-      </Stack>
+      <SongList
+        songs={state.songs}
+        loading={state.loading}
+        currentSong={currentSong}
+        onAdd={handleAdd}
+        onInsert={handleInsert}
+        onClick={handleSelectionProxy}
+        onRealoadList={handleReaload}
+        lastUsed={state.lastUsed}
+        onScroll={scrollObserver}
+        listRef={listRef}
+        scrollTo={scrollTo}
+      />
     </PageTemplate>
   );
 }

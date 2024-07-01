@@ -1,5 +1,4 @@
 import { List, ListItem, ListItemText } from '@mui/material';
-import '/src/styles/list/list.scss';
 import './EmptyList.scss';
 
 function EmptyList() {

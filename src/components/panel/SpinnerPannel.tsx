@@ -1,13 +1,12 @@
 import { Stack } from '@mui/material';
 import { CirclesWithBar } from 'react-loader-spinner';
+import './SpinnerPannel.scss';
 
 const SpinnerPannel = ({ show }: { show?: boolean | null }) => {
   return (
     <Stack
+      className="spinner-wrapper"
       sx={{
-        position: 'absolute',
-        width: '100%',
-        height: '100%',
         zIndex: (theme) => theme.zIndex.drawer + 1,
         visibility: `${show ? 'visible' : 'hidden'}`,
       }}

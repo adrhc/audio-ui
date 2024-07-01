@@ -32,7 +32,7 @@
   .MuiListItemButton-root {
     // each action btn has a height of $iconSize + 2 (i.e. padding top + bottom)
     // also adding some overall padding top & bottom
-    min-height: spacing($actBtnCount * ($iconSize + 2) + 1.5);
+    min-height: spacing($actBtnCount * ($iconSize + 2) + 1);
     .MuiListItemText-root {
       padding-right: spacing($iconSize + 1);
     }

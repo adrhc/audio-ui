@@ -3,12 +3,12 @@ import { AppContext } from '../../components/app/AppContext';
 import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../songssearch/useSongsList';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
-import { Stack } from '@mui/material';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { scrollTop } from '../../domain/scroll';
 import { getPlaylistItems } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
+import '/src/styles/wide-list-page.scss';
 
 type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsPageState;
 
@@ -86,29 +86,27 @@ function MopidyPlItemsPage() {
 
   return (
     <PageTemplate
-      className="list-page"
+      className="wide-list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TracksAccessMenu />}
       disableSpinner={true}
     >
-      <Stack className="list-wrapper">
-        <SongList
-          songs={state.songs}
-          loading={state.loading}
-          currentSong={currentSong}
-          onAdd={handleAdd}
-          onInsert={handleInsert}
-          onClick={handleSelection}
-          lastUsed={state.lastUsed}
-          onScroll={scrollObserver}
-          listRef={listRef}
-          scrollTo={scrollTo}
-          onRealoadList={handleReaload}
-          onAddAllSongs={handleAddAll}
-        />
-      </Stack>
+      <SongList
+        songs={state.songs}
+        loading={state.loading}
+        currentSong={currentSong}
+        onAdd={handleAdd}
+        onInsert={handleInsert}
+        onClick={handleSelection}
+        lastUsed={state.lastUsed}
+        onScroll={scrollObserver}
+        listRef={listRef}
+        scrollTo={scrollTo}
+        onRealoadList={handleReaload}
+        onAddAllSongs={handleAddAll}
+      />
     </PageTemplate>
   );
 }

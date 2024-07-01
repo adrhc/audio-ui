@@ -7,7 +7,6 @@ import { TrackSong } from '../../domain/track-song';
 import { SongListNavigatorParam, shouldShowNavigator, shouldShowTopNavigator } from './navigator-commons';
 import { LoadingState } from '../../lib/sustain.ts';
 import LoadingList from './LoadingList.tsx';
-import '/src/styles/list/list.scss';
 import './SongList.scss';
 
 type SongHandler = (song: Song) => void;
@@ -43,7 +42,7 @@ function SongList({
 
   return (
     <LoadingList
-      className="list song-list"
+      className="song-list"
       onScroll={onScroll}
       listRef={listRef}
       loading={loading}

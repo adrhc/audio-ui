@@ -1,4 +1,3 @@
-import { Stack } from '@mui/material';
 import { useCallback, useEffect } from 'react';
 import { getLastUsed, getPresets, loadPreset } from '../../services/easyeffects';
 import _ from 'lodash';
@@ -7,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import PresetList from './PresetList';
 import PageTemplate from '../../templates/PageTemplate';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/list/list-wrapper.scss';
 
 type EasyEffectsState = {
   current?: string;
@@ -69,17 +67,15 @@ export default function EasyEffectsPage() {
       hideTop={true}
       disableSpinner={true}
     >
-      <Stack className="list-wrapper">
-        <PresetList
-          loading={state.loading}
-          current={state.current}
-          presets={state.presets}
-          onView={handleView}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onSelection={handleSelection}
-        />
-      </Stack>
+      <PresetList
+        loading={state.loading}
+        current={state.current}
+        presets={state.presets}
+        onView={handleView}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onSelection={handleSelection}
+      />
     </PageTemplate>
   );
 }

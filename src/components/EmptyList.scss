@@ -1,9 +1,14 @@
+@use '/src/styles/list/list.scss' as *;
+
 .empty-list {
   border: none;
   > li {
+    height: 100%;
     .MuiListItemText-root {
       text-align: center;
       color: rgba(0, 0, 0, 0.6);
     }
   }
 }
+
+@include list;

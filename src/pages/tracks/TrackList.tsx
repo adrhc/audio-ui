@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { LoadingState } from '../../lib/sustain';
 import LoadingList from '../../components/list/LoadingList';
-import '/src/styles/list/list.scss';
 import './TrackList.scss';
 
 type TrackListParam = {
@@ -35,7 +34,7 @@ function TrackList({
   );
 
   return (
-    <LoadingList className="list track-list" loading={loading} length={songs.length}>
+    <LoadingList className="track-list" loading={loading} length={songs.length}>
       {songs.map((track, index) => (
         <ListItem
           disablePadding

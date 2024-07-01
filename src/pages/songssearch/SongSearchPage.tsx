@@ -1,4 +1,3 @@
-import { Stack } from '@mui/material';
 import PageTemplate from '../../templates/PageTemplate';
 import { searchSongs } from '../../services/audio-db/songs-search';
 import { useCallback, useContext, useEffect, useRef } from 'react';
@@ -138,7 +137,7 @@ function SongSearchPage() {
 
   return (
     <PageTemplate
-      className="list-page"
+      className="wide-list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
@@ -154,18 +153,16 @@ function SongSearchPage() {
         autoFocus={state.songs.length == 0}
         searchRef={searchRef}
       />
-      <Stack className="list-wrapper">
-        <SongList
-          songs={state.songs}
-          loading={state.loading}
-          lastUsed={state.lastUsed}
-          onClick={handleSelection}
-          onAdd={handleAdd}
-          onInsert={handleInsert}
-          onScroll={scrollObserver}
-          {...partialSongsListParam}
-        />
-      </Stack>
+      <SongList
+        songs={state.songs}
+        loading={state.loading}
+        lastUsed={state.lastUsed}
+        onClick={handleSelection}
+        onAdd={handleAdd}
+        onInsert={handleInsert}
+        onScroll={scrollObserver}
+        {...partialSongsListParam}
+      />
     </PageTemplate>
   );
 }

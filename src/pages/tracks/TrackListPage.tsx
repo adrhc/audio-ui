@@ -1,6 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { getTrackSongs } from '../../services/track-song';
-import { Stack } from '@mui/material';
 import { play } from '../../services/player';
 import PageTemplate from '../../templates/PageTemplate';
 import { useSustainableState } from '../../hooks/useSustainableState';
@@ -11,7 +10,7 @@ import { useMaxEdge } from '../../constants';
 import { TrackSong, removeSong } from '../../domain/track-song';
 import TrackListMenu from '../../components/menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/list-page.scss';
+import '/src/styles/wide-list-page.scss';
 
 type TrackListPageState = {
   songs: TrackSong[];
@@ -67,23 +66,21 @@ export default function TrackListPage() {
 
   return (
     <PageTemplate
-      className="list-page"
+      className="wide-list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TrackListMenu sustain={sustain} />}
       disableSpinner={true}
     >
-      <Stack className="list-wrapper">
-        <TrackList
-          songs={state.songs}
-          loading={state.loading}
-          currentSong={currentSong}
-          onRemove={handleRemove}
-          onClick={handleSelection}
-          songCloseToLastRemoved={state.songCloseToLastRemoved}
-        />
-      </Stack>
+      <TrackList
+        songs={state.songs}
+        loading={state.loading}
+        currentSong={currentSong}
+        onRemove={handleRemove}
+        onClick={handleSelection}
+        songCloseToLastRemoved={state.songCloseToLastRemoved}
+      />
     </PageTemplate>
   );
 }

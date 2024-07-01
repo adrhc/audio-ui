@@ -3,7 +3,6 @@ import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import { LocationSelection, MediaLocation } from '../../domain/media-location';
 import LoadingList from './LoadingList';
 import { LoadingState } from '../../lib/sustain';
-import '/src/styles/list/list.scss';
 import './LocationSelectionList.scss';
 
 interface LocationsSelectionListParam {
@@ -17,7 +16,7 @@ function LocationSelectionList({
   onClick,
 }: LoadingState<LocationsSelectionListParam>) {
   return (
-    <LoadingList className="list location-list" length={playlists.length} loading={loading}>
+    <LoadingList className="location-list" length={playlists.length} loading={loading}>
       {playlists.map((pl, index) => (
         <ListItem
           disablePadding

@@ -1,13 +1,12 @@
 @mixin pageContentWithListWrapper {
-  .content {
+  .list-wrapper {
     flex-grow: 1;
-    .list-wrapper {
-      flex-grow: 1;
-      position: relative;
-      justify-content: center;
-      text-align: center;
-      height: 0; // solves the list overflow issue
-    }
+    position: relative;
+    justify-content: center;
+    text-align: center;
+    // solves the overflow issue when the list is not empty but makes list-wrapper
+    // aware of its (flex) parent because it must rely on flex-grow=1 to grow
+    height: 0;
   }
 }
 

@@ -4,14 +4,14 @@ import { AppContext } from '../components/app/AppContext';
 import { LocationSelection, MediaLocation, filterSelected } from '../domain/media-location';
 import { LoadingStateOrProvider, useSustainableState } from '../hooks/useSustainableState';
 import { getDiskPlaylists, updateUriPlaylists } from '../services/audio-db/audio-db';
-import { Stack, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import PageTemplate from '../templates/PageTemplate';
 import LocationSelectionList from '../components/list/LocationSelectionList';
 import CreateConfirmButtonMenu from '../components/menu/CreateConfirmButtonMenu';
 import { useURLQueryParams } from '../hooks/useURLSearchParams';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
-import '/src/styles/list-page.scss';
+import '/src/styles/wide-list-page.scss';
 
 interface SongPlaylistsEditorPageState {
   selections: LocationSelection[];
@@ -78,7 +78,7 @@ function SongPlaylistsEditorPage() {
 
   return (
     <PageTemplate
-      className="list-page"
+      className="wide-list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
@@ -91,13 +91,7 @@ function SongPlaylistsEditorPage() {
       }
       disableSpinner={true}
     >
-      <Stack className="list-wrapper">
-        <LocationSelectionList
-          loading={state.loading}
-          selections={state.selections}
-          onClick={selectLocation}
-        />
-      </Stack>
+      <LocationSelectionList loading={state.loading} selections={state.selections} onClick={selectLocation} />
     </PageTemplate>
   );
 }

@@ -1,23 +1,19 @@
-.list {
-  padding: 0 !important;
-  overflow: auto;
-  max-height: 100%;
-  border: thin solid rgba(0, 0, 0, 0.2);
+@mixin list {
+  .list {
+    height: 100%;
+    padding: 0 !important;
+    overflow: auto;
+    max-height: 100%;
+    border: thin solid rgba(0, 0, 0, 0.2);
 
-  > li:not(.empty) {
-    border-right: solid thin rgba(0, 0, 0, 0.2);
-  }
+    > li:not(.empty) {
+      border-right: solid thin rgba(0, 0, 0, 0.2);
+    }
 
-  > li:not(:last-of-type) {
-    border-bottom: thin solid rgba(0, 0, 0, 0.2);
+    > li:not(:last-of-type) {
+      border-bottom: thin solid rgba(0, 0, 0, 0.2);
+    }
   }
 }
 
-/* 
-.ul > li:hover {
-  background-color: rgba(0, 0, 0, 0.04);
-}
-.li:hover {
-  border: thin solid rgba(0, 0, 0, 0.8);
-} 
-*/
+@include list;

@@ -4,11 +4,11 @@ import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../songs
 import { useParams } from 'react-router-dom';
 import { getYTPlContent } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
-import { Stack } from '@mui/material';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
+import '/src/styles/wide-list-page.scss';
 
 type YouTubePlContentCache = { scrollTop: number } & RawSongsPageState;
 
@@ -86,14 +86,13 @@ function YouTubePlContentPage() {
 
   return (
     <PageTemplate
-      className="list-page"
+      className="wide-list-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TracksAccessMenu />}
       disableSpinner={true}
     >
-      <Stack className="list-wrapper">
         <SongList
           songs={state.songs}
           loading={state.loading}
@@ -108,7 +107,6 @@ function YouTubePlContentPage() {
           onRealoadList={handleReaload}
           onAddAllSongs={handleAddAll}
         />
-      </Stack>
     </PageTemplate>
   );
 }

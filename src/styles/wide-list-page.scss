@@ -1,0 +1,7 @@
+@mixin wideListPage {
+  .wide-list-page {
+    max-width: 100%;
+  }
+}
+
+@include wideListPage;
