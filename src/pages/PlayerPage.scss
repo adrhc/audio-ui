@@ -17,11 +17,15 @@
       }
     }
 
-    a {
-      cursor: pointer;
-      text-decoration: none;
-      svg {
-        vertical-align: sub;
+    .title {
+      a {
+        cursor: pointer;
+        text-decoration: none;
+        svg {
+          line-height: 0;
+          vertical-align: text-bottom;
+          font-size: 1.265rem;
+        }
       }
     }
   }

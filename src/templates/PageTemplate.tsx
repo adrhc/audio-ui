@@ -1,12 +1,12 @@
 import { ResponsiveStyleValue } from '@mui/system';
-import { Stack, Typography } from '@mui/material';
-import ShowIf from '../components/ShowIf';
+import { Stack } from '@mui/material';
 import { Loading, SetFeedbackState } from '../lib/sustain';
 import { NoArgsProc, Styles } from '../domain/types';
 import Spinner from '../components/Spinner';
 import CloseableAlert from '../components/feedback/ErrorAlert';
 import BackAndHomeButtonsMenu from '../components/menu/BackAndHomeButtonsMenu';
 import { ReactNode } from 'react';
+import PageTitle from '../components/PageTitle';
 import './PageTemplate.scss';
 
 export interface PageTemplateParam {
@@ -49,12 +49,8 @@ const PageTemplate = ({
         {!hideTop && <Stack className="top"></Stack>}
         <Stack className="content" spacing={contentSpacing}>
           <CloseableAlert className="ignored" message={state?.error} onClose={onErrorClose} />
-          <ShowIf condition={!!title}>
-            <Typography variant="h6" className="title">
-              {title}
-            </Typography>
-          </ShowIf>
-          <ShowIf condition={!hideContent}>{children}</ShowIf>
+          <PageTitle title={title} />
+          {!hideContent && children}
         </Stack>
         {bottom}
         {!bottom && !hideBottom && <BackAndHomeButtonsMenu />}

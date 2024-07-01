@@ -12,6 +12,7 @@ import { useURLQueryParams } from '../hooks/useURLSearchParams';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import '/src/styles/wide-list-page.scss';
+import PageTitle from '../components/PageTitle';
 
 interface SongPlaylistsEditorPageState {
   selections: LocationSelection[];
@@ -81,6 +82,7 @@ function SongPlaylistsEditorPage() {
       className="wide-list-page"
       state={state}
       setState={setState as SetFeedbackState}
+      title={<PageTitle>{decodedTitle}</PageTitle>}
       hideTop={true}
       bottom={
         <CreateConfirmButtonMenu

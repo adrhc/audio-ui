@@ -8,8 +8,10 @@ import { setVolume as setMopidyVolume } from '../services/mpc';
 import { useGoBack } from '../hooks/useGoBack';
 import { AppContext } from '../components/app/AppContext';
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
-import './AudioBoostPage.scss';
 import { SetFeedbackState } from '../lib/sustain';
+import { Typography } from '@mui/material';
+import './AudioBoostPage.scss';
+import PageTitle from '../components/PageTitle';
 
 type AudioBoostPageState = { draftVolume?: number };
 
@@ -77,11 +79,11 @@ const AudioBoostPage = () => {
       setState={setState as SetFeedbackState}
       hideContent={boost == null}
       title={
-        <>
+        <PageTitle>
           Boost from {baseVolume}
           <br />
           {boost?.title}
-        </>
+        </PageTitle>
       }
       bottom={<ConfirmationButtonMenu goBack={goBack} onAccept={saveBoost} />}
     >

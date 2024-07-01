@@ -23,6 +23,7 @@ import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import { MOPIDY_DISCONNECTED_ERROR } from '../constants';
 import PlayerBottomPageMenu from '../components/menu/PlayerBottomPageMenu';
 import { SetFeedbackState } from '../lib/sustain';
+import PageTitle from '../components/PageTitle';
 import '/src/styles/panel.scss';
 import './PlayerPage.scss';
 
@@ -67,17 +68,15 @@ export default function PlayerPage() {
       >
         <ShowIf condition={!!currentSong?.tlid}>
           <Box className="ignored">
-            <Typography variant="h6" className="title">
+            <PageTitle>
               <Badge color={boost < 0 ? 'warning' : 'info'} badgeContent={boost} invisible={boost == 0}>
                 <Link to="/audio-boost">
                   <SurroundSoundIcon />
                 </Link>
               </Badge>
               &nbsp;{currentSong?.title}
-            </Typography>
-            <Typography variant="h6" className="title">
-              {streamTitle ?? currentSong?.artists}
-            </Typography>
+            </PageTitle>
+            <PageTitle>{streamTitle ?? currentSong?.artists}</PageTitle>
           </Box>
         </ShowIf>
         <ExactVolumePanel values={[5, 15, 25, 45, 65, 80]} onChange={onVolumeChange} />

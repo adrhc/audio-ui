@@ -1,0 +1,9 @@
+@mixin pageTitle {
+  .title {
+    text-align: center;
+    line-height: normal;
+    font-size: medium;
+  }
+}
+
+@include pageTitle;
