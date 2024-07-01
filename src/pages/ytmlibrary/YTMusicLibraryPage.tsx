@@ -3,7 +3,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongsList';
+import useSongList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongsList';
 import { getYTPlaylists } from '../../services/audio-db/audio-db';
 import { Song } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +26,7 @@ function YTMusicLibraryPage() {
     scrollObserver,
     scrollTo,
     currentSong,
-  } = useSongsList<RawSongsPageState>('ytmlibrary');
+  } = useSongList<RawSongsPageState>('ytmlibrary');
   const cache = getCache('ytmlibrary') as YouTubePlaylistsCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

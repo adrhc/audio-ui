@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongsList';
+import useSongList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongsList';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
@@ -28,7 +28,7 @@ function MopidyPlItemsPage() {
     scrollTo,
     scrollObserver,
     currentSong,
-  } = useSongsList<RawSongsPageState>(cacheName);
+  } = useSongList<RawSongsPageState>(cacheName);
   const cache = getCache(cacheName) as MopidyPlItemsPageCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

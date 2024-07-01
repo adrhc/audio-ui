@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongsList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongsList';
+import useSongList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongsList';
 import { useParams } from 'react-router-dom';
 import { getYTPlContent } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
@@ -28,7 +28,7 @@ function YouTubePlContentPage() {
     scrollObserver,
     scrollTo,
     currentSong,
-  } = useSongsList<RawSongsPageState>(cacheName);
+  } = useSongList<RawSongsPageState>(cacheName);
   const cache = getCache(cacheName) as YouTubePlContentCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

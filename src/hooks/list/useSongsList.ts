@@ -37,7 +37,7 @@ export interface UseSongsList<S extends RawSongsPageState> extends UseCachedList
   mopidy?: Mopidy;
 }
 
-export default function useSongsList<S extends RawSongsPageState>(
+export default function useSongList<S extends RawSongsPageState>(
   cacheName: string,
   defaultState?: Partial<LoadingState<S>> | null
 ): UseSongsList<S> {
