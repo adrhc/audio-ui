@@ -73,7 +73,7 @@ export default function TrackListPage() {
       hideTop={true}
       bottom={<TrackListMenu sustain={sustain} />}
     >
-      <Stack className="songs-wrapper">
+      <Stack className="song-list-wrapper">
         <TrackList
           songs={state.songs}
           currentSong={currentSong}

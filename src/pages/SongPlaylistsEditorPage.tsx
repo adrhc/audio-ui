@@ -90,7 +90,7 @@ function SongPlaylistsEditorPage() {
         />
       }
     >
-      <Stack className="songs-wrapper">
+      <Stack className="song-list-wrapper">
         <LocationsSelectionList selections={state.selections} onClick={selectLocation} />
       </Stack>
     </PageTemplate>

@@ -143,6 +143,7 @@ function SongSearchPage() {
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TracksAccessMenu />}
+      disableSpinner={true}
     >
       <TextSearchButton
         placeholder="Search for songs"
@@ -153,9 +154,10 @@ function SongSearchPage() {
         autoFocus={state.songs.length == 0}
         searchRef={searchRef}
       />
-      <Stack className="songs-wrapper">
+      <Stack className="song-list-wrapper">
         <SongList
           songs={state.songs}
+          loading={state.loading}
           lastUsed={state.lastUsed}
           onClick={handleSelection}
           onAdd={handleAdd}

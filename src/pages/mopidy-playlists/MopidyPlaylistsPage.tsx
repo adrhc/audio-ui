@@ -118,10 +118,12 @@ function MopidyPlaylistsPage() {
       setState={setState as SetFeedbackState}
       hideTop={true}
       bottom={<TracksAccessMenu />}
+      disableSpinner={true}
     >
-      <Stack className="songs-wrapper">
+      <Stack className="song-list-wrapper">
         <SongList
           songs={state.songs}
+          loading={state.loading}
           currentSong={currentSong}
           onAdd={handleAddPl}
           onInsert={handleInsertPl}

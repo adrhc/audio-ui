@@ -11,7 +11,8 @@
       background-color: $background;
     }
 
-    .songs-wrapper {
+    .song-list-wrapper {
+      position: relative;
       justify-content: center;
       text-align: center;
       flex-grow: 1;
