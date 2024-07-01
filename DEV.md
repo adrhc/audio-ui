@@ -1,3 +1,6 @@
+# URL
+http://localhost:5173/#/player?user=...&password=...
+
 # SVG
 import CloseBtn from '../../assets/btn/close-square-line-icon.svg';
 <SvgIcon component="object">
