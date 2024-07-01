@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
-import useSongsList, { RawSongsPageState } from '../songssearch/useSongsList';
+import useSongsList, { RawSongsPageState } from '../../hooks/list/useSongsList';
 import { getHistory, getHistoryAfter, getHistoryBefore } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';

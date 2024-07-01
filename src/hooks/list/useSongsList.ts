@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 import { RefObject, useCallback, useContext } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import { SustainVoidFn, useSustainableState } from '../../hooks/useSustainableState';
+import { SustainVoidFn, useSustainableState } from '../useSustainableState';
 import {
   addSongsAndRemember,
   addSongThenPlay,
@@ -10,7 +10,7 @@ import {
   addYtMusicPlAndRemember,
 } from '../../services/tracklist';
 import { LoadingState, SetLoadingState } from '../../lib/sustain';
-import useScroll from '../../hooks/useScroll';
+import useScroll from '../useScroll';
 import { Song, isYtMusicPl } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
 import { AddAllSongsFn } from '../../components/list/navigator-commons';
