@@ -45,7 +45,7 @@ function SongList({
       listRef={listRef}
       loading={loading}
       length={songs.length}
-      empty={!showListItemMenu}
+      empty={!showListItemMenu && !songs.length}
     >
       {showListItemMenu && (
         <ListItem key="SongListItemTopMenu" className="MENU" disablePadding>
