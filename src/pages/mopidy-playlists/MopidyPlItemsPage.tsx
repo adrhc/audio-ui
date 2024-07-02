@@ -15,7 +15,6 @@ type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsPageState;
 function MopidyPlItemsPage() {
   const { uri } = useParams();
   const cacheName = `mopidy-playlist/${uri}`;
-  const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
   const {
     state,
     sustain,
@@ -29,6 +28,7 @@ function MopidyPlItemsPage() {
     scrollObserver,
     currentSong,
   } = useSongList<RawSongsPageState>(cacheName);
+  const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
   const cache = getCache(cacheName) as MopidyPlItemsPageCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
