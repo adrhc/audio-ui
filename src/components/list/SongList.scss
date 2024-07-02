@@ -6,16 +6,7 @@
 $liPX: spacing(0.5);
 
 .song-list.zero-length {
-  display: flex;
-  flex-direction: column;
-  border: none;
-  li:nth-child(2) {
-    margin-top: 4px;
-    border: thin solid rgba(0, 0, 0, 0.2);
-    flex-grow: 1;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.6);
-  }
+  @include emptyMessage2ndItem;
 }
 
 .song-list {
