@@ -1,17 +1,16 @@
 import { ListItem, ListItemText } from '@mui/material';
-import SongListTopNavigator from './SongListTopNavigator.tsx';
-import SongListBottomNavigator from './SongListBottomNavigator.tsx';
+import SongListItemMenu from './SongListItemMenu.tsx';
 import SongListItem from './SongListItem';
 import { Song } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
-import { SongListNavigatorParam, shouldShowNavigator, shouldShowTopNavigator } from './navigator-commons';
+import { SongListItemMenuParam, shouldShowListItemMenu } from '../../domain/SongListItemMenuParam.ts';
 import { LoadingState } from '../../lib/sustain.ts';
 import LoadingList from './LoadingList.tsx';
 import './SongList.scss';
 
 type SongHandler = (song: Song) => void;
 
-interface SongsListParam extends SongListNavigatorParam {
+interface SongsListParam extends SongListItemMenuParam {
   prevSongsCount?: number;
   currentSong?: TrackSong;
   onAdd?: SongHandler;
@@ -37,8 +36,7 @@ function SongList({
   // console.log(`[SongsList] lastUsed:`, lastUsed);
 
   const navParam = { songs, listRef, ...partialNavParam };
-  const showTopNav = shouldShowTopNavigator(navParam);
-  const showBottomNav = shouldShowNavigator(navParam) && !!songs.length;
+  const showListItemMenu = shouldShowListItemMenu(navParam);
 
   return (
     <LoadingList
@@ -47,11 +45,11 @@ function SongList({
       listRef={listRef}
       loading={loading}
       length={songs.length}
-      empty={!showTopNav && !showBottomNav && !songs.length}
+      empty={!showListItemMenu}
     >
-      {showTopNav && (
-        <ListItem key="SongListTopNavigator" className="MENU" disablePadding>
-          <SongListTopNavigator {...navParam} />
+      {showListItemMenu && (
+        <ListItem key="SongListItemTopMenu" className="MENU" disablePadding>
+          <SongListItemMenu {...navParam} />
         </ListItem>
       )}
 
@@ -75,15 +73,15 @@ function SongList({
         />
       ))}
 
-      {(showTopNav || showBottomNav) && !songs.length && (
+      {showListItemMenu && !songs.length && (
         <ListItem key="empty" className="empty">
           <ListItemText primary="The list is empty!" />
         </ListItem>
       )}
 
-      {showBottomNav && (
-        <ListItem key="SongListBottomNavigator" className="MENU" disablePadding>
-          <SongListBottomNavigator {...navParam} />
+      {showListItemMenu && !!songs.length && (
+        <ListItem key="SongListItemBottomMenu" className="MENU" disablePadding>
+          <SongListItemMenu {...navParam} bottom={true} />
         </ListItem>
       )}
     </LoadingList>

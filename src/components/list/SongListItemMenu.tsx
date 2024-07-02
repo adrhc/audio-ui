@@ -2,11 +2,12 @@ import { ButtonGroup, Button } from '@mui/material';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import VerticalAlignBottomOutlinedIcon from '@mui/icons-material/VerticalAlignBottomOutlined';
+import VerticalAlignTopOutlinedIcon from '@mui/icons-material/VerticalAlignTopOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import { SongListNavigatorParam } from './navigator-commons';
+import { SongListItemMenuParam, showScrollTo } from '../../domain/SongListItemMenuParam';
 
-function SongListTopNavigator({
+function SongListItemMenu({
   songs,
   listRef,
   pageBeforeExists,
@@ -16,7 +17,8 @@ function SongListTopNavigator({
   scrollTo,
   onRealoadList,
   onAddAllSongs,
-}: SongListNavigatorParam) {
+  bottom,
+}: SongListItemMenuParam) {
   return (
     <ButtonGroup>
       {pageBeforeExists && goToPreviousPage && (
@@ -24,9 +26,10 @@ function SongListTopNavigator({
           <ArrowBackIosNewOutlinedIcon />
         </Button>
       )}
-      {scrollTo && listRef && songs.length && (
-        <Button variant="outlined" onClick={() => scrollTo(listRef?.current?.scrollHeight)}>
-          <VerticalAlignBottomOutlinedIcon />
+      {showScrollTo({ songs, listRef, scrollTo, bottom }) && (
+        <Button variant="outlined" onClick={() => scrollTo!(bottom ? 0 : listRef?.current?.scrollHeight)}>
+          {!bottom && <VerticalAlignBottomOutlinedIcon />}
+          {bottom && <VerticalAlignTopOutlinedIcon />}
         </Button>
       )}
       {pageAfterExists && goToNextPage && (
@@ -48,4 +51,4 @@ function SongListTopNavigator({
   );
 }
 
-export default SongListTopNavigator;
+export default SongListItemMenu;

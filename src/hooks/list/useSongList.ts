@@ -11,7 +11,7 @@ import {
 import { LoadingState } from '../../lib/sustain';
 import { Song, isYtMusicPl } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
-import { AddAllSongsFn } from '../../components/list/navigator-commons';
+import { AddAllSongsFn } from '../../domain/SongListItemMenuParam';
 import useCachedList, { UseCachedList } from './useCachedList';
 
 export type RawSongsPageState = {
