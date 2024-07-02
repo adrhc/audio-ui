@@ -21,7 +21,7 @@ import { toTrackSong } from './domain/track-song';
 
 export default function App() {
   const theme = useTheme();
-  const [getCache, setCache, mergeCache, clearCache, cacheContains] = useCache();
+  const { getCache, setCache, mergeCache, clearCache, cacheContains } = useCache();
   const [getBaseVolume, setBaseVolume, incrementBaseVolume] = useBaseVolume();
   const [state, sustain, setState, setBoost, clearNotification, setNotification, setCredentials] =
     useAppState();

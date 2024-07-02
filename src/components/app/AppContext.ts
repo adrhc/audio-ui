@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { VolumeBoost } from '../../services/boost';
-import { GetCacheFn, SetCacheFn, ClearCacheFn, CacheContainsFn, MergeCacheFn } from '../../hooks/useCache';
+import { CacheOperations } from '../../hooks/useCache';
 import {
   AppState,
   DEFAULT_APP_STATE_WTHOUT_MOPIDY,
@@ -9,20 +9,16 @@ import {
 } from './useAppState';
 import { Credentials } from '../../domain/credentials';
 
-type AppContextValue = AppState & {
-  getBaseVolume: () => number | null | undefined;
-  setBaseVolume: (baseVolume: number) => void;
-  incrementBaseVolume: (increment: number) => void;
-  setBoost: (vb: VolumeBoost) => void;
-  getCache: GetCacheFn;
-  setCache: SetCacheFn;
-  mergeCache: MergeCacheFn;
-  clearCache: ClearCacheFn;
-  cacheContains: CacheContainsFn;
-  setNotification: SetNotificationFn;
-  reloadState: () => void;
-  setCredentials: SetCredentialsFn;
-};
+type AppContextValue = AppState &
+  CacheOperations & {
+    getBaseVolume: () => number | null | undefined;
+    setBaseVolume: (baseVolume: number) => void;
+    incrementBaseVolume: (increment: number) => void;
+    setBoost: (vb: VolumeBoost) => void;
+    setNotification: SetNotificationFn;
+    reloadState: () => void;
+    setCredentials: SetCredentialsFn;
+  };
 
 export const AppContext = createContext<AppContextValue>({
   getBaseVolume: () => undefined,

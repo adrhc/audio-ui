@@ -10,18 +10,26 @@ export type MergeCacheFn = (key: string, mergeFn: (oldValue: unknown) => unknown
 export type ClearCacheFn = (key: string) => void;
 export type CacheContainsFn = (key: string) => boolean;
 
-export function useCache(): [GetCacheFn, SetCacheFn, MergeCacheFn, ClearCacheFn, CacheContainsFn] {
+export interface CacheOperations {
+  getCache: GetCacheFn;
+  setCache: SetCacheFn;
+  mergeCache: MergeCacheFn;
+  clearCache: ClearCacheFn;
+  cacheContains: CacheContainsFn;
+}
+
+export function useCache(): CacheOperations {
   const ref = useRef<Cache>({});
-  const contains = useCallback((key: string) => ref.current[key] == null, [ref]);
-  const getValue = useCallback((key: string) => ref.current[key], [ref]);
-  const setValue = useCallback(
+  const cacheContains = useCallback((key: string) => ref.current[key] == null, [ref]);
+  const getCache = useCallback((key: string) => ref.current[key], [ref]);
+  const setCache = useCallback(
     (key: string, value: unknown) => {
       ref.current[key] = value;
       // console.log(`set cache for ${key}:`, value);
     },
     [ref]
   );
-  const mergeValue = useCallback(
+  const mergeCache = useCallback(
     (key: string, mergeFn: (oldValue: unknown) => unknown) => {
       // const oldCache = ref.current[key];
       // const newCache = mergeFn(ref.current[key]);
@@ -31,11 +39,11 @@ export function useCache(): [GetCacheFn, SetCacheFn, MergeCacheFn, ClearCacheFn,
     },
     [ref]
   );
-  const clear = useCallback(
+  const clearCache = useCallback(
     (key: string) => {
       delete ref.current[key];
     },
     [ref]
   );
-  return [getValue, setValue, mergeValue, clear, contains];
+  return { getCache, setCache, mergeCache, clearCache, cacheContains };
 }
