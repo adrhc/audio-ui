@@ -15,7 +15,6 @@ type YouTubePlContentCache = { scrollTop: number } & RawSongsPageState;
 function YouTubePlContentPage() {
   const { uri } = useParams();
   const cacheName = `ytplcontent/${uri}`;
-  const { getCache, mergeCache } = useContext(AppContext);
   const {
     state,
     sustain,
@@ -29,6 +28,7 @@ function YouTubePlContentPage() {
     scrollTo,
     currentSong,
   } = useSongList<RawSongsPageState>(cacheName);
+  const { getCache, mergeCache } = useContext(AppContext);
   const cache = getCache(cacheName) as YouTubePlContentCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -93,20 +93,20 @@ function YouTubePlContentPage() {
       bottom={<TracksAccessMenu />}
       disableSpinner={true}
     >
-        <SongList
-          songs={state.songs}
-          loading={state.loading}
-          currentSong={currentSong}
-          onAdd={handleAdd}
-          onInsert={handleInsert}
-          onClick={handleSelection}
-          lastUsed={state.lastUsed}
-          onScroll={scrollObserver}
-          listRef={listRef}
-          scrollTo={scrollTo}
-          onRealoadList={handleReaload}
-          onAddAllSongs={handleAddAll}
-        />
+      <SongList
+        songs={state.songs}
+        loading={state.loading}
+        currentSong={currentSong}
+        onAdd={handleAdd}
+        onInsert={handleInsert}
+        onClick={handleSelection}
+        lastUsed={state.lastUsed}
+        onScroll={scrollObserver}
+        listRef={listRef}
+        scrollTo={scrollTo}
+        onRealoadList={handleReaload}
+        onAddAllSongs={handleAddAll}
+      />
     </PageTemplate>
   );
 }
