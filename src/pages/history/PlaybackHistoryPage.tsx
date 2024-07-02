@@ -1,26 +1,19 @@
 import { useCallback, useContext, useEffect } from 'react';
-import useSongList, { RawSongsPageState } from '../../hooks/list/useSongList';
+import useSongList from '../../hooks/list/useSongList';
 import { getHistory, getHistoryAfter, getHistoryBefore } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import { toPartialState } from './history-utils';
+import {
+  HistoryCache,
+  RawPlaybackHistoryPageState,
+  toPartialHistoryCache,
+  toPartialState,
+} from './history-utils';
 import { AppContext } from '../../components/app/AppContext';
-import { HistoryPosition } from '../../domain/history';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-list-page.scss';
-
-export type RawPlaybackHistoryPageState = {
-  completePageSize: number;
-  prevSongsCount: number;
-  before?: HistoryPosition;
-  after?: HistoryPosition;
-  pageBeforeExists?: boolean;
-  pageAfterExists?: boolean;
-} & RawSongsPageState;
-
-type HistoryCache = { scrollTop: number } & RawPlaybackHistoryPageState;
 
 function PlaybackHistoryPage() {
   const { getCache, mergeCache } = useContext(AppContext);
@@ -81,24 +74,22 @@ function PlaybackHistoryPage() {
       // console.log(`[PlaybackHistoryPage.useEffect] no songs to backup!`);
       return;
     }
-    const stateBackup = state.pageBeforeExists
-      ? {
-          songs: state.songs,
-          lastUsed: state.lastUsed,
-          before: state.before,
-          after: state.after,
-          pageBeforeExists: state.pageBeforeExists,
-          pageAfterExists: state.pageAfterExists,
-          completePageSize: state.completePageSize,
-          prevSongsCount: state.prevSongsCount,
-        }
-      : { lastUsed: state.lastUsed };
-    // console.log(`[PlaybackHistoryPage.useEffect] backing the state:`, stateBackup);
+    const partialHistoryCache = toPartialHistoryCache({
+      songs: state.songs,
+      lastUsed: state.lastUsed,
+      before: state.before,
+      after: state.after,
+      pageBeforeExists: state.pageBeforeExists,
+      pageAfterExists: state.pageAfterExists,
+      completePageSize: state.completePageSize,
+      prevSongsCount: state.prevSongsCount,
+    });
+    // console.log(`[PlaybackHistoryPage.useEffect] backing the state:`, partialHistoryCache);
     mergeCache('history', (old) => {
-      const backup = stateBackup.pageBeforeExists
-        ? { ...(old as object), ...stateBackup }
-        : { scrollTop: scrollTop(old), ...stateBackup };
-      console.log(`[PlaybackHistoryPage] stateBackup:`, backup);
+      const backup = partialHistoryCache.pageBeforeExists
+        ? { ...(old as object), ...partialHistoryCache }
+        : { scrollTop: scrollTop(old), ...partialHistoryCache };
+      console.log(`[PlaybackHistoryPage] partialHistoryCache:`, backup);
       return backup;
     });
   }, [

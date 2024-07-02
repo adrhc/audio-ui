@@ -1,15 +1,43 @@
-import { HistoryPage } from "../../domain/history";
+import { HistoryPage, HistoryPosition } from '../../domain/history';
+import { RawSongsPageState } from '../../hooks/list/useSongList';
+import { LoadingState } from '../../lib/sustain';
+
+export type RawPlaybackHistoryPageState = {
+  completePageSize: number;
+  prevSongsCount: number;
+  before?: HistoryPosition;
+  after?: HistoryPosition;
+  pageBeforeExists?: boolean;
+  pageAfterExists?: boolean;
+} & RawSongsPageState;
+
+export type HistoryCache = { scrollTop: number } & RawPlaybackHistoryPageState;
 
 export function toPartialState(prevSongsCount: number, page: HistoryPage) {
   return {
+    songs: page.entries,
     before: page.first,
     after: page.last,
     pageBeforeExists: page.pageBeforeExists,
     pageAfterExists: page.pageAfterExists,
     completePageSize: page.completePageSize,
-    songs: page.entries,
     prevSongsCount,
   };
+}
+
+export function toPartialHistoryCache(state: LoadingState<RawPlaybackHistoryPageState>) {
+  return state.pageBeforeExists
+    ? {
+        songs: state.songs,
+        lastUsed: state.lastUsed,
+        before: state.before,
+        after: state.after,
+        pageBeforeExists: state.pageBeforeExists,
+        pageAfterExists: state.pageAfterExists,
+        completePageSize: state.completePageSize,
+        prevSongsCount: state.prevSongsCount,
+      }
+    : { lastUsed: state.lastUsed };
 }
 
 /* export function addNavRows(page: HistoryPage) {
