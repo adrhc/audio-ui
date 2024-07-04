@@ -24,20 +24,16 @@
   }
 }
 
-@mixin bottomGroupMenu($btnPY) {
-  $btnPYpx: spacing($btnPY);
+@mixin bottomGroupMenu($minHeight) {
   .button-group-menu {
-    .MuiButtonGroup-grouped {
-      padding-top: $btnPYpx;
-      padding-bottom: $btnPYpx;
-    }
+    min-height: $minHeight;
   }
 }
 
 @media (max-width: $tablet) {
-  @include bottomGroupMenu(1.5);
+  @include bottomGroupMenu($btnMenuHeightPhone);
 }
 
 @media (min-width: $tablet) {
-  @include bottomGroupMenu(0.8);
+  @include bottomGroupMenu($btnMenuHeightTablet);
 }
