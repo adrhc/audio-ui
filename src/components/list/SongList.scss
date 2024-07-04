@@ -21,7 +21,8 @@ $liPX: spacing(0.5);
     @media (max-width: $tablet) {
       @include liButton($liPX, 1.1rem);
       @include liAction(4, 2);
-      @include liAvatarOnTop(60%);
+      @include liAvatarAtLeft(25%, $liPX);
+      // @include liAvatarOnTop(60%);
     }
     @media (min-width: $tablet) {
       @include liButton($liPX, 0.95rem);
