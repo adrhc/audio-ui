@@ -2,6 +2,17 @@ import { models } from 'mopidy';
 import * as appsong from '../../domain/song';
 import * as apppl from '../../domain/media-location';
 import * as apphistory from '../../domain/history';
+import { sortByAbsDiff } from '../../lib/image';
+
+export function toSongsWithImgUri(imgMaxEdge: number, audioDbSongs: Song[]): appsong.Song[] {
+  const imgMaxArea = imgMaxEdge * imgMaxEdge;
+  return audioDbSongs.map((it) => toSongWithImgUri(imgMaxArea, it));
+}
+
+function toSongWithImgUri(imgMaxArea: number, audioDbSong: Song): appsong.Song {
+  const sortedThumbnails = sortByAbsDiff(imgMaxArea, audioDbSong.thumbnails);
+  return { imgUri: sortedThumbnails?.[0]?.uri, ...toSong(audioDbSong) };
+}
 
 export function toHistoryPage(audioDbHistoryPage: HistoryPage): apphistory.HistoryPage {
   const { entries, ...historyPage } = audioDbHistoryPage;

@@ -9,6 +9,7 @@ import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-list-page.scss';
+import { useMaxEdge } from '../../constants';
 
 type YouTubePlContentCache = { scrollTop: number } & RawSongsPageState;
 
@@ -38,6 +39,8 @@ function YouTubePlContentPage() {
     state,
   });
 
+  const imgMaxEdge = useMaxEdge();
+
   const handleReaload = useCallback(() => {
     if (!uri) {
       console.log(`[YouTubePlContentPage.handleReaload] can't load "null" YouTube playlist!`);
@@ -45,10 +48,10 @@ function YouTubePlContentPage() {
     }
     console.log(`[YouTubePlContentPage.handleReaload] loading ${uri}`);
     sustain(
-      getYTPlContent(uri).then((songs) => ({ songs })),
+      getYTPlContent(imgMaxEdge, uri).then((songs) => ({ songs })),
       `Failed to load the YouTube playlist!`
     );
-  }, [sustain, uri]);
+  }, [imgMaxEdge, sustain, uri]);
 
   // loading the playlist if not already loaded
   useEffect(() => {

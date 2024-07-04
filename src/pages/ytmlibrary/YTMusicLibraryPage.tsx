@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-list-page.scss';
+import { useMaxEdge } from '../../constants';
 
 type YouTubePlaylistsCache = { scrollTop: number } & RawSongsPageState;
 
@@ -32,13 +33,15 @@ function YTMusicLibraryPage() {
   const songsIsEmpty = state.songs.length == 0;
   console.log(`[YTMusicLibraryPage]`, { currentSong, cache, state });
 
+  const imgMaxEdge = useMaxEdge();
+
   const handleReaload = useCallback(() => {
     console.log(`[YTMusicLibraryPage.useEffect] loading the YT Music library`);
     sustain(
-      getYTPlaylists().then((songs) => ({ songs })),
+      getYTPlaylists(imgMaxEdge).then((songs) => ({ songs })),
       `Failed to load the YouTube Music playlists!`
     );
-  }, [sustain]);
+  }, [imgMaxEdge, sustain]);
 
   // loading the library if not already loaded
   useEffect(() => {

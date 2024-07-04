@@ -35,12 +35,16 @@ export function getHistory(): Promise<HistoryPage> {
   return get<audiodb.HistoryPage>(HISTORY).then(audiodb.toHistoryPage);
 }
 
-export function getYTPlaylists(): Promise<Song[]> {
-  return get<audiodb.SongsPage>(`${YOUTUBE_PLAYLIST}`).then(audiodb.pageToSongs);
+export function getYTPlaylists(imgMaxEdge: number): Promise<Song[]> {
+  return get<audiodb.SongsPage>(`${YOUTUBE_PLAYLIST}`).then((pg) =>
+    audiodb.toSongsWithImgUri(imgMaxEdge, pg.entries)
+  );
 }
 
-export function getYTPlContent(ytUri: string): Promise<Song[]> {
-  return get<audiodb.SongsPage>(`${YOUTUBE_PLAYLIST}/${encodeURIComponent(ytUri)}`).then(audiodb.pageToSongs);
+export function getYTPlContent(imgMaxEdge: number, ytUri: string): Promise<Song[]> {
+  return get<audiodb.SongsPage>(`${YOUTUBE_PLAYLIST}/${encodeURIComponent(ytUri)}`).then((pg) =>
+    audiodb.toSongsWithImgUri(imgMaxEdge, pg.entries)
+  );
 }
 
 export function getDiskPlaylists(uri: string): Promise<LocationSelection[]> {
