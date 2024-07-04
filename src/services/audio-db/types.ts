@@ -17,9 +17,9 @@ function toSongWithImgUri(imgMaxArea: number, audioDbSong: Song): appsong.Song {
   return { imgUri: sortedThumbnails?.[0]?.uri, ...toSong(audioDbSong) };
 }
 
-export function toHistoryPage(audioDbHistoryPage: HistoryPage): apphistory.HistoryPage {
+export function toHistoryPage(imgMaxArea: number, audioDbHistoryPage: HistoryPage): apphistory.HistoryPage {
   const { entries, ...historyPage } = audioDbHistoryPage;
-  return { ...historyPage, entries: toSongs(entries) };
+  return { ...historyPage, entries: toSongsWithImgUri(imgMaxArea, entries) };
 }
 
 export function toSongsPage(audioDbSongsPage: SongsPage): appsong.SongsPage {

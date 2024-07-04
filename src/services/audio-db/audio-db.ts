@@ -23,16 +23,20 @@ export function addToHistory(tlTrack: models.TlTrack[]) {
   return postVoid(HISTORY, JSON.stringify(tlTrack.map((it) => it.track)));
 }
 
-export function getHistoryBefore(before: HistoryPosition): Promise<HistoryPage> {
-  return post<audiodb.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before)).then(audiodb.toHistoryPage);
+export function getHistoryBefore(imgMaxEdge: number, before: HistoryPosition): Promise<HistoryPage> {
+  return post<audiodb.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before)).then((hp) =>
+    audiodb.toHistoryPage(imgMaxEdge, hp)
+  );
 }
 
-export function getHistoryAfter(after: HistoryPosition): Promise<HistoryPage> {
-  return post<audiodb.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after)).then(audiodb.toHistoryPage);
+export function getHistoryAfter(imgMaxEdge: number, after: HistoryPosition): Promise<HistoryPage> {
+  return post<audiodb.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after)).then((hp) =>
+    audiodb.toHistoryPage(imgMaxEdge, hp)
+  );
 }
 
-export function getHistory(): Promise<HistoryPage> {
-  return get<audiodb.HistoryPage>(HISTORY).then(audiodb.toHistoryPage);
+export function getHistory(imgMaxEdge: number): Promise<HistoryPage> {
+  return get<audiodb.HistoryPage>(HISTORY).then((hp) => audiodb.toHistoryPage(imgMaxEdge, hp));
 }
 
 export function getYTPlaylists(imgMaxEdge: number): Promise<Song[]> {
