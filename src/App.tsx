@@ -6,7 +6,6 @@ import { MopidyEvent, PlaybackState } from './domain/types';
 import { ifIPhone, isIPhone } from './lib/agent';
 import { omitProps } from './lib/object';
 import { getSongAndBoost, getVolumeBoost } from './services/boost';
-import { areSameTrack } from './services/track-song';
 import Spinner from './components/Spinner';
 import CloseableAlert from './components/feedback/ErrorAlert';
 import { AppContext } from './components/app/AppContext';
@@ -17,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/useCache';
 import { setGlobalAuthorization } from './domain/credentials';
-import { toTrackSong } from './domain/track-song';
+import { areSameTrack, toTrackSong } from './domain/track-song';
 
 export default function App() {
   const theme = useTheme();

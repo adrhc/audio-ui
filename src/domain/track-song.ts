@@ -1,6 +1,10 @@
 import { models } from 'mopidy';
 import { Song, formatUri } from './song';
 
+export function areSameTrack(tk1: TrackSong, tk2?: TrackSong): boolean {
+  return tk1.tlid == tk2?.tlid && tk1.uri == tk2.uri;
+}
+
 export function removeSong(songs: TrackSong[], song: TrackSong) {
   const idxToRemove = songs.indexOf(song);
   const newSongs = songs.filter((it) => it.tlid != song.tlid);

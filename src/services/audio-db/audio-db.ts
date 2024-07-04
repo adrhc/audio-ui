@@ -1,10 +1,11 @@
-import { models } from 'mopidy';
+import Mopidy, { models } from 'mopidy';
 import { get, post, postVoid } from '../rest';
-import { Song } from '../../domain/song';
+import { Song, toSongExtsWithImgUri, toSongUris } from '../../domain/song';
 import { HistoryPosition, HistoryPage } from '../../domain/history';
 import * as audiodb from './types';
 import { LocationSelection, MediaLocation } from '../../domain/media-location';
 import { toQueryParams } from '../../lib/path-param-utils';
+import { getImages } from '../mpc';
 
 const YOUTUBE_PLAYLIST = '/audio-ui/db-api/youtube/playlist';
 const DISK_PLAYLIST = '/audio-ui/db-api/disk/playlist';
@@ -23,20 +24,41 @@ export function addToHistory(tlTrack: models.TlTrack[]) {
   return postVoid(HISTORY, JSON.stringify(tlTrack.map((it) => it.track)));
 }
 
-export function getHistoryBefore(imgMaxEdge: number, before: HistoryPosition): Promise<HistoryPage> {
-  return post<audiodb.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before)).then((hp) =>
-    audiodb.toHistoryPage(imgMaxEdge, hp)
-  );
+export function getHistoryBefore(
+  mopidy: Mopidy | undefined,
+  imgMaxEdge: number,
+  before: HistoryPosition
+): Promise<HistoryPage> {
+  return post<audiodb.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before))
+    .then(audiodb.toHistoryPage)
+    .then((hp) => toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
 }
 
-export function getHistoryAfter(imgMaxEdge: number, after: HistoryPosition): Promise<HistoryPage> {
-  return post<audiodb.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after)).then((hp) =>
-    audiodb.toHistoryPage(imgMaxEdge, hp)
-  );
+export function getHistoryAfter(
+  mopidy: Mopidy | undefined,
+  imgMaxEdge: number,
+  after: HistoryPosition
+): Promise<HistoryPage> {
+  return post<audiodb.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after))
+    .then(audiodb.toHistoryPage)
+    .then((hp) => toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
 }
 
-export function getHistory(imgMaxEdge: number): Promise<HistoryPage> {
-  return get<audiodb.HistoryPage>(HISTORY).then((hp) => audiodb.toHistoryPage(imgMaxEdge, hp));
+export function getHistory(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<HistoryPage> {
+  return get<audiodb.HistoryPage>(HISTORY)
+    .then(audiodb.toHistoryPage)
+    .then((hp) => toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
+}
+
+function toHistoryPageWithImages(
+  mopidy: Mopidy | undefined,
+  imgMaxEdge: number,
+  hp: HistoryPage
+): Promise<HistoryPage> {
+  return getImages(mopidy, toSongUris(hp.entries))?.then((imagesMap) => {
+    const entries = toSongExtsWithImgUri(imgMaxEdge, hp.entries, imagesMap);
+    return { ...hp, entries };
+  });
 }
 
 export function getYTPlaylists(imgMaxEdge: number): Promise<Song[]> {

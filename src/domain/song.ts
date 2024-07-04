@@ -1,4 +1,6 @@
 import { models } from 'mopidy';
+import { sortByAbsDiff } from '../lib/image';
+import { UriImagesMap } from '../services/mpc';
 
 const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;
 
@@ -65,3 +67,24 @@ export function sortSongs(songs: Song[]) {
 /* export function sortRefs(refs: models.Ref<models.ModelType>[]) {
   return refs.sort((a, b) => compare(a.name, b.name));
 } */
+
+export function toSongUris(songs: Song[]): string[] {
+  return songs.map((s) => s.uri).filter((it) => !!it) as string[];
+}
+
+export function toSongExtsWithImgUri<T extends Song>(
+  imgMaxEdge: number,
+  songs: T[],
+  imagesMap: UriImagesMap
+): T[] {
+  const imgMaxArea = imgMaxEdge * imgMaxEdge;
+  // console.log(`imagesMap:\n`, imagesMap);
+  return songs.map((song) => toSongExtWithImgUri(imgMaxArea, imagesMap, song));
+}
+
+function toSongExtWithImgUri<T extends Song>(imgMaxArea: number, imagesMap: UriImagesMap, song: T): T {
+  let images = song.uri ? imagesMap[song.uri] : undefined;
+  images = sortByAbsDiff(imgMaxArea, images);
+  // images.length && console.log(`images of ${track.uri}:\n`, images);
+  return { ...song, imgUri: images?.[0]?.uri };
+}

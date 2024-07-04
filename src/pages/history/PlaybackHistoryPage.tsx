@@ -13,11 +13,11 @@ import {
 import { AppContext } from '../../components/app/AppContext';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/wide-list-page.scss';
 import { useMaxEdge } from '../../constants';
+import '/src/styles/wide-list-page.scss';
 
 function PlaybackHistoryPage() {
-  const { getCache, mergeCache } = useContext(AppContext);
+  const { mopidy, getCache, mergeCache } = useContext(AppContext);
   const cache = getCache('history') as HistoryCache;
   const {
     state,
@@ -55,10 +55,10 @@ function PlaybackHistoryPage() {
     }
     console.log(`[PlaybackHistoryPage.useEffect] loading the history`);
     sustain(
-      getHistory(imgMaxEdge).then((it) => ({ ...toPartialState(0, it) })),
+      getHistory(mopidy, imgMaxEdge).then((it) => ({ ...toPartialState(0, it) })),
       `Failed to load the history!`
     );
-  }, [imgMaxEdge, songsIsEmpty, sustain]);
+  }, [imgMaxEdge, mopidy, songsIsEmpty, sustain]);
 
   // scroll after loading the history
   useEffect(() => {
@@ -111,7 +111,7 @@ function PlaybackHistoryPage() {
     // console.log(`[PlaybackHistoryPage.goToNextPage]`);
     if (state.songs.length < state.completePageSize) {
       sustain(
-        getHistory(imgMaxEdge).then((it) => {
+        getHistory(mopidy, imgMaxEdge).then((it) => {
           console.log(`[PlaybackHistoryPage.goToNextPage] scrollTo set to zero`);
           mergeCache('history', (old) => ({ ...(old as object), scrollTop: 0 }));
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
@@ -121,7 +121,7 @@ function PlaybackHistoryPage() {
       );
     } else if (state.after) {
       sustain(
-        getHistoryAfter(imgMaxEdge, state.after).then((it) => {
+        getHistoryAfter(mopidy, imgMaxEdge, state.after).then((it) => {
           console.log(`[PlaybackHistoryPage.goToNextPage] scrollTo set to zero`);
           mergeCache('history', (old) => ({ ...(old as object), scrollTop: 0 }));
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
@@ -133,16 +133,7 @@ function PlaybackHistoryPage() {
         `Failed to load the history!`
       );
     }
-  }, [
-    imgMaxEdge,
-    mergeCache,
-    scrollTo,
-    setState,
-    state.after,
-    state.completePageSize,
-    state.songs.length,
-    sustain,
-  ]);
+  }, [imgMaxEdge, mergeCache, mopidy, scrollTo, setState, state.after, state.completePageSize, state.songs.length, sustain]);
 
   const goToPreviousPage = useCallback(() => {
     if (!state.before) {
@@ -150,7 +141,7 @@ function PlaybackHistoryPage() {
     }
     // console.log(`[PlaybackHistoryPage.goToPreviousPage]`);
     sustain(
-      getHistoryBefore(imgMaxEdge, state.before).then((it) => {
+      getHistoryBefore(mopidy, imgMaxEdge, state.before).then((it) => {
         mergeCache('history', (old) => ({ ...(old as object), scrollTop: 0 }));
         setState((old) => ({
           ...old,
@@ -159,7 +150,7 @@ function PlaybackHistoryPage() {
       }),
       `Failed to load the history!`
     );
-  }, [imgMaxEdge, mergeCache, setState, state.before, sustain]);
+  }, [imgMaxEdge, mergeCache, mopidy, setState, state.before, sustain]);
 
   return (
     <PageTemplate
