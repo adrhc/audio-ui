@@ -2,9 +2,12 @@ import { models } from 'mopidy';
 import { get, post } from '../rest';
 import { TrackSong, toTrackSong } from '../../domain/track-song';
 import { toQueryParams } from '../../lib/path-param-utils';
+import { Song } from '../../domain/song';
+import * as audiows from './types';
 
 const URI = '/audio-ui/api/audio-state';
-const PLAYLIST_URI = '/audio-ui/api/playlist';
+const DISK_PLAYLIST = '/audio-ui/api/disk-playlist';
+const MOPIDY_PLAYLIST = '/audio-ui/api/mopidy-playlist';
 
 export type AudioServerState = {
   currentSong: TrackSong;
@@ -33,7 +36,16 @@ export function refreshSharedStateAndGet() {
 }
 
 export function createPlaylist(name: string) {
-  return post<boolean>(`${PLAYLIST_URI}?${toQueryParams(['name', encodeURI(name)])}`);
+  return post<boolean>(`${DISK_PLAYLIST}?${toQueryParams(['name', encodeURI(name)])}`);
+}
+
+/**
+ * alternative to getPlItems from mpc.ts
+ */
+export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
+  return get<audiows.RefWithImages[]>(`${MOPIDY_PLAYLIST}/${encodeURIComponent(uri)}`).then((rwis) =>
+    audiows.refWithImagesToSongs(imgMaxArea, rwis)
+  );
 }
 
 function toAudioServerState({

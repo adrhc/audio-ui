@@ -8,6 +8,7 @@ import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { scrollTop } from '../../domain/scroll';
 import { getPlaylistItems } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
+import { useMaxEdge } from '../../constants';
 import '/src/styles/wide-list-page.scss';
 
 type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsPageState;
@@ -28,7 +29,7 @@ function MopidyPlItemsPage() {
     scrollObserver,
     currentSong,
   } = useSongList<RawSongsPageState>(cacheName);
-  const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
+  const { online, getCache, mergeCache } = useContext(AppContext);
   const cache = getCache(cacheName) as MopidyPlItemsPageCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -38,6 +39,8 @@ function MopidyPlItemsPage() {
     state,
   });
 
+  const imgMaxEdge = useMaxEdge();
+
   const handleReaload = useCallback(() => {
     if (!uri) {
       console.log(`[MopidyPlItemsPage.handleReaload] can't load "null" the Mopidy playlist!`);
@@ -45,10 +48,10 @@ function MopidyPlItemsPage() {
     }
     console.log(`[MopidyPlItemsPage.handleReaload] loading ${uri}`);
     sustain(
-      getPlaylistItems(mopidy, uri).then((songs) => ({ songs })),
+      getPlaylistItems(imgMaxEdge, uri).then((songs) => ({ songs })),
       `Failed to load the playlist!`
     );
-  }, [mopidy, sustain, uri]);
+  }, [imgMaxEdge, sustain, uri]);
 
   // loading the playlist if not already loaded
   useEffect(() => {
