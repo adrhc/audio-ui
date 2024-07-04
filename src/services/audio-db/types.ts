@@ -5,6 +5,9 @@ import * as apphistory from '../../domain/history';
 import { sortByAbsDiff } from '../../lib/image';
 
 export function toSongsWithImgUri(imgMaxEdge: number, audioDbSongs: Song[]): appsong.Song[] {
+  if (imgMaxEdge <= 0) {
+    return toSongs(audioDbSongs);
+  }
   const imgMaxArea = imgMaxEdge * imgMaxEdge;
   return audioDbSongs.map((it) => toSongWithImgUri(imgMaxArea, it));
 }
