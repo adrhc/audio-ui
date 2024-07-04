@@ -31,7 +31,7 @@ $liPX: spacing(0.5);
   }
   > li.MENU {
     @media (max-width: $tablet) {
-      @include liMenu(calc(#{$btnMenuHeightPhone} * 1/2));
+      @include liMenu(calc(#{$btnMenuHeightPhone} * 3/4));
     }
     @media (min-width: $tablet) {
       @include liMenu(auto);
