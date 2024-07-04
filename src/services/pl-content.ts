@@ -10,7 +10,7 @@ import { getPlContent } from './audio-ws/audio-ws';
  */
 export function getPlaylistItems(imgMaxArea: number, uri: string): Promise<Song[]> {
   if (isYtMusicPl(uri)) {
-    return getYTPlContent(uri).then(sortSongs);
+    return getYTPlContent(imgMaxArea, uri).then(sortSongs);
   } else {
     return getPlItems(imgMaxArea, uri);
   }

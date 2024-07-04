@@ -8,8 +8,8 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/wide-list-page.scss';
 import { useMaxEdge } from '../../constants';
+import '/src/styles/wide-list-page.scss';
 
 type YouTubePlContentCache = { scrollTop: number } & RawSongsPageState;
 

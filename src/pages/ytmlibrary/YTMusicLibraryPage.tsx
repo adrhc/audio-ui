@@ -9,8 +9,8 @@ import { Song } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/wide-list-page.scss';
 import { useMaxEdge } from '../../constants';
+import '/src/styles/wide-list-page.scss';
 
 type YouTubePlaylistsCache = { scrollTop: number } & RawSongsPageState;
 
