@@ -15,7 +15,6 @@ import { play, resume } from '../services/player';
 import PlaybackPanel from '../components/panel/PlaybackPanel';
 import ExactVolumePanel from '../components/panel/ExactVolumePanel';
 import MopidyPlayOptions from '../components/panel/MopidyPlayOptions';
-import ShowIf from '../components/ShowIf';
 import PrevNextPanel from '../components/panel/PrevNextPanel';
 import PageTemplate from '../templates/PageTemplate';
 import { AppContext } from '../components/app/AppContext';
@@ -66,7 +65,7 @@ export default function PlayerPage() {
         setState={setState as SetFeedbackState}
         bottom={<PlayerBottomPageMenu />}
       >
-        <ShowIf condition={!!currentSong?.tlid}>
+        {currentSong?.tlid && (
           <Box className="ignored">
             <PageTitle>
               <Badge color={boost < 0 ? 'warning' : 'info'} badgeContent={boost} invisible={boost == 0}>
@@ -78,7 +77,7 @@ export default function PlayerPage() {
             </PageTitle>
             <PageTitle>{streamTitle ?? currentSong?.artists}</PageTitle>
           </Box>
-        </ShowIf>
+        )}
         <ExactVolumePanel values={[5, 15, 25, 45, 65, 80]} onChange={onVolumeChange} />
         <PlaybackPanel
           status={pbStatus}

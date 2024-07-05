@@ -61,7 +61,7 @@ export default function App() {
         .then((ss) => handleServerState('Mopidy got back online!', ss))
         .then((it) => ({ ...it, online: true })),
       { online: true, error: 'State loading error!' },
-      true // otherwise a complete "visual" App refresh occurs (e.g. History page resets its "visual" position)
+      true // otherwise the App spinner is presented
     );
   }, [handleServerState, sustain]);
 
