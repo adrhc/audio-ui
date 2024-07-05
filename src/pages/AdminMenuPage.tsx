@@ -1,5 +1,5 @@
 import { MenuList, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
-import { shallowDiskUpdate as shallowDiskUpdateImpl } from '../services/audio-db/audio-db';
+import { shallowDiskUpdate as indexShallowDiskUpdate } from '../services/audio-db/audio-db';
 import PageTemplate from '../templates/PageTemplate';
 import HomeIcon from '@mui/icons-material/Home';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
@@ -12,12 +12,13 @@ import { Link } from 'react-router-dom';
 import BackwardIcon from '../components/BackwardIcon';
 import '../styles/menu-page.scss';
 
-function AdminMenuPage() {
+export default function AdminMenuPage() {
   const goBackFn = useGoBack();
   const { credentials, reloadState, setNotification } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableUnknownState();
 
-  /* const reset = useCallback(() => {
+  /* todo: update the reset method to touch only the DISK entries!
+  const reset = useCallback(() => {
     sustain(
       indexReset().then(() => setNotification('The index was reset!')),
       'Failed to reset the index!'
@@ -26,7 +27,7 @@ function AdminMenuPage() {
 
   const shallowDiskUpdate = useCallback(() => {
     sustain(
-      shallowDiskUpdateImpl().then(() => setNotification('The disk entries were synced with the index!')),
+      indexShallowDiskUpdate().then(() => setNotification('The disk entries were synced with the index!')),
       'Failed to sync the index with the disk entries!'
     );
   }, [setNotification, sustain]);
@@ -41,11 +42,11 @@ function AdminMenuPage() {
     >
       <MenuList>
         {/* <MenuItem onClick={reset}>
-            <ListItemIcon>
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText>Reset The Index</ListItemText>
-          </MenuItem> */}
+          <ListItemIcon>
+            <SettingsBackupRestoreIcon />
+          </ListItemIcon>
+          <ListItemText>Reset The Index</ListItemText>
+        </MenuItem> */}
         <MenuItem onClick={shallowDiskUpdate}>
           <ListItemIcon>
             <SettingsIcon />
@@ -76,5 +77,3 @@ function AdminMenuPage() {
     </PageTemplate>
   );
 }
-
-export default AdminMenuPage;
