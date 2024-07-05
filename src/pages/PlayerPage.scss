@@ -6,7 +6,6 @@
   .content {
     > div:not(.ignored) {
       height: $panelHeight;
-      width: 100%;
     }
 
     .MuiTypography-root {
