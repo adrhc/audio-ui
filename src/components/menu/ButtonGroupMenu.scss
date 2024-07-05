@@ -2,20 +2,19 @@
 @use '/src/styles/functions.scss' as *;
 
 .button-group-menu {
-  $svgHeight: 2.35rem;
   justify-content: center;
   .MuiButtonGroup-grouped {
     flex-grow: 1;
     color: rgba(0, 0, 0, 0.8);
     .MuiSvgIcon-root {
-      font-size: $svgHeight;
+      font-size: $svgSize;
     }
     .btn-img-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: $svgHeight;
-      height: $svgHeight;
+      width: $svgSize;
+      height: $svgSize;
       img {
         width: 24px;
         height: 24px;

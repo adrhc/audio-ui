@@ -6,6 +6,8 @@ import { AppContext } from '../../components/app/AppContext';
 import { useGoBack } from '../../hooks/useGoBack';
 import { Credentials } from '../../domain/credentials';
 import { SetFeedbackState } from '../../lib/sustain';
+import BackwardIcon from '../../components/BackwardIcon';
+import LoginIcon from '@mui/icons-material/Login';
 import './LoginPage.scss';
 
 type LoginPageState = {
@@ -65,10 +67,10 @@ function LoginPage() {
         />
         <Stack direction="row" spacing={1}>
           <Button variant="outlined" onClick={goBackFn}>
-            <img src="btn/turn-left-arrow-icon.svg" />
+            <BackwardIcon />
           </Button>
           <Button type="submit" variant="outlined">
-            Login
+            <LoginIcon />
           </Button>
         </Stack>
       </Stack>

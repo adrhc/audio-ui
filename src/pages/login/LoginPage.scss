@@ -7,13 +7,16 @@
     margin-top: spacing(1.25) !important;
     > div,
     > button {
-      width: 75%;
+      width: 80%;
     }
     .MuiButtonBase-root {
       flex-grow: 1;
       width: 50%;
       height: spacing(7); // same as the input fields
       color: rgba(0, 0, 0, 0.8);
+      .MuiSvgIcon-root {
+        font-size: $svgSize;
+      }
       img {
         width: 24px;
         height: 24px;
