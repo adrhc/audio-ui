@@ -61,7 +61,7 @@ function AdminMenuPage() {
         {/* <Divider /> */}
         <MenuItem onClick={goBackFn}>
           <ListItemIcon>
-            <BackwardIcon style={{ transform: 'rotate(180deg)' }} />
+            <BackwardIcon />
           </ListItemIcon>
           <ListItemText>Back</ListItemText>
         </MenuItem>

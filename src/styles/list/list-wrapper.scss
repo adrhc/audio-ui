@@ -1,6 +1,7 @@
 @mixin pageContentWithListWrapper {
   .list-wrapper {
     flex-grow: 1;
+    align-self: stretch;
     position: relative;
     justify-content: center;
     text-align: center;

@@ -2,6 +2,7 @@ import { Button } from '@mui/material';
 import { useGoBack } from '../../hooks/useGoBack';
 import { NoArgsProc } from '../../domain/types';
 import ButtonGroupMenu, { ButtonGroupMenuParam } from './ButtonGroupMenu';
+import BackwardIcon from '../BackwardIcon';
 import './BackButtonMenu.scss';
 
 export interface BackButtonMenuParam extends ButtonGroupMenuParam {
@@ -16,9 +17,7 @@ function BackButtonMenu({ goBack, children, backAtRight }: BackButtonMenuParam) 
     <ButtonGroupMenu>
       {backAtRight && children}
       <Button className="back-btn" variant="outlined" onClick={goBack ?? goBackFn}>
-        <div className="btn-img-wrapper">
-          <img src="btn/turn-left-arrow-icon.svg" />
-        </div>
+        <BackwardIcon />
       </Button>
       {!backAtRight && children}
     </ButtonGroupMenu>
