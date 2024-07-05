@@ -1,10 +1,10 @@
+@use '/src/styles/menu-page.scss' as *;
+
+@include menuPage;
+
 .menu-page {
   .content {
-    align-items: center;
-
     [role='menu'] {
-      width: 100%;
-      max-width: 100%;
       .history {
         color: black;
       }

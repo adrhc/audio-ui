@@ -1,20 +1,18 @@
 import { MenuList, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
-import { useGoBack } from '../hooks/useGoBack';
-import { Link } from 'react-router-dom';
+import { shallowDiskUpdate as shallowDiskUpdateImpl } from '../services/audio-db/audio-db';
 import PageTemplate from '../templates/PageTemplate';
-import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import HomeIcon from '@mui/icons-material/Home';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
-import HomeIcon from '@mui/icons-material/Home';
-import PersonIcon from '@mui/icons-material/Person';
-import YouTubeIcon from '@mui/icons-material/YouTube';
-import { shallowDiskUpdate as shallowDiskUpdateImpl } from '../services/audio-db/audio-db';
-import { useSustainableUnknownState } from '../hooks/useSustainableState';
 import { useCallback, useContext } from 'react';
 import { AppContext } from '../components/app/AppContext';
-import './MenuPage.scss';
+import { useGoBack } from '../hooks/useGoBack';
+import { useSustainableUnknownState } from '../hooks/useSustainableState';
+import { Link } from 'react-router-dom';
+import BackwardIcon from '../components/BackwardIcon';
+import '../styles/menu-page.scss';
 
-function MenuPage() {
+function AdminMenuPage() {
   const goBackFn = useGoBack();
   const { credentials, reloadState, setNotification } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableUnknownState();
@@ -43,17 +41,11 @@ function MenuPage() {
     >
       <MenuList>
         {/* <MenuItem onClick={reset}>
-          <ListItemIcon>
-            <SettingsIcon />
-          </ListItemIcon>
-          <ListItemText>Reset The Index</ListItemText>
-        </MenuItem> */}
-        <MenuItem component={Link} to="/login">
-          <ListItemIcon>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText>Login</ListItemText>
-        </MenuItem>
+            <ListItemIcon>
+              <SettingsIcon />
+            </ListItemIcon>
+            <ListItemText>Reset The Index</ListItemText>
+          </MenuItem> */}
         <MenuItem onClick={shallowDiskUpdate}>
           <ListItemIcon>
             <SettingsIcon />
@@ -66,32 +58,14 @@ function MenuPage() {
           </ListItemIcon>
           <ListItemText>Reload The State</ListItemText>
         </MenuItem>
-        <MenuItem component={Link} to="/songssearch">
-          <ListItemIcon>
-            <img className="search" src="btn/find-icon.svg" />
-          </ListItemIcon>
-          <ListItemText>Search Songs</ListItemText>
-        </MenuItem>
-        <MenuItem component={Link} to="/history">
-          <ListItemIcon>
-            <HistoryOutlinedIcon className="history" />
-          </ListItemIcon>
-          <ListItemText>Playback History</ListItemText>
-        </MenuItem>
-        <MenuItem component={Link} to="/ytmlibrary">
-          <ListItemIcon>
-            <YouTubeIcon className="ytmlibrary" />
-          </ListItemIcon>
-          <ListItemText>YouTube Playlists</ListItemText>
-        </MenuItem>
-        <MenuItem component={Link} to="/mopidy-playlists">
-          <ListItemIcon>
-            <img src="mopidy.png" className="mopidy-playlists" />
-          </ListItemIcon>
-          <ListItemText>Mopidy Playlists</ListItemText>
-        </MenuItem>
         {/* <Divider /> */}
         <MenuItem onClick={goBackFn}>
+          <ListItemIcon>
+            <BackwardIcon style={{ transform: 'rotate(180deg)' }} />
+          </ListItemIcon>
+          <ListItemText>Back</ListItemText>
+        </MenuItem>
+        <MenuItem component={Link} to="/player">
           <ListItemIcon>
             <HomeIcon />
             {/* <img className="search" src="btn/angle-circle-arrow-left-icon.svg" /> */}
@@ -103,4 +77,4 @@ function MenuPage() {
   );
 }
 
-export default MenuPage;
+export default AdminMenuPage;

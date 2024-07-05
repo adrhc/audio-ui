@@ -1,7 +1,7 @@
 @use '/src/styles/vars.scss' as *;
 @use '/src/styles/functions.scss' as *;
 @use '/src/styles/list/list-mixins.scss' as *;
-@use '../EmptyList.scss' as *;
+@use 'EmptyList.scss' as *;
 
 $liPX: spacing(0.5);
 

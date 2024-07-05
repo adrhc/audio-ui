@@ -9,7 +9,7 @@ import PresetEditPage from './pages/easyeffects/PresetEditPage';
 import PresetViewPage from './pages/easyeffects/PresetViewPage';
 import PresetDeletePage from './pages/easyeffects/PresetDeletePage';
 import AudioBoostPage from './pages/AudioBoostPage';
-import MenuPage from './pages/MenuPage';
+import MainMenuPage from './pages/MainMenuPage';
 import SongSearchPage from './pages/songssearch/SongSearchPage';
 import PlaybackHistoryPage from './pages/history/PlaybackHistoryPage';
 import LoginPage from './pages/login/LoginPage';
@@ -20,6 +20,7 @@ import MopidyPlItemsPage from './pages/mopidy-playlists/MopidyPlItemsPage';
 import SongPlaylistsEditorPage from './pages/SongPlaylistsEditorPage';
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
+import AdminMenuPage from './pages/AdminMenuPage';
 
 const ROUTER = createHashRouter([
   {
@@ -29,7 +30,6 @@ const ROUTER = createHashRouter([
     children: [
       {
         path: '',
-        // element: <DashboardPage />,
         element: <Navigate to="player" replace />,
       },
       {
@@ -94,7 +94,11 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'menu',
-        element: <MenuPage />,
+        element: <MainMenuPage />,
+      },
+      {
+        path: 'admin',
+        element: <AdminMenuPage />,
       },
       {
         path: 'easyeffects/:preset',

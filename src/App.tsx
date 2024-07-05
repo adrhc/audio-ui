@@ -6,7 +6,7 @@ import { MopidyEvent, PlaybackState } from './domain/types';
 import { ifIPhone, isIPhone } from './lib/agent';
 import { omitProps } from './lib/object';
 import { getSongAndBoost, getVolumeBoost } from './services/boost';
-import Spinner from './components/Spinner';
+import Spinner from './components/feedback/Spinner';
 import CloseableAlert from './components/feedback/ErrorAlert';
 import { AppContext } from './components/app/AppContext';
 import { useBaseVolume } from './components/app/useBaseVolume';

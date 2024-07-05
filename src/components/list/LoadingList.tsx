@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { LoadingState } from '../../lib/sustain';
 import SpinnerPannel from '../panel/SpinnerPannel';
-import EmptyList from '../EmptyList';
+import EmptyList from './EmptyList';
 import { List, Stack } from '@mui/material';
 import '/src/styles/list/list-wrapper.scss';
 import '/src/styles/list/list.scss';

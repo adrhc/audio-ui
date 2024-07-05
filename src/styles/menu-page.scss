@@ -1,0 +1,11 @@
+@mixin menuPage {
+  .content {
+    align-items: center;
+    [role='menu'] {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+}
+
+@include menuPage;
