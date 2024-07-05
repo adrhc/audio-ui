@@ -42,8 +42,8 @@ export default function PlaybackPanel({
   sx,
 }: PlaybackPanelParam) {
   const { online } = useContext(AppContext);
-  const stopEnabled = !!status && status !== 'stopped';
-  const pauseEnabled = status === 'playing';
+  const stopEnabled = online && !!status && status !== 'stopped';
+  const pauseEnabled = online && status === 'playing';
   const fontSize = iconFontSize((fs) => fs.map((n) => n + 1));
 
   return (
