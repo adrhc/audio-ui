@@ -15,7 +15,7 @@
       height: spacing(7); // same as the input fields
       color: rgba(0, 0, 0, 0.8);
       .MuiSvgIcon-root {
-        font-size: $svgSize;
+        font-size: $svgSize - 0.25rem;
       }
       img {
         width: 24px;
