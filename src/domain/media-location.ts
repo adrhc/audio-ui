@@ -1,3 +1,17 @@
+export function getNotFailed(result: UriPlAllocationResult) {
+  return [...result.addedTo, ...result.removedFrom];
+}
+
+export function filterByMediaLocations(mediaLocations: MediaLocation[], selections: LocationSelection[]) {
+  return selections.filter((sel) => mediaLocations.find((ml) => ml.uri == sel.uri));
+}
+
+export interface UriPlAllocationResult {
+  addedTo: MediaLocation[];
+  removedFrom: MediaLocation[];
+  failedToChange: MediaLocation[];
+}
+
 export interface LocationSelection extends MediaLocation {
   selected: boolean;
 }

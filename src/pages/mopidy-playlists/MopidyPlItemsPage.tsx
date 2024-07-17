@@ -9,13 +9,15 @@ import { scrollTop } from '../../domain/scroll';
 import { getPlaylistItems } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
+import { plItemsCacheName } from './MopidyPlItemsUtils';
 import '/src/styles/wide-list-page.scss';
 
 type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsPageState;
 
 function MopidyPlItemsPage() {
   const { uri } = useParams();
-  const cacheName = `mopidy-playlist/${uri}`;
+  const cacheName = plItemsCacheName(uri);
+  console.log(`[MopidyPlItemsPage] uri = ${uri}, cacheName = ${cacheName}`);
   const {
     state,
     sustain,

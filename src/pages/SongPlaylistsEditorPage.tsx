@@ -1,7 +1,14 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../components/app/AppContext';
-import { LocationSelection, MediaLocation, filterSelected } from '../domain/media-location';
+import {
+  LocationSelection,
+  MediaLocation,
+  UriPlAllocationResult,
+  filterByMediaLocations,
+  filterSelected,
+  getNotFailed,
+} from '../domain/media-location';
 import { LoadingStateOrProvider, useSustainableState } from '../hooks/useSustainableState';
 import { getDiskPlaylists, updateUriPlaylists } from '../services/audio-db/audio-db';
 import { Typography } from '@mui/material';
@@ -12,6 +19,7 @@ import { useURLQueryParams } from '../hooks/useURLSearchParams';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import PageTitle from '../components/PageTitle';
+import { toPlItemsCacheName } from './mopidy-playlists/MopidyPlItemsUtils';
 import '/src/styles/wide-list-page.scss';
 
 interface SongPlaylistsEditorPageState {
@@ -24,8 +32,9 @@ function SongPlaylistsEditorPage() {
   const { title } = useURLQueryParams('title');
   const decodedUri = uri ? decodeURIComponent(uri) : uri;
   const decodedTitle = title ? decodeURIComponent(title) : title;
-  const { online } = useContext(AppContext);
+  const { online, clearCache } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<SongPlaylistsEditorPageState>({ selections: [] });
+  const { loading, selections } = state;
   /* console.log(
     `[SongPlaylistsEditorPage]\nuri: ${uri}\ndecodedUri: ${decodedUri}\ntitle: ${title}\ndecodedTitle: ${decodedTitle}`
   ); */
@@ -54,24 +63,26 @@ function SongPlaylistsEditorPage() {
   );
 
   const handleChangeResult = useCallback(
-    (failedToChange: MediaLocation[]) => {
-      if (failedToChange.length) {
-        return toError(failedToChange);
+    (selections: LocationSelection[], result: UriPlAllocationResult) => {
+      filterByMediaLocations(getNotFailed(result), selections).map(toPlItemsCacheName).forEach(clearCache);
+      if (result.failedToChange.length) {
+        return toError(result.failedToChange);
       } else {
+        // console.log(`[SongPlaylistsEditorPage] selections: `, selections);
         goBack();
       }
     },
-    [goBack]
+    [goBack, clearCache]
   );
 
   const allocate = useCallback(() => {
     sustain(
-      updateUriPlaylists(decodedUri!, decodedTitle, filterSelected(state.selections)).then(
-        handleChangeResult
+      updateUriPlaylists(decodedUri!, decodedTitle, filterSelected(selections)).then((result) =>
+        handleChangeResult(selections, result)
       ),
       'Failed to save the selection!'
     );
-  }, [decodedTitle, decodedUri, handleChangeResult, state.selections, sustain]);
+  }, [decodedTitle, decodedUri, handleChangeResult, selections, sustain]);
 
   if (!decodedUri) {
     return <Typography variant="h6">The song to search the locations for is missing!</Typography>;
@@ -88,12 +99,12 @@ function SongPlaylistsEditorPage() {
         <CreateConfirmButtonMenu
           addPage="/add-playlist"
           onAccept={allocate}
-          acceptDisabled={!decodedUri || !online || !state.selections.length}
+          acceptDisabled={!decodedUri || !online || !selections.length}
         />
       }
       disableSpinner={true}
     >
-      <LocationSelectionList loading={state.loading} selections={state.selections} onClick={selectLocation} />
+      <LocationSelectionList loading={loading} selections={selections} onClick={selectLocation} />
     </PageTemplate>
   );
 }

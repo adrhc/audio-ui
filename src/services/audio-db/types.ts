@@ -1,6 +1,6 @@
 import { models } from 'mopidy';
 import * as appsong from '../../domain/song';
-import * as apppl from '../../domain/media-location';
+import * as medialoc from '../../domain/media-location';
 import * as apphistory from '../../domain/history';
 import { sortByAbsDiff } from '../../lib/image';
 
@@ -35,21 +35,29 @@ export function toSongs(audioDbSongs: Song[]): appsong.Song[] {
   return audioDbSongs.map(toSong);
 }
 
+export function toUriPlAllocationResult(r: UriPlAllocationResult): medialoc.UriPlAllocationResult {
+  return {
+    addedTo: toMediaLocations(r.addedTo),
+    removedFrom: toMediaLocations(r.removedFrom),
+    failedToChange: toMediaLocations(r.failedToChange),
+  };
+}
+
 export function toAudioDbLocationSelections(
   uri: string,
   title: string | null | undefined,
-  selections: apppl.LocationSelection[]
+  selections: medialoc.LocationSelection[]
 ): LocationSelections {
   return { uri, title, selections: selections.map(toAudioDbLocationSelection) };
 }
 
-export function toAudioDbLocationSelection(location: apppl.LocationSelection): LocationSelection {
+export function toAudioDbLocationSelection(location: medialoc.LocationSelection): LocationSelection {
   const { type, title, uri } = location;
   return { location: { type, name: title, uri }, selected: location.selected };
 }
 
-export function toLocationSelections(audioDbMarkedPls: LocationSelections): apppl.LocationSelection[] {
-  return audioDbMarkedPls.selections.map(toLocationSelection);
+export function toPlSelections(audioDbMarkedPls: LocationSelections): medialoc.LocationSelection[] {
+  return audioDbMarkedPls.selections.map(toPlSelection);
 }
 
 export function toSong(audioDbSong: Song): appsong.Song {
@@ -58,20 +66,25 @@ export function toSong(audioDbSong: Song): appsong.Song {
   return { type, uri, formattedUri: appsong.formatUri(uri)!, title };
 }
 
-export function toLocationSelection(audioDbLocationSelection: LocationSelection): apppl.LocationSelection {
+export function toPlSelection(audioDbLocationSelection: LocationSelection): medialoc.LocationSelection {
   return {
-    ...toMediaLocation(audioDbLocationSelection.location),
+    ...toPlMediaLocation(audioDbLocationSelection.location),
     selected: audioDbLocationSelection.selected,
   };
 }
 
-export function toMediaLocations(audioDbLocations: MediaLocation[]): apppl.MediaLocation[] {
-  return audioDbLocations.map(toMediaLocation);
+export function toMediaLocations(audioDbLocations: MediaLocation[]): medialoc.MediaLocation[] {
+  return audioDbLocations.map(toPlMediaLocation);
 }
 
-export function toMediaLocation(audioDbLoc: MediaLocation): apppl.MediaLocation {
+export function toPlMediaLocation(audioDbLoc: MediaLocation): medialoc.MediaLocation {
   const { type, name, uri } = audioDbLoc;
-  return { type, title: name ?? apppl.uriToTitle(uri)!, uri, formattedUri: appsong.formatUri(uri)! };
+  return {
+    type,
+    title: name ?? medialoc.uriToTitle(uri)!,
+    uri,
+    formattedUri: appsong.formatUri(uri)!,
+  };
 }
 
 export interface HistoryPage extends SongsPage {
@@ -112,4 +125,10 @@ export interface MediaLocation {
   type: string;
   name?: string;
   uri: string;
+}
+
+export interface UriPlAllocationResult {
+  addedTo: MediaLocation[];
+  removedFrom: MediaLocation[];
+  failedToChange: MediaLocation[];
 }

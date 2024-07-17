@@ -3,7 +3,7 @@ import { get, post, postVoid } from '../rest';
 import { Song, toSongExtsWithImgUri, toSongUris } from '../../domain/song';
 import { HistoryPosition, HistoryPage } from '../../domain/history';
 import * as audiodb from './types';
-import { LocationSelection, MediaLocation } from '../../domain/media-location';
+import { LocationSelection, UriPlAllocationResult } from '../../domain/media-location';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { getImages } from '../mpc';
 
@@ -76,7 +76,7 @@ export function getYTPlContent(imgMaxEdge: number, ytUri: string): Promise<Song[
 export function getDiskPlaylists(uri: string): Promise<LocationSelection[]> {
   // must use encodeURI!
   return get<audiodb.LocationSelections>(`${DISK_PLAYLIST}?${toQueryParams(['uri', encodeURI(uri)])}`).then(
-    audiodb.toLocationSelections
+    audiodb.toPlSelections
   );
 }
 
@@ -84,9 +84,9 @@ export function updateUriPlaylists(
   uri: string,
   title: string | null | undefined,
   locationSelections: LocationSelection[]
-): Promise<MediaLocation[]> {
-  return post<audiodb.MediaLocation[]>(
+): Promise<UriPlAllocationResult> {
+  return post<audiodb.UriPlAllocationResult>(
     DISK_PLAYLIST,
     JSON.stringify(audiodb.toAudioDbLocationSelections(uri, title, locationSelections))
-  ).then(audiodb.toMediaLocations);
+  ).then(audiodb.toUriPlAllocationResult);
 }
