@@ -31,7 +31,7 @@ type PlayerPageState = {
 };
 
 export default function PlayerPage() {
-  const { mopidy, pbStatus, currentSong, streamTitle, volume, boost, mute, getBaseVolume, setBaseVolume, setNotification } =
+  const { mopidy, pbStatus, currentSong, streamTitle, boost, mute, getBaseVolume, setBaseVolume, setNotification } =
     useContext(AppContext);
   // const [logs, setLogs] = useState<string[]>([]);
   const [state, sustain, setState] = useSustainableState<PlayerPageState>({ tuneOn: false });
