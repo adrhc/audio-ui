@@ -31,7 +31,7 @@ type PlayerPageState = {
 };
 
 export default function PlayerPage() {
-  const { mopidy, pbStatus, currentSong, streamTitle, volume, boost, mute, setBaseVolume, setNotification } =
+  const { mopidy, pbStatus, currentSong, streamTitle, volume, boost, mute, getBaseVolume, setBaseVolume, setNotification } =
     useContext(AppContext);
   // const [logs, setLogs] = useState<string[]>([]);
   const [state, sustain, setState] = useSustainableState<PlayerPageState>({ tuneOn: false });
@@ -88,7 +88,7 @@ export default function PlayerPage() {
           play={() => sustain(play(mopidy), 'Failed to play!', true)}
           resume={() => sustain(resume(mopidy), 'Failed to resume!', true)}
         />
-        <VolumeButtonsPanel badgeColor="info" volume={volume} onChange={onVolumeChange} />
+        <VolumeButtonsPanel badgeColor="info" volume={getBaseVolume()} onChange={onVolumeChange} />
         <PrevNextPanel
           previous={() => sustain(previous(mopidy), 'Failed to go previous!', true)}
           next={() => sustain(next(mopidy), 'Failed to go next!', true)}
