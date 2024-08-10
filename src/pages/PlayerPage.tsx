@@ -88,7 +88,7 @@ export default function PlayerPage() {
           play={() => sustain(play(mopidy), 'Failed to play!', true)}
           resume={() => sustain(resume(mopidy), 'Failed to resume!', true)}
         />
-        <VolumeButtonsPanel badgeColor="info" volume={getBaseVolume()} onChange={onVolumeChange} />
+        <VolumeButtonsPanel badgeColor="info" volume={getBaseVolume()??0} onChange={onVolumeChange} />
         <PrevNextPanel
           previous={() => sustain(previous(mopidy), 'Failed to go previous!', true)}
           next={() => sustain(next(mopidy), 'Failed to go next!', true)}
