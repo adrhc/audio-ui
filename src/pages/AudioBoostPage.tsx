@@ -79,9 +79,9 @@ const AudioBoostPage = () => {
       hideContent={boost == null}
       title={
         <PageTitle>
-          Boost from {baseVolume}
+          Boost from <b>{baseVolume}</b>
           <br />
-          <b>{boost?.title}</b>
+          {boost?.title}
         </PageTitle>
       }
       bottom={<ConfirmationButtonMenu goBack={goBack} onAccept={saveBoost} />}
