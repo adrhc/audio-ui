@@ -73,7 +73,7 @@ const AudioBoostPage = () => {
         <PageTitle>
           {boost?.title}
           <br />
-          (unamplified volume is {baseVolume})
+          (flat volume is {baseVolume})
         </PageTitle>
       }
       bottom={<ConfirmationButtonMenu goBack={goBack} onAccept={saveBoost} />}
