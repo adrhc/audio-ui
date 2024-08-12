@@ -10,6 +10,7 @@ import {
   pause as pauseMopidy,
   next,
   previous,
+  truncateVolume,
 } from '../services/mpc';
 import { play, resume } from '../services/player';
 import PlaybackPanel from '../components/panel/PlaybackPanel';
@@ -19,7 +20,6 @@ import PrevNextPanel from '../components/panel/PrevNextPanel';
 import PageTemplate from '../templates/PageTemplate';
 import { AppContext } from '../components/app/AppContext';
 import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
-import { MOPIDY_DISCONNECTED_ERROR } from '../constants';
 import PlayerBottomPageMenu from '../components/menu/PlayerBottomPageMenu';
 import { SetFeedbackState } from '../lib/sustain';
 import PageTitle from '../components/PageTitle';
@@ -31,30 +31,29 @@ type PlayerPageState = {
 };
 
 export default function PlayerPage() {
-  const { mopidy, pbStatus, currentSong, streamTitle, boost, mute, getBaseVolume, setBaseVolume, setNotification } =
+  const { mopidy, pbStatus, currentSong, streamTitle, boost, mute, volume, setBaseVolume } =
     useContext(AppContext);
+
   // const [logs, setLogs] = useState<string[]>([]);
   const [state, sustain, setState] = useSustainableState<PlayerPageState>({ tuneOn: false });
 
   console.log(`[PlayerPage] state:\n`, state);
 
-  const onVolumeChange = useCallback(
-    (boostedVolume: number) => {
-      console.log(`[PlayerPage:onVolumeChange] boost = ${boost}, boostedVolume = ${boostedVolume}`);
-      // addLog(`[PlayerPage:onVolumeChange] boostedVolume = ${boostedVolume}`);
-      if (mopidy != null) {
-        // see "boostedVolume - boost" in audio-web-services too (aka "in java")
-        sustain(
-          setMopidyVolume(mopidy, boostedVolume)?.then(() => setBaseVolume(boostedVolume - boost)),
-          `Couldn't set the volume to ${boostedVolume}!`,
-          true
-        );
-      } else {
-        console.error(`[PlayerPage:onVolumeChange] boostedVolume = ${boostedVolume}`, mopidy);
-        setNotification(MOPIDY_DISCONNECTED_ERROR);
-      }
+  const setVolume = useCallback(
+    (newVolume: number) => {
+      const newBaseVolume = truncateVolume(newVolume - boost);
+      console.log(
+        `[PlayerPage:setVolume] newBaseVolume = ${newBaseVolume}, boost = ${boost}, newVolume = ${newVolume}`
+      );
+      // see "boostedVolume - boost" in audio-web-services too (aka "in java")
+      sustain(
+        // setMopidyVolume and setBaseVolume truncate to [0,100]
+        setMopidyVolume(mopidy, newVolume)?.then(() => setBaseVolume(newBaseVolume)),
+        `Couldn't set the volume to ${newVolume}!`,
+        true
+      );
     },
-    [boost, mopidy, setBaseVolume, setNotification, sustain]
+    [boost, mopidy, setBaseVolume, sustain]
   );
 
   return (
@@ -78,7 +77,7 @@ export default function PlayerPage() {
             <PageTitle>{streamTitle ?? currentSong?.artists}</PageTitle>
           </Box>
         )}
-        <ExactVolumePanel values={[5, 15, 25, 45, 65, 80]} onChange={onVolumeChange} />
+        <ExactVolumePanel values={[5, 15, 25, 45, 65, 80]} onChange={setVolume} />
         <PlaybackPanel
           status={pbStatus}
           mute={mute}
@@ -88,7 +87,12 @@ export default function PlayerPage() {
           play={() => sustain(play(mopidy), 'Failed to play!', true)}
           resume={() => sustain(resume(mopidy), 'Failed to resume!', true)}
         />
-        <VolumeButtonsPanel badgeColor="info" volume={getBaseVolume()??0} onChange={onVolumeChange} />
+        <VolumeButtonsPanel
+          badgeColor="info"
+          volume={volume}
+          onIncrement={(increment) => setVolume(truncateVolume(volume + increment))}
+          useVolumeForBadge={true}
+        />
         <PrevNextPanel
           previous={() => sustain(previous(mopidy), 'Failed to go previous!', true)}
           next={() => sustain(next(mopidy), 'Failed to go next!', true)}

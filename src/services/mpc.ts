@@ -137,9 +137,8 @@ export function mute(mopidy: Mopidy | undefined, newMute: boolean) {
 }
 
 export function setVolume(mopidy: Mopidy | undefined, newVolume: number) {
-  console.log(`[Mopidy:setVolume] newVolume = ${newVolume}`);
-  newVolume = Math.max(0, newVolume);
-  newVolume = Math.min(100, newVolume);
+  console.log(`[Mopidy:setVolume] newVolume = ${newVolume} (it'll be trunked to min 0 and max 100)`);
+  newVolume = truncateVolume(newVolume);
   return mopidy?.mixer == null
     ? Promise.reject(MOPIDY_DISCONNECTED_ERROR)
     : mopidy.mixer.setVolume({ volume: newVolume }).then((success: boolean) => {
@@ -147,6 +146,10 @@ export function setVolume(mopidy: Mopidy | undefined, newVolume: number) {
           return Promise.reject(new Error(`Couldn't set the volume to ${newVolume}!`));
         }
       });
+}
+
+export function truncateVolume(volume?: number | null) {
+  return volume == null ? 0 : Math.max(0, Math.min(100, volume));
 }
 
 export type PlayOptions = { consume?: boolean; random?: boolean; repeat?: boolean; single?: boolean };

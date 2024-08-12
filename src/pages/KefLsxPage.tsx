@@ -51,7 +51,7 @@ export default function KefLsxPage() {
       <ShowIf condition={state.power}>
         <ExactVolumePanel values={[0, 5, 10, 15, 20]} onChange={onVolumeChange} />
         <ExactVolumePanel values={[25, 30, 35, 40, 45]} onChange={onVolumeChange} />
-        <VolumeButtonsPanel badgeColor="secondary" volume={state.volume} onChange={onVolumeChange} />
+        <VolumeButtonsPanel badgeColor="secondary" volume={state.volume} onIncrement={onVolumeChange} />
         <ExactVolumePanel values={[50, 55, 60, 65, 70]} onChange={onVolumeChange} />
         <ExactVolumePanel values={[75, 80, 85, 90, 100]} onChange={onVolumeChange} />
       </ShowIf>

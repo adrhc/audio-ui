@@ -21,7 +21,7 @@ import { areSameTrack, toTrackSong } from './domain/track-song';
 export default function App() {
   const theme = useTheme();
   const { getCache, setCache, mergeCache, clearCache, cacheContains } = useCache();
-  const [getBaseVolume, setBaseVolume, incrementBaseVolume] = useBaseVolume();
+  const [getBaseVolume, getBaseVolumeOr, setBaseVolume, incrementBaseVolume] = useBaseVolume();
   const [state, sustain, setState, setBoost, clearNotification, setNotification, setCredentials] =
     useAppState();
 
@@ -158,15 +158,25 @@ export default function App() {
       const currentSong = toTrackSong(params.tl_track);
       if (currentSong) {
         // this catches prev/next navigation only when a track is playing
-        console.log(`[App:event:trackPlaybackStarted] boost was set to 0 while switching to:`, currentSong);
-        setState((old) => ({
-          ...old,
-          currentSong: areSameTrack(currentSong, old.currentSong) ? old.currentSong : currentSong,
-          streamTitle: null,
-          boost: 0,
-          // severity: 'info',
-          // notification: `Playback started! boost was set to 0 while switching to ${currentSong.uri}`,
-        }));
+        setState((old) => {
+          const sameTrack = areSameTrack(currentSong, old.currentSong);
+          if (sameTrack) {
+            return old;
+          } else {
+            console.log(
+              `[App:event:trackPlaybackStarted] boost was set to 0 while switching to:`,
+              currentSong
+            );
+            return {
+              ...old,
+              currentSong: currentSong,
+              streamTitle: null,
+              boost: 0,
+              // severity: 'info',
+              // notification: `Playback started! boost was set to 0 while switching to ${currentSong.uri}`,
+            };
+          }
+        });
       } else {
         console.log(`[App:event:trackPlaybackStarted] can't switch to:`, currentSong);
         setState((old) => ({ ...old, error: 'The current song has no uri!' }));
@@ -393,6 +403,7 @@ export default function App() {
           value={{
             ...omitProps(state, ['error', 'loading', 'notification']),
             getBaseVolume,
+            getBaseVolumeOr,
             setBaseVolume,
             incrementBaseVolume,
             setBoost,

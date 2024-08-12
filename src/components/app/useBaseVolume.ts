@@ -1,15 +1,31 @@
 import { useCallback } from 'react';
 import useRefEx from '../../hooks/useRefEx';
 import { NullOrUndefined } from '../../domain/types';
+import { truncateVolume } from '../../services/mpc';
 
 export type UseBaseVolumeResult = [
   () => NullOrUndefined<number>,
+  (defaultIfNull: number) => number,
   (value: NullOrUndefined<number>) => void,
   (increment: number) => void,
 ];
 
 export function useBaseVolume(): UseBaseVolumeResult {
-  const [getBaseVolume, setBaseVolume] = useRefEx<number>();
+  const [getBaseVolume, setRawBaseVolume] = useRefEx<number>();
+
+  const getBaseVolumeOr = useCallback(
+    (defaultIfNull: number) => {
+      return getBaseVolume() ?? defaultIfNull;
+    },
+    [getBaseVolume]
+  );
+
+  const setBaseVolume = useCallback(
+    (rawBaseVolume?: number | null) => {
+      setRawBaseVolume(truncateVolume(rawBaseVolume));
+    },
+    [setRawBaseVolume]
+  );
 
   /* const setBaseVolume = useCallback(
     (newValue: number | null | undefined) => {
@@ -36,5 +52,5 @@ export function useBaseVolume(): UseBaseVolumeResult {
     [getBaseVolume, setBaseVolume]
   );
 
-  return [getBaseVolume, setBaseVolume, incrementBaseVolume];
+  return [getBaseVolume, getBaseVolumeOr, setBaseVolume, incrementBaseVolume];
 }

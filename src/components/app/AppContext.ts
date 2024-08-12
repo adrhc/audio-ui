@@ -12,6 +12,7 @@ import { Credentials } from '../../domain/credentials';
 type AppContextValue = AppState &
   CacheOperations & {
     getBaseVolume: () => number | null | undefined;
+    getBaseVolumeOr: (defaultIfNull: number) => number;
     setBaseVolume: (baseVolume: number) => void;
     incrementBaseVolume: (increment: number) => void;
     setBoost: (vb: VolumeBoost) => void;
@@ -22,6 +23,7 @@ type AppContextValue = AppState &
 
 export const AppContext = createContext<AppContextValue>({
   getBaseVolume: () => undefined,
+  getBaseVolumeOr: () => 0,
   setBaseVolume: () => {},
   incrementBaseVolume: () => {},
   setBoost: () => {},
