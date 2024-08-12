@@ -55,7 +55,7 @@ export default function useAppState(): [
     (vb: VolumeBoost) => {
       setState((old) => {
         if (old.currentSong?.uri == vb.uri) {
-          console.log(`[useAppState:setBoost] setting volume boost to:`, vb);
+          console.log(`[useAppState:setBoost] boosted ${vb.title} to ${vb.boost}`);
           return { ...old, boost: vb.boost };
         } else {
           console.error(`[useAppState:setBoost] boost uri doesn't match song uri!`, {
