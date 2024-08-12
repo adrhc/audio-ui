@@ -22,9 +22,11 @@ export function useBaseVolume(): UseBaseVolumeResult {
 
   const setBaseVolume = useCallback(
     (rawBaseVolume?: number | null) => {
-      setRawBaseVolume(truncateVolume(rawBaseVolume));
+      const newBaseVolume = truncateVolume(rawBaseVolume);
+      console.log(`[setBaseVolume] old = ${getBaseVolume() ?? 'undefined'}, new = ${newBaseVolume}`);
+      setRawBaseVolume(newBaseVolume);
     },
-    [setRawBaseVolume]
+    [getBaseVolume, setRawBaseVolume]
   );
 
   /* const setBaseVolume = useCallback(

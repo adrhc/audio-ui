@@ -15,29 +15,35 @@ import './AudioBoostPage.scss';
 type AudioBoostPageState = { draftVolume?: number };
 
 const AudioBoostPage = () => {
-  const goBack = useGoBack();
-  const { mopidy, currentSong, boost: oldBoost, volume, getBaseVolume, setBoost } = useContext(AppContext);
+  const goBackFn = useGoBack();
+  const {
+    mopidy,
+    currentSong,
+    boost: oldBoost,
+    volume,
+    getBaseVolume,
+    setBaseVolume,
+    setBoost,
+  } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<AudioBoostPageState>({});
-  const { draftVolume = volume } = state;
-  const baseVolume = getBaseVolume();
-  console.log(
-    `[AudioBoostPage] baseVolume = ${baseVolume ?? 'unknown'}, oldBoost=${oldBoost}, volume=${volume}, draftVolume = ${draftVolume}`
-  );
+  const { draftVolume } = state;
+  console.log(`[AudioBoostPage] oldBoost=${oldBoost}, volume=${volume}, draftVolume = ${draftVolume}`);
 
   // there's no chance for the baseVolume to be changed
   // after reading it here while still in AudioBoostPage
+  const baseVolume = getBaseVolume();
   // whilst oldBoost remains unchanged till setBoost(boost)
-  // is invoked, boost does change when volume changes
-  const boost = volumeBoost(baseVolume, volume, currentSong);
-  /* console.log(`[AudioBoostPage] draftVolume = ${state.draftVolume}`, {
-    oldBoost,
-    draftBoost: boost?.boost,
-  }); */
+  // is invoked, "boost" does change when "volume" changes
+  const draftBoost = volumeBoost(baseVolume, draftVolume, currentSong);
+  console.log(
+    `[AudioBoostPage] baseVolume = ${baseVolume ?? 'undefined'}, draftBoost = ${draftBoost?.boost}`
+  );
 
   const setVolume = useCallback(
     (newDraftVolume: number) => {
-      console.log(`[AudioBoostPage:setVolume] draftVolume = ${newDraftVolume} (truncated to [0,100])`);
+      // console.log(`[AudioBoostPage.setVolume] newDraftVolume = ${newDraftVolume} (truncated to [0,100])`);
       sustain(
+        // see also App:event:volumeChanged (i.e. "volume" is updated too)
         setMopidyVolume(mopidy, newDraftVolume)?.then(() => ({ draftVolume: newDraftVolume })),
         `Can't change the volume to ${newDraftVolume}!`,
         true
@@ -46,48 +52,59 @@ const AudioBoostPage = () => {
     [mopidy, sustain]
   );
 
+  const goBack = useCallback(() => {
+    /* console.log(
+      `[AudioBoostPage.goBack] oldBoost = ${oldBoost}, draftVolume = ${draftVolume ?? 'undefined'}`
+    ); */
+    // the audio boost remains unchanged but the base (aka, flat) one does change
+    !!draftVolume && setBaseVolume(draftVolume - (oldBoost ?? 0));
+    goBackFn();
+  }, [goBackFn, setBaseVolume, oldBoost, draftVolume]);
+
   const saveBoost = useCallback(() => {
-    if (boost == null) {
-      setState((old) => ({ ...old, error: "Can't determine the boost to use!" }));
+    if (draftBoost == null) {
+      // console.log(`[AudioBoostPage.saveBoost] draftBoost didn't change!`);
+      goBackFn();
       return;
     }
     sustain(
-      boostVolume(boost).then(() => {
-        console.log(`[AudioBoostPage] boost = ${boost.boost}, title = ${boost.title}`);
-        // App:useEffect:boostAwareVolume effect will update the Mopidy volume
-        // which otherwise will be out of sync if draftVolume != undefined
-        setBoost(boost);
-        goBack();
+      boostVolume(draftBoost).then(() => {
+        console.log(
+          `[AudioBoostPage.saveBoost] draftBoost = ${draftBoost.boost}, title = ${draftBoost.title}`
+        );
+        setBoost(draftBoost);
+        goBackFn();
       }),
       'Failed to save!'
     );
-  }, [boost, goBack, setBoost, setState, sustain]);
+  }, [draftBoost, goBackFn, setBoost, sustain]);
 
+  const disabled = !currentSong?.title;
   return (
     <PageTemplate
       className="audio-boost-page"
       state={state}
       setState={setState as SetFeedbackState}
-      hideContent={boost == null}
       title={
         <PageTitle>
-          {boost?.title}
+          {currentSong?.title}
           <br />
           (flat volume is {baseVolume})
         </PageTitle>
       }
-      bottom={<ConfirmationButtonMenu goBack={goBack} onAccept={saveBoost} />}
+      bottom={<ConfirmationButtonMenu goBack={goBack} onAccept={saveBoost} acceptDisabled={disabled} />}
     >
-      <ExactVolumePanel values={[0, 5, 10, 15, 20]} onChange={setVolume} />
-      <ExactVolumePanel values={[25, 30, 35, 40, 45]} onChange={setVolume} />
+      <ExactVolumePanel values={[0, 5, 10, 15, 20]} onChange={setVolume} disabled={disabled} />
+      <ExactVolumePanel values={[25, 30, 35, 40, 45]} onChange={setVolume} disabled={disabled} />
       <VolumeButtonsPanel
         badgeColor="secondary"
-        volume={draftVolume}
+        volume={volume}
         onIncrement={(increment) => setVolume(truncateVolume(volume + increment))}
         useVolumeForBadge={true}
+        disabled={disabled}
       />
-      <ExactVolumePanel values={[50, 55, 60, 65, 70]} onChange={setVolume} />
-      <ExactVolumePanel values={[75, 80, 85, 90, 100]} onChange={setVolume} />
+      <ExactVolumePanel values={[50, 55, 60, 65, 70]} onChange={setVolume} disabled={disabled} />
+      <ExactVolumePanel values={[75, 80, 85, 90, 100]} onChange={setVolume} disabled={disabled} />
     </PageTemplate>
   );
 };
