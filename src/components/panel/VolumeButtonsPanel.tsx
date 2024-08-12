@@ -33,7 +33,7 @@ export default function VolumeButtonsPanel({
   // there's no chance for the baseVolume to be changed
   // after reading it here while still in VolumeButtonsPanel
   const baseVolume = getBaseVolume();
-  console.log(`[VolumeButtons] baseVolume=${baseVolume}, volume=${volume}`);
+  // console.log(`[VolumeButtons] baseVolume=${baseVolume}, volume=${volume}`);
 
   const badgeContent = useVolumeForBadge ? volume : baseVolume ?? 'unknown';
 
