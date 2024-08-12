@@ -2,7 +2,7 @@ import ExactVolumePanel from '../components/panel/ExactVolumePanel';
 import VolumeButtonsPanel from '../components/panel/VolumeButtonsPanel';
 import PageTemplate from '../templates/PageTemplate';
 import { useSustainableState } from '../hooks/useSustainableState';
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext } from 'react';
 import { boostVolume, volumeBoost } from '../services/boost';
 import { setVolume as setMopidyVolume, truncateVolume } from '../services/mpc';
 import { useGoBack } from '../hooks/useGoBack';
