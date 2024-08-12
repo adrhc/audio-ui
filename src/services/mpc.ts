@@ -137,7 +137,7 @@ export function mute(mopidy: Mopidy | undefined, newMute: boolean) {
 }
 
 export function setVolume(mopidy: Mopidy | undefined, newVolume: number) {
-  console.log(`[Mopidy:setVolume] newVolume = ${newVolume} (it'll be trunked to min 0 and max 100)`);
+  console.log(`[Mopidy:setVolume] newVolume = ${newVolume} (it'll be trunked to [0,100])`);
   newVolume = truncateVolume(newVolume);
   return mopidy?.mixer == null
     ? Promise.reject(MOPIDY_DISCONNECTED_ERROR)
