@@ -27,7 +27,7 @@ const AudioBoostPage = () => {
   } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<AudioBoostPageState>({});
   const { draftVolume } = state;
-  console.log(`[AudioBoostPage] oldBoost=${oldBoost}, volume=${volume}, draftVolume = ${draftVolume}`);
+  // console.log(`[AudioBoostPage] oldBoost=${oldBoost}, volume=${volume}, draftVolume = ${draftVolume}`);
 
   // there's no chance for the baseVolume to be changed
   // after reading it here while still in AudioBoostPage
@@ -35,9 +35,9 @@ const AudioBoostPage = () => {
   // whilst oldBoost remains unchanged till setBoost(boost)
   // is invoked, "boost" does change when "volume" changes
   const draftBoost = volumeBoost(baseVolume, draftVolume, currentSong);
-  console.log(
+  /* console.log(
     `[AudioBoostPage] baseVolume = ${baseVolume ?? 'undefined'}, draftBoost = ${draftBoost?.boost}`
-  );
+  ); */
 
   const setVolume = useCallback(
     (newDraftVolume: number) => {
@@ -69,9 +69,9 @@ const AudioBoostPage = () => {
     }
     sustain(
       boostVolume(draftBoost).then(() => {
-        console.log(
+        /* console.log(
           `[AudioBoostPage.saveBoost] draftBoost = ${draftBoost.boost}, title = ${draftBoost.title}`
-        );
+        ); */
         setBoost(draftBoost);
         goBackFn();
       }),
