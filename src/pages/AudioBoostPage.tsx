@@ -69,9 +69,7 @@ const AudioBoostPage = () => {
     }
     sustain(
       boostVolume(draftBoost).then(() => {
-        /* console.log(
-          `[AudioBoostPage.saveBoost] draftBoost = ${draftBoost.boost}, title = ${draftBoost.title}`
-        ); */
+        console.log(`[AudioBoostPage.saveBoost] boosted ${draftBoost.title} to = ${draftBoost.boost}`);
         setBoost(draftBoost);
         goBackFn();
       }),
