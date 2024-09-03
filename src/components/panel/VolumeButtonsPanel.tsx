@@ -10,22 +10,22 @@ import './VolumeButtonsPanel.scss';
 
 export type VolumeButtonsParam = {
   sx?: Styles;
-  badgeColor: 'primary' | 'secondary' | 'default' | 'error' | 'info' | 'success' | 'warning';
+  badgeColor?: 'primary' | 'secondary' | 'default' | 'error' | 'info' | 'success' | 'warning';
   disabled?: boolean;
   hideBadge?: boolean;
   volume: number;
   onIncrement: (increment: number) => void;
-  useVolumeForBadge?: boolean;
+  showVolumeBaseAsBadge?: boolean;
 };
 
 export default function VolumeButtonsPanel({
   sx,
-  badgeColor,
+  badgeColor = 'info',
   disabled,
   hideBadge = false,
   volume,
   onIncrement,
-  useVolumeForBadge,
+  showVolumeBaseAsBadge,
 }: VolumeButtonsParam) {
   const { getBaseVolume, online } = useContext(AppContext);
   // console.log(`[VolumeButtons] badgeColor=${badgeColor}, hideBadge=${hideBadge}`);
@@ -35,7 +35,7 @@ export default function VolumeButtonsPanel({
   const baseVolume = getBaseVolume();
   // console.log(`[VolumeButtons] baseVolume=${baseVolume}, volume=${volume}`);
 
-  const badgeContent = useVolumeForBadge ? volume : baseVolume ?? 'unknown';
+  const badgeContent = showVolumeBaseAsBadge ? baseVolume ?? 'unknown' : volume;
 
   const fontSize = iconFontSize((fs) => fs.map((n) => n + 1));
 

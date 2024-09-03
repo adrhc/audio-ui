@@ -97,7 +97,6 @@ const AudioBoostPage = () => {
         badgeColor="secondary"
         volume={volume}
         onIncrement={(increment) => setVolume(truncateVolume(volume + increment))}
-        useVolumeForBadge={true}
         disabled={disabled}
       />
       <ExactVolumePanel values={[50, 55, 60, 65, 70]} onChange={setVolume} disabled={disabled} />

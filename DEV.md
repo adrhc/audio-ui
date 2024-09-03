@@ -26,7 +26,10 @@ https://icomoon.io/app/#/select
 clear; git pull; ./build-deploy.sh && ./deploy-pi.sh
 clear; sudo rsync -hikLmrt Downloads/audio-ui/ /var/www/html/audio-ui/
 
-# remote dev env
+# local dev procedure
+npm run dev         -> http://localhost:5173/#/player
+
+# remote dev procedure
 OPENSSL_CONF=./openssl.cnf npm i
 OPENSSL_CONF=./openssl.cnf npm run dev-from-remote
 

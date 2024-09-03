@@ -88,10 +88,8 @@ export default function PlayerPage() {
           resume={() => sustain(resume(mopidy), 'Failed to resume!', true)}
         />
         <VolumeButtonsPanel
-          badgeColor="info"
           volume={volume}
           onIncrement={(increment) => setVolume(truncateVolume(volume + increment))}
-          useVolumeForBadge={true}
         />
         <PrevNextPanel
           previous={() => sustain(previous(mopidy), 'Failed to go previous!', true)}
