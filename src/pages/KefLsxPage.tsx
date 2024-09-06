@@ -1,5 +1,5 @@
-import { KefLSXState, getState, setPower as setKefPower, setVolume } from '../services/kef';
-import { useEffect } from 'react';
+import { KefLSXState, getState, setPower as setKefPower, setVolume as setKefVolume } from '../services/kef';
+import { useCallback, useEffect } from 'react';
 import kefctrlstop from '../assets/kef-control-stop.png';
 import ShowIf from '../components/ShowIf';
 import VolumeButtonsPanel from '../components/panel/VolumeButtonsPanel';
@@ -9,6 +9,7 @@ import { useSustainableState } from '../hooks/useSustainableState';
 import { Button, Icon, Stack } from '@mui/material';
 import { SetFeedbackState } from '../lib/sustain';
 import KefLsxButtonMenu from '../components/menu/KefLsxButtonMenu';
+import { truncateVolume } from '../services/mpc';
 import './KefLsxPage.scss';
 
 export default function KefLsxPage() {
@@ -28,8 +29,18 @@ export default function KefLsxPage() {
 
   function onVolumeChange(volume: number) {
     console.log(`[KefLsxPage:onVolumeChange] newVolume = ${volume}`);
-    sustain(setVolume(volume), "Can't change the volume!");
+    // setKefVolume's return is used by "sustain" to set state.volume 
+    sustain(setKefVolume(volume), "Can't change the volume!");
   }
+
+  const onIncrement = useCallback(
+    (increment: number) => {
+      const newVolume = truncateVolume(state.volume + increment);
+      console.log(`[KefLsxPage:onIncrement] newVolume = ${newVolume}, increment = ${increment}`);
+      sustain(setKefVolume(newVolume), "Can't change the KEF LSX volume!");
+    },
+    [state.volume, sustain]
+  );
 
   return (
     <PageTemplate
@@ -51,7 +62,7 @@ export default function KefLsxPage() {
       <ShowIf condition={state.power}>
         <ExactVolumePanel values={[0, 5, 10, 15, 20]} onChange={onVolumeChange} />
         <ExactVolumePanel values={[25, 30, 35, 40, 45]} onChange={onVolumeChange} />
-        <VolumeButtonsPanel badgeColor="secondary" volume={state.volume} onIncrement={onVolumeChange} />
+        <VolumeButtonsPanel badgeColor="secondary" volume={state.volume} onIncrement={onIncrement} />
         <ExactVolumePanel values={[50, 55, 60, 65, 70]} onChange={onVolumeChange} />
         <ExactVolumePanel values={[75, 80, 85, 90, 100]} onChange={onVolumeChange} />
       </ShowIf>
