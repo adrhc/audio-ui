@@ -43,7 +43,7 @@ export function createPlaylist(name: string) {
  * alternative to getPlItems from mpc.ts
  */
 export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
-  return get<audiows.RefWithImages[]>(`${MOPIDY_PLAYLIST}/${encodeURIComponent(uri)}`).then((rwis) =>
+  return get<audiows.RefWithImages[]>(`${MOPIDY_PLAYLIST}/${encodeURIComponent(encodeURIComponent(uri))}`).then((rwis) =>
     audiows.refWithImagesToSongs(imgMaxArea, rwis)
   );
 }
