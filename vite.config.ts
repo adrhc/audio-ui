@@ -4,6 +4,8 @@ import react from '@vitejs/plugin-react-swc';
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
+    // the 192.168.0.1:* requests doesn't pass through nginx hence 
+    // they get with the original encoding to the upstream server
     proxy: {
       '/audio-ui/db-api/': {
         target: 'http://192.168.0.1:8082', // NAS
@@ -29,6 +31,9 @@ export default defineConfig({
             // console.log(`Request headers sent to upstream:`);
             // console.log(proxyReq.getHeaders()); // Log the headers sent to the upstream
           });
+          /* proxy.on('proxyRes', (proxyRes, _req, _res) => {
+            console.log(`Response from upstream: ${proxyRes.statusCode}`);
+          }); */
         },
       },
       '/easyeffects/api/': {
