@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react-swc';
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    // the 192.168.0.1:* requests doesn't pass through nginx hence 
+    // the 192.168.0.1:* requests don't pass through nginx hence 
     // they get with the original encoding to the upstream server
     proxy: {
       '/audio-ui/db-api/': {
