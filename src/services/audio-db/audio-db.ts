@@ -72,7 +72,16 @@ export function getYTPlaylists(imgMaxEdge: number): Promise<Song[]> {
 }
 
 export function getYTPlContent(imgMaxEdge: number, ytUri: string): Promise<Song[]> {
-  return get<audiodb.SongsPage>(`${YOUTUBE_PLAYLIST}/${encodeURIComponent(ytUri)}`).then((pg) =>
+  // Nginx decodes 1x the received requests so 1x encoded "m3u:[Radio Streams].m3u8" 
+  // becomes "m3u:[Radio Streams].m3u8" when passed to upstream (aka, java).
+  // 
+  // "m3u:[Radio Streams].m3u8" containes special characters (i.e., space [ and ]) 
+  // which must be encoded, otherwise the request is not passed to the upstream!
+  // 
+  // 2x encoded "m3u:[Radio Streams].m3u8" becomes "m3u%3A%5BRadio%20Streams%5D.m3u8"
+  // for the upstream; PlaylistsService.getPlItems pass it to Mopidy but Mopidy can't
+  // decode the encoded : character (i.e. %3A); solved with java.net.URLDecoder.decode.
+  return get<audiodb.SongsPage>(`${YOUTUBE_PLAYLIST}/${encodeURIComponent(encodeURIComponent(ytUri))}`).then((pg) =>
     audiodb.toSongsWithImgUri(imgMaxEdge, pg.entries)
   );
 }
