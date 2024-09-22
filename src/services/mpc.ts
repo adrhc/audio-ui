@@ -81,11 +81,11 @@ export function addUrisAfter(mopidy: Mopidy | undefined, afterTlid: number, ...u
 export function addUris(mopidy: Mopidy | undefined, ...uris: string[]) {
   if (uris.length == 0) {
     return Promise.reject("Can't add an empty uri list to the playlist!");
+  } else if (mopidy?.tracklist == null) {
+    return Promise.reject(MOPIDY_DISCONNECTED_ERROR);
   } else {
     // console.log(`[addUris] uris:`, uris);
-    return mopidy?.tracklist == null
-      ? Promise.reject(MOPIDY_DISCONNECTED_ERROR)
-      : mopidy.tracklist.add({ uris });
+    return mopidy.tracklist.add({ uris });
   }
 }
 
