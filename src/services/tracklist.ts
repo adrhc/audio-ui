@@ -89,8 +89,12 @@ export function addSongsAndRemember(mopidy: Mopidy | undefined, ...song: Song[])
 }
 
 export function addUrisAndRemember(mopidy: Mopidy | undefined, ...uris: string[]) {
-  // console.log(`[addUrisAndRemember] uris:`, uris);
-  return addUris(mopidy, ...uris)?.then(addToHistory);
+  if (uris.length == 0) {
+    return Promise.reject("Can't add an empty uri list to the playlist!");
+  } else {
+    // console.log(`[addUrisAndRemember] uris:`, uris);
+    return addUris(mopidy, ...uris)?.then(addToHistory);
+  }
 }
 
 export function addSongThenPlay(mopidy: Mopidy | undefined, song: Song) {

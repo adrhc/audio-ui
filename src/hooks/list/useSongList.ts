@@ -76,7 +76,7 @@ export default function useSongList<S extends RawSongsPageState>(
       const addFn = isYtMusicPl(song) ? addYtMusicPlAndRemember : addSongsAndRemember;
       sustain(
         addFn(mopidy, song)?.then(() => ({ lastUsed: song }) as Partial<S>),
-        { error: `Failed to add ${song.title}!`, lastUsed: song } as Partial<LoadingState<S>>
+        // { error: `Failed to add ${song.title}!`, lastUsed: song } as Partial<LoadingState<S>>
       );
     },
     [mopidy, sustain]

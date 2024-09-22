@@ -22,7 +22,7 @@ export function shallowDiskUpdate() {
 
 export function addToHistory(tlTrack: models.TlTrack[]) {
   if (tlTrack.length == 0) {
-    console.warn(`Received empty tracks-list to add to the history!`);
+    return Promise.reject("Can't add an empty track list to the history!");
   } else {
     return postVoid(HISTORY, JSON.stringify(tlTrack.map((it) => it.track)));
   }
