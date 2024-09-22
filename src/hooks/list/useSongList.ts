@@ -62,9 +62,9 @@ export default function useSongList<S extends RawSongsPageState>(
   const handleAddAll = useCallback(
     (songs: Song[]) => {
       // console.log(`[useSongsList:handleAddAll] songs:\n`, songs);
-      sustain(addSongsAndRemember(mopidy, ...songs), {
+      sustain(addSongsAndRemember(mopidy, ...songs), /* {
         error: `Failed to add ${songs.length} songs!`,
-      } as Partial<LoadingState<S>>);
+      } as Partial<LoadingState<S>> */);
     },
     [mopidy, sustain]
   );
