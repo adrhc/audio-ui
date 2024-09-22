@@ -89,6 +89,7 @@ export function addSongsAndRemember(mopidy: Mopidy | undefined, ...song: Song[])
 }
 
 export function addUrisAndRemember(mopidy: Mopidy | undefined, ...uris: string[]) {
+  // console.log(`[addUrisAndRemember] uris:`, uris);
   return addUris(mopidy, ...uris)?.then(addToHistory);
 }
 
