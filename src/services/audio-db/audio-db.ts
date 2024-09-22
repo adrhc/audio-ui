@@ -81,6 +81,7 @@ export function getYTPlContent(imgMaxEdge: number, ytUri: string): Promise<Song[
   // 2x encoded "m3u:[Radio Streams].m3u8" becomes "m3u%3A%5BRadio%20Streams%5D.m3u8"
   // for the upstream; PlaylistsService.getPlItems pass it to Mopidy but Mopidy can't
   // decode the encoded : character (i.e. %3A); solved with java.net.URLDecoder.decode.
+  console.log(`[getYTPlContent] ytUri = `, encodeURIComponent(encodeURIComponent(ytUri)));
   return get<audiodb.SongsPage>(`${YOUTUBE_PLAYLIST}/${encodeURIComponent(encodeURIComponent(ytUri))}`).then((pg) =>
     audiodb.toSongsWithImgUri(imgMaxEdge, pg.entries)
   );
