@@ -22,7 +22,7 @@ export default defineConfig({
         target: 'https://adrhc.go.ro',
         changeOrigin: true,
         ws: true,
-        // auth: 'user:pwd'
+        // auth: '<<user>>:<<pwd>>'
       },
     },
   },
