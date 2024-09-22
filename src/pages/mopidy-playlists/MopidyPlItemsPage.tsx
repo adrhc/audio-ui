@@ -79,13 +79,13 @@ function MopidyPlItemsPage() {
   // cache the current state
   useEffect(() => {
     if (!state.songs.length) {
-      console.log(`[MopidyPlItemsPage.backup] no songs to backup! ${uri}`);
+      console.log(`[MopidyPlItemsPage.cache] no songs to cache! ${uri}`);
       return;
     }
     mergeCache(cacheName, (old) => {
-      const backup = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
-      console.log(`[MopidyPlItemsPage.backup] ${uri}:`, backup);
-      return backup;
+      const cache = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
+      console.log(`[MopidyPlItemsPage.cache] ${uri}:`, cache);
+      return cache;
     });
   }, [mergeCache, cacheName, state, uri]);
 
