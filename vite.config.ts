@@ -22,6 +22,14 @@ export default defineConfig({
         target: 'http://192.168.0.1:8083', // Raspberry Pi
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/audio-ui/, ''),
+        configure: (proxy) => {
+          // Custom middleware to log requests
+          proxy.on('proxyReq', (_proxyReq, req) => {
+            console.log(`Proxying request to upstream: ${req.method} ${req.originalUrl}`);
+            // console.log(`Request headers sent to upstream:`);
+            // console.log(proxyReq.getHeaders()); // Log the headers sent to the upstream
+          });
+        },
       },
       '/easyeffects/api/': {
         target: 'http://192.168.0.1:8086',
