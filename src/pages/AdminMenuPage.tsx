@@ -57,7 +57,7 @@ export default function AdminMenuPage() {
           <ListItemIcon>
             <CachedOutlinedIcon />
           </ListItemIcon>
-          <ListItemText>Reload The State</ListItemText>
+          <ListItemText>Reload the State</ListItemText>
         </MenuItem>
         {/* <Divider /> */}
         <MenuItem onClick={goBackFn}>
