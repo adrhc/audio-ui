@@ -51,7 +51,7 @@ export default function AdminMenuPage() {
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <ListItemText>Update The Disk Entries</ListItemText>
+          <ListItemText>Update the Disk Entries</ListItemText>
         </MenuItem>
         <MenuItem onClick={reloadState}>
           <ListItemIcon>
