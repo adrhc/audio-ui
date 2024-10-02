@@ -4,7 +4,7 @@ import { get, post, remove } from './rest';
 const ROOT = '/easyeffects/api/ee';
 
 export type EEPresets = { input: string[]; output: string[] };
-export interface EEPreset { name: string; amount: number; harmonics: number; floor: number; scope: number }
+export interface EEPreset { name: string; amount: number; blend: number; harmonics: number; floor: number; scope: number }
 
 export function areEqual(source: EEPreset, updated: EEPreset) {
   // console.log(`[areEqual] source:`, source);
@@ -22,6 +22,7 @@ export function newPreset(name?: string | null): EEPreset {
   return {
     name: name ?? '',
     amount: 0,
+    blend: 0,
     harmonics: 8.5,
     floor: 0,
     scope: 250,

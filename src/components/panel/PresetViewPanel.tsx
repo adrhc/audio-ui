@@ -12,6 +12,10 @@ const PresetViewPanel = ({ preset }: { preset: EEPreset }) => {
           <TableCell>{preset.amount}</TableCell>
         </TableRow>
         <TableRow>
+          <TableCell>Blend:</TableCell>
+          <TableCell>{preset.blend}</TableCell>
+        </TableRow>
+        <TableRow>
           <TableCell>Harmonics:</TableCell>
           <TableCell>{preset.harmonics}</TableCell>
         </TableRow>

@@ -42,6 +42,14 @@ const PresetEditForm = ({ state, setState, submitBtnRef, onSubmit }: PresetEditF
       />
       <TextField
         type="number"
+        label="Blend"
+        name="blend"
+        value={state.blend}
+        onChange={handleChange}
+        inputProps={{ min: -10, max: 10, step: 1 }}
+      />
+      <TextField
+        type="number"
         label="Harmonics"
         name="harmonics"
         value={state.harmonics}
