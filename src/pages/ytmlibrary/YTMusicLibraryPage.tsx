@@ -3,7 +3,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongList';
+import useSongList, { RawSongsPageState, copyRawSongsPageState } from '../../hooks/list/useSongList';
 import { getYTPlaylists } from '../../services/audio-db/audio-db';
 import { Song } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
@@ -71,7 +71,7 @@ function YTMusicLibraryPage() {
       return;
     }
     mergeCache('ytmlibrary', (old) => {
-      const backup = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
+      const backup = { ...copyRawSongsPageState(state), scrollTop: scrollTop(old) };
       console.log(`[YTMusicLibraryPage] stateBackup:`, backup);
       return backup;
     });
@@ -106,7 +106,7 @@ function YTMusicLibraryPage() {
         onAdd={handleAdd}
         onInsert={handleInsert}
         onClick={handleSelectionProxy}
-        onRealoadList={handleReaload}
+        onReloadList={handleReaload}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}
         listRef={listRef}

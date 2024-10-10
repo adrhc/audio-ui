@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongList';
+import useSongList, { RawSongsPageState, copyRawSongsPageState } from '../../hooks/list/useSongList';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
@@ -83,7 +83,7 @@ function MopidyPlItemsPage() {
       return;
     }
     mergeCache(cacheName, (old) => {
-      const cache = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
+      const cache = { ...copyRawSongsPageState(state), scrollTop: scrollTop(old) };
       console.log(`[MopidyPlItemsPage.cache] ${uri}:`, cache);
       return cache;
     });
@@ -109,7 +109,7 @@ function MopidyPlItemsPage() {
         onScroll={scrollObserver}
         listRef={listRef}
         scrollTo={scrollTo}
-        onRealoadList={handleReaload}
+        onReloadList={handleReaload}
         onAddAllSongs={handleAddAll}
       />
     </PageTemplate>

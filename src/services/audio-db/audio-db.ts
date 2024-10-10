@@ -2,10 +2,10 @@ import Mopidy, { models } from 'mopidy';
 import { get, post, postVoid } from '../rest';
 import { Song, toSongExtsWithImgUri, toSongUris } from '../../domain/song';
 import { HistoryPosition, HistoryPage } from '../../domain/history';
-import * as audiodb from './types';
-import { LocationSelection, UriPlAllocationResult } from '../../domain/media-location';
+import { LocationSelection, MediaLocation, UriPlAllocationResult } from '../../domain/media-location';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { getImages } from '../mpc';
+import * as audiodb from './types';
 
 const YOUTUBE_PLAYLIST = '/audio-ui/db-api/youtube/playlist';
 const DISK_PLAYLIST = '/audio-ui/db-api/disk/playlist';
@@ -77,20 +77,38 @@ export function getYTPlContent(imgMaxEdge: number, ytUri: string): Promise<Song[
   );
 }
 
-export function getDiskPlaylists(uri: string): Promise<LocationSelection[]> {
+/**
+ * @param songUri
+ * @returns the playlists containing songUris
+ */
+export function getDiskPlaylists(songUri: string): Promise<LocationSelection[]> {
   // must use encodeURI!
-  return get<audiodb.LocationSelections>(`${DISK_PLAYLIST}?${toQueryParams(['uri', encodeURI(uri)])}`).then(
-    audiodb.toPlSelections
-  );
+  return get<audiodb.LocationSelections>(
+    `${DISK_PLAYLIST}?${toQueryParams(['uri', encodeURI(songUri)])}`
+  ).then(audiodb.toPlSelections);
 }
 
+/**
+ * @param songUri song to add to many playlists
+ * @param songTitle song's title
+ * @param playlists the playlists to add the song to
+ * @returns allocation outcome
+ */
 export function updateUriPlaylists(
-  uri: string,
-  title: string | null | undefined,
-  locationSelections: LocationSelection[]
+  songUri: string,
+  songTitle: string | null | undefined,
+  playlists: LocationSelection[]
 ): Promise<UriPlAllocationResult> {
   return post<audiodb.UriPlAllocationResult>(
-    DISK_PLAYLIST,
-    JSON.stringify(audiodb.toAudioDbLocationSelections(uri, title, locationSelections))
+    `${DISK_PLAYLIST}/add-song-to-playlists`,
+    JSON.stringify(audiodb.toAudioDbLocationSelections(songUri, songTitle, playlists))
   ).then(audiodb.toUriPlAllocationResult);
+}
+
+/**
+ * plUri e.g.: m3u/colinde.m3u8
+ */
+export function updateDiskPlContent(diskPlUri: string, songs: MediaLocation[]): Promise<void> {
+  // console.log(`[updatePlContent] plUri = ${diskPlUri}, songs:`, songs);
+  return postVoid(DISK_PLAYLIST, JSON.stringify(audiodb.toPlContentUpdateRequest(diskPlUri, songs)));
 }

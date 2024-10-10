@@ -1,8 +1,14 @@
+import { isM3uMpcRefUri, m3uMpcRefUriToFileName } from '../services/mpc';
+import Selectable from './Selectable';
+
 export function getNotFailed(result: UriPlAllocationResult) {
   return [...result.addedTo, ...result.removedFrom];
 }
 
-export function filterByMediaLocations(mediaLocations: MediaLocation[], selections: LocationSelection[]) {
+export function filterByMediaLocations<T extends MediaLocation>(
+  mediaLocations: MediaLocation[],
+  selections: T[]
+) {
   return selections.filter((sel) => mediaLocations.find((ml) => ml.uri == sel.uri));
 }
 
@@ -12,19 +18,13 @@ export interface UriPlAllocationResult {
   failedToChange: MediaLocation[];
 }
 
-export interface LocationSelection extends MediaLocation {
-  selected: boolean;
-}
+export interface LocationSelection extends MediaLocation, Selectable {}
 
 export interface MediaLocation {
   type: string;
   uri: string;
   formattedUri: string;
   title: string;
-}
-
-export function filterSelected(selections: LocationSelection[]) {
-  return selections.filter((it) => it.selected);
 }
 
 export function uriToTitle(uri: string | null | undefined) {
@@ -37,8 +37,8 @@ export function uriToTitle(uri: string | null | undefined) {
     } else {
       return uri;
     }
-  } else if (uri.startsWith('m3u:')) {
-    return decodeURIComponent(uri.substring(4));
+  } else if (isM3uMpcRefUri(uri)) {
+    return m3uMpcRefUriToFileName(uri);
   } else {
     return uri;
   }

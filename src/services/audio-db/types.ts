@@ -3,6 +3,8 @@ import * as appsong from '../../domain/song';
 import * as medialoc from '../../domain/media-location';
 import * as apphistory from '../../domain/history';
 import { sortByAbsDiff } from '../../lib/image';
+import Selectable from '../../domain/Selectable';
+import { m3uMpcRefUriToFileName } from '../mpc';
 
 export function toSongsWithImgUri(imgMaxEdge: number, audioDbSongs: Song[]): appsong.Song[] {
   if (imgMaxEdge <= 0) {
@@ -105,9 +107,8 @@ export interface LocationSelections {
   title?: string | null;
 }
 
-export interface LocationSelection {
+export interface LocationSelection extends Selectable {
   location: MediaLocation;
-  selected: boolean;
 }
 
 export interface Song {
@@ -131,4 +132,8 @@ export interface UriPlAllocationResult {
   addedTo: MediaLocation[];
   removedFrom: MediaLocation[];
   failedToChange: MediaLocation[];
+}
+
+export function toPlContentUpdateRequest(diskPlUri: string, songs: medialoc.MediaLocation[]) {
+  return { playlistUri: m3uMpcRefUriToFileName(diskPlUri), songUris: songs.map((it) => it.uri) };
 }

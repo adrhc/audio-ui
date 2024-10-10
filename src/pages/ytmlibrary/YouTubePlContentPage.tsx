@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongList, { RawSongsPageState, pickRawSongsPageState } from '../../hooks/list/useSongList';
+import useSongList, { RawSongsPageState, copyRawSongsPageState } from '../../hooks/list/useSongList';
 import { useParams } from 'react-router-dom';
 import { getYTPlContent } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
@@ -81,7 +81,7 @@ function YouTubePlContentPage() {
       return;
     }
     mergeCache(cacheName, (old) => {
-      const backup = { ...pickRawSongsPageState(state), scrollTop: scrollTop(old) };
+      const backup = { ...copyRawSongsPageState(state), scrollTop: scrollTop(old) };
       console.log(`[YouTubePlContentPage.backup] ${uri}:`, backup);
       return backup;
     });
@@ -107,7 +107,7 @@ function YouTubePlContentPage() {
         onScroll={scrollObserver}
         listRef={listRef}
         scrollTo={scrollTo}
-        onRealoadList={handleReaload}
+        onReloadList={handleReaload}
         onAddAllSongs={handleAddAll}
       />
     </PageTemplate>

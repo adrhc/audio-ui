@@ -6,6 +6,7 @@ import { createPlaylist } from '../services/audio-ws/audio-ws';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
+import { MOPIDY_PLAYLISTS_CACHE } from './mopidy-playlists/MopidyPlaylistsPage';
 
 const MIN_PL_NAME_LENGTH = 3;
 interface NewPlaylistPageState {
@@ -14,7 +15,7 @@ interface NewPlaylistPageState {
 
 function AddPlaylistPage() {
   const goBack = useGoBack();
-  const { online } = useContext(AppContext);
+  const { online, clearCache } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<NewPlaylistPageState>({ name: '' });
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,12 +32,13 @@ function AddPlaylistPage() {
         if (!success) {
           return { error: failMessage } as Partial<LoadingStateOrProvider<NewPlaylistPageState>>;
         } else {
+          clearCache(MOPIDY_PLAYLISTS_CACHE);
           goBack();
         }
       }),
       failMessage
     );
-  }, [goBack, trimmedName, sustain]);
+  }, [trimmedName, sustain, clearCache, goBack]);
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {

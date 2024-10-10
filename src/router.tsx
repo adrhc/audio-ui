@@ -21,6 +21,8 @@ import SongPlaylistsEditorPage from './pages/SongPlaylistsEditorPage';
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
 import AdminMenuPage from './pages/AdminMenuPage';
+import PlaylistEditOptionsPage from './pages/pl-editor/PlaylistEditOptionsPage';
+import PlEditFromCurrentPlayPage from './pages/pl-editor/PlEditFromCurrentPlayPage';
 
 const ROUTER = createHashRouter([
   {
@@ -55,6 +57,14 @@ const ROUTER = createHashRouter([
       {
         path: 'mopidy-playlists',
         element: <MopidyPlaylistsPage />,
+      },
+      {
+        path: 'playlist-edit-options',
+        element: <PlaylistEditOptionsPage />,
+      },
+      {
+        path: 'playlist-edit-from-current-play/:uri',
+        element: <PlEditFromCurrentPlayPage />,
       },
       {
         path: 'ytplcontent/:uri',

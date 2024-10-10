@@ -8,8 +8,8 @@ export default defineConfig({
     // they get with the original encoding to the upstream server
     proxy: {
       '/audio-ui/db-api/': {
-        target: 'http://192.168.0.1:8082', // NAS
-        // target: 'http://localhost:8082', // IDEA local development
+        // target: 'http://192.168.0.1:8082', // NAS
+        target: 'http://localhost:8082', // IDEA local development
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/audio-ui\/db-api\//, '/api/'),
       },

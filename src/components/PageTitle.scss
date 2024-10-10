@@ -1,8 +1,9 @@
 @mixin pageTitle {
   .title {
     text-align: center;
-    line-height: normal;
-    font-size: medium;
+    // line-height: normal !important;
+    // font-size: medium !important;
+    font-weight: 500 !important;
   }
 }
 

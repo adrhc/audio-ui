@@ -13,7 +13,7 @@ export interface SongListItemMenuParam {
   goToPreviousPage?: NoArgsProc;
   goToNextPage?: NoArgsProc;
   onAddAllSongs?: AddAllSongsFn;
-  onRealoadList?: NoArgsProc;
+  onReloadList?: NoArgsProc;
   bottom?: boolean;
 }
 
@@ -24,14 +24,14 @@ export function shouldShowListItemMenu({
   goToPreviousPage,
   goToNextPage,
   onAddAllSongs,
-  onRealoadList,
+  onReloadList,
   ...scrollToParam
 }: SongListItemMenuParam) {
   return (
     (pageBeforeExists && !!goToPreviousPage) ||
     showScrollTo({ songs, ...scrollToParam }) ||
     (pageAfterExists && !!goToNextPage) ||
-    !!onRealoadList ||
+    !!onReloadList ||
     (!!onAddAllSongs && !!songs.length)
   );
 }

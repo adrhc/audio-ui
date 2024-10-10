@@ -15,7 +15,7 @@ function SongListItemMenu({
   goToPreviousPage,
   goToNextPage,
   scrollTo,
-  onRealoadList,
+  onReloadList: onRealoadList,
   onAddAllSongs,
   bottom,
 }: SongListItemMenuParam) {

@@ -1,14 +1,19 @@
 import { LocationSelection } from '../../domain/media-location';
 
-export function plItemsCacheName(navigationUri?: string) {
-  return navigationUri ? `mopidy-playlist/${navigationUri}` : 'mopidy-playlist/unknown-playlist';
+/**
+ * @param plUri e.g. m3u/colinde.m3u8
+ */
+export function plItemsCacheName(plUri?: string) {
+  return plUri ? `mopidy-playlist/${plUri}` : 'mopidy-playlist/unknown-playlist';
 }
 
-export function toPlItemsCacheName(selection: LocationSelection) {
-  if (selection.type == 'DISK') {
-    const parts = decodeURIComponent(selection.uri).split('/');
+export function toPlItemsCacheName(plSelection: LocationSelection) {
+  if (plSelection.type == 'DISK') {
+    // e.g. m3u/colinde.m3u8
+    const parts = decodeURIComponent(plSelection.uri).split('/');
+    // has nothing to do with models.Ref.uri format (e.g. m3u:Marcin%20Patrzalek.m3u8)
     return `mopidy-playlist/m3u:${parts[parts.length - 1]}`;
   } else {
-    return `mopidy-playlist/${selection.uri}`;
+    return `mopidy-playlist/${plSelection.uri}`;
   }
 }

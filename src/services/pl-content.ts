@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 import { getYTPlContent } from './audio-db/audio-db';
 import { Song, isYtMusicPl, refsToSongs, sortSongs } from '../domain/song';
-import { getPlItems as getMpcPlItems, getPlaylists } from './mpc';
+import { getPlItems as getMpcPlItems, getPlaylists, isM3uMpcRefUri } from './mpc';
 import { getPlContent } from './audio-ws/audio-ws';
 
 /**
@@ -21,7 +21,7 @@ export function getPlaylistItems(imgMaxArea: number, uri: string): Promise<Song[
  */
 export function getMopidyPlItems(mopidy: Mopidy | undefined, uri: string): Promise<Song[]> {
   const songsPromise = getMpcPlItems(mopidy, uri).then(refsToSongs);
-  if (uri.startsWith('m3u:')) {
+  if (isM3uMpcRefUri(uri)) {
     // keeping the playlist order
     return songsPromise;
   } else {
@@ -35,7 +35,7 @@ export function getMopidyPlItems(mopidy: Mopidy | undefined, uri: string): Promi
  */
 export function getPlItems(imgMaxArea: number, uri: string): Promise<Song[]> {
   const songsPromise = getPlContent(imgMaxArea, uri);
-  if (uri.startsWith('m3u:')) {
+  if (isM3uMpcRefUri(uri)) {
     // keeping the playlist order
     return songsPromise;
   } else {

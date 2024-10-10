@@ -19,9 +19,9 @@ export type RawSongsPageState = {
   lastUsed?: Song | null;
 };
 
-export function pickRawSongsPageState(rawState?: RawSongsPageState | null) {
+export function copyRawSongsPageState(rawState?: RawSongsPageState | null) {
   return rawState == null
-    ? rawState
+    ? null
     : ({
         songs: rawState.songs,
         lastUsed: rawState.lastUsed,

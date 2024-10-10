@@ -1,6 +1,7 @@
 import { models } from 'mopidy';
 import { sortByAbsDiff } from '../lib/image';
-import { UriImagesMap } from '../services/mpc';
+import { isM3uMpcRefUri, m3uMpcRefUriToFileName, UriImagesMap } from '../services/mpc';
+import { MediaLocation } from './media-location';
 
 const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;
 
@@ -8,13 +9,9 @@ export type SongsPage = {
   entries: Song[];
 };
 
-export type Song = {
-  type: string;
-  uri: string;
-  formattedUri: string;
-  title: string;
+export interface Song extends MediaLocation {
   imgUri?: string | null;
-};
+}
 
 export function formatUri(uri: string | null | undefined) {
   if (!uri) {
@@ -26,8 +23,8 @@ export function formatUri(uri: string | null | undefined) {
     } else {
       return uri;
     }
-  } else if (uri.startsWith('m3u:')) {
-    return decodeURIComponent(uri.substring(4));
+  } else if (isM3uMpcRefUri(uri)) {
+    return m3uMpcRefUriToFileName(uri);
   } else {
     return uri;
   }
@@ -57,6 +54,14 @@ export function isYtMusicPl(song: Song | string) {
     return song.uri.startsWith('ytmusic:playlist:');
     // song.uri.startsWith('youtube:playlist:') ||
     // song.uri.startsWith('yt:playlist:')
+  }
+}
+
+export function isDiskPl(song: Song | string) {
+  if (typeof song == 'string') {
+    return song.endsWith('.m3u8');
+  } else {
+    return song.uri.endsWith('.m3u8');
   }
 }
 

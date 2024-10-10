@@ -1,5 +1,6 @@
 import { models } from 'mopidy';
 import { Song, formatUri } from './song';
+import Selectable from './Selectable';
 
 export function areSameTrack(tk1: TrackSong, tk2?: TrackSong): boolean {
   return tk1.tlid == tk2?.tlid && tk1.uri == tk2.uri;
@@ -17,10 +18,16 @@ export function removeSong(songs: TrackSong[], song: TrackSong) {
   return { songs: newSongs, songCloseToLastRemoved };
 }
 
-export type TrackSong = Song & {
+export function toSelectableTrackSong(songs: Song[], track: TrackSong): SelectableTrackSong {
+  return { ...track, selected: !!songs.find((s) => s.uri == track.uri) };
+}
+
+export interface SelectableTrackSong extends TrackSong, Selectable {}
+
+export interface TrackSong extends Song {
   tlid: number;
   artists?: string | null;
-};
+}
 
 export function songEquals(song: Song, currentSong?: TrackSong) {
   return song.uri == currentSong?.uri;

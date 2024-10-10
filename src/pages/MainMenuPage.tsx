@@ -65,6 +65,12 @@ function MainMenuPage() {
           </ListItemIcon>
           <ListItemText>Mopidy Playlists</ListItemText>
         </MenuItem>
+        <MenuItem component={Link} to="/playlist-edit-options">
+          <ListItemIcon>
+            <img src="btn/audio-playlist-icon-70.svg" className="playlist-edit-options" />
+          </ListItemIcon>
+          <ListItemText>Playlist Edit Options</ListItemText>
+        </MenuItem>
         {/* <Divider /> */}
         <MenuItem component={Link} to="/player">
           <ListItemIcon>

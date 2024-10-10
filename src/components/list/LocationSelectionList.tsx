@@ -7,7 +7,7 @@ import './LocationSelectionList.scss';
 
 interface LocationsSelectionListParam {
   selections: LocationSelection[];
-  onClick: (pl: MediaLocation) => void;
+  onClick: (ml: MediaLocation) => void;
 }
 
 function LocationSelectionList({
@@ -17,19 +17,19 @@ function LocationSelectionList({
 }: LoadingState<LocationsSelectionListParam>) {
   return (
     <LoadingList className="location-list" length={playlists.length} loading={loading}>
-      {playlists.map((pl, index) => (
+      {playlists.map((ml, index) => (
         <ListItem
           disablePadding
-          className={pl.type}
-          key={pl.title}
+          className={ml.type}
+          key={ml.uri}
           secondaryAction={
-            pl.selected && <CheckBoxOutlinedIcon onClick={() => onClick(pl)} sx={{ cursor: 'pointer' }} />
+            ml.selected && <CheckBoxOutlinedIcon onClick={() => onClick(ml)} sx={{ cursor: 'pointer' }} />
           }
         >
-          <ListItemButton onClick={() => onClick(pl)} sx={{ py: 0 }}>
+          <ListItemButton onClick={() => onClick(ml)} sx={{ py: 0 }}>
             <ListItemText
-              primary={`${index + 1}. ${pl.title}`}
-              secondary={pl.formattedUri}
+              primary={`${index + 1}. ${ml.title}`}
+              secondary={ml.formattedUri}
               sx={{ wordBreak: 'break-all', my: 0.5 }}
               primaryTypographyProps={{ fontSize: ['1.1rem', '0.95rem'] }}
             />

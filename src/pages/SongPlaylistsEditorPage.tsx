@@ -6,12 +6,10 @@ import {
   MediaLocation,
   UriPlAllocationResult,
   filterByMediaLocations,
-  filterSelected,
   getNotFailed,
 } from '../domain/media-location';
-import { LoadingStateOrProvider, useSustainableState } from '../hooks/useSustainableState';
+import { useSustainableState } from '../hooks/useSustainableState';
 import { getDiskPlaylists, updateUriPlaylists } from '../services/audio-db/audio-db';
-import { Typography } from '@mui/material';
 import PageTemplate from '../templates/PageTemplate';
 import LocationSelectionList from '../components/list/LocationSelectionList';
 import CreateConfirmButtonMenu from '../components/menu/CreateConfirmButtonMenu';
@@ -20,6 +18,8 @@ import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import PageTitle from '../components/PageTitle';
 import { toPlItemsCacheName } from './mopidy-playlists/MopidyPlItemsUtils';
+import { filterSelected } from '../domain/Selectable';
+import { toError } from './pl-editor/pl-editor-utils';
 import '/src/styles/wide-list-page.scss';
 
 interface SongPlaylistsEditorPageState {
@@ -66,7 +66,7 @@ function SongPlaylistsEditorPage() {
     (selections: LocationSelection[], result: UriPlAllocationResult) => {
       filterByMediaLocations(getNotFailed(result), selections).map(toPlItemsCacheName).forEach(clearCache);
       if (result.failedToChange.length) {
-        return toError(result.failedToChange);
+        return toError<SongPlaylistsEditorPageState>(result.failedToChange);
       } else {
         // console.log(`[SongPlaylistsEditorPage] selections: `, selections);
         goBack();
@@ -85,7 +85,7 @@ function SongPlaylistsEditorPage() {
   }, [decodedTitle, decodedUri, handleChangeResult, selections, sustain]);
 
   if (!decodedUri) {
-    return <Typography variant="h6">The song to search the locations for is missing!</Typography>;
+    return <PageTitle>The song to search the locations for is missing!</PageTitle>;
   }
 
   return (
@@ -110,9 +110,3 @@ function SongPlaylistsEditorPage() {
 }
 
 export default SongPlaylistsEditorPage;
-
-function toError(
-  failedToChange: MediaLocation[]
-): Partial<LoadingStateOrProvider<SongPlaylistsEditorPageState>> {
-  return { error: `Failed to change ${failedToChange.map((it) => it.title).join(',')}!` };
-}

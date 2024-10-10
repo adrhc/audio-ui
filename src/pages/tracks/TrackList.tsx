@@ -1,19 +1,21 @@
 import { IconButton, ListItem, ListItemButton, Stack } from '@mui/material';
 import { useCallback } from 'react';
-import { TrackSong } from '../../domain/track-song';
+import { SelectableTrackSong, TrackSong } from '../../domain/track-song';
 import TrackListItemText from '../../components/list/TrackListItemText';
 import SongListItemAvatar from '../../components/list/SongListItemAvatar';
 import { Link } from 'react-router-dom';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { LoadingState } from '../../lib/sustain';
 import LoadingList from '../../components/list/LoadingList';
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import './TrackList.scss';
 
 type TrackListParam = {
-  songs: TrackSong[];
+  songs: TrackSong[] | SelectableTrackSong[];
   currentSong?: TrackSong;
-  onRemove: (song: TrackSong) => void;
-  onClick: (song: TrackSong) => void;
+  onRemove?: (song: TrackSong) => void;
+  onClick?: (song: TrackSong) => void;
+  onSelect?: (song: SelectableTrackSong) => void;
   songCloseToLastRemoved?: TrackSong;
 };
 
@@ -23,6 +25,7 @@ function TrackList({
   currentSong,
   onRemove,
   onClick,
+  onSelect,
   songCloseToLastRemoved,
 }: LoadingState<TrackListParam>) {
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
@@ -41,27 +44,30 @@ function TrackList({
           key={track.tlid}
           secondaryAction={
             <Stack className="action">
-              <IconButton
-                className="upsert-pl"
-                component={Link}
-                to={`/song-playlists-editor/${encodeURIComponent(track.uri)}?${toQueryParams(['title', encodeURIComponent(track.title)])}`}
-              >
-                {/* <svg fill="grey">
-                  <image xlink:href="https://svgur.com/i/AFM.svg" src="btn/audio-playlist-icon.svg" />
-                </svg> */}
-                {/* <QueueMusicIcon /> */}
-                <img src="btn/audio-playlist-icon-70.svg" />
-              </IconButton>
-              <IconButton className="del-btn" onClick={() => onRemove(track)}>
-                <img src="btn/recycle-bin-line-icon.svg" />
-              </IconButton>
+              {!onSelect && (
+                <IconButton
+                  className="upsert-pl"
+                  component={Link}
+                  to={`/song-playlists-editor/${encodeURIComponent(track.uri)}?${toQueryParams(['title', encodeURIComponent(track.title)])}`}
+                >
+                  <img src="btn/audio-playlist-icon-70.svg" />
+                </IconButton>
+              )}
+              {onRemove && (
+                <IconButton className="del-btn" onClick={() => onRemove(track)}>
+                  <img src="btn/recycle-bin-line-icon.svg" />
+                </IconButton>
+              )}
+              {'selected' in track && track.selected && onSelect && (
+                <CheckBoxOutlinedIcon onClick={() => onSelect(track)} sx={{ cursor: 'pointer' }} />
+              )}
             </Stack>
           }
         >
           <ListItemButton
             autoFocus={shouldAutoFocus(track)}
             selected={track.tlid == currentSong?.tlid}
-            onClick={() => onClick(track)}
+            onClick={() => (onClick ?? onSelect)?.(track)}
           >
             <SongListItemAvatar song={track} />
             <TrackListItemText track={track} index={index + 1} />

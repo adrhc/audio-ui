@@ -6,12 +6,12 @@ export interface RefWithImages extends models.Ref<models.ModelType> {
   thumbnails?: models.Image[];
 }
 
-export function refWithImagesToSongs(imgMaxArea: number, rwis: RefWithImages[]): Song[] {
-  return rwis.map((rwi) => refWithImagesToSong(imgMaxArea, rwi));
+export function refWithImagesToSongs(rwis: RefWithImages[], imgMaxArea?: number): Song[] {
+  return rwis.map((rwi) => refWithImagesToSong(rwi, imgMaxArea));
 }
 
-export function refWithImagesToSong(imgMaxArea: number, rwi: RefWithImages): Song {
-  const sortedThumbnails = sortByAbsDiff(imgMaxArea, rwi.thumbnails);
+function refWithImagesToSong(rwi: RefWithImages, imgMaxArea?: number): Song {
+  const sortedThumbnails = imgMaxArea ? sortByAbsDiff(imgMaxArea, rwi.thumbnails) : null;
   const song = refToSong(rwi);
   return { ...song, imgUri: sortedThumbnails?.[0]?.uri };
 }

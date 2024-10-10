@@ -4,6 +4,20 @@ import { getArtists } from '../domain/track-song';
 
 export type UriImagesMap = { [index: string]: models.Image[] };
 
+/**
+ * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8
+ */
+export function isM3uMpcRefUri(uri: string) {
+  return uri.startsWith('m3u:');
+}
+
+/**
+ * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8
+ */
+export function m3uMpcRefUriToFileName(mpcRefUri: string) {
+  return decodeURIComponent(mpcRefUri.substring(4));
+}
+
 export function clearTrackList(mopidy: Mopidy | undefined) {
   return mopidy?.tracklist == null ? Promise.reject(MOPIDY_DISCONNECTED_ERROR) : mopidy.tracklist.clear();
 }
@@ -15,6 +29,9 @@ export function getPlItems(mopidy: Mopidy | undefined, uri: string): Promise<mod
     : mopidy.playlists.getItems({ uri }).then((it) => it ?? []);
 }
 
+/**
+ * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function getPlaylists(mopidy: Mopidy | undefined): Promise<models.Ref<any>[]> {
   return mopidy?.playlists == null ? Promise.reject(MOPIDY_DISCONNECTED_ERROR) : mopidy.playlists.asList();
