@@ -135,5 +135,5 @@ export interface UriPlAllocationResult {
 }
 
 export function toPlContentUpdateRequest(diskPlUri: string, songs: medialoc.MediaLocation[]) {
-  return { playlistUri: m3uMpcRefUriToFileName(diskPlUri), songUris: songs.map((it) => it.uri) };
+  return { playlistUri: m3uMpcRefUriToFileName(diskPlUri), songs };
 }
