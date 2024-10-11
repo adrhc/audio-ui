@@ -17,7 +17,7 @@ import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { useGoBack } from '../../hooks/useGoBack';
 import { SetFeedbackState } from '../../lib/sustain';
 import PageTitle from '../../components/PageTitle';
-import { toPlItemsCacheName } from '../local-playlists/PlaylistContentUtils';
+import { toPlContentCacheName } from '../local-playlists/PlaylistContentUtils';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
 import '/src/styles/wide-list-page.scss';
@@ -64,7 +64,7 @@ function SongPlaylistsEditorPage() {
 
   const handleChangeResult = useCallback(
     (selections: LocationSelection[], result: UriPlAllocationResult) => {
-      filterByMediaLocations(getNotFailed(result), selections).map(toPlItemsCacheName).forEach(clearCache);
+      filterByMediaLocations(getNotFailed(result), selections).map(toPlContentCacheName).forEach(clearCache);
       if (result.failedToChange.length) {
         return toError<SongPlaylistsEditorPageState>(result.failedToChange);
       } else {

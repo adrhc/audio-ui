@@ -3,11 +3,11 @@ import { LocationSelection } from '../../domain/media-location';
 /**
  * @param plUri e.g. m3u/colinde.m3u8
  */
-export function plItemsCacheName(plUri?: string) {
+export function plContentCacheName(plUri?: string) {
   return plUri ? `mopidy-playlist/${plUri}` : 'mopidy-playlist/unknown-playlist';
 }
 
-export function toPlItemsCacheName(plSelection: LocationSelection) {
+export function toPlContentCacheName(plSelection: LocationSelection) {
   if (plSelection.type == 'DISK') {
     // e.g. m3u/colinde.m3u8
     const parts = decodeURIComponent(plSelection.uri).split('/');
