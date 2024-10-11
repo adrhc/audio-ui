@@ -22,9 +22,7 @@ function LocationSelectionList({
           disablePadding
           className={ml.type}
           key={ml.uri}
-          secondaryAction={
-            ml.selected && <CheckBoxOutlinedIcon onClick={() => onClick(ml)} sx={{ cursor: 'pointer' }} />
-          }
+          secondaryAction={ml.selected && <CheckBoxOutlinedIcon onClick={() => onClick(ml)} />}
         >
           <ListItemButton onClick={() => onClick(ml)} sx={{ py: 0 }}>
             <ListItemText
