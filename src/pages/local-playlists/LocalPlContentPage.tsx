@@ -31,7 +31,7 @@ function LocalPlContentPage() {
     scrollObserver,
     currentSong,
   } = useSongList<RawSongsPageState>(cacheName);
-  const { online, getCache, mergeCache } = useContext(AppContext);
+  const { online, getCache, mergeCache, clearCache } = useContext(AppContext);
   const cache = getCache(cacheName) as LocalPlContentPageCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -80,6 +80,7 @@ function LocalPlContentPage() {
   useEffect(() => {
     if (!state.songs.length) {
       console.log(`[MopidyPlItemsPage.cache] no songs to cache! ${uri}`);
+      clearCache(cacheName);
       return;
     }
     mergeCache(cacheName, (old) => {
@@ -87,7 +88,7 @@ function LocalPlContentPage() {
       console.log(`[MopidyPlItemsPage.cache] ${uri}:`, cache);
       return cache;
     });
-  }, [mergeCache, cacheName, state, uri]);
+  }, [mergeCache, cacheName, state, uri, clearCache]);
 
   return (
     <PageTemplate
