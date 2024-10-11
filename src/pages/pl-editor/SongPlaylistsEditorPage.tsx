@@ -1,25 +1,25 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { AppContext } from '../components/app/AppContext';
+import { AppContext } from '../../components/app/AppContext';
 import {
   LocationSelection,
   MediaLocation,
   UriPlAllocationResult,
   filterByMediaLocations,
   getNotFailed,
-} from '../domain/media-location';
-import { useSustainableState } from '../hooks/useSustainableState';
-import { getDiskPlaylists, updateUriPlaylists } from '../services/audio-db/audio-db';
-import PageTemplate from '../templates/PageTemplate';
-import LocationSelectionList from '../components/list/LocationSelectionList';
-import CreateConfirmButtonMenu from '../components/menu/CreateConfirmButtonMenu';
-import { useURLQueryParams } from '../hooks/useURLSearchParams';
-import { useGoBack } from '../hooks/useGoBack';
-import { SetFeedbackState } from '../lib/sustain';
-import PageTitle from '../components/PageTitle';
-import { toPlItemsCacheName } from './mopidy-playlists/MopidyPlItemsUtils';
-import { filterSelected } from '../domain/Selectable';
-import { toError } from './pl-editor/pl-editor-utils';
+} from '../../domain/media-location';
+import { useSustainableState } from '../../hooks/useSustainableState';
+import { getDiskPlaylists, updateUriPlaylists } from '../../services/audio-db/audio-db';
+import PageTemplate from '../../templates/PageTemplate';
+import LocationSelectionList from '../../components/list/LocationSelectionList';
+import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
+import { useURLQueryParams } from '../../hooks/useURLSearchParams';
+import { useGoBack } from '../../hooks/useGoBack';
+import { SetFeedbackState } from '../../lib/sustain';
+import PageTitle from '../../components/PageTitle';
+import { toPlItemsCacheName } from '../mopidy-playlists/MopidyPlItemsUtils';
+import { filterSelected } from '../../domain/Selectable';
+import { toError } from './pl-editor-utils';
 import '/src/styles/wide-list-page.scss';
 
 interface SongPlaylistsEditorPageState {

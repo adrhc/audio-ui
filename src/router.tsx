@@ -17,7 +17,7 @@ import YouTubePlContentPage from './pages/ytmlibrary/YouTubePlContentPage';
 import YTMusicLibraryPage from './pages/ytmlibrary/YTMusicLibraryPage';
 import MopidyPlaylistsPage from './pages/mopidy-playlists/MopidyPlaylistsPage';
 import MopidyPlItemsPage from './pages/mopidy-playlists/MopidyPlItemsPage';
-import SongPlaylistsEditorPage from './pages/SongPlaylistsEditorPage';
+import SongPlaylistsEditorPage from './pages/pl-editor/SongPlaylistsEditorPage';
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
 import AdminMenuPage from './pages/AdminMenuPage';
