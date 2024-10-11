@@ -1,5 +1,5 @@
 import { IconButton, ListItem, ListItemButton, Stack } from '@mui/material';
-import { useCallback } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { SelectableTrackSong, TrackSong } from '../../domain/track-song';
 import TrackListItemText from '../../components/list/TrackListItemText';
 import SongListItemAvatar from '../../components/list/SongListItemAvatar';
@@ -17,6 +17,7 @@ type TrackListParam = {
   onClick?: (song: TrackSong) => void;
   onSelect?: (song: SelectableTrackSong) => void;
   songCloseToLastRemoved?: TrackSong;
+  menu?: ReactNode;
 };
 
 function TrackList({
@@ -27,6 +28,7 @@ function TrackList({
   onClick,
   onSelect,
   songCloseToLastRemoved,
+  menu,
 }: LoadingState<TrackListParam>) {
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
   const shouldAutoFocus = useCallback(
@@ -38,6 +40,11 @@ function TrackList({
 
   return (
     <LoadingList className="track-list" loading={loading} length={songs.length}>
+      {menu && (
+        <ListItem key="TrackListItemTopMenu" className="MENU" disablePadding>
+          {menu}
+        </ListItem>
+      )}
       {songs.map((track, index) => (
         <ListItem
           disablePadding
@@ -74,6 +81,11 @@ function TrackList({
           </ListItemButton>
         </ListItem>
       ))}
+      {menu && (
+        <ListItem key="TrackListItemBottomMenu" className="MENU" disablePadding>
+          {menu}
+        </ListItem>
+      )}
     </LoadingList>
   );
 }

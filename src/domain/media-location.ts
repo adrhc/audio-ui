@@ -1,6 +1,16 @@
 import { isM3uMpcRefUri, m3uMpcRefUriToFileName } from '../services/mpc';
 import Selectable from './Selectable';
 
+export function uriEqual(uri1: string, uri2: string) {
+  // console.log(`uri1: ${fixUriEncoding(uri1)}`);
+  // console.log(`uri2: ${fixUriEncoding(uri2)}`);
+  return uri1 == uri2 || fixUriEncoding(uri1) == fixUriEncoding(uri2);
+}
+
+function fixUriEncoding(uri: string) {
+  return uri?.replaceAll("'", '%27')?.replaceAll('(', '%28')?.replaceAll(')', '%29')?.replaceAll(',', '%2C');
+}
+
 export function getNotFailed(result: UriPlAllocationResult) {
   return [...result.addedTo, ...result.removedFrom];
 }

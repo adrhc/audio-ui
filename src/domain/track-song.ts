@@ -1,6 +1,7 @@
 import { models } from 'mopidy';
 import { Song, formatUri } from './song';
 import Selectable from './Selectable';
+import { uriEqual } from './media-location';
 
 export function areSameTrack(tk1: TrackSong, tk2?: TrackSong): boolean {
   return tk1.tlid == tk2?.tlid && tk1.uri == tk2.uri;
@@ -19,7 +20,7 @@ export function removeSong(songs: TrackSong[], song: TrackSong) {
 }
 
 export function toSelectableTrackSong(songs: Song[], track: TrackSong): SelectableTrackSong {
-  return { ...track, selected: !!songs.find((s) => s.uri == track.uri) };
+  return { ...track, selected: !!songs.find((s) => uriEqual(s.uri, track.uri)) };
 }
 
 export interface SelectableTrackSong extends TrackSong, Selectable {}

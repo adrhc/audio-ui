@@ -15,6 +15,7 @@ import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { filterSelected } from '../../domain/Selectable';
 import { useGoBack } from '../../hooks/useGoBack';
 import { plItemsCacheName } from '../mopidy-playlists/MopidyPlItemsUtils';
+import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
 
 interface PlEditFromCurrentPlayPageState {
   selections: SelectableTrackSong[];
@@ -68,6 +69,14 @@ function PlEditFromCurrentPlayPage() {
     }
   }, [clearCache, goBack, selections, sustain, uri]);
 
+  const removeAll = useCallback(() => {
+    setState((old) => ({ ...old, selections: old.selections.map((it) => ({ ...it, selected: false })) }));
+  }, [setState]);
+
+  const selectAll = useCallback(() => {
+    setState((old) => ({ ...old, selections: old.selections.map((it) => ({ ...it, selected: true })) }));
+  }, [setState]);
+
   if (!uri) {
     return <PageTitle>The playlist to edit is wrong!</PageTitle>;
   }
@@ -84,7 +93,12 @@ function PlEditFromCurrentPlayPage() {
       }
       disableSpinner={true}
     >
-      <TrackList songs={selections} loading={loading} onSelect={handleSelection} />
+      <TrackList
+        songs={selections}
+        loading={loading}
+        onSelect={handleSelection}
+        menu={<ListItemMinusPlusMenu onMinus={removeAll} onPlus={selectAll} />}
+      />
     </PageTemplate>
   );
 }
