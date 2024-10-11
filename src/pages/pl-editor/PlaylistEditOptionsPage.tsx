@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { getM3u8Playlists } from '../../services/pl-content';
 import { scrollTop } from '../../domain/scroll';
 import { Song } from '../../domain/song';
-import { MOPIDY_PLAYLISTS_CACHE, MopidyPlaylistsCache } from '../mopidy-playlists/MopidyPlaylistsPage';
+import { MOPIDY_PLAYLISTS_CACHE, MopidyPlaylistsCache } from '../local-playlists/MopidyPlaylistsPage';
 import { toQueryParams } from '../../lib/path-param-utils';
 import '/src/styles/wide-list-page.scss';
 import './PlaylistEditOptionsPage.scss';

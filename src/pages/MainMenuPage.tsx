@@ -60,10 +60,10 @@ function MainMenuPage() {
           </ListItemIcon>
           <ListItemText>YouTube Playlists</ListItemText>
         </MenuItem>
-        <MenuItem component={Link} to="/mopidy-playlists">
+        <MenuItem component={Link} to="/local-playlists">
           <ListItemIcon>
-            {/* <img src="mopidy.png" className="mopidy-playlists" /> */}
-            <SaveOutlinedIcon className="mopidy-playlists" />
+            {/* <img src="mopidy.png" className="local-playlists" /> */}
+            <SaveOutlinedIcon className="local-playlists" />
           </ListItemIcon>
           <ListItemText>Local Playlists</ListItemText>
         </MenuItem>

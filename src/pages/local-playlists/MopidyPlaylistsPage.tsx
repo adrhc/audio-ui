@@ -18,7 +18,7 @@ import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-list-page.scss';
 
 export type MopidyPlaylistsCache = { scrollTop: number } & RawSongsPageState;
-export const MOPIDY_PLAYLISTS_CACHE = 'mopidy-playlists';
+export const MOPIDY_PLAYLISTS_CACHE = 'local-playlists';
 
 function MopidyPlaylistsPage() {
   const navigate = useNavigate();

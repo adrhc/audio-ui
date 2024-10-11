@@ -14,7 +14,7 @@ import TrackList from '../tracks/TrackList';
 import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { filterSelected } from '../../domain/Selectable';
 import { useGoBack } from '../../hooks/useGoBack';
-import { plItemsCacheName } from '../mopidy-playlists/MopidyPlItemsUtils';
+import { plItemsCacheName } from '../local-playlists/MopidyPlItemsUtils';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
 import '/src/styles/wide-list-page.scss';
 import './PlEditFromCurrentPlayPage.scss';
