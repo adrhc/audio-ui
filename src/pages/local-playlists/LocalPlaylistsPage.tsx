@@ -22,7 +22,7 @@ export const MOPIDY_PLAYLISTS_CACHE = 'local-playlists';
 
 function LocalPlaylistsPage() {
   const navigate = useNavigate();
-  const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
+  const { mopidy, online, getCache, mergeCache, clearCache } = useContext(AppContext);
   const { state, sustain, setState, listRef, scrollObserver, scrollTo, currentSong } =
     useSongList<RawSongsPageState>(MOPIDY_PLAYLISTS_CACHE);
   const cache = getCache(MOPIDY_PLAYLISTS_CACHE) as MopidyPlaylistsCache;
@@ -63,6 +63,7 @@ function LocalPlaylistsPage() {
   useEffect(() => {
     if (!state.songs.length) {
       console.log(`[MopidyPlaylistsPage.useEffect] no songs to backup!`);
+      clearCache(MOPIDY_PLAYLISTS_CACHE);
       return;
     }
     mergeCache(MOPIDY_PLAYLISTS_CACHE, (old) => {
@@ -70,7 +71,7 @@ function LocalPlaylistsPage() {
       console.log(`[MopidyPlaylistsPage] stateBackup:`, backup);
       return backup;
     });
-  }, [mergeCache, state]);
+  }, [clearCache, mergeCache, state]);
 
   const handlePlSelection = useCallback(
     (song: Song) => {
@@ -80,7 +81,7 @@ function LocalPlaylistsPage() {
         console.log(`[MopidyPlaylistsPage] stateBackup:`, backup);
         return backup;
       });
-      navigate(`/mopidy-plitems/${song.uri}`);
+      navigate(`/local-playlist-content/${song.uri}`);
     },
     [mergeCache, navigate]
   );
@@ -111,6 +112,10 @@ function LocalPlaylistsPage() {
     [currentSong, mopidy, sustain]
   );
 
+  const goToPlAdd = useCallback(() => {
+    navigate('/add-playlist');
+  }, [navigate]);
+
   return (
     <PageTemplate
       className="wide-list-page"
@@ -125,6 +130,7 @@ function LocalPlaylistsPage() {
         loading={state.loading}
         currentSong={currentSong}
         onAdd={handleAddPl}
+        onAddAllSongs={goToPlAdd}
         onInsert={handleInsertPl}
         onClick={handlePlSelection}
         onReloadList={handleReaload}

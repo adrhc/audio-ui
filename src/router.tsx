@@ -51,7 +51,7 @@ const ROUTER = createHashRouter([
         element: <SongPlaylistsEditorPage />,
       },
       {
-        path: 'mopidy-plitems/:uri',
+        path: 'local-playlist-content/:uri',
         element: <LocalPlContentPage />,
       },
       {
