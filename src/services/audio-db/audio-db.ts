@@ -2,7 +2,7 @@ import Mopidy, { models } from 'mopidy';
 import { get, post, postVoid } from '../rest';
 import { Song, toSongExtsWithImgUri, toSongUris } from '../../domain/song';
 import { HistoryPosition, HistoryPage } from '../../domain/history';
-import { LocationSelection, MediaLocation, UriPlAllocationResult } from '../../domain/media-location';
+import { LocationSelection, UriPlAllocationResult } from '../../domain/media-location';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { getImages } from '../mpc';
 import * as audiodb from './types';
@@ -108,7 +108,7 @@ export function updateUriPlaylists(
 /**
  * plUri e.g.: m3u/colinde.m3u8
  */
-export function updateDiskPlContent(diskPlUri: string, songs: LocationSelection[]): Promise<void> {
-  // console.log(`[updatePlContent] plUri = ${diskPlUri}, songs:`, songs);
-  return postVoid(DISK_PLAYLIST, JSON.stringify(audiodb.toPlContentUpdateRequest(diskPlUri, songs)));
+export function updateDiskPlContent(diskPlUri: string, selections: LocationSelection[]): Promise<void> {
+  // console.log(`[updatePlContent] plUri = ${diskPlUri}, selections:`, selections);
+  return postVoid(DISK_PLAYLIST, JSON.stringify(audiodb.toPlContentUpdateRequest(diskPlUri, selections)));
 }
