@@ -12,7 +12,6 @@ import { useMaxEdge } from '../../constants';
 import { SelectableTrackSong } from '../../domain/track-song';
 import TrackList from '../tracks/TrackList';
 import { updateDiskPlContent } from '../../services/audio-db/audio-db';
-import { filterSelected } from '../../domain/Selectable';
 import { useGoBack } from '../../hooks/useGoBack';
 import { plContentCacheName } from '../local-playlists/LocalPlContentUtils';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
