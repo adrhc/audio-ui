@@ -17,7 +17,7 @@ import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { useGoBack } from '../../hooks/useGoBack';
 import { SetFeedbackState } from '../../lib/sustain';
 import PageTitle from '../../components/PageTitle';
-import { toPlItemsCacheName } from '../local-playlists/MopidyPlItemsUtils';
+import { toPlItemsCacheName } from '../local-playlists/PlaylistContentUtils';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
 import '/src/styles/wide-list-page.scss';

@@ -9,12 +9,12 @@ import { scrollTop } from '../../domain/scroll';
 import { getPlaylistItems } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
-import { plItemsCacheName } from './MopidyPlItemsUtils';
+import { plItemsCacheName } from './PlaylistContentUtils';
 import '/src/styles/wide-list-page.scss';
 
 type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsPageState;
 
-function MopidyPlItemsPage() {
+function PlaylistContentPage() {
   const { uri } = useParams();
   const cacheName = plItemsCacheName(uri);
   console.log(`[MopidyPlItemsPage] uri = ${uri}, cacheName = ${cacheName}`);
@@ -116,4 +116,4 @@ function MopidyPlItemsPage() {
   );
 }
 
-export default MopidyPlItemsPage;
+export default PlaylistContentPage;
