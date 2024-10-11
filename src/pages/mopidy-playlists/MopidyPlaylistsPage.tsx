@@ -13,7 +13,7 @@ import {
   addYtMusicPlAfterAndRemember,
   addYtMusicPlAndRemember,
 } from '../../services/tracklist';
-import { getMopidyPlaylists } from '../../services/pl-content';
+import { getM3u8Playlists } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-list-page.scss';
 
@@ -33,7 +33,7 @@ function MopidyPlaylistsPage() {
   const handleReaload = useCallback(() => {
     console.log(`[MopidyPlaylistsPage.useEffect] loading the Mopidy playlists`);
     sustain(
-      getMopidyPlaylists(mopidy).then((songs) => ({ songs })),
+      getM3u8Playlists(mopidy).then((songs) => ({ songs })),
       `Failed to load the Mopidy playlists!`
     );
   }, [mopidy, sustain]);

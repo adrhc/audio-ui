@@ -5,6 +5,7 @@ import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import { useSustainableUnknownState } from '../hooks/useSustainableState';
 import { useContext } from 'react';
 import { AppContext } from '../components/app/AppContext';
@@ -61,9 +62,10 @@ function MainMenuPage() {
         </MenuItem>
         <MenuItem component={Link} to="/mopidy-playlists">
           <ListItemIcon>
-            <img src="mopidy.png" className="mopidy-playlists" />
+            {/* <img src="mopidy.png" className="mopidy-playlists" /> */}
+            <SaveOutlinedIcon className="mopidy-playlists" />
           </ListItemIcon>
-          <ListItemText>Mopidy Playlists</ListItemText>
+          <ListItemText>Local Playlists</ListItemText>
         </MenuItem>
         <MenuItem component={Link} to="/playlist-edit-options">
           <ListItemIcon>

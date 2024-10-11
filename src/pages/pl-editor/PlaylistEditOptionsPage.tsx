@@ -6,9 +6,9 @@ import { AppContext } from '../../components/app/AppContext';
 import useSongList, { copyRawSongsPageState, RawSongsPageState } from '../../hooks/list/useSongList';
 import { SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
-import { getMopidyPlaylists } from '../../services/pl-content';
+import { getM3u8Playlists } from '../../services/pl-content';
 import { scrollTop } from '../../domain/scroll';
-import { isDiskPl, Song } from '../../domain/song';
+import { Song } from '../../domain/song';
 import { MOPIDY_PLAYLISTS_CACHE, MopidyPlaylistsCache } from '../mopidy-playlists/MopidyPlaylistsPage';
 import { toQueryParams } from '../../lib/path-param-utils';
 import '/src/styles/wide-list-page.scss';
@@ -27,7 +27,7 @@ function PlaylistEditOptionsPage() {
   const handleReload = useCallback(() => {
     console.log(`[PlaylistEditOptionsPage.useEffect] loading the Mopidy playlists`);
     sustain(
-      getMopidyPlaylists(mopidy).then((songs) => ({ songs: songs.filter(isDiskPl) })),
+      getM3u8Playlists(mopidy).then((songs) => ({ songs })),
       `Failed to load the Mopidy playlists!`
     );
   }, [mopidy, sustain]);

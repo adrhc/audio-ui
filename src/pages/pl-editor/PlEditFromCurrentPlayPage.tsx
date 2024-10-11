@@ -59,10 +59,10 @@ function PlEditFromCurrentPlayPage() {
     [setState]
   );
 
-  const allocate = useCallback(() => {
+  const persistSelection = useCallback(() => {
     if (uri) {
       sustain(
-        updateDiskPlContent(uri, filterSelected(selections)).then(() => {
+        updateDiskPlContent(uri, selections).then(() => {
           clearCache(plItemsCacheName(uri));
           goBack();
         }),
@@ -91,7 +91,7 @@ function PlEditFromCurrentPlayPage() {
       title={<PageTitle>{title}</PageTitle>}
       hideTop={true}
       bottom={
-        <CreateConfirmButtonMenu onAccept={allocate} acceptDisabled={!uri || !online || !selections.length} />
+        <CreateConfirmButtonMenu onAccept={persistSelection} acceptDisabled={!uri || !online || !selections.length} />
       }
       disableSpinner={true}
     >
