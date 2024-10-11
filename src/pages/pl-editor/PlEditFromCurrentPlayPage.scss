@@ -1,0 +1,9 @@
+.pl-edit-current-play-list {
+    > li {
+      .MuiListItemButton-root {
+        // overwrite src/styles/list/list-mixins.scss:liAction
+        min-height: auto;
+      }
+    }
+  }
+  

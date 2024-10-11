@@ -18,6 +18,7 @@ type TrackListParam = {
   onSelect?: (song: SelectableTrackSong) => void;
   songCloseToLastRemoved?: TrackSong;
   menu?: ReactNode;
+  className?: string;
 };
 
 function TrackList({
@@ -29,6 +30,7 @@ function TrackList({
   onSelect,
   songCloseToLastRemoved,
   menu,
+  className,
 }: LoadingState<TrackListParam>) {
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
   const shouldAutoFocus = useCallback(
@@ -39,7 +41,7 @@ function TrackList({
   );
 
   return (
-    <LoadingList className="track-list" loading={loading} length={songs.length}>
+    <LoadingList className={`${className} track-list`} loading={loading} length={songs.length}>
       {menu && (
         <ListItem key="TrackListItemTopMenu" className="MENU" disablePadding>
           {menu}
@@ -66,7 +68,10 @@ function TrackList({
                 </IconButton>
               )}
               {'selected' in track && track.selected && onSelect && (
-                <CheckBoxOutlinedIcon onClick={() => onSelect(track)} sx={{ cursor: 'pointer' }} />
+                // <CheckBoxOutlinedIcon className="secondary-action-btn" onClick={() => onSelect(track)} />
+                <IconButton className="select-btn" onClick={() => onSelect(track)}>
+                  <CheckBoxOutlinedIcon />
+                </IconButton>
               )}
             </Stack>
           }

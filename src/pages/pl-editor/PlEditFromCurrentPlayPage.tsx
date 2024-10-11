@@ -16,6 +16,8 @@ import { filterSelected } from '../../domain/Selectable';
 import { useGoBack } from '../../hooks/useGoBack';
 import { plItemsCacheName } from '../mopidy-playlists/MopidyPlItemsUtils';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
+import '/src/styles/wide-list-page.scss';
+import './PlEditFromCurrentPlayPage.scss';
 
 interface PlEditFromCurrentPlayPageState {
   selections: SelectableTrackSong[];
@@ -94,6 +96,7 @@ function PlEditFromCurrentPlayPage() {
       disableSpinner={true}
     >
       <TrackList
+        className="pl-edit-current-play-list"
         songs={selections}
         loading={loading}
         onSelect={handleSelection}

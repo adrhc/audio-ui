@@ -29,6 +29,10 @@
         height: $iconSizePx;
       }
     }
+    /* svg.secondary-action-btn {
+      margin: spacing(1);
+      cursor: pointer;
+    } */
   }
   .MuiListItemButton-root {
     // each action btn has a height of $iconSize + 2 (i.e. padding top + bottom)
@@ -82,7 +86,7 @@
 @mixin liMenuMedia {
   > li.MENU {
     @media (max-width: $tablet) {
-      @include liMenu(calc(#{$btnMenuHeightPhone} * 3/4));
+      @include liMenu(calc(#{$btnMenuHeightPhone} * 3 / 4));
     }
     @media (min-width: $tablet) {
       @include liMenu(auto);
