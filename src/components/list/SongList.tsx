@@ -18,6 +18,7 @@ interface SongsListParam extends SongListItemMenuParam {
   onClick?: SongHandler;
   lastUsed?: Song | null;
   onScroll?: (e: React.UIEvent<HTMLUListElement>) => void;
+  className?: string;
 }
 
 function SongList({
@@ -31,6 +32,7 @@ function SongList({
   lastUsed,
   listRef,
   onScroll,
+  className,
   ...partialNavParam
 }: LoadingState<SongsListParam>) {
   // console.log(`[SongsList] lastUsed:`, lastUsed);
@@ -40,7 +42,7 @@ function SongList({
 
   return (
     <LoadingList
-      className="song-list"
+      className={`${className} song-list`}
       onScroll={onScroll}
       listRef={listRef}
       loading={loading}

@@ -82,6 +82,10 @@ function PlaylistEditOptionsPage() {
     [mergeCache, navigate]
   );
 
+  const goToPlAdd = useCallback(() => {
+    navigate('/add-playlist');
+  }, [navigate]);
+
   return (
     <PageTemplate
       className="wide-list-page"
@@ -92,10 +96,12 @@ function PlaylistEditOptionsPage() {
       disableSpinner={true}
     >
       <SongList
+        className="pl-edit-options-list"
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
         onClick={handlePlSelection}
+        onAddAllSongs={goToPlAdd}
         onReloadList={handleReload}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}
