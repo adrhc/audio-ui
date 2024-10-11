@@ -6,7 +6,7 @@ import { createPlaylist } from '../services/audio-ws/audio-ws';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
-import { MOPIDY_PLAYLISTS_CACHE } from './local-playlists/MopidyPlaylistsPage';
+import { MOPIDY_PLAYLISTS_CACHE } from './local-playlists/LocalPlaylistsPage';
 
 const MIN_PL_NAME_LENGTH = 3;
 interface NewPlaylistPageState {

@@ -20,7 +20,7 @@ import '/src/styles/wide-list-page.scss';
 export type MopidyPlaylistsCache = { scrollTop: number } & RawSongsPageState;
 export const MOPIDY_PLAYLISTS_CACHE = 'local-playlists';
 
-function MopidyPlaylistsPage() {
+function LocalPlaylistsPage() {
   const navigate = useNavigate();
   const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
   const { state, sustain, setState, listRef, scrollObserver, scrollTo, currentSong } =
@@ -137,4 +137,4 @@ function MopidyPlaylistsPage() {
   );
 }
 
-export default MopidyPlaylistsPage;
+export default LocalPlaylistsPage;

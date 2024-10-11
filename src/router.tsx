@@ -15,7 +15,7 @@ import PlaybackHistoryPage from './pages/history/PlaybackHistoryPage';
 import LoginPage from './pages/login/LoginPage';
 import YouTubePlContentPage from './pages/ytmlibrary/YouTubePlContentPage';
 import YTMusicLibraryPage from './pages/ytmlibrary/YTMusicLibraryPage';
-import MopidyPlaylistsPage from './pages/local-playlists/MopidyPlaylistsPage';
+import LocalPlaylistsPage from './pages/local-playlists/LocalPlaylistsPage';
 import MopidyPlItemsPage from './pages/local-playlists/MopidyPlItemsPage';
 import SongPlaylistsEditorPage from './pages/pl-editor/SongPlaylistsEditorPage';
 import AddPlaylistPage from './pages/AddPlaylistPage';
@@ -56,7 +56,7 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'local-playlists',
-        element: <MopidyPlaylistsPage />,
+        element: <LocalPlaylistsPage />,
       },
       {
         path: 'playlist-edit-options',
