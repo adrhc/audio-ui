@@ -29,12 +29,5 @@ $liPX: spacing(0.5);
       @include liAvatarAtLeft(25%, $liPX);
     }
   }
-  > li.MENU {
-    @media (max-width: $tablet) {
-      @include liMenu(calc(#{$btnMenuHeightPhone} * 3/4));
-    }
-    @media (min-width: $tablet) {
-      @include liMenu(auto);
-    }
-  }
+  @include liMenuMedia;
 }

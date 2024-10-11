@@ -1,3 +1,4 @@
+@use '/src/styles/vars.scss' as *;
 @use '/src/styles/functions.scss' as *;
 
 @mixin liButton($btnPX, $fontSize) {
@@ -74,6 +75,17 @@
     .MuiListItemText-root {
       flex-grow: 0;
       width: 100%;
+    }
+  }
+}
+
+@mixin liMenuMedia {
+  > li.MENU {
+    @media (max-width: $tablet) {
+      @include liMenu(calc(#{$btnMenuHeightPhone} * 3/4));
+    }
+    @media (min-width: $tablet) {
+      @include liMenu(auto);
     }
   }
 }
