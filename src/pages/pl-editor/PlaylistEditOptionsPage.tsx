@@ -12,6 +12,7 @@ import { isDiskPl, Song } from '../../domain/song';
 import { MOPIDY_PLAYLISTS_CACHE, MopidyPlaylistsCache } from '../mopidy-playlists/MopidyPlaylistsPage';
 import { toQueryParams } from '../../lib/path-param-utils';
 import '/src/styles/wide-list-page.scss';
+import './PlaylistEditOptionsPage.scss';
 
 function PlaylistEditOptionsPage() {
   const navigate = useNavigate();
