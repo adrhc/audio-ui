@@ -71,7 +71,7 @@ function MainMenuPage() {
           <ListItemIcon>
             <img src="btn/audio-playlist-icon-70.svg" className="playlist-edit-options" />
           </ListItemIcon>
-          <ListItemText>Playlist Edit Options</ListItemText>
+          <ListItemText>Playlist Editor</ListItemText>
         </MenuItem>
         {/* <Divider /> */}
         <MenuItem component={Link} to="/player">
