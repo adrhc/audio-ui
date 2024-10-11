@@ -14,7 +14,7 @@ import TrackList from '../tracks/TrackList';
 import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { filterSelected } from '../../domain/Selectable';
 import { useGoBack } from '../../hooks/useGoBack';
-import { plContentCacheName } from '../local-playlists/PlaylistContentUtils';
+import { plContentCacheName } from '../local-playlists/LocalPlContentUtils';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
 import '/src/styles/wide-list-page.scss';
 import './PlEditFromCurrentPlayPage.scss';

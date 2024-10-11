@@ -9,12 +9,12 @@ import { scrollTop } from '../../domain/scroll';
 import { getPlaylistItems } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
-import { plContentCacheName } from './PlaylistContentUtils';
+import { plContentCacheName } from './LocalPlContentUtils';
 import '/src/styles/wide-list-page.scss';
 
-type MopidyPlItemsPageCache = { scrollTop: number } & RawSongsPageState;
+type LocalPlContentPageCache = { scrollTop: number } & RawSongsPageState;
 
-function PlaylistContentPage() {
+function LocalPlContentPage() {
   const { uri } = useParams();
   const cacheName = plContentCacheName(uri);
   console.log(`[MopidyPlItemsPage] uri = ${uri}, cacheName = ${cacheName}`);
@@ -32,7 +32,7 @@ function PlaylistContentPage() {
     currentSong,
   } = useSongList<RawSongsPageState>(cacheName);
   const { online, getCache, mergeCache } = useContext(AppContext);
-  const cache = getCache(cacheName) as MopidyPlItemsPageCache;
+  const cache = getCache(cacheName) as LocalPlContentPageCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
   console.log(`[MopidyPlItemsPage] cacheName = ${cacheName}:`, {
@@ -116,4 +116,4 @@ function PlaylistContentPage() {
   );
 }
 
-export default PlaylistContentPage;
+export default LocalPlContentPage;

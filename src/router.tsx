@@ -16,7 +16,7 @@ import LoginPage from './pages/login/LoginPage';
 import YouTubePlContentPage from './pages/ytmlibrary/YouTubePlContentPage';
 import YTMusicLibraryPage from './pages/ytmlibrary/YTMusicLibraryPage';
 import LocalPlaylistsPage from './pages/local-playlists/LocalPlaylistsPage';
-import PlaylistContentPage from './pages/local-playlists/PlaylistContentPage';
+import LocalPlContentPage from './pages/local-playlists/LocalPlContentPage';
 import SongPlaylistsEditorPage from './pages/pl-editor/SongPlaylistsEditorPage';
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
@@ -52,7 +52,7 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'mopidy-plitems/:uri',
-        element: <PlaylistContentPage />,
+        element: <LocalPlContentPage />,
       },
       {
         path: 'local-playlists',
