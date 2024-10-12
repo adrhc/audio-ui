@@ -13,6 +13,8 @@ import { Song, isYtMusicPl } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
 import { AddAllSongsFn } from '../../domain/SongListItemMenuParam';
 import useCachedList, { UseCachedList } from './useCachedList';
+import { NoArgsProc } from '../../domain/types';
+import { useNavigate } from 'react-router-dom';
 
 export type RawSongsPageState = {
   songs: Song[];
@@ -33,6 +35,7 @@ export interface UseSongsList<S extends RawSongsPageState> extends UseCachedList
   handleAdd: (song: Song) => void;
   handleAddAll: AddAllSongsFn;
   handleInsert: (song: Song) => void;
+  goToPlAdd: NoArgsProc;
   currentSong?: TrackSong;
   mopidy?: Mopidy;
 }
@@ -41,11 +44,13 @@ export default function useSongList<S extends RawSongsPageState>(
   cacheName: string,
   defaultState?: Partial<LoadingState<S>> | null
 ): UseSongsList<S> {
+  const navigate = useNavigate();
+  const { mopidy, currentSong } = useContext(AppContext);
+  
   const { sustain, ...cachedListRest } = useCachedList<S>(cacheName, {
     songs: [],
     ...defaultState,
   } as LoadingState<S>);
-  const { mopidy, currentSong } = useContext(AppContext);
   // console.log(`[useSongsList]`, { cache, state });
 
   const handleSelection = useCallback(
@@ -95,6 +100,10 @@ export default function useSongList<S extends RawSongsPageState>(
     [mopidy, sustain, currentSong]
   );
 
+  const goToPlAdd = useCallback(() => {
+    navigate('/add-playlist');
+  }, [navigate]);
+
   return {
     ...cachedListRest,
     sustain,
@@ -102,6 +111,7 @@ export default function useSongList<S extends RawSongsPageState>(
     handleAdd,
     handleAddAll,
     handleInsert,
+    goToPlAdd,
     currentSong,
     mopidy,
   };

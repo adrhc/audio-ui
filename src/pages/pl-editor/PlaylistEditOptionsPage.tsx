@@ -17,8 +17,9 @@ import '/src/styles/list/list-with-1x-secondary-action.scss';
 function PlaylistEditOptionsPage() {
   const navigate = useNavigate();
   const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
-  const { state, sustain, setState, listRef, scrollObserver, scrollTo, currentSong } =
+  const { state, sustain, setState, listRef, scrollObserver, scrollTo, goToPlAdd, currentSong } =
     useSongList<RawSongsPageState>(MOPIDY_PLAYLISTS_CACHE);
+
   const cache = getCache(MOPIDY_PLAYLISTS_CACHE) as MopidyPlaylistsCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -56,7 +57,11 @@ function PlaylistEditOptionsPage() {
   // cache the current state
   useEffect(() => {
     if (!state.songs.length) {
-      console.log(`[PlaylistEditOptionsPage.useEffect] no songs to backup!`);
+      mergeCache(MOPIDY_PLAYLISTS_CACHE, () => {
+        console.log(`[PlaylistEditOptionsPage] no songs to backup!`);
+        const backup = { lastUsed: state.lastUsed, scrollTop: 0, songs: [] };
+        return backup;
+      });
       return;
     }
     mergeCache(MOPIDY_PLAYLISTS_CACHE, (old) => {
@@ -81,10 +86,6 @@ function PlaylistEditOptionsPage() {
     },
     [mergeCache, navigate]
   );
-
-  const goToPlAdd = useCallback(() => {
-    navigate('/add-playlist');
-  }, [navigate]);
 
   return (
     <PageTemplate
