@@ -16,21 +16,23 @@ import useCachedList, { UseCachedList } from './useCachedList';
 import { NoArgsProc } from '../../domain/types';
 import { useNavigate } from 'react-router-dom';
 
-export type RawSongsPageState = {
+/**
+ * The purpose of this structure is to provide the basic state
+ * (and cache) structure for the features extending useSongList.
+ */
+export interface ThinSongListState {
   songs: Song[];
   lastUsed?: Song | null;
-};
-
-export function copyRawSongsPageState(rawState?: RawSongsPageState | null) {
-  return rawState == null
-    ? null
-    : ({
-        songs: rawState.songs,
-        lastUsed: rawState.lastUsed,
-      } as RawSongsPageState);
 }
 
-export interface UseSongsList<S extends RawSongsPageState> extends UseCachedList<S> {
+export function copyThinSongListState(rawState?: ThinSongListState | null): ThinSongListState {
+  return {
+    songs: rawState == null ? [] : rawState.songs,
+    lastUsed: rawState?.lastUsed,
+  };
+}
+
+export interface UseSongList<S extends ThinSongListState> extends UseCachedList<S> {
   handleSelection: (song: Song) => void;
   handleAdd: (song: Song) => void;
   handleAddAll: AddAllSongsFn;
@@ -40,13 +42,13 @@ export interface UseSongsList<S extends RawSongsPageState> extends UseCachedList
   mopidy?: Mopidy;
 }
 
-export default function useSongList<S extends RawSongsPageState>(
+export default function useSongList<S extends ThinSongListState>(
   cacheName: string,
   defaultState?: Partial<LoadingState<S>> | null
-): UseSongsList<S> {
+): UseSongList<S> {
   const navigate = useNavigate();
   const { mopidy, currentSong } = useContext(AppContext);
-  
+
   const { sustain, ...cachedListRest } = useCachedList<S>(cacheName, {
     songs: [],
     ...defaultState,
@@ -67,9 +69,11 @@ export default function useSongList<S extends RawSongsPageState>(
   const handleAddAll = useCallback(
     (songs: Song[]) => {
       // console.log(`[useSongsList:handleAddAll] songs:\n`, songs);
-      sustain(addSongsAndRemember(mopidy, ...songs), /* {
+      sustain(
+        addSongsAndRemember(mopidy, ...songs) /* {
         error: `Failed to add ${songs.length} songs!`,
-      } as Partial<LoadingState<S>> */);
+      } as Partial<LoadingState<S>> */
+      );
     },
     [mopidy, sustain]
   );
@@ -80,7 +84,7 @@ export default function useSongList<S extends RawSongsPageState>(
       // addYTMPlAndRemember uses /playlist/content instead of Mopidy to replace "ytmusic:" with "youtube:"
       const addFn = isYtMusicPl(song) ? addYtMusicPlAndRemember : addSongsAndRemember;
       sustain(
-        addFn(mopidy, song)?.then(() => ({ lastUsed: song }) as Partial<S>),
+        addFn(mopidy, song)?.then(() => ({ lastUsed: song }) as Partial<S>)
         // { error: `Failed to add ${song.title}!`, lastUsed: song } as Partial<LoadingState<S>>
       );
     },

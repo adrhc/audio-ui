@@ -3,7 +3,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import SongList from '../../components/list/SongList';
 import { AppContext } from '../../components/app/AppContext';
-import useSongList, { copyRawSongsPageState, RawSongsPageState } from '../../hooks/list/useSongList';
+import useSongList, { copyThinSongListState, ThinSongListState } from '../../hooks/list/useSongList';
 import { SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
 import { getM3u8Playlists } from '../../services/pl-content';
@@ -18,7 +18,7 @@ function PlaylistEditOptionsPage() {
   const navigate = useNavigate();
   const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
   const { state, sustain, setState, listRef, scrollObserver, scrollTo, goToPlAdd, currentSong } =
-    useSongList<RawSongsPageState>(MOPIDY_PLAYLISTS_CACHE);
+    useSongList<ThinSongListState>(MOPIDY_PLAYLISTS_CACHE);
 
   const cache = getCache(MOPIDY_PLAYLISTS_CACHE) as MopidyPlaylistsCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
@@ -65,7 +65,7 @@ function PlaylistEditOptionsPage() {
       return;
     }
     mergeCache(MOPIDY_PLAYLISTS_CACHE, (old) => {
-      const backup = { ...copyRawSongsPageState(state), scrollTop: scrollTop(old) };
+      const backup = { ...copyThinSongListState(state), scrollTop: scrollTop(old) };
       console.log(`[PlaylistEditOptionsPage] stateBackup:`, backup);
       return backup;
     });

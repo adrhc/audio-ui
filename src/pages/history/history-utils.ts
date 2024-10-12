@@ -1,17 +1,19 @@
 import { HistoryPage, HistoryPosition } from '../../domain/history';
-import { RawSongsPageState } from '../../hooks/list/useSongList';
+import { ThinSongListState } from '../../hooks/list/useSongList';
 import { LoadingState } from '../../lib/sustain';
 
-export type RawPlaybackHistoryPageState = {
+export interface RawPlaybackHistoryPageState extends ThinSongListState {
   completePageSize: number;
   prevSongsCount: number;
   before?: HistoryPosition;
   after?: HistoryPosition;
   pageBeforeExists?: boolean;
   pageAfterExists?: boolean;
-} & RawSongsPageState;
+}
 
-export type HistoryCache = { scrollTop: number } & RawPlaybackHistoryPageState;
+export interface HistoryCache extends RawPlaybackHistoryPageState {
+  scrollTop: number;
+}
 
 export function toPartialState(prevSongsCount: number, page: HistoryPage) {
   return {

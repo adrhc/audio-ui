@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../components/app/AppContext';
-import useSongList, { RawSongsPageState, copyRawSongsPageState } from '../../hooks/list/useSongList';
+import useSongList, { ThinSongListState, copyThinSongListState } from '../../hooks/list/useSongList';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
@@ -12,7 +12,9 @@ import { useMaxEdge } from '../../constants';
 import { plContentCacheName } from './LocalPlContentUtils';
 import '/src/styles/wide-page.scss';
 
-type LocalPlContentPageCache = { scrollTop: number } & RawSongsPageState;
+interface LocalPlContentPageCache extends ThinSongListState {
+  scrollTop: number;
+}
 
 function LocalPlContentPage() {
   const { uri } = useParams();
@@ -30,7 +32,7 @@ function LocalPlContentPage() {
     scrollTo,
     scrollObserver,
     currentSong,
-  } = useSongList<RawSongsPageState>(cacheName);
+  } = useSongList<ThinSongListState>(cacheName);
   const { online, getCache, mergeCache, clearCache } = useContext(AppContext);
   const cache = getCache(cacheName) as LocalPlContentPageCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
@@ -84,7 +86,7 @@ function LocalPlContentPage() {
       return;
     }
     mergeCache(cacheName, (old) => {
-      const cache = { ...copyRawSongsPageState(state), scrollTop: scrollTop(old) };
+      const cache = { ...copyThinSongListState(state), scrollTop: scrollTop(old) };
       console.log(`[MopidyPlItemsPage.cache] ${uri}:`, cache);
       return cache;
     });

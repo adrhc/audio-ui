@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import SongList from '../../components/list/SongList';
 import { useMaxEdge } from '../../constants';
-import useSongList, { RawSongsPageState } from '../../hooks/list/useSongList';
+import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { AppContext } from '../../components/app/AppContext';
 import { ScrollPosition } from '../../domain/scroll';
@@ -14,9 +14,9 @@ import { toQueryParams } from '../../lib/path-param-utils';
 import { SetFeedbackState } from '../../lib/sustain';
 import './SongSearchPage.scss';
 
-type RawSongsSearchPageState = {
+interface RawSongsSearchPageState extends ThinSongListState {
   draftExpression?: string | null;
-} & RawSongsPageState;
+}
 
 type SongSearchCache = { searchExpression: string } & ScrollPosition & RawSongsSearchPageState;
 
