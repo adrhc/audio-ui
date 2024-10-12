@@ -10,7 +10,7 @@ import { useMaxEdge } from '../../constants';
 import { TrackSong, removeSong } from '../../domain/track-song';
 import TrackListMenu from '../../components/menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/wide-list-page.scss';
+import '/src/styles/wide-page.scss';
 
 type TrackListPageState = {
   songs: TrackSong[];
@@ -66,7 +66,7 @@ export default function TrackListPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}

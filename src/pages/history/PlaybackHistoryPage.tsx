@@ -14,7 +14,7 @@ import { AppContext } from '../../components/app/AppContext';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
-import '/src/styles/wide-list-page.scss';
+import '/src/styles/wide-page.scss';
 
 function PlaybackHistoryPage() {
   const { mopidy, getCache, mergeCache } = useContext(AppContext);
@@ -154,7 +154,7 @@ function PlaybackHistoryPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}

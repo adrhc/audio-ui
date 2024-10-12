@@ -20,7 +20,7 @@ import PageTitle from '../../components/PageTitle';
 import { toPlContentCacheName } from '../local-playlists/LocalPlContentUtils';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
-import '/src/styles/wide-list-page.scss';
+import '/src/styles/wide-page.scss';
 
 interface SongPlaylistsEditorPageState {
   selections: LocationSelection[];
@@ -90,7 +90,7 @@ function SongPlaylistsEditorPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       title={<PageTitle>{decodedTitle}</PageTitle>}

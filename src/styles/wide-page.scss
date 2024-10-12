@@ -1,0 +1,7 @@
+@mixin widePage {
+  .wide-page {
+    max-width: 768px;
+  }
+}
+
+@include widePage;

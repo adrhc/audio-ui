@@ -1,8 +1,8 @@
 @use '/src/styles/vars.scss' as *;
 @use '/src/styles/functions.scss' as *;
-@use '/src/styles/wide-list-page.scss' as *;
+@use '/src/styles/wide-page.scss' as *;
 
-@include wideListPage;
+@include widePage;
 
 .text-search-button {
   background-color: $background !important;

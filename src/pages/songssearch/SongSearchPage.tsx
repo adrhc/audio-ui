@@ -137,7 +137,7 @@ function SongSearchPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}

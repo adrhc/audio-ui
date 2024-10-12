@@ -10,7 +10,7 @@ import { getPlaylistItems } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import { plContentCacheName } from './LocalPlContentUtils';
-import '/src/styles/wide-list-page.scss';
+import '/src/styles/wide-page.scss';
 
 type LocalPlContentPageCache = { scrollTop: number } & RawSongsPageState;
 
@@ -92,7 +92,7 @@ function LocalPlContentPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}

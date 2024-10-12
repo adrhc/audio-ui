@@ -15,7 +15,7 @@ import {
 } from '../../services/tracklist';
 import { getM3u8Playlists } from '../../services/pl-content';
 import { SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/wide-list-page.scss';
+import '/src/styles/wide-page.scss';
 
 export type MopidyPlaylistsCache = { scrollTop: number } & RawSongsPageState;
 export const MOPIDY_PLAYLISTS_CACHE = 'local-playlists';
@@ -118,7 +118,7 @@ function LocalPlaylistsPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}

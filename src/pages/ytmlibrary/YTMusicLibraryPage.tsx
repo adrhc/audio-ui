@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { scrollTop } from '../../domain/scroll';
 import { SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
-import '/src/styles/wide-list-page.scss';
+import '/src/styles/wide-page.scss';
 
 type YouTubePlaylistsCache = { scrollTop: number } & RawSongsPageState;
 
@@ -92,7 +92,7 @@ function YTMusicLibraryPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}

@@ -15,7 +15,7 @@ import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { useGoBack } from '../../hooks/useGoBack';
 import { plContentCacheName } from '../local-playlists/LocalPlContentUtils';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
-import '/src/styles/wide-list-page.scss';
+import '/src/styles/wide-page.scss';
 import './PlEditFromCurrentPlayPage.scss';
 
 interface PlEditFromCurrentPlayPageState {
@@ -84,7 +84,7 @@ function PlEditFromCurrentPlayPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       title={<PageTitle>{title}</PageTitle>}

@@ -11,8 +11,8 @@ import { scrollTop } from '../../domain/scroll';
 import { Song } from '../../domain/song';
 import { MOPIDY_PLAYLISTS_CACHE, MopidyPlaylistsCache } from '../local-playlists/LocalPlaylistsPage';
 import { toQueryParams } from '../../lib/path-param-utils';
-import '/src/styles/wide-list-page.scss';
-import './PlaylistEditOptionsPage.scss';
+import '/src/styles/wide-page.scss';
+import '/src/styles/list/list-with-1x-secondary-action.scss';
 
 function PlaylistEditOptionsPage() {
   const navigate = useNavigate();
@@ -88,7 +88,7 @@ function PlaylistEditOptionsPage() {
 
   return (
     <PageTemplate
-      className="wide-list-page"
+      className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
       hideTop={true}
@@ -96,7 +96,7 @@ function PlaylistEditOptionsPage() {
       disableSpinner={true}
     >
       <SongList
-        className="pl-edit-options-list"
+        className="list-with-1x-secondary-action"
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
