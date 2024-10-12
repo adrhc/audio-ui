@@ -19,12 +19,14 @@ interface RawSongsSearchPageState extends ThinSongListState {
 
 interface SongSearchCache extends ScrollPosition, RawSongsSearchPageState {
   searchExpression: string;
+  rand?: string;
+  // moveToTop?: boolean;
 }
 
 function SongSearchPage() {
   const searchRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const { search: searchExpression, rand } = useURLQueryParams('search', 'rand');
+  const { search: searchExpression } = useURLQueryParams('search');
   const {
     state,
     sustain,
@@ -62,16 +64,13 @@ function SongSearchPage() {
       console.log(`[SongsSearchPage.useEffect/search] searching for:`, searchExpression);
       sustain(
         searchSongs(imgMaxEdge, searchExpression).then((songs) => {
-          if (searchExpression != cache?.searchExpression) {
-            mergeCache((old) => ({ ...old, scrollTop: 0 }));
-          }
+          mergeCache((old) => ({ ...old, scrollTop: 0 }));
           return { songs, draftExpression: searchExpression };
         }),
         `Failed to search for ${searchExpression}!`
       );
     }
   }, [
-    cache?.searchExpression,
     imgMaxEdge,
     mergeCache,
     searchExpression,
@@ -80,7 +79,7 @@ function SongSearchPage() {
     // "rand" is used to force the search at page load even when the searchExpression
     // didn't change; it is used because even if the search criteria is the same the
     // result might differ because, e.g. YouTube database might meanwhile changed.
-    rand,
+    cache?.rand,
   ]);
 
   // scroll position after loading the search result
@@ -94,16 +93,25 @@ function SongSearchPage() {
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
 
   // cache the current state
+  const curatedState = keepRawSongsSearchPageStateOnly(removeLoadingAttributes(state) as SongSearchCache);
   useEffect(() => {
-    mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state), searchExpression }));
-  }, [mergeCache, searchExpression, state]);
+    mergeCache((old) => ({ ...old, ...curatedState, searchExpression }));
+  }, [mergeCache, searchExpression, curatedState]);
 
   const handleSearch = useCallback(() => {
     if (draftExpression) {
       // console.log(`[SongsSearchPage.handleSearch] draftExpression:`, draftExpression);
-      // Without searchExpression changed in the cache, than later, the useEffect that
-      // invokes searchSongs would invoke searchSongs twice at 1st search per expression.
-      mergeCache((old) => ({ ...old, searchExpression: draftExpression }));
+      mergeCache((old) => ({
+        ...old,
+        // Without searchExpression changed in the cache, than later, the useEffect that
+        // invokes searchSongs would invoke searchSongs twice at 1st search per expression.
+        searchExpression: draftExpression,
+        // forcing the search even when searching the same expression again
+        rand: Math.random(),
+        // requesting scroll to top when the search expression is a new one
+        // moveToTop: draftExpression != cache.searchExpression,
+        // moveToTop: false,
+      }));
       navigate(`/songssearch?${toSongsSearchParams(draftExpression)}`, { replace: true });
     } else {
       setState((old) => ({ ...old, error: 'The search expression must not be empty!' }));
@@ -152,6 +160,13 @@ function SongSearchPage() {
 
 export default SongSearchPage;
 
+function keepRawSongsSearchPageStateOnly(state: SongSearchCache): RawSongsSearchPageState {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { searchExpression, rand, ...result } = { ...state };
+  return result;
+}
+
 function toSongsSearchParams(search: string) {
-  return toQueryParams(['search', search], ['rand', `${Math.random()}`]);
+  // return toQueryParams(['search', search], ['rand', `${Math.random()}`]);
+  return toQueryParams(['search', search]);
 }

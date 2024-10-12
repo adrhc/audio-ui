@@ -42,15 +42,15 @@ function LocalPlContentPage() {
   const imgMaxEdge = useMaxEdge();
 
   const loadPlContent = useCallback(() => {
-    if (!uri) {
-      console.log(`[LocalPlContentPage.loadPlContent] can't load "null" the Mopidy playlist!`);
-      return;
+    if (uri) {
+      console.log(`[LocalPlContentPage.loadPlContent] loading ${uri}`);
+      sustain(
+        getPlaylistItems(imgMaxEdge, uri).then((songs) => ({ songs })),
+        `Failed to load the playlist!`
+      );
+    } else {
+      console.log(`[LocalPlContentPage.loadPlContent] "uri" is empty!`);
     }
-    console.log(`[LocalPlContentPage.loadPlContent] loading ${uri}`);
-    sustain(
-      getPlaylistItems(imgMaxEdge, uri).then((songs) => ({ songs })),
-      `Failed to load the playlist!`
-    );
   }, [imgMaxEdge, sustain, uri]);
 
   // loading the playlist if not already loaded
@@ -74,11 +74,7 @@ function LocalPlContentPage() {
 
   // cache the current state
   useEffect(() => {
-    mergeCache((old) => {
-      const cache = { ...old, ...removeLoadingAttributes(state) };
-      console.log(`[LocalPlContentPage.cache] ${uri}:`, cache);
-      return cache;
-    });
+    mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
   }, [mergeCache, state, uri, clearCache]);
 
   return (

@@ -49,11 +49,12 @@ function LocalPlaylistsPage() {
 
   // loading the library if not already loaded
   useEffect(() => {
-    if (!songsIsEmpty) {
+    if (songsIsEmpty) {
+      console.log(`[LocalPlaylistsPage.useEffect] online = ${online}`);
+      online && handleReaload();
+    } else {
       console.log(`[LocalPlaylistsPage.useEffect] the local playlists are already loaded!`);
-      return;
     }
-    online && handleReaload();
   }, [handleReaload, online, songsIsEmpty]);
 
   // scroll after loading the library

@@ -55,8 +55,13 @@ export default function useSongList<S extends ThinSongListState>(
     ...cache,
   } as LoadingState<S> & ScrollPosition;
   // the cache contains scrollTop which might not be part of S!
-  if (defaultState && !('scrollTop' in defaultState)) {
+  if (!defaultState || (defaultState && !('scrollTop' in defaultState))) {
     delete properDefaultState.scrollTop;
+  } else if ('scrollTop' in properDefaultState) {
+    console.warn(`[useSongList] keeping state.scrollTop = ${properDefaultState?.scrollTop}`, {
+      defaultState,
+      properDefaultState,
+    });
   }
 
   const [state, sustain, setState] = useSustainableState<S>(properDefaultState);

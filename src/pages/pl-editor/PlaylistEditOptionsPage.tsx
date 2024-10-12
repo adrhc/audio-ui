@@ -66,11 +66,7 @@ function PlaylistEditOptionsPage() {
 
   // cache the current state
   useEffect(() => {
-    mergeCache((old) => {
-      const backup = { ...old, ...removeLoadingAttributes(state) };
-      console.log(`[PlaylistEditOptionsPage] stateBackup:`, backup);
-      return backup;
-    });
+    mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
   }, [mergeCache, state]);
 
   const handlePlSelection = useCallback(
