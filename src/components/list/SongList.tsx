@@ -15,6 +15,7 @@ interface SongsListParam extends SongListItemMenuParam {
   currentSong?: TrackSong;
   onAdd?: SongHandler;
   onInsert?: SongHandler;
+  onDelete?: SongHandler;
   onClick?: SongHandler;
   lastUsed?: Song | null;
   onScroll?: (e: React.UIEvent<HTMLUListElement>) => void;
@@ -28,6 +29,7 @@ function SongList({
   currentSong,
   onAdd,
   onInsert,
+  onDelete,
   onClick,
   lastUsed,
   listRef,
@@ -71,6 +73,7 @@ function SongList({
           currentSong={currentSong}
           onAdd={onAdd}
           onInsert={onInsert}
+          onDelete={onDelete}
           onClick={onClick}
         />
       ))}

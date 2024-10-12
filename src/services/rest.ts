@@ -9,8 +9,8 @@ export function get<T>(url: string): Promise<T> {
   });
 }
 
-export function remove(url: string) {
-  return fetch(url, { method: 'DELETE', headers: headers() }).then((response) => {
+export function remove(url: string, body?: BodyInit | null): Promise<void> {
+  return fetch(url, { method: 'DELETE', headers: headers(), body }).then((response) => {
     if (!response.ok) {
       return Promise.reject(new Error(response.statusText));
     }

@@ -14,6 +14,7 @@ type SongListItemParam = {
   index: number;
   onAdd?: SongHandler;
   onInsert?: SongHandler;
+  onDelete?: SongHandler;
   onClick?: SongHandler;
 };
 
@@ -25,6 +26,7 @@ function SongListItem({
   index,
   onAdd,
   onInsert,
+  onDelete,
   onClick,
 }: SongListItemParam) {
   // console.log(`[SongListItem]`, { song, lastUsed });
@@ -36,7 +38,7 @@ function SongListItem({
   );
 
   const songCount = 1 + prevSongsCount + index;
-  const showActions = onInsert || onAdd;
+  const showActions = onInsert || onAdd || onDelete;
   return (
     <ListItem
       disablePadding
@@ -60,6 +62,11 @@ function SongListItem({
             {onAdd && (
               <IconButton className="insert-btn" onClick={() => onAdd(song)}>
                 <img src="btn/plus-square-line-icon.svg" />
+              </IconButton>
+            )}
+            {onDelete && (
+              <IconButton className="del-btn" onClick={() => onDelete(song)}>
+                <img src="btn/recycle-bin-line-icon.svg" />
               </IconButton>
             )}
           </Stack>

@@ -137,3 +137,7 @@ export interface UriPlAllocationResult {
 export function toPlContentUpdateRequest(diskPlUri: string, selections: medialoc.LocationSelection[]) {
   return { playlistUri: m3uMpcRefUriToFileName(diskPlUri), selections };
 }
+
+export function toPlRemoveRequest(diskPlUri: string) {
+  return { playlistUri: m3uMpcRefUriToFileName(diskPlUri) };
+}

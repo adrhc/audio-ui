@@ -11,6 +11,7 @@ import { Song } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
 import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
+import { removeDiskPlaylist } from '../../services/audio-db/audio-db';
 
 export const PLAYLISTS_EDIT_CACHE = 'playlists/edit';
 
@@ -33,10 +34,10 @@ function PlaylistEditorPage() {
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[PlaylistEditOptionsPage]`, { currentSong, cache, state });
+  console.log(`[PlaylistEditorPage]`, { currentSong, cache, state });
 
   const handleReload = useCallback(() => {
-    console.log(`[PlaylistEditOptionsPage.useEffect] loading the Mopidy playlists`);
+    console.log(`[PlaylistEditorPage.useEffect] loading the Mopidy playlists`);
     sustain(
       getM3u8Playlists(mopidy).then((songs) => ({ songs })),
       `Failed to load the Mopidy playlists!`
@@ -46,7 +47,7 @@ function PlaylistEditorPage() {
   // loading the library if not already loaded
   useEffect(() => {
     if (!songsIsEmpty) {
-      console.log(`[PlaylistEditOptionsPage.useEffect] the Mopidy playlists are already loaded!`);
+      console.log(`[PlaylistEditorPage.useEffect] the Mopidy playlists are already loaded!`);
       return;
     }
     online && handleReload();
@@ -56,10 +57,10 @@ function PlaylistEditorPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[PlaylistEditOptionsPage.useEffect] the library isn't loaded yet or is empty!`);
+      console.log(`[PlaylistEditorPage.useEffect] the library isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[PlaylistEditOptionsPage] scrolling to ${cachedScrollTop} after loading the library`);
+    console.log(`[PlaylistEditorPage] scrolling to ${cachedScrollTop} after loading the library`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
@@ -69,20 +70,24 @@ function PlaylistEditorPage() {
     mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
   }, [mergeCache, state]);
 
-  const handlePlSelection = useCallback(
+  const handleClick = useCallback(
     (playlist: Song) => {
-      // console.log(`[PlaylistEditOptionsPage.handlePlSelection] song:`, song);
-      mergeCache((old) => {
-        const backup = { ...old, lastUsed: playlist };
-        console.log(`[PlaylistEditOptionsPage] stateBackup:`, backup);
-        return backup;
-      });
+      // console.log(`[PlaylistEditorPage.handlePlSelection] song:`, song);
+      mergeCache((old) => ({ ...old, lastUsed: playlist }));
       // navigate(`/playlist-edit-from-current-play/${encodeURIComponent(song.uri)}?${toQueryParams(['title', encodeURIComponent(song.title)])}`);
       navigate(
         `/playlist-edit-from-current-play/${playlist.uri}?${toQueryParams(['title', playlist.title])}`
       );
     },
     [mergeCache, navigate]
+  );
+
+  const removePlaylist = useCallback(
+    (playlist: Song) => {
+      console.info(`[PlaylistEditorPage.removePlaylist] playlist:`, playlist);
+      sustain(removeDiskPlaylist(playlist.uri), `Failed to remove the playlist ${playlist.formattedUri}!`);
+    },
+    [sustain]
   );
 
   return (
@@ -99,7 +104,8 @@ function PlaylistEditorPage() {
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
-        onClick={handlePlSelection}
+        onClick={handleClick}
+        onDelete={removePlaylist}
         onAddAllSongs={goToPlAdd}
         onReloadList={handleReload}
         lastUsed={state.lastUsed}

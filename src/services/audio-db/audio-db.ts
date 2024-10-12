@@ -1,5 +1,5 @@
 import Mopidy, { models } from 'mopidy';
-import { get, post, postVoid } from '../rest';
+import { get, post, postVoid, remove } from '../rest';
 import { Song, toSongExtsWithImgUri, toSongUris } from '../../domain/song';
 import { HistoryPosition, HistoryPage } from '../../domain/history';
 import { LocationSelection, UriPlAllocationResult } from '../../domain/media-location';
@@ -111,4 +111,12 @@ export function updateUriPlaylists(
 export function updateDiskPlContent(diskPlUri: string, selections: LocationSelection[]): Promise<void> {
   // console.log(`[updatePlContent] plUri = ${diskPlUri}, selections:`, selections);
   return postVoid(DISK_PLAYLIST, JSON.stringify(audiodb.toPlContentUpdateRequest(diskPlUri, selections)));
+}
+
+/**
+ * plUri e.g.: m3u/colinde.m3u8
+ */
+export function removeDiskPlaylist(diskPlUri: string): Promise<void> {
+  // console.log(`[updatePlContent] plUri = ${diskPlUri}, selections:`, selections);
+  return remove(DISK_PLAYLIST, JSON.stringify(audiodb.toPlRemoveRequest(diskPlUri)));
 }
