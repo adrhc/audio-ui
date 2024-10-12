@@ -14,7 +14,7 @@ import '/src/styles/list/list-with-1x-secondary-action.scss';
 
 export const PLAYLISTS_EDIT_CACHE = 'playlists/edit';
 
-function PlaylistEditOptionsPage() {
+function PlaylistEditorPage() {
   const navigate = useNavigate();
   const { mopidy, online } = useContext(AppContext);
   const {
@@ -111,4 +111,4 @@ function PlaylistEditOptionsPage() {
   );
 }
 
-export default PlaylistEditOptionsPage;
+export default PlaylistEditorPage;

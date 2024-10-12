@@ -7,7 +7,7 @@ import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
 import { LOCAL_PLAYLISTS_CACHE } from './local-playlists/LocalPlaylistsPage';
-import { PLAYLISTS_EDIT_CACHE } from './pl-editor/PlaylistEditOptionsPage';
+import { PLAYLISTS_EDIT_CACHE } from './pl-editor/PlaylistEditorPage';
 
 const MIN_PL_NAME_LENGTH = 3;
 interface NewPlaylistPageState {
