@@ -16,7 +16,7 @@ import { getM3u8Playlists } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-page.scss';
 
-export const MOPIDY_PLAYLISTS_CACHE = 'local-playlists';
+export const LOCAL_PLAYLISTS_CACHE = 'playlists/local';
 
 function LocalPlaylistsPage() {
   const navigate = useNavigate();
@@ -28,11 +28,12 @@ function LocalPlaylistsPage() {
     listRef,
     scrollObserver,
     scrollTo,
+    goToPlAdd,
     currentSong,
     getCache,
     mergeCache,
     clearCache,
-  } = useSongList<ThinSongListState>(MOPIDY_PLAYLISTS_CACHE);
+  } = useSongList<ThinSongListState>(LOCAL_PLAYLISTS_CACHE);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -114,10 +115,6 @@ function LocalPlaylistsPage() {
     },
     [currentSong, mopidy, sustain]
   );
-
-  const goToPlAdd = useCallback(() => {
-    navigate('/add-playlist');
-  }, [navigate]);
 
   return (
     <PageTemplate

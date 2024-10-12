@@ -8,7 +8,7 @@ export type GetCacheFn<S> = (cacheName: string) => S;
 export type SetCacheFn<S> = (cacheName: string, value: S) => void;
 export type MergeFn<S> = (oldValue: S) => S;
 export type MergeCacheFn<S> = (cacheName: string, mergeFn: MergeFn<S>) => void;
-export type ClearCacheFn = (cacheName: string) => void;
+export type ClearCacheFn = (...cacheName: string[]) => void;
 export type CacheContainsFn = (cacheName: string) => boolean;
 
 export interface CacheOperations<S> {
@@ -49,9 +49,11 @@ export function useTypedCache<S>(): CacheOperations<S> {
     [ref]
   );
   const clearCache = useCallback(
-    (cacheName: string) => {
-      console.log(`[useTypedCache.clearCache] ${cacheName}`);
-      delete ref.current[cacheName];
+    (...cacheName: string[]) => {
+      cacheName.forEach((cn) => {
+        console.log(`[useTypedCache.clearCache] ${cn}`);
+        delete ref.current[cn];
+      });
     },
     [ref]
   );
