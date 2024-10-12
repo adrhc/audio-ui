@@ -6,7 +6,7 @@ import {
   MediaLocation,
   UriPlAllocationResult,
   filterByMediaLocations,
-  getNotFailed,
+  getChanged,
 } from '../../domain/media-location';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import { getDiskPlaylists, updateUriPlaylists } from '../../services/audio-db/audio-db';
@@ -64,7 +64,9 @@ function SongPlaylistsEditorPage() {
 
   const handleChangeResult = useCallback(
     (selections: LocationSelection[], result: UriPlAllocationResult) => {
-      filterByMediaLocations(getNotFailed(result), selections).map(toPlContentCacheName).forEach(clearCache);
+      filterByMediaLocations(getChanged(result), selections)
+        .map(toPlContentCacheName)
+        .forEach((cn) => clearCache(cn));
       if (result.failedToChange.length) {
         return toError<SongPlaylistsEditorPageState>(result.failedToChange);
       } else {

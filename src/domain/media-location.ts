@@ -11,7 +11,7 @@ function fixUriEncoding(uri: string) {
   return uri?.replaceAll("'", '%27')?.replaceAll('(', '%28')?.replaceAll(')', '%29')?.replaceAll(',', '%2C');
 }
 
-export function getNotFailed(result: UriPlAllocationResult) {
+export function getChanged(result: UriPlAllocationResult) {
   return [...result.addedTo, ...result.removedFrom];
 }
 
