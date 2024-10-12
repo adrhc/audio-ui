@@ -18,11 +18,14 @@ function AddPlaylistPage() {
   const { online, clearCache } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<NewPlaylistPageState>({ name: '' });
 
-  const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    // console.log(`[NewPlaylistPage.handleChange] changed:`, { [name]: value });
-    setState((prevState) => ({ ...prevState, [name]: value }));
-  }, [setState]);
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = event.target;
+      // console.log(`[NewPlaylistPage.handleChange] changed:`, { [name]: value });
+      setState((prevState) => ({ ...prevState, [name]: value }));
+    },
+    [setState]
+  );
 
   const trimmedName = state.name.trim();
   const createPl = useCallback(() => {

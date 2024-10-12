@@ -3,24 +3,33 @@ import PageTemplate from '../../templates/PageTemplate';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import SongList from '../../components/list/SongList';
 import { AppContext } from '../../components/app/AppContext';
-import useSongList, { copyThinSongListState, ThinSongListState } from '../../hooks/list/useSongList';
-import { SetFeedbackState } from '../../lib/sustain';
+import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
+import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
 import { getM3u8Playlists } from '../../services/pl-content';
-import { scrollTop } from '../../domain/scroll';
 import { Song } from '../../domain/song';
-import { MOPIDY_PLAYLISTS_CACHE, MopidyPlaylistsCache } from '../local-playlists/LocalPlaylistsPage';
+import { MOPIDY_PLAYLISTS_CACHE } from '../local-playlists/LocalPlaylistsPage';
 import { toQueryParams } from '../../lib/path-param-utils';
 import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
 
 function PlaylistEditOptionsPage() {
   const navigate = useNavigate();
-  const { mopidy, online, getCache, mergeCache } = useContext(AppContext);
-  const { state, sustain, setState, listRef, scrollObserver, scrollTo, goToPlAdd, currentSong } =
-    useSongList<ThinSongListState>(MOPIDY_PLAYLISTS_CACHE);
+  const { mopidy, online } = useContext(AppContext);
+  const {
+    state,
+    sustain,
+    setState,
+    listRef,
+    scrollObserver,
+    scrollTo,
+    goToPlAdd,
+    currentSong,
+    getCache,
+    mergeCache,
+  } = useSongList<ThinSongListState>(MOPIDY_PLAYLISTS_CACHE);
 
-  const cache = getCache(MOPIDY_PLAYLISTS_CACHE) as MopidyPlaylistsCache;
+  const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
   console.log(`[PlaylistEditOptionsPage]`, { currentSong, cache, state });
@@ -56,16 +65,8 @@ function PlaylistEditOptionsPage() {
 
   // cache the current state
   useEffect(() => {
-    if (!state.songs.length) {
-      mergeCache(MOPIDY_PLAYLISTS_CACHE, () => {
-        console.log(`[PlaylistEditOptionsPage] no songs to backup!`);
-        const backup = { lastUsed: state.lastUsed, scrollTop: 0, songs: [] };
-        return backup;
-      });
-      return;
-    }
-    mergeCache(MOPIDY_PLAYLISTS_CACHE, (old) => {
-      const backup = { ...copyThinSongListState(state), scrollTop: scrollTop(old) };
+    mergeCache((old) => {
+      const backup = { ...old, ...removeLoadingAttributes(state) };
       console.log(`[PlaylistEditOptionsPage] stateBackup:`, backup);
       return backup;
     });
@@ -74,8 +75,8 @@ function PlaylistEditOptionsPage() {
   const handlePlSelection = useCallback(
     (playlist: Song) => {
       // console.log(`[PlaylistEditOptionsPage.handlePlSelection] song:`, song);
-      mergeCache(MOPIDY_PLAYLISTS_CACHE, (old) => {
-        const backup = { ...(old as object), scrollTop: scrollTop(old), lastUsed: playlist };
+      mergeCache((old) => {
+        const backup = { ...old, lastUsed: playlist };
         console.log(`[PlaylistEditOptionsPage] stateBackup:`, backup);
         return backup;
       });

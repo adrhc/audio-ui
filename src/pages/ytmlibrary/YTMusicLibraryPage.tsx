@@ -1,20 +1,14 @@
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import { useCallback, useContext, useEffect } from 'react';
-import { AppContext } from '../../components/app/AppContext';
-import useSongList, { ThinSongListState, copyThinSongListState } from '../../hooks/list/useSongList';
+import { useCallback, useEffect } from 'react';
+import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
 import { getYTPlaylists } from '../../services/audio-db/audio-db';
 import { Song } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
-import { scrollTop } from '../../domain/scroll';
-import { SetFeedbackState } from '../../lib/sustain';
+import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import '/src/styles/wide-page.scss';
-
-interface YouTubePlaylistsCache extends ThinSongListState {
-  scrollTop: number;
-}
 
 function YTMusicLibraryPage() {
   const navigate = useNavigate();
@@ -28,9 +22,10 @@ function YTMusicLibraryPage() {
     scrollObserver,
     scrollTo,
     currentSong,
+    getCache,
+    mergeCache,
   } = useSongList<ThinSongListState>('ytmlibrary');
-  const { getCache, mergeCache } = useContext(AppContext);
-  const cache = getCache('ytmlibrary') as YouTubePlaylistsCache;
+  const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
   console.log(`[YTMusicLibraryPage]`, { currentSong, cache, state });
@@ -61,32 +56,18 @@ function YTMusicLibraryPage() {
       console.log(`[YTMusicLibraryPage.useEffect] the library isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[YTMusicLibraryPage] scrolling to ${cachedScrollTop} after loading the library`);
-    // setTimeout(scrollTo, 0, cachedScrollTop);
+    console.log(`[YTMusicLibraryPage.useEffect] scrolling to ${cachedScrollTop}`);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
 
   // cache the current state
   useEffect(() => {
-    if (!state.songs.length) {
-      console.log(`[YTMusicLibraryPage.useEffect] no songs to backup!`);
-      return;
-    }
-    mergeCache('ytmlibrary', (old) => {
-      const backup = { ...copyThinSongListState(state), scrollTop: scrollTop(old) };
-      console.log(`[YTMusicLibraryPage] stateBackup:`, backup);
-      return backup;
-    });
+    mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
   }, [mergeCache, state]);
 
-  const handleSelectionProxy = useCallback(
+  const handleSelection = useCallback(
     (song: Song) => {
-      // console.log(`[YouTubePlaylistsPage.handleSelectionProxy] isYtLiked:`, isYtLiked(song));
-      mergeCache('ytmlibrary', (old) => {
-        const backup = { ...(old as object), scrollTop: scrollTop(old), lastUsed: song };
-        console.log(`[YTMusicLibraryPage] stateBackup:`, backup);
-        return backup;
-      });
+      mergeCache((old) => ({ ...old, lastUsed: song }));
       navigate(`/ytplcontent/${song.uri}`);
     },
     [mergeCache, navigate]
@@ -107,7 +88,7 @@ function YTMusicLibraryPage() {
         currentSong={currentSong}
         onAdd={handleAdd}
         onInsert={handleInsert}
-        onClick={handleSelectionProxy}
+        onClick={handleSelection}
         onReloadList={handleReaload}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}

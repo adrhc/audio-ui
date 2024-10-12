@@ -1,25 +1,18 @@
-import { useCallback, useContext, useEffect } from 'react';
-import { AppContext } from '../../components/app/AppContext';
-import useSongList, { ThinSongListState, copyThinSongListState } from '../../hooks/list/useSongList';
+import { useCallback, useEffect } from 'react';
+import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import { scrollTop } from '../../domain/scroll';
 import { getPlaylistItems } from '../../services/pl-content';
-import { SetFeedbackState } from '../../lib/sustain';
+import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import { plContentCacheName } from './LocalPlContentUtils';
 import '/src/styles/wide-page.scss';
 
-interface LocalPlContentPageCache extends ThinSongListState {
-  scrollTop: number;
-}
-
 function LocalPlContentPage() {
   const { uri } = useParams();
   const cacheName = plContentCacheName(uri);
-  console.log(`[MopidyPlItemsPage] uri = ${uri}, cacheName = ${cacheName}`);
   const {
     state,
     sustain,
@@ -32,25 +25,28 @@ function LocalPlContentPage() {
     scrollTo,
     scrollObserver,
     currentSong,
+    getCache,
+    mergeCache,
+    clearCache,
   } = useSongList<ThinSongListState>(cacheName);
-  const { online, getCache, mergeCache, clearCache } = useContext(AppContext);
-  const cache = getCache(cacheName) as LocalPlContentPageCache;
+  const cache = getCache();
+  console.log(`[LocalPlContentPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
+    currentSong,
+    state,
+    cache,
+  });
+
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[MopidyPlItemsPage] cacheName = ${cacheName}:`, {
-    currentSong,
-    cache,
-    state,
-  });
 
   const imgMaxEdge = useMaxEdge();
 
-  const handleReaload = useCallback(() => {
+  const loadPlContent = useCallback(() => {
     if (!uri) {
-      console.log(`[MopidyPlItemsPage.handleReaload] can't load "null" the Mopidy playlist!`);
+      console.log(`[LocalPlContentPage.loadPlContent] can't load "null" the Mopidy playlist!`);
       return;
     }
-    console.log(`[MopidyPlItemsPage.handleReaload] loading ${uri}`);
+    console.log(`[LocalPlContentPage.loadPlContent] loading ${uri}`);
     sustain(
       getPlaylistItems(imgMaxEdge, uri).then((songs) => ({ songs })),
       `Failed to load the playlist!`
@@ -59,38 +55,31 @@ function LocalPlContentPage() {
 
   // loading the playlist if not already loaded
   useEffect(() => {
-    if (!songsIsEmpty) {
-      console.log(`[MopidyPlItemsPage.useEffect] ${uri} is already loaded!`);
-      return;
+    if (songsIsEmpty) {
+      loadPlContent();
     }
-    online && handleReaload();
-  }, [handleReaload, online, songsIsEmpty, uri]);
+  }, [loadPlContent, songsIsEmpty, uri]);
 
   // scroll after loading the playlist
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[MopidyPlItemsPage.useEffect] ${uri} isn't loaded yet or is empty!`);
+      console.log(`[LocalPlContentPage.useEffect] ${uri} isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[MopidyPlItemsPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
+    console.log(`[LocalPlContentPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty, uri]);
 
   // cache the current state
   useEffect(() => {
-    if (!state.songs.length) {
-      console.log(`[MopidyPlItemsPage.cache] no songs to cache! ${uri}`);
-      clearCache(cacheName);
-      return;
-    }
-    mergeCache(cacheName, (old) => {
-      const cache = { ...copyThinSongListState(state), scrollTop: scrollTop(old) };
-      console.log(`[MopidyPlItemsPage.cache] ${uri}:`, cache);
+    mergeCache((old) => {
+      const cache = { ...old, ...removeLoadingAttributes(state) };
+      console.log(`[LocalPlContentPage.cache] ${uri}:`, cache);
       return cache;
     });
-  }, [mergeCache, cacheName, state, uri, clearCache]);
+  }, [mergeCache, state, uri, clearCache]);
 
   return (
     <PageTemplate
@@ -112,7 +101,7 @@ function LocalPlContentPage() {
         onScroll={scrollObserver}
         listRef={listRef}
         scrollTo={scrollTo}
-        onReloadList={handleReaload}
+        onReloadList={loadPlContent}
         onAddAllSongs={handleAddAll}
       />
     </PageTemplate>

@@ -4,21 +4,14 @@ import { getHistory, getHistoryAfter, getHistoryBefore } from '../../services/au
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import {
-  HistoryCache,
-  RawPlaybackHistoryPageState,
-  toPartialHistoryCache,
-  toPartialState,
-} from './history-utils';
+import { RawPlaybackHistoryPageState, toRawPlaybackHistoryPageState } from './history-utils';
 import { AppContext } from '../../components/app/AppContext';
-import { scrollTop } from '../../domain/scroll';
-import { SetFeedbackState } from '../../lib/sustain';
+import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import '/src/styles/wide-page.scss';
 
 function PlaybackHistoryPage() {
-  const { mopidy, getCache, mergeCache } = useContext(AppContext);
-  const cache = getCache('history') as HistoryCache;
+  const { mopidy } = useContext(AppContext);
   const {
     state,
     sustain,
@@ -30,10 +23,10 @@ function PlaybackHistoryPage() {
     scrollObserver,
     scrollTo,
     currentSong,
-  } = useSongList<RawPlaybackHistoryPageState>('history', {
-    pageBeforeExists: cache?.pageBeforeExists,
-    pageAfterExists: cache?.pageAfterExists,
-  });
+    getCache,
+    mergeCache,
+  } = useSongList<RawPlaybackHistoryPageState>('history');
+  const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
   console.log(`[PlaybackHistoryPage] cachedScrollTop = ${cachedScrollTop}:`, { currentSong, ...state });
@@ -42,22 +35,20 @@ function PlaybackHistoryPage() {
 
   // scroll position restoration at 1st page load
   useEffect(() => {
-    console.log(`[PlaybackHistoryPage] scrolling to ${cachedScrollTop} at page load`);
+    console.log(`[PlaybackHistoryPage.useEffect] scrolling to ${cachedScrollTop} at page load`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo]);
 
   // loading the history if not already loaded
   useEffect(() => {
-    if (!songsIsEmpty) {
-      // console.log(`[PlaybackHistoryPage.useEffect] history is already loaded!`);
-      return;
+    if (songsIsEmpty) {
+      console.log(`[PlaybackHistoryPage.useEffect] loading the history`);
+      sustain(
+        getHistory(mopidy, imgMaxEdge).then((hp) => toRawPlaybackHistoryPageState(0, hp)),
+        `Failed to load the history!`
+      );
     }
-    console.log(`[PlaybackHistoryPage.useEffect] loading the history`);
-    sustain(
-      getHistory(mopidy, imgMaxEdge).then((it) => ({ ...toPartialState(0, it) })),
-      `Failed to load the history!`
-    );
   }, [imgMaxEdge, mopidy, songsIsEmpty, sustain]);
 
   // scroll after loading the history
@@ -66,74 +57,57 @@ function PlaybackHistoryPage() {
     if (songsIsEmpty || state.pageBeforeExists) {
       return;
     }
-    console.log(`[PlaybackHistoryPage] scrolling to ${cachedScrollTop} after loading the history`);
+    console.log(`[PlaybackHistoryPage.useEffect] scrolling to ${cachedScrollTop} after loading the history`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty, state.pageBeforeExists]);
 
   // cache the current state
   useEffect(() => {
-    if (!state.songs.length) {
-      // console.log(`[PlaybackHistoryPage.useEffect] no songs to backup!`);
-      return;
-    }
-    const partialHistoryCache = toPartialHistoryCache({
-      songs: state.songs,
-      lastUsed: state.lastUsed,
-      before: state.before,
-      after: state.after,
-      pageBeforeExists: state.pageBeforeExists,
-      pageAfterExists: state.pageAfterExists,
-      completePageSize: state.completePageSize,
-      prevSongsCount: state.prevSongsCount,
-    });
-    // console.log(`[PlaybackHistoryPage.useEffect] backing the state:`, partialHistoryCache);
-    mergeCache('history', (old) => {
-      const backup = partialHistoryCache.pageBeforeExists
-        ? { ...(old as object), ...partialHistoryCache }
-        : { scrollTop: scrollTop(old), ...partialHistoryCache };
-      console.log(`[PlaybackHistoryPage] partialHistoryCache:`, backup);
+    mergeCache((old) => {
+      const backup = { ...old, ...removeLoadingAttributes(state) };
+      console.log(`[PlaybackHistoryPage.useEffect/mergeCache] partialHistoryCache:`, backup);
       return backup;
     });
-  }, [
-    mergeCache,
-    state.after,
-    state.before,
-    state.completePageSize,
-    state.lastUsed,
-    state.pageAfterExists,
-    state.pageBeforeExists,
-    state.prevSongsCount,
-    state.songs,
-  ]);
+  }, [mergeCache, state]);
 
   const goToNextPage = useCallback(() => {
     // console.log(`[PlaybackHistoryPage.goToNextPage]`);
     if (state.songs.length < state.completePageSize) {
       sustain(
-        getHistory(mopidy, imgMaxEdge).then((it) => {
-          console.log(`[PlaybackHistoryPage.goToNextPage] scrollTo set to zero`);
-          mergeCache('history', (old) => ({ ...(old as object), scrollTop: 0 }));
+        getHistory(mopidy, imgMaxEdge).then((hp) => {
+          console.log(`[PlaybackHistoryPage.goToNextPage/getHistory] scrollTo set to zero`);
+          mergeCache((old) => ({ ...old, scrollTop: 0 }));
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
-          setState((old) => ({ ...old, ...toPartialState(0, it) }));
+          setState((old) => ({ ...old, ...toRawPlaybackHistoryPageState(0, hp) }));
         }),
         `Failed to load the history!`
       );
     } else if (state.after) {
       sustain(
-        getHistoryAfter(mopidy, imgMaxEdge, state.after).then((it) => {
-          console.log(`[PlaybackHistoryPage.goToNextPage] scrollTo set to zero`);
-          mergeCache('history', (old) => ({ ...(old as object), scrollTop: 0 }));
+        getHistoryAfter(mopidy, imgMaxEdge, state.after).then((hp) => {
+          console.log(`[PlaybackHistoryPage.goToNextPage/getHistoryAfter] scrollTo set to zero`);
+          mergeCache((old) => ({ ...old, scrollTop: 0 }));
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
           setState((old) => ({
             ...old,
-            ...toPartialState(old.prevSongsCount + old.completePageSize, it),
+            ...toRawPlaybackHistoryPageState(old.prevSongsCount + old.completePageSize, hp),
           }));
         }),
         `Failed to load the history!`
       );
     }
-  }, [imgMaxEdge, mergeCache, mopidy, scrollTo, setState, state.after, state.completePageSize, state.songs.length, sustain]);
+  }, [
+    imgMaxEdge,
+    mergeCache,
+    mopidy,
+    scrollTo,
+    setState,
+    state.after,
+    state.completePageSize,
+    state.songs.length,
+    sustain,
+  ]);
 
   const goToPreviousPage = useCallback(() => {
     if (!state.before) {
@@ -141,11 +115,11 @@ function PlaybackHistoryPage() {
     }
     // console.log(`[PlaybackHistoryPage.goToPreviousPage]`);
     sustain(
-      getHistoryBefore(mopidy, imgMaxEdge, state.before).then((it) => {
-        mergeCache('history', (old) => ({ ...(old as object), scrollTop: 0 }));
+      getHistoryBefore(mopidy, imgMaxEdge, state.before).then((hp) => {
+        mergeCache((old) => ({ ...old, scrollTop: 0 }));
         setState((old) => ({
           ...old,
-          ...toPartialState(Math.max(0, old.prevSongsCount - old.completePageSize), it),
+          ...toRawPlaybackHistoryPageState(Math.max(0, old.prevSongsCount - old.completePageSize), hp),
         }));
       }),
       `Failed to load the history!`

@@ -11,6 +11,13 @@ export type SetLoadingState<S> = Dispatch<SetStateAction<LoadingState<S>>>;
 export type SetLoading = Dispatch<SetStateAction<Loading>>;
 export type SetState<S> = Dispatch<SetStateAction<S>>;
 
+export function removeLoadingAttributes<S>(loadingState: LoadingState<S>): S {
+  const state = { ...loadingState };
+  delete state.loading;
+  delete state.error;
+  return state;
+}
+
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S>>>, promise: Promise<Partial<LoadingState<S>>>) : void;
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S> | undefined>>, promise: Promise<Partial<LoadingState<S>>>) : void {
 export function sustain<S>(

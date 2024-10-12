@@ -14,7 +14,7 @@ import { TrackSong } from '../../domain/track-song';
 import { AddAllSongsFn } from '../../domain/SongListItemMenuParam';
 import { NoArgsProc } from '../../domain/types';
 import { useNavigate } from 'react-router-dom';
-import useScrollableCachedList, { UseScrollableCachedList } from './useScrollableCachedList';
+import useScrollableCachedList, { ScrollPosition, UseScrollableCachedList } from './useScrollableCachedList';
 import { SustainVoidFn, useSustainableState } from '../useSustainableState';
 
 /**
@@ -24,13 +24,6 @@ import { SustainVoidFn, useSustainableState } from '../useSustainableState';
 export interface ThinSongListState {
   songs: Song[];
   lastUsed?: Song | null;
-}
-
-export function copyThinSongListState(rawState?: ThinSongListState | null): ThinSongListState {
-  return {
-    songs: rawState == null ? [] : rawState.songs,
-    lastUsed: rawState?.lastUsed,
-  };
 }
 
 export interface UseSongList<S extends ThinSongListState> extends UseScrollableCachedList<S> {
@@ -54,13 +47,20 @@ export default function useSongList<S extends ThinSongListState>(
   const { mopidy, currentSong } = useContext(AppContext);
 
   const { getCache, ...scrollableCachedList } = useScrollableCachedList<S>(cacheName);
-  // console.log(`[useSongsList]`, { cache, state });
+  const cache = getCache();
 
-  const [state, sustain, setState] = useSustainableState<S>({
+  const properDefaultState = {
     songs: [],
     ...defaultState,
-    ...getCache(),
-  } as LoadingState<S>);
+    ...cache,
+  } as LoadingState<S> & ScrollPosition;
+  // the cache contains scrollTop which might not be part of S!
+  if (defaultState && !('scrollTop' in defaultState)) {
+    delete properDefaultState.scrollTop;
+  }
+
+  const [state, sustain, setState] = useSustainableState<S>(properDefaultState);
+  // console.log(`[useSongsList]`, { [`${cacheName} cache`]: cache, state });
 
   const handleSelection = useCallback(
     (song: Song) => {

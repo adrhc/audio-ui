@@ -16,6 +16,10 @@ export interface NamedTypedCacheOperations<S> {
   cacheContains: CacheContainsFn;
 }
 
+/**
+ * Useful only while in page because after exiting the cache is
+ * lost; use the cache with useContext(AppContext) to not lose it!
+ */
 export function useNamedTypedCache<S>(cacheName: string): NamedTypedCacheOperations<S> {
   const {
     getCache: getTypedCache,
@@ -25,12 +29,27 @@ export function useNamedTypedCache<S>(cacheName: string): NamedTypedCacheOperati
     cacheContains: typedCacheContains,
   } = useTypedCache<S>();
 
-  const getCache = useCallback(() => getTypedCache(cacheName), [cacheName, getTypedCache]);
-  const setCache = useCallback((value: S) => setTypedCache(cacheName, value), [cacheName, setTypedCache]);
+  const getCache = useCallback(() => {
+    // console.log(`[getCache] cacheName = ${cacheName}`);
+    return getTypedCache(cacheName);
+  }, [cacheName, getTypedCache]);
+
+  const setCache = useCallback(
+    (value: S) => {
+      console.log(`[setCache] cacheName = ${cacheName}`);
+      setTypedCache(cacheName, value);
+    },
+    [cacheName, setTypedCache]
+  );
+
   const mergeCache = useCallback(
-    (mergeFn: MergeFn<S>) => mergeTypedCache(cacheName, mergeFn),
+    (mergeFn: MergeFn<S>) => {
+      // console.log(`[mergeCache] cacheName = ${cacheName}`);
+      return mergeTypedCache(cacheName, mergeFn);
+    },
     [cacheName, mergeTypedCache]
   );
+
   const clearCache = useCallback(() => clearTypedCache(cacheName), [cacheName, clearTypedCache]);
   const cacheContains = useCallback(() => typedCacheContains(cacheName), [cacheName, typedCacheContains]);
 
