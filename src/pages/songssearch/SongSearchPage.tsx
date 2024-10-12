@@ -43,8 +43,8 @@ function SongSearchPage() {
 
   const cache = getCache() as SongSearchCache;
 
-  // console.log(`[SongsSearchPage] searchExpression = ${searchExpression}, state:`, state);
-  // console.log(`[SongsSearchPage] cache:`, cache);
+  /* console.log(`[SongsSearchPage] searchExpression = ${searchExpression}, state:`, state);
+  console.log(`[SongsSearchPage] cache:`, cache); */
 
   /* console.log(
     `[SongsSearchPage] songs:`,
@@ -59,7 +59,7 @@ function SongSearchPage() {
   // URL "search" param changed: search for the corresponding songs.
   useEffect(() => {
     if (searchExpression) {
-      // console.log(`[SongsSearchPage.useEffect/search] searching for:`, searchExpression);
+      console.log(`[SongsSearchPage.useEffect/search] searching for:`, searchExpression);
       sustain(
         searchSongs(imgMaxEdge, searchExpression).then((songs) => {
           if (searchExpression != cache?.searchExpression) {
@@ -76,7 +76,6 @@ function SongSearchPage() {
     mergeCache,
     searchExpression,
     setState,
-    songsIsEmpty,
     sustain,
     // "rand" is used to force the search at page load even when the searchExpression
     // didn't change; it is used because even if the search criteria is the same the
@@ -102,11 +101,14 @@ function SongSearchPage() {
   const handleSearch = useCallback(() => {
     if (draftExpression) {
       // console.log(`[SongsSearchPage.handleSearch] draftExpression:`, draftExpression);
+      // Without searchExpression changed in the cache, than later, the useEffect that
+      // invokes searchSongs would invoke searchSongs twice at 1st search per expression.
+      mergeCache((old) => ({ ...old, searchExpression: draftExpression }));
       navigate(`/songssearch?${toSongsSearchParams(draftExpression)}`, { replace: true });
     } else {
       setState((old) => ({ ...old, error: 'The search expression must not be empty!' }));
     }
-  }, [draftExpression, navigate, setState]);
+  }, [draftExpression, mergeCache, navigate, setState]);
 
   const handleDraftChange = useCallback(
     (draftExpression?: string) => {

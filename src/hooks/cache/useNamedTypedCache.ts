@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useTypedCache } from './useCache';
+import { CacheOperations } from './useCache';
 
 export type GetCacheFn<S> = () => S | null | undefined;
 export type SetCacheFn<S> = (value: S) => void;
@@ -20,23 +20,26 @@ export interface NamedTypedCacheOperations<S> {
  * Useful only while in page because after exiting the cache is
  * lost; use the cache with useContext(AppContext) to not lose it!
  */
-export function useNamedTypedCache<S>(cacheName: string): NamedTypedCacheOperations<S> {
+export function useNamedTypedCache<S>(
+  cacheName: string,
+  cacheOperations: CacheOperations<unknown>
+): NamedTypedCacheOperations<S> {
   const {
     getCache: getTypedCache,
     setCache: setTypedCache,
     mergeCache: mergeTypedCache,
     clearCache: clearTypedCache,
     cacheContains: typedCacheContains,
-  } = useTypedCache<S>();
+  } = cacheOperations;
 
   const getCache = useCallback(() => {
     // console.log(`[getCache] cacheName = ${cacheName}`);
-    return getTypedCache(cacheName);
+    return getTypedCache(cacheName) as S;
   }, [cacheName, getTypedCache]);
 
   const setCache = useCallback(
     (value: S) => {
-      console.log(`[setCache] cacheName = ${cacheName}`);
+      // console.log(`[setCache] cacheName = ${cacheName}`);
       setTypedCache(cacheName, value);
     },
     [cacheName, setTypedCache]
@@ -45,7 +48,7 @@ export function useNamedTypedCache<S>(cacheName: string): NamedTypedCacheOperati
   const mergeCache = useCallback(
     (mergeFn: MergeFn<S>) => {
       // console.log(`[mergeCache] cacheName = ${cacheName}`);
-      return mergeTypedCache(cacheName, mergeFn);
+      return mergeTypedCache(cacheName, mergeFn as MergeFn<unknown>);
     },
     [cacheName, mergeTypedCache]
   );

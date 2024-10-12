@@ -28,7 +28,8 @@ export function useCache(): UnknownCacheTypeOperations {
 export function useTypedCache<S>(): CacheOperations<S> {
   const ref = useRef<Cache<S>>({});
   const cacheContains = useCallback((cacheName: string) => ref.current[cacheName] == null, [ref]);
-  const getCache = useCallback((cacheName: string) => ref.current[cacheName], [ref]);
+  // return a copy to avoid subtle errors
+  const getCache = useCallback((cacheName: string) => ({ ...ref.current[cacheName] }), [ref]);
   const setCache = useCallback(
     (cacheName: string, value: S) => {
       console.log(`[useTypedCache.setCache] set "${cacheName}" cache to:`, value);
@@ -41,7 +42,7 @@ export function useTypedCache<S>(): CacheOperations<S> {
       // const oldCache = ref.current[cacheName];
       // const newCache = mergeFn(ref.current[cacheName]);
       // console.log(`[useTypedCache.mergeCache] ${cacheName}:`, { oldCache, newCache });
-      // console.log(`[useTypedCache.mergeCache] ${cacheName}:`, newCache);
+      // console.log(`[useTypedCache.mergeCache] ${cacheName}, new cache:`, newCache);
       // ref.current[cacheName] = newCache;
       ref.current[cacheName] = mergeFn(ref.current[cacheName]);
     },
