@@ -14,7 +14,7 @@ import useAppState, { AppState } from './components/app/useAppState';
 import { AudioServerState, refreshSharedStateAndGet, reloadServerState } from './services/audio-ws/audio-ws';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
-import { useCache } from './hooks/useCache';
+import { useCache } from './hooks/cache/useCache';
 import { setGlobalAuthorization } from './domain/credentials';
 import { areSameTrack, toTrackSong } from './domain/track-song';
 

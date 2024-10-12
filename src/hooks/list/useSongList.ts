@@ -8,13 +8,14 @@ import {
   addYtMusicPlAfterAndRemember,
   addYtMusicPlAndRemember,
 } from '../../services/tracklist';
-import { LoadingState } from '../../lib/sustain';
+import { LoadingState, SetLoadingState } from '../../lib/sustain';
 import { Song, isYtMusicPl } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
 import { AddAllSongsFn } from '../../domain/SongListItemMenuParam';
-import useCachedList, { UseCachedList } from './useCachedList';
 import { NoArgsProc } from '../../domain/types';
 import { useNavigate } from 'react-router-dom';
+import useScrollableCachedList, { UseScrollableCachedList } from './useScrollableCachedList';
+import { SustainVoidFn, useSustainableState } from '../useSustainableState';
 
 /**
  * The purpose of this structure is to provide the basic state
@@ -32,12 +33,15 @@ export function copyThinSongListState(rawState?: ThinSongListState | null): Thin
   };
 }
 
-export interface UseSongList<S extends ThinSongListState> extends UseCachedList<S> {
+export interface UseSongList<S extends ThinSongListState> extends UseScrollableCachedList<S> {
   handleSelection: (song: Song) => void;
   handleAdd: (song: Song) => void;
   handleAddAll: AddAllSongsFn;
   handleInsert: (song: Song) => void;
   goToPlAdd: NoArgsProc;
+  state: LoadingState<S>;
+  sustain: SustainVoidFn<S>;
+  setState: SetLoadingState<S>;
   currentSong?: TrackSong;
   mopidy?: Mopidy;
 }
@@ -49,11 +53,14 @@ export default function useSongList<S extends ThinSongListState>(
   const navigate = useNavigate();
   const { mopidy, currentSong } = useContext(AppContext);
 
-  const { sustain, ...cachedListRest } = useCachedList<S>(cacheName, {
+  const { getCache, ...scrollableCachedList } = useScrollableCachedList<S>(cacheName);
+  // console.log(`[useSongsList]`, { cache, state });
+
+  const [state, sustain, setState] = useSustainableState<S>({
     songs: [],
     ...defaultState,
+    ...getCache(),
   } as LoadingState<S>);
-  // console.log(`[useSongsList]`, { cache, state });
 
   const handleSelection = useCallback(
     (song: Song) => {
@@ -109,8 +116,11 @@ export default function useSongList<S extends ThinSongListState>(
   }, [navigate]);
 
   return {
-    ...cachedListRest,
+    ...scrollableCachedList,
+    getCache,
+    state,
     sustain,
+    setState,
     handleSelection,
     handleAdd,
     handleAddAll,
