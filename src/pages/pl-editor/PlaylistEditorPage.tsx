@@ -17,7 +17,7 @@ export const PLAYLISTS_EDIT_CACHE = 'playlists/edit';
 
 function PlaylistEditorPage() {
   const navigate = useNavigate();
-  const { mopidy, online } = useContext(AppContext);
+  const { mopidy, online, credentials } = useContext(AppContext);
   const {
     state,
     sustain,
@@ -115,7 +115,7 @@ function PlaylistEditorPage() {
         loading={state.loading}
         currentSong={currentSong}
         onClick={handleClick}
-        onDelete={removePlaylist}
+        onDelete={credentials.isValid() ? removePlaylist : undefined}
         onAddAllSongs={goToPlAdd}
         onReloadList={handleReload}
         lastUsed={state.lastUsed}
