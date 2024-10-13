@@ -63,6 +63,7 @@ function AddPlaylistPage() {
     >
       <Stack component="form" onSubmit={handleSubmit} spacing={2}>
         <TextField
+          autoFocus={true}
           required
           label="Name"
           name="name"

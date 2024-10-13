@@ -88,13 +88,16 @@ function PlaylistEditorPage() {
       sustain(
         removeDiskPlaylist(playlist).then((removed) => {
           if (removed) {
+            setState((old) => ({ ...old, songs: old.songs.filter((s) => s.uri != playlist.uri) }));
+          } else {
+            // console.log(`Couldn't find the playlist to remove! ${playlist.formattedUri}`);
             return { error: `Couldn't find the playlist to remove! ${playlist.formattedUri}` };
           }
         }),
         `Failed to remove the playlist ${playlist.formattedUri}!`
       );
     },
-    [sustain]
+    [setState, sustain]
   );
 
   return (
