@@ -6,6 +6,8 @@ import {
   SetLoadingState,
   sustain,
   sustainUnknown,
+  SustainUnknownFailState,
+  SustainUnknownPromise,
 } from '../lib/sustain';
 
 export type LoadingStateOrProvider<S> = LoadingState<S> | (() => LoadingState<S>);
@@ -24,13 +26,17 @@ export function useSustainableState<S>(
 
 export function useSustainableUnknownState(): [
   Loading,
-  (promise?: Promise<Partial<LoadingState<unknown>>>, errorMessage?: string, noWait?: boolean) => Promise<unknown>,
+  (
+    promise?: SustainUnknownPromise,
+    failState?: SustainUnknownFailState,
+    noWait?: boolean
+  ) => Promise<unknown>,
   SetFeedbackState,
 ] {
   const [loading, setState] = useState<Loading>({});
   const sustainFn = useCallback(
-    (promise?: Promise<Partial<LoadingState<unknown>>>, errorMessage?: string, noWait?: boolean) =>
-      sustainUnknown(setState, promise, errorMessage, noWait),
+    (promise?: SustainUnknownPromise, failState?: SustainUnknownFailState, noWait?: boolean) =>
+      sustainUnknown(setState, promise, failState, noWait),
     []
   );
   return [loading, sustainFn, setState];
