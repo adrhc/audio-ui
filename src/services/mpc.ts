@@ -14,8 +14,15 @@ export function isM3uMpcRefUri(uri: string) {
 /**
  * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8
  */
-export function m3uMpcRefUriToFileName(mpcRefUri: string) {
-  return decodeURIComponent(mpcRefUri.substring(4));
+export function m3uMpcRefUriToDecodedFileName(mpcRefUri: string) {
+  return decodeURIComponent(m3uMpcRefUriToEncodedFileName(mpcRefUri));
+}
+
+/**
+ * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8
+ */
+export function m3uMpcRefUriToEncodedFileName(mpcRefUri: string) {
+  return mpcRefUri.substring(4);
 }
 
 export function clearTrackList(mopidy: Mopidy | undefined) {

@@ -4,7 +4,7 @@ import * as medialoc from '../../domain/media-location';
 import * as apphistory from '../../domain/history';
 import { sortByAbsDiff } from '../../lib/image';
 import Selectable from '../../domain/Selectable';
-import { m3uMpcRefUriToFileName } from '../mpc';
+import { m3uMpcRefUriToDecodedFileName } from '../mpc';
 
 export function toSongsWithImgUri(imgMaxEdge: number, audioDbSongs: Song[]): appsong.Song[] {
   if (imgMaxEdge <= 0) {
@@ -89,6 +89,15 @@ export function toPlMediaLocation(audioDbLoc: MediaLocation): medialoc.MediaLoca
   };
 }
 
+/**
+ * Works with playlists loaded from MPC (i.e. models.Ref) but not audio-web-services.
+ */
+export function toDiskPlaylistRemoveRequest(playlist: medialoc.MediaLocation) {
+  const { type, title, uri } = playlist;
+  // console.log(`[toDbPlMediaLocation] uri:`, m3uMpcRefUriToFileName(uri));
+  return { type, name: title, uri, fileName: m3uMpcRefUriToDecodedFileName(uri) };
+}
+
 export interface HistoryPage extends SongsPage {
   first: apphistory.HistoryPosition;
   last: apphistory.HistoryPosition;
@@ -135,9 +144,5 @@ export interface UriPlAllocationResult {
 }
 
 export function toPlContentUpdateRequest(diskPlUri: string, selections: medialoc.LocationSelection[]) {
-  return { playlistUri: m3uMpcRefUriToFileName(diskPlUri), selections };
-}
-
-export function toPlRemoveRequest(diskPlUri: string) {
-  return { playlistUri: m3uMpcRefUriToFileName(diskPlUri) };
+  return { playlistUri: m3uMpcRefUriToDecodedFileName(diskPlUri), selections };
 }

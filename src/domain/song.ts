@@ -1,6 +1,6 @@
 import { models } from 'mopidy';
 import { sortByAbsDiff } from '../lib/image';
-import { isM3uMpcRefUri, m3uMpcRefUriToFileName, UriImagesMap } from '../services/mpc';
+import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName, UriImagesMap } from '../services/mpc';
 import { MediaLocation } from './media-location';
 
 const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;
@@ -24,7 +24,7 @@ export function formatUri(uri: string | null | undefined) {
       return uri;
     }
   } else if (isM3uMpcRefUri(uri)) {
-    return m3uMpcRefUriToFileName(uri);
+    return m3uMpcRefUriToDecodedFileName(uri);
   } else {
     return uri;
   }
@@ -35,6 +35,7 @@ export function refsToSongs(refs: models.Ref<models.ModelType>[]): Song[] {
 }
 
 export function refToSong(ref: models.Ref<models.ModelType>): Song {
+  // console.log(`[refToSong] ref.uri`, ref.uri);
   return { type: ref.type, uri: ref.uri, formattedUri: formatUri(ref.uri)!, title: ref.name };
 }
 

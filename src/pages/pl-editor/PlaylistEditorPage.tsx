@@ -85,7 +85,14 @@ function PlaylistEditorPage() {
   const removePlaylist = useCallback(
     (playlist: Song) => {
       console.info(`[PlaylistEditorPage.removePlaylist] playlist:`, playlist);
-      sustain(removeDiskPlaylist(playlist.uri), `Failed to remove the playlist ${playlist.formattedUri}!`);
+      sustain(
+        removeDiskPlaylist(playlist).then((removed) => {
+          if (removed) {
+            return { error: `Couldn't find the playlist to remove! ${playlist.formattedUri}` };
+          }
+        }),
+        `Failed to remove the playlist ${playlist.formattedUri}!`
+      );
     },
     [sustain]
   );

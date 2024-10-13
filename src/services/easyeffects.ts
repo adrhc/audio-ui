@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { get, post, remove } from './rest';
+import { get, post, removeVoid } from './rest';
 
 const ROOT = '/easyeffects/api/ee';
 
@@ -34,7 +34,7 @@ export function updatePreset(preset: EEPreset) {
 }
 
 export function removePreset<T>(preset: string) {
-  return remove(`${ROOT}/${preset}`) as Promise<T>;
+  return removeVoid(`${ROOT}/${preset}`) as Promise<T>;
 }
 
 export function getPreset(preset: string) {

@@ -2,7 +2,7 @@ import Mopidy, { models } from 'mopidy';
 import { get, post, postVoid, remove } from '../rest';
 import { Song, toSongExtsWithImgUri, toSongUris } from '../../domain/song';
 import { HistoryPosition, HistoryPage } from '../../domain/history';
-import { LocationSelection, UriPlAllocationResult } from '../../domain/media-location';
+import { LocationSelection, MediaLocation, UriPlAllocationResult } from '../../domain/media-location';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { getImages } from '../mpc';
 import * as audiodb from './types';
@@ -116,7 +116,7 @@ export function updateDiskPlContent(diskPlUri: string, selections: LocationSelec
 /**
  * plUri e.g.: m3u/colinde.m3u8
  */
-export function removeDiskPlaylist(diskPlUri: string): Promise<void> {
-  // console.log(`[updatePlContent] plUri = ${diskPlUri}, selections:`, selections);
-  return remove(DISK_PLAYLIST, JSON.stringify(audiodb.toPlRemoveRequest(diskPlUri)));
+export function removeDiskPlaylist(playlist: MediaLocation): Promise<boolean> {
+  // console.log(`[removeDiskPlaylist] playlist:`, playlist);
+  return remove<boolean>(DISK_PLAYLIST, JSON.stringify(audiodb.toDiskPlaylistRemoveRequest(playlist)));
 }

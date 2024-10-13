@@ -24,12 +24,12 @@ export function useSustainableState<S>(
 
 export function useSustainableUnknownState(): [
   Loading,
-  (promise?: Promise<unknown>, errorMessage?: string, noWait?: boolean) => Promise<unknown>,
+  (promise?: Promise<Partial<LoadingState<unknown>>>, errorMessage?: string, noWait?: boolean) => Promise<unknown>,
   SetFeedbackState,
 ] {
   const [loading, setState] = useState<Loading>({});
   const sustainFn = useCallback(
-    (promise?: Promise<unknown>, errorMessage?: string, noWait?: boolean) =>
+    (promise?: Promise<Partial<LoadingState<unknown>>>, errorMessage?: string, noWait?: boolean) =>
       sustainUnknown(setState, promise, errorMessage, noWait),
     []
   );
@@ -37,7 +37,7 @@ export function useSustainableUnknownState(): [
 }
 
 export type SustainVoidFn<S> = (
-  promise?: Promise<Partial<S> | null | undefined | void>,
+  promise?: Promise<Partial<LoadingState<S>> | null | undefined | void>,
   failState?: Partial<LoadingState<S>> | string | null,
   noWait?: boolean
 ) => Promise<void>;
@@ -48,7 +48,7 @@ export function useSustainableState<S>(
   const [state, setState] = useState<LoadingState<S>>(initialState);
   const sustainFn = useCallback(
     (
-      promise?: Promise<Partial<S> | null | undefined | void>,
+      promise?: Promise<Partial<LoadingState<S>> | null | undefined | void>,
       failState?: Partial<LoadingState<S>> | string | null,
       noWait?: boolean
     ) => sustain(setState, promise, failState, noWait),

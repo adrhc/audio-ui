@@ -1,4 +1,4 @@
-import { isM3uMpcRefUri, m3uMpcRefUriToFileName } from '../services/mpc';
+import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName } from '../services/mpc';
 import Selectable from './Selectable';
 
 export function uriEqual(uri1: string, uri2: string) {
@@ -48,7 +48,7 @@ export function uriToTitle(uri: string | null | undefined) {
       return uri;
     }
   } else if (isM3uMpcRefUri(uri)) {
-    return m3uMpcRefUriToFileName(uri);
+    return m3uMpcRefUriToDecodedFileName(uri);
   } else {
     return uri;
   }

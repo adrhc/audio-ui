@@ -18,12 +18,15 @@ export function removeLoadingAttributes<S>(loadingState: LoadingState<S>): S {
   return state;
 }
 
+export type SustainPromise<S> = Promise<Partial<LoadingState<S>> | null | undefined | void>;
+export type SustainFailState<S> = Partial<LoadingState<S>> | string | null;
+
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S>>>, promise: Promise<Partial<LoadingState<S>>>) : void;
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S> | undefined>>, promise: Promise<Partial<LoadingState<S>>>) : void {
 export function sustain<S>(
   setState: SetLoadingState<S>,
-  promise?: Promise<Partial<S> | null | undefined | void>,
-  failState?: Partial<LoadingState<S>> | string | null,
+  promise?: SustainPromise<S>,
+  failState?: SustainFailState<S>,
   noWait?: boolean
 ) {
   setState((old) => ({ ...old, loading: !noWait, error: '' }));
@@ -32,8 +35,8 @@ export function sustain<S>(
 
 function handleState<S>(
   setState: SetLoadingState<S>,
-  promise: Promise<Partial<S> | null | undefined | void> = Promise.resolve({}),
-  failState?: Partial<LoadingState<S>> | string | null
+  promise: SustainPromise<S> = Promise.resolve({}),
+  failState?: SustainFailState<S>
 ) {
   return promise
     .then((newState) =>
@@ -51,35 +54,38 @@ function handleState<S>(
     });
 }
 
+export type SustainUnknownPromise = Promise<Partial<LoadingState<unknown> | Loading> | void>;
+export type SustainUnknownFailState = Partial<LoadingState<unknown> | Loading> | string | null;
+
 export function sustainUnknown(
   setState: SetLoading,
-  promise?: Promise<unknown>,
-  errorMessage?: string,
+  promise?: SustainUnknownPromise,
+  failState?: SustainUnknownFailState,
   noWait?: boolean
 ) {
   setState({ loading: !noWait });
-  return handleUnknownState(setState, promise, errorMessage);
+  return handleUnknownState(setState, promise, failState);
 }
 
 function handleUnknownState(
   setState: SetLoading,
-  promise: Promise<unknown> = Promise.resolve(),
-  errorMessage?: string
+  promise: SustainUnknownPromise = Promise.resolve(),
+  failState?: SustainUnknownFailState
 ) {
   return promise
-    .then(() => setState((old) => ({ ...old, loading: false })))
+    .then((it) => setState((old) => ({ ...old, ...it, loading: false })))
     .catch((reason) => {
       console.error(reason);
-      // console.error(`[handleLoadingUnknownError]`, { loading: false, ...toStateError(reason, errorMessage) });
-      setState({ loading: false, ...toStateError(reason, errorMessage) });
+      // console.error(`[handleLoadingUnknownError]`, { loading: false, ...toStateError(reason, failState) });
+      setState({ loading: false, ...toStateError(reason, failState) });
       // alert(formatErr(reason));
     });
 }
 
 function toStateError<S>(
   reason: unknown,
-  failState?: Partial<LoadingState<S>> | string | null
-): Partial<LoadingState<S>> | Loading | null {
+  failState?: SustainUnknownFailState
+): Partial<LoadingState<S> | Loading> | null {
   if (failState == null) {
     if (typeof reason === 'string') {
       return { error: reason };
