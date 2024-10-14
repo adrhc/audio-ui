@@ -14,7 +14,7 @@ import useLibrary from '../../hooks/list/useLibrary';
 import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
 
-function M3u8LibraryEditorPage() {
+function LocalLibraryEditorPage() {
   const navigate = useNavigate();
   const { mopidy, online, credentials } = useContext(AppContext);
   const {
@@ -118,4 +118,4 @@ function M3u8LibraryEditorPage() {
   );
 }
 
-export default M3u8LibraryEditorPage;
+export default LocalLibraryEditorPage;
