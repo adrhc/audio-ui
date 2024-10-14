@@ -107,9 +107,9 @@ export default function useScrollableCachedSongList<S extends ThinSongListState>
     (song: Song) => {
       // song.location.uri = 'ytmusic:track:sk_K10Modes';
       // console.log(`[useSongsList:onAdd] song:\n`, song);
-      const addAfterFn = isYtMusicPl(song) ? addYtMusicPlAfterAndRemember : addSongsAfterAndRemember;
+      const insertFn = isYtMusicPl(song) ? addYtMusicPlAfterAndRemember : addSongsAfterAndRemember;
       sustain(
-        addAfterFn(mopidy, currentSong, song)?.then(() => ({ lastUsed: song }) as Partial<S>),
+        insertFn(mopidy, currentSong, song)?.then(() => ({ lastUsed: song }) as Partial<S>),
         { error: `Failed to start ${song.title}!`, lastUsed: song } as Partial<LoadingState<S>>
       );
     },

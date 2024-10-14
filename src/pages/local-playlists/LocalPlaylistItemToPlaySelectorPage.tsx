@@ -10,7 +10,7 @@ import { useMaxEdge } from '../../constants';
 import { plCacheName } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
 
-function LocalPlContentPage() {
+function LocalPlaylistItemToPlaySelectorPage() {
   const { uri } = useParams();
   const cacheName = plCacheName(uri);
   const {
@@ -104,4 +104,4 @@ function LocalPlContentPage() {
   );
 }
 
-export default LocalPlContentPage;
+export default LocalPlaylistItemToPlaySelectorPage;

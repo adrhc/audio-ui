@@ -14,10 +14,10 @@ import {
 } from '../../services/tracklist';
 import { getM3u8Playlists } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
-import '/src/styles/wide-page.scss';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
+import '/src/styles/wide-page.scss';
 
-function M3u8LibraryPlayerPage() {
+function LocalLibraryToPlaySelectorPage() {
   const navigate = useNavigate();
   const { mopidy, online } = useContext(AppContext);
   const {
@@ -143,4 +143,4 @@ function M3u8LibraryPlayerPage() {
   );
 }
 
-export default M3u8LibraryPlayerPage;
+export default LocalLibraryToPlaySelectorPage;
