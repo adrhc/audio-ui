@@ -3,7 +3,7 @@ import { NoArgsProc, PlaybackState, Styles } from '../../domain/types';
 // import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { useContext } from 'react';
-import { AppContext } from '../app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 
 export type PlayOrResumeButtonParam = {
   sx?: Styles;

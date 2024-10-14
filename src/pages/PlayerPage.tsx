@@ -18,7 +18,7 @@ import ExactVolumePanel from '../components/panel/ExactVolumePanel';
 import MopidyPlayOptions from '../components/panel/MopidyPlayOptions';
 import PrevNextPanel from '../components/panel/PrevNextPanel';
 import PageTemplate from '../templates/PageTemplate';
-import { AppContext } from '../components/app/AppContext';
+import { AppContext } from '../hooks/AppContext';
 import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import PlayerBottomPageMenu from '../components/menu/PlayerBottomPageMenu';
 import { SetFeedbackState } from '../lib/sustain';

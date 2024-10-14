@@ -2,7 +2,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
-import { AppContext } from '../../components/app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
 import { Song, isYtMusicPl } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';

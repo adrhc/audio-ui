@@ -1,14 +1,14 @@
 import Mopidy from 'mopidy';
 import { useCallback } from 'react';
-import { VolumeBoost } from '../../services/boost';
-import { SustainVoidFn, useSustainableState } from '../../hooks/useSustainableState';
-import { LoadingState, SetLoadingState } from '../../lib/sustain';
-import { NoArgsProc } from '../../domain/types';
-import { PlaybackState } from '../../domain/types';
+import { VolumeBoost } from '../services/boost';
+import { SustainVoidFn, useSustainableState } from './useSustainableState';
+import { LoadingState, SetLoadingState } from '../lib/sustain';
+import { NoArgsProc } from '../domain/types';
+import { PlaybackState } from '../domain/types';
 import { AlertColor } from '@mui/material';
-import { useURLQueryParams } from '../../hooks/useURLSearchParams';
-import { Credentials, credentialsOf } from '../../domain/credentials';
-import { TrackSong } from '../../domain/track-song';
+import { useURLQueryParams } from './useURLSearchParams';
+import { Credentials, credentialsOf } from '../domain/credentials';
+import { TrackSong } from '../domain/track-song';
 
 export const DEFAULT_APP_STATE_WTHOUT_MOPIDY = {
   online: false,

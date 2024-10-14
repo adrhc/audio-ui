@@ -6,7 +6,7 @@ import { useCallback, useContext } from 'react';
 import { boostVolume, volumeBoost } from '../services/boost';
 import { setVolume as setMopidyVolume, truncateVolume } from '../services/mpc';
 import { useGoBack } from '../hooks/useGoBack';
-import { AppContext } from '../components/app/AppContext';
+import { AppContext } from '../hooks/AppContext';
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
 import { SetFeedbackState } from '../lib/sustain';
 import PageTitle from '../components/PageTitle';

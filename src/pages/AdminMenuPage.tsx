@@ -5,7 +5,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useCallback, useContext } from 'react';
-import { AppContext } from '../components/app/AppContext';
+import { AppContext } from '../hooks/AppContext';
 import { useGoBack } from '../hooks/useGoBack';
 import { useSustainableUnknownState } from '../hooks/useSustainableState';
 import { Link } from 'react-router-dom';

@@ -3,7 +3,7 @@ import { getTrackSongs } from '../../services/track-song';
 import { play } from '../../services/player';
 import PageTemplate from '../../templates/PageTemplate';
 import { useSustainableState } from '../../hooks/useSustainableState';
-import { AppContext } from '../../components/app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 import { removeTlid } from '../../services/mpc';
 import TrackList from './TrackList';
 import { useMaxEdge } from '../../constants';

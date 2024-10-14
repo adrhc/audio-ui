@@ -2,7 +2,7 @@ import { RefObject, useCallback, useContext } from 'react';
 import { ScrollToFn } from '../../domain/scroll';
 import useScroll from '../useScroll';
 import { NamedTypedCacheOperations, useNamedTypedCache } from '../cache/useNamedTypedCache';
-import { AppContext } from '../../components/app/AppContext';
+import { AppContext } from '../AppContext';
 
 export interface ScrollPosition {
   scrollTop?: number | null;

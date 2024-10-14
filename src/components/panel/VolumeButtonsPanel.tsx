@@ -5,7 +5,7 @@ import Looks5RoundedIcon from '@mui/icons-material/Looks5Rounded';
 import { iconFontSize } from '../../pages/styles';
 import { Styles } from '../../domain/types';
 import { useContext } from 'react';
-import { AppContext } from '../app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 import './VolumeButtonsPanel.scss';
 
 export type VolumeButtonsParam = {

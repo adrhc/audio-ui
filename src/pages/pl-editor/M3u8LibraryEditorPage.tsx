@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect } from 'react';
 import PageTemplate from '../../templates/PageTemplate';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import SongList from '../../components/list/SongList';
-import { AppContext } from '../../components/app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ import { removeDiskPlaylist } from '../../services/audio-db/audio-db';
 
 export const PLAYLISTS_EDIT_CACHE = 'playlists/edit';
 
-function PlaylistEditorPage() {
+function M3u8LibraryEditorPage() {
   const navigate = useNavigate();
   const { mopidy, online, credentials } = useContext(AppContext);
   const {
@@ -127,4 +127,4 @@ function PlaylistEditorPage() {
   );
 }
 
-export default PlaylistEditorPage;
+export default M3u8LibraryEditorPage;

@@ -3,7 +3,7 @@ import DownMuteIcon from './DownMuteIcon';
 import { Styles } from '../../domain/types';
 import { toArray } from '../../lib/array';
 import { useContext } from 'react';
-import { AppContext } from '../app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 // import { AllSystemCSSProperties } from '@mui/system/styleFunctionSx';
 
 type MuteIconButtonParam = {

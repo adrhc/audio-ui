@@ -1,6 +1,6 @@
 import Mopidy from 'mopidy';
 import { useCallback, useContext } from 'react';
-import { AppContext } from '../../components/app/AppContext';
+import { AppContext } from '../AppContext';
 import {
   addSongsAndRemember,
   addSongThenPlay,

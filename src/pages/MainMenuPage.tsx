@@ -8,7 +8,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import { useSustainableUnknownState } from '../hooks/useSustainableState';
 import { useContext } from 'react';
-import { AppContext } from '../components/app/AppContext';
+import { AppContext } from '../hooks/AppContext';
 import './MainMenuPage.scss';
 
 function MainMenuPage() {

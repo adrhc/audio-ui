@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
-import { AppContext } from '../app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 import { clearTrackList as clearMopidyTrackList } from '../../services/mpc';
 import { SustainVoidFn } from '../../hooks/useSustainableState';
 import { TrackSong } from '../../domain/track-song';

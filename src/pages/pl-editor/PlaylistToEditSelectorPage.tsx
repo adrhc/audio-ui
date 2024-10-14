@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { AppContext } from '../../components/app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 import {
   LocationSelection,
   MediaLocation,

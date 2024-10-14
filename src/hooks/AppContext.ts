@@ -1,13 +1,13 @@
 import { createContext } from 'react';
-import { VolumeBoost } from '../../services/boost';
-import { UnknownCacheTypeOperations } from '../../hooks/cache/useCache';
+import { VolumeBoost } from '../services/boost';
+import { UnknownCacheTypeOperations } from './cache/useCache';
 import {
   AppState,
   DEFAULT_APP_STATE_WTHOUT_MOPIDY,
   SetCredentialsFn,
   SetNotificationFn,
 } from './useAppState';
-import { Credentials } from '../../domain/credentials';
+import { Credentials } from '../domain/credentials';
 
 interface AppContextValue extends AppState, UnknownCacheTypeOperations {
   getBaseVolume: () => number | null | undefined;

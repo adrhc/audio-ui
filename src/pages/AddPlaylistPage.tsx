@@ -1,13 +1,13 @@
 import { Stack, TextField } from '@mui/material';
 import { LoadingStateOrProvider, useSustainableState } from '../hooks/useSustainableState';
 import { useCallback, useContext } from 'react';
-import { AppContext } from '../components/app/AppContext';
+import { AppContext } from '../hooks/AppContext';
 import { createPlaylist } from '../services/audio-ws/audio-ws';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
 import { LOCAL_PLAYLISTS_CACHE } from './local-playlists/LocalPlaylistsPage';
-import { PLAYLISTS_EDIT_CACHE } from './pl-editor/PlaylistEditorPage';
+import { PLAYLISTS_EDIT_CACHE } from './pl-editor/M3u8LibraryEditorPage';
 
 const MIN_PL_NAME_LENGTH = 3;
 interface NewPlaylistPageState {

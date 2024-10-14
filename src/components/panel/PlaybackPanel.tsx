@@ -7,7 +7,7 @@ import PlayOrResumeButton from '../button/PlayOrResumeButton';
 import MuteIconButton from '../button/MuteIconButton';
 import './PlaybackPanel.scss';
 import { useContext } from 'react';
-import { AppContext } from '../app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 
 export type PlaybackPanelParam = {
   sx?: Styles;

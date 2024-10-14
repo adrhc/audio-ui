@@ -2,7 +2,7 @@ import { Stack, TextField } from '@mui/material';
 import { SetFeedbackState } from '../lib/sustain';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
 import { useCallback, useContext } from 'react';
-import { AppContext } from '../components/app/AppContext';
+import { AppContext } from '../hooks/AppContext';
 import { useGoBack } from '../hooks/useGoBack';
 import { useSustainableState } from '../hooks/useSustainableState';
 import { addUrisThenPlay } from '../services/tracklist';

@@ -1,7 +1,7 @@
 import { Stack, Button } from '@mui/material';
 import { inputFontSize } from '../../pages/styles';
 import { useContext } from 'react';
-import { AppContext } from '../app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 
 export type ExactVolumePanelParam = {
   values: number[];

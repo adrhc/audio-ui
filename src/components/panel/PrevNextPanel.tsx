@@ -8,7 +8,7 @@ import { iconFontSize } from '../../pages/styles';
 import { NoArgsProc, Styles } from '../../domain/types';
 import './PrevNextPanel.scss';
 import { useContext } from 'react';
-import { AppContext } from '../app/AppContext';
+import { AppContext } from '../../hooks/AppContext';
 
 type PrevNextPanelParam = {
   sx?: Styles;

@@ -21,7 +21,7 @@ import PlaylistToEditSelectorPage from './pages/pl-editor/PlaylistToEditSelector
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
 import AdminMenuPage from './pages/AdminMenuPage';
-import PlaylistEditorPage from './pages/pl-editor/PlaylistEditorPage';
+import M3u8LibraryEditorPage from './pages/pl-editor/M3u8LibraryEditorPage';
 import PlEditFromCurrentPlayPage from './pages/pl-editor/PlEditFromCurrentPlayPage';
 
 const ROUTER = createHashRouter([
@@ -60,7 +60,7 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'playlist-edit-options',
-        element: <PlaylistEditorPage />,
+        element: <M3u8LibraryEditorPage />,
       },
       {
         path: 'playlist-edit-from-current-play/:uri',
