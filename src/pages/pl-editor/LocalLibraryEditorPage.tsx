@@ -3,7 +3,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import SongList from '../../components/list/SongList';
 import { AppContext } from '../../hooks/AppContext';
-import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
+import useCachedSongsScrollable from '../../hooks/list/useCachedSongsScrollable';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
 import { getM3u8Playlists } from '../../services/pl-content';
@@ -28,7 +28,7 @@ function LocalLibraryEditorPage() {
     currentSong,
     getCache,
     mergeCache,
-  } = useScrollableCachedSongList<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
+  } = useCachedSongsScrollable<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
   const { removePlaylist } = useLibrary(sustain);
 
   const cache = getCache();

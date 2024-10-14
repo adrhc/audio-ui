@@ -26,9 +26,10 @@ export function useTypedCache<S>(cacheName: string): NamedTypedCacheOperations<S
   const {
     getCache: getTypedCache,
     setCache: setTypedCache,
+    cacheContains: typedCacheContains,
     mergeCache: mergeTypedCache,
     clearCache: clearTypedCache,
-    cacheContains: typedCacheContains,
+    clearLocalLibraryCache,
   } = useContext(AppContext); // must use the cache through AppContext to persist between pages!
 
   const getCache = useCallback(() => {
@@ -55,5 +56,5 @@ export function useTypedCache<S>(cacheName: string): NamedTypedCacheOperations<S
   const clearCache = useCallback(() => clearTypedCache(cacheName), [cacheName, clearTypedCache]);
   const cacheContains = useCallback(() => typedCacheContains(cacheName), [cacheName, typedCacheContains]);
 
-  return { ...cacheOperations, getCache, setCache, mergeCache, clearCache, cacheContains };
+  return { getCache, setCache, mergeCache, cacheContains, clearCache, clearLocalLibraryCache };
 }

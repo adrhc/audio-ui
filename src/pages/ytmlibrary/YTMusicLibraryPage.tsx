@@ -2,7 +2,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useEffect } from 'react';
-import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
+import useCachedSongsScrollable from '../../hooks/list/useCachedSongsScrollable';
 import { getYTPlaylists } from '../../services/audio-db/audio-db';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ function YTMusicLibraryPage() {
     currentSong,
     getCache,
     mergeCache,
-  } = useScrollableCachedSongList<ThinSongListState>(YOUTUBE_LIBRARY);
+  } = useCachedSongsScrollable<ThinSongListState>(YOUTUBE_LIBRARY);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

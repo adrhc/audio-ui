@@ -8,7 +8,7 @@ import { PlaybackState } from '../domain/types';
 import { AlertColor } from '@mui/material';
 import { useURLQueryParams } from './useURLSearchParams';
 import { Credentials, credentialsOf } from '../domain/credentials';
-import { TrackSong } from '../domain/track-song';
+import { CurrentSongAware, TrackSong } from '../domain/track-song';
 
 export const DEFAULT_APP_STATE_WTHOUT_MOPIDY = {
   online: false,
@@ -20,11 +20,10 @@ export const DEFAULT_APP_STATE_WTHOUT_MOPIDY = {
   password: '',
 };
 
-export type AppState = {
+export interface AppState extends CurrentSongAware {
   mopidy?: Mopidy;
   online: boolean;
   pbStatus?: PlaybackState;
-  currentSong?: TrackSong;
   streamTitle?: string | null;
   volume: number;
   boost: number;
@@ -33,7 +32,7 @@ export type AppState = {
   notification?: string | null;
   severity?: AlertColor;
   credentials: Credentials;
-};
+}
 
 export type SetNotificationFn = (notification?: string | null) => void;
 export type SetCredentialsFn = (credentials: Credentials) => void;

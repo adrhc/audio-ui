@@ -1,6 +1,6 @@
 import { ListItem, IconButton, ListItemButton, ListItemText, Stack } from '@mui/material';
 import { useCallback } from 'react';
-import { TrackSong, songEquals } from '../../domain/track-song';
+import { TrackSong, songEqual } from '../../domain/track-song';
 import { Song } from '../../domain/song';
 import SongListItemAvatar from './SongListItemAvatar';
 
@@ -74,7 +74,7 @@ function SongListItem({
       }
     >
       {onClick && (
-        <ListItemButton selected={songEquals(song, currentSong)} onClick={() => onClick(song)}>
+        <ListItemButton selected={songEqual(song, currentSong)} onClick={() => onClick(song)}>
           <SongListItemAvatar song={song} />
           <ListItemText primary={`${songCount}. ${song.title}`} secondary={song.formattedUri} />
         </ListItemButton>

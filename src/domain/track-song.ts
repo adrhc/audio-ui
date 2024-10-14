@@ -25,12 +25,16 @@ export function toSelectableTrackSong(songs: Song[], track: TrackSong): Selectab
 
 export interface SelectableTrackSong extends TrackSong, Selectable {}
 
+export interface CurrentSongAware {
+  currentSong?: TrackSong | null;
+}
+
 export interface TrackSong extends Song {
   tlid: number;
   artists?: string | null;
 }
 
-export function songEquals(song: Song, currentSong?: TrackSong) {
+export function songEqual(song: Song, currentSong?: Song) {
   return song.uri == currentSong?.uri;
 }
 

@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
-import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
+import useCachedSongsScrollable from '../../hooks/list/useCachedSongsScrollable';
 import { getHistory, getHistoryAfter, getHistoryBefore } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
@@ -26,7 +26,7 @@ function PlaybackHistoryPage() {
     currentSong,
     getCache,
     mergeCache,
-  } = useScrollableCachedSongList<RawPlaybackHistoryPageState>(PLAYLIST_HISTORY);
+  } = useCachedSongsScrollable<RawPlaybackHistoryPageState>(PLAYLIST_HISTORY);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

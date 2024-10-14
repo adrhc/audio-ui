@@ -1,33 +1,33 @@
-import Mopidy from 'mopidy';
-import { useCallback, useContext } from 'react';
-import { AppContext } from '../AppContext';
+import { useCallback } from 'react';
 import { LoadingState, SetLoadingState } from '../../lib/sustain';
 import { Song, ThinSongListState } from '../../domain/song';
-import { TrackSong } from '../../domain/track-song';
 import { NoArgsProc } from '../../domain/types';
 import { useNavigate } from 'react-router-dom';
-import useCachedPositionScrollable, { ScrollPosition, UseScrollableCachedList } from '../scrollable/useCachedPositionScrollable';
+import useCachedPositionScrollable, {
+  ScrollPosition,
+  UseCachedPositionScrollable,
+} from '../scrollable/useCachedPositionScrollable';
 import { SustainVoidFn, useSustainableState } from '../useSustainableState';
 import { UsePlayingList, usePlayingList } from './usePlayingList';
 
-export interface UseSongList<S extends ThinSongListState> extends UsePlayingList, UseScrollableCachedList<S> {
+export interface UseSongList<S extends ThinSongListState>
+  extends UsePlayingList,
+    UseCachedPositionScrollable<S> {
   addSongThenPlay: (song: Song) => void;
   goToPlAdd: NoArgsProc;
   state: LoadingState<S>;
   sustain: SustainVoidFn<S>;
   setState: SetLoadingState<S>;
-  currentSong?: TrackSong;
-  mopidy?: Mopidy;
 }
 
-export default function useScrollableCachedSongList<S extends ThinSongListState>(
+export default function useCachedSongsScrollable<S extends ThinSongListState>(
   cacheName: string,
   defaultState?: Partial<LoadingState<S>> | null
 ): UseSongList<S> {
   const navigate = useNavigate();
-  const { mopidy, currentSong } = useContext(AppContext);
 
-  const { getCache, ...scrollableCachedList } = useCachedPositionScrollable<S>(cacheName);
+  const { getCache, ...useCachedPositionScrollableRest } =
+    useCachedPositionScrollable<S>(cacheName);
 
   const properDefaultState = {
     songs: [],
@@ -53,13 +53,11 @@ export default function useScrollableCachedSongList<S extends ThinSongListState>
 
   return {
     ...usePlayingList(sustain),
-    ...scrollableCachedList,
+    ...useCachedPositionScrollableRest,
     getCache,
     state,
     sustain,
     setState,
     goToPlAdd,
-    currentSong,
-    mopidy,
   };
 }

@@ -3,7 +3,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../hooks/AppContext';
-import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
+import useCachedSongsScrollable from '../../hooks/list/useCachedSongsScrollable';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { getM3u8Playlists } from '../../services/pl-content';
@@ -28,7 +28,7 @@ function LocalLibraryToPlaySelectorPage() {
     getCache,
     mergeCache,
     clearCache,
-  } = useScrollableCachedSongList<ThinSongListState>(LOCAL_LIBRARY_PLAY_CACHE);
+  } = useCachedSongsScrollable<ThinSongListState>(LOCAL_LIBRARY_PLAY_CACHE);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

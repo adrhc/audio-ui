@@ -1,5 +1,5 @@
 import { useCallback, useContext } from 'react';
-import { isPlaylist, isYtMusicPl, Song, ThinSongListState } from '../../domain/song';
+import { isPlaylist, isYtMusicPl, Song, LastUsedMediaAware } from '../../domain/song';
 import { SustainVoidFn } from '../useSustainableState';
 import { AppContext } from '../AppContext';
 import {
@@ -11,17 +11,18 @@ import {
   addYtMusicPlAfterAndRemember,
   addYtMusicPlAndRemember,
 } from '../../services/tracklist';
+import { CurrentSongAware } from '../../domain/track-song';
 
 export type AddManySongsFn = (songs: Song[]) => void;
 
-export interface UsePlayingList {
+export interface UsePlayingList extends CurrentSongAware {
   addSongThenPlay: (song: Song) => void;
   addManySongs: AddManySongsFn;
   addSongOrPlaylist: (song: Song) => void;
   insertSongOrPlaylist: (song: Song) => void;
 }
 
-export function usePlayingList<S extends ThinSongListState>(sustain: SustainVoidFn<S>): UsePlayingList {
+export function usePlayingList<S extends LastUsedMediaAware>(sustain: SustainVoidFn<S>): UsePlayingList {
   const { mopidy, currentSong } = useContext(AppContext);
 
   const addSongThenPlay = useCallback(
@@ -78,5 +79,5 @@ export function usePlayingList<S extends ThinSongListState>(sustain: SustainVoid
     [mopidy, sustain, currentSong]
   );
 
-  return { addSongThenPlay, addManySongs, addSongOrPlaylist, insertSongOrPlaylist };
+  return { currentSong, addSongThenPlay, addManySongs, addSongOrPlaylist, insertSongOrPlaylist };
 }
