@@ -5,6 +5,8 @@ import {
   SetFeedbackState,
   SetLoadingState,
   sustain,
+  SustainFailState,
+  SustainPromise,
   sustainUnknown,
   SustainUnknownFailState,
   SustainUnknownPromise,
@@ -43,8 +45,8 @@ export function useSustainableUnknownState(): [
 }
 
 export type SustainVoidFn<S> = (
-  promise?: Promise<Partial<LoadingState<S>> | null | undefined | void>,
-  failState?: Partial<LoadingState<S>> | string | null,
+  promise?: SustainPromise<S>,
+  failState?: SustainFailState<S>,
   noWait?: boolean
 ) => Promise<void>;
 
@@ -53,11 +55,8 @@ export function useSustainableState<S>(
 ): [LoadingState<S>, SustainVoidFn<S>, SetLoadingState<S>] {
   const [state, setState] = useState<LoadingState<S>>(initialState);
   const sustainFn = useCallback(
-    (
-      promise?: Promise<Partial<LoadingState<S>> | null | undefined | void>,
-      failState?: Partial<LoadingState<S>> | string | null,
-      noWait?: boolean
-    ) => sustain(setState, promise, failState, noWait),
+    (promise?: SustainPromise<S>, failState?: SustainFailState<S>, noWait?: boolean) =>
+      sustain(setState, promise, failState, noWait),
     []
   );
   return [state, sustainFn, setState];

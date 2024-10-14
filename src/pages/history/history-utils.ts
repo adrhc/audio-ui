@@ -1,5 +1,5 @@
 import { HistoryPage, HistoryPosition } from '../../domain/history';
-import { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
+import { ThinSongListState } from '../../domain/song';
 
 export interface RawPlaybackHistoryPageState extends ThinSongListState {
   completePageSize: number;

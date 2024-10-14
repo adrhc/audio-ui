@@ -3,11 +3,11 @@ import PageTemplate from '../../templates/PageTemplate';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import SongList from '../../components/list/SongList';
 import { AppContext } from '../../hooks/AppContext';
-import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
+import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
 import { getM3u8Playlists } from '../../services/pl-content';
-import { Song } from '../../domain/song';
+import { Song, ThinSongListState } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
 import useLibrary from '../../hooks/list/useLibrary';
@@ -107,7 +107,7 @@ function M3u8LibraryEditorPage() {
         currentSong={currentSong}
         onClick={handleClick}
         onDelete={credentials.isValid() ? removePl : undefined}
-        onAddAllSongs={goToPlAdd}
+        addManySongs={goToPlAdd}
         onReloadList={handleReload}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}

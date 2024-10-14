@@ -17,9 +17,9 @@ function PlaybackHistoryPage() {
     state,
     sustain,
     setState,
-    handleSelection,
-    handleAdd,
-    handleInsert,
+    addSongThenPlay,
+    addSongOrPlaylist,
+    insertSongOrPlaylist,
     listRef,
     scrollObserver,
     scrollTo,
@@ -141,9 +141,9 @@ function PlaybackHistoryPage() {
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
-        onAdd={handleAdd}
-        onInsert={handleInsert}
-        onClick={handleSelection}
+        onAdd={addSongOrPlaylist}
+        onInsert={insertSongOrPlaylist}
+        onClick={addSongThenPlay}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}
         listRef={listRef}

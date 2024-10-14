@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
+import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
@@ -8,6 +8,7 @@ import { getPlaylistItems } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import { plCacheName } from '../../hooks/cache/cache-names';
+import { ThinSongListState } from '../../domain/song';
 import '/src/styles/wide-page.scss';
 
 function LocalPlaylistItemToPlaySelectorPage() {
@@ -17,10 +18,10 @@ function LocalPlaylistItemToPlaySelectorPage() {
     state,
     sustain,
     setState,
-    handleSelection,
-    handleAdd,
-    handleAddAll,
-    handleInsert,
+    addSongThenPlay,
+    addSongOrPlaylist,
+    addManySongs,
+    insertSongOrPlaylist,
     listRef,
     scrollTo,
     scrollObserver,
@@ -90,15 +91,15 @@ function LocalPlaylistItemToPlaySelectorPage() {
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
-        onAdd={handleAdd}
-        onInsert={handleInsert}
-        onClick={handleSelection}
+        onAdd={addSongOrPlaylist}
+        onInsert={insertSongOrPlaylist}
+        onClick={addSongThenPlay}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}
         listRef={listRef}
         scrollTo={scrollTo}
         onReloadList={loadPlContent}
-        onAddAllSongs={handleAddAll}
+        addManySongs={addManySongs}
       />
     </PageTemplate>
   );

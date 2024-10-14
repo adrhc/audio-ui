@@ -19,7 +19,7 @@ export function removeLoadingAttributes<S>(loadingState: LoadingState<S>): S {
 }
 
 export type SustainPromise<S> = Promise<Partial<LoadingState<S>> | null | undefined | void>;
-export type SustainFailState<S> = Partial<LoadingState<S>> | string | null;
+export type SustainFailState<S> = Partial<LoadingState<S> | Loading> | string | null | undefined;
 
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S>>>, promise: Promise<Partial<LoadingState<S>>>) : void;
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S> | undefined>>, promise: Promise<Partial<LoadingState<S>>>) : void {
@@ -55,7 +55,7 @@ function handleState<S>(
 }
 
 export type SustainUnknownPromise = Promise<Partial<LoadingState<unknown> | Loading> | void>;
-export type SustainUnknownFailState = Partial<LoadingState<unknown> | Loading> | string | null;
+export type SustainUnknownFailState = Partial<LoadingState<unknown> | Loading> | string | null | undefined;
 
 export function sustainUnknown(
   setState: SetLoading,

@@ -3,15 +3,9 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../hooks/AppContext';
-import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
-import { Song, isYtMusicPl } from '../../domain/song';
+import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
+import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
-import {
-  addMopidyPlAfterAndRemember,
-  addMopidyPlAndRemember,
-  addYtMusicPlAfterAndRemember,
-  addYtMusicPlAndRemember,
-} from '../../services/tracklist';
 import { getM3u8Playlists } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
@@ -28,6 +22,8 @@ function LocalLibraryToPlaySelectorPage() {
     scrollObserver,
     scrollTo,
     goToPlAdd,
+    addSongOrPlaylist,
+    insertSongOrPlaylist,
     currentSong,
     getCache,
     mergeCache,
@@ -90,32 +86,6 @@ function LocalLibraryToPlaySelectorPage() {
     [mergeCache, navigate]
   );
 
-  const handleAddPl = useCallback(
-    (song: Song) => {
-      console.log(`[LocalPlaylistsPage.handleAddPl] isYtMusicPl=${isYtMusicPl(song)}, song:\n`, song);
-      // addYTMPlAndRemember uses /playlist/content instead of Mopidy to replace "ytmusic:" with "youtube:"
-      const addFn = isYtMusicPl(song) ? addYtMusicPlAndRemember : addMopidyPlAndRemember;
-      sustain(
-        addFn(mopidy, song)?.then(() => ({ lastUsed: song })),
-        { error: `Failed to add ${song.title}!`, lastUsed: song }
-      );
-    },
-    [mopidy, sustain]
-  );
-
-  const handleInsertPl = useCallback(
-    (song: Song) => {
-      console.log(`[LocalPlaylistsPage.handleInsertPl] isYtMusicPl=${isYtMusicPl(song)}, song:\n`, song);
-      // addYTMPlAndRemember uses /playlist/content instead of Mopidy to replace "ytmusic:" with "youtube:"
-      const insertFn = isYtMusicPl(song) ? addYtMusicPlAfterAndRemember : addMopidyPlAfterAndRemember;
-      sustain(
-        insertFn(mopidy, currentSong, song)?.then(() => ({ lastUsed: song })),
-        { error: `Failed to add ${song.title}!`, lastUsed: song }
-      );
-    },
-    [currentSong, mopidy, sustain]
-  );
-
   return (
     <PageTemplate
       className="wide-page"
@@ -129,9 +99,9 @@ function LocalLibraryToPlaySelectorPage() {
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
-        onAdd={handleAddPl}
-        onAddAllSongs={goToPlAdd}
-        onInsert={handleInsertPl}
+        onAdd={addSongOrPlaylist}
+        addManySongs={goToPlAdd}
+        onInsert={insertSongOrPlaylist}
         onClick={handlePlSelection}
         onReloadList={handleReaload}
         lastUsed={state.lastUsed}

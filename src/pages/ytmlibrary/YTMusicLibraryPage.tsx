@@ -2,14 +2,14 @@ import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useEffect } from 'react';
-import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
+import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
 import { getYTPlaylists } from '../../services/audio-db/audio-db';
-import { Song } from '../../domain/song';
+import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
-import '/src/styles/wide-page.scss';
 import { YOUTUBE_LIBRARY } from '../../hooks/cache/cache-names';
+import '/src/styles/wide-page.scss';
 
 function YTMusicLibraryPage() {
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ function YTMusicLibraryPage() {
     state,
     sustain,
     setState,
-    handleAdd,
-    handleInsert,
+    addSongOrPlaylist,
+    insertSongOrPlaylist,
     listRef,
     scrollObserver,
     scrollTo,
@@ -87,8 +87,8 @@ function YTMusicLibraryPage() {
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
-        onAdd={handleAdd}
-        onInsert={handleInsert}
+        onAdd={addSongOrPlaylist}
+        onInsert={insertSongOrPlaylist}
         onClick={handleSelection}
         onReloadList={handleReaload}
         lastUsed={state.lastUsed}

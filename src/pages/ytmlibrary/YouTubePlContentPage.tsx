@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
+import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
 import { useParams } from 'react-router-dom';
 import { getYTPlContent } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
@@ -8,6 +8,7 @@ import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import { plCacheName } from '../../hooks/cache/cache-names';
+import { ThinSongListState } from '../../domain/song';
 import '/src/styles/wide-page.scss';
 
 interface YouTubePlContentCache extends ThinSongListState {
@@ -21,10 +22,10 @@ function YouTubePlContentPage() {
     state,
     sustain,
     setState,
-    handleSelection,
-    handleAdd,
-    handleAddAll,
-    handleInsert,
+    addSongThenPlay,
+    addSongOrPlaylist,
+    addManySongs,
+    insertSongOrPlaylist,
     listRef,
     scrollObserver,
     scrollTo,
@@ -94,15 +95,15 @@ function YouTubePlContentPage() {
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
-        onAdd={handleAdd}
-        onInsert={handleInsert}
-        onClick={handleSelection}
+        onAdd={addSongOrPlaylist}
+        onInsert={insertSongOrPlaylist}
+        onClick={addSongThenPlay}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}
         listRef={listRef}
         scrollTo={scrollTo}
         onReloadList={handleReaload}
-        onAddAllSongs={handleAddAll}
+        addManySongs={addManySongs}
       />
     </PageTemplate>
   );

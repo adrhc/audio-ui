@@ -13,6 +13,15 @@ export interface Song extends MediaLocation {
   imgUri?: string | null;
 }
 
+/**
+ * The purpose of this structure is to provide the basic state
+ * (and cache) structure for the features extending useSongList.
+ */
+export interface ThinSongListState {
+  songs: Song[];
+  lastUsed?: Song | null;
+}
+
 export function formatUri(uri: string | null | undefined) {
   if (!uri) {
     return uri;
@@ -48,21 +57,27 @@ export function uriToSong(uri: string): Song {
   return song.location.uri.endsWith(':VLLM') || song.location.uri.endsWith(':LM');
 } */
 
+export function isPlaylist(song: Song) {
+  return song.type == 'playlist';
+}
+
 export function isYtMusicPl(song: Song | string) {
   if (typeof song == 'string') {
     return song.startsWith('ytmusic:playlist:');
   } else {
-    return song.uri.startsWith('ytmusic:playlist:');
+    return song.type == 'playlist' && song.uri.startsWith('ytmusic:playlist:');
     // song.uri.startsWith('youtube:playlist:') ||
     // song.uri.startsWith('yt:playlist:')
   }
 }
 
-export function isDiskPl(song: Song | string) {
+export function isLocalPl(song: Song | string) {
   if (typeof song == 'string') {
-    return song.endsWith('.m3u8');
+    // return song.endsWith('.m3u8');
+    return song.startsWith('m3u:');
   } else {
-    return song.uri.endsWith('.m3u8');
+    // return song.uri.endsWith('.m3u8');
+    return song.type == 'playlist' && song.uri.startsWith('m3u:');
   }
 }
 

@@ -1,8 +1,7 @@
+import { AddManySongsFn } from '../hooks/list/usePlayingList';
 import { ScrollToFn } from './scroll';
 import { Song } from './song';
 import { NoArgsProc } from './types';
-
-export type AddAllSongsFn = (songs: Song[]) => void;
 
 export interface SongListItemMenuParam {
   songs: Song[];
@@ -12,7 +11,7 @@ export interface SongListItemMenuParam {
   pageAfterExists?: boolean | null;
   goToPreviousPage?: NoArgsProc;
   goToNextPage?: NoArgsProc;
-  onAddAllSongs?: AddAllSongsFn;
+  addManySongs?: AddManySongsFn;
   onReloadList?: NoArgsProc;
   bottom?: boolean;
 }
@@ -23,7 +22,7 @@ export function shouldShowListItemMenu({
   pageAfterExists,
   goToPreviousPage,
   goToNextPage,
-  onAddAllSongs,
+  addManySongs,
   onReloadList,
   ...scrollToParam
 }: SongListItemMenuParam) {
@@ -32,7 +31,7 @@ export function shouldShowListItemMenu({
     showScrollTo({ songs, ...scrollToParam }) ||
     (pageAfterExists && !!goToNextPage) ||
     !!onReloadList ||
-    (!!onAddAllSongs && !!songs.length)
+    (!!addManySongs && !!songs.length)
   );
 }
 

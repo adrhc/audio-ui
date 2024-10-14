@@ -1,6 +1,6 @@
 import Mopidy from 'mopidy';
 import { getYTPlContent } from './audio-db/audio-db';
-import { Song, isDiskPl, isYtMusicPl, refsToSongs, sortSongs } from '../domain/song';
+import { Song, isLocalPl, isYtMusicPl, refsToSongs, sortSongs } from '../domain/song';
 import { getPlItems as getMpcPlItems, getPlaylists, isM3uMpcRefUri } from './mpc';
 import { getPlContent } from './audio-ws/audio-ws';
 
@@ -50,7 +50,7 @@ export function getPlItems(imgMaxArea: number, uri: string): Promise<Song[]> {
 export function getM3u8Playlists(mopidy: Mopidy | undefined): Promise<Song[]> {
   return getPlaylists(mopidy)
     .then(refsToSongs)
-    .then((songs) => songs.filter(isDiskPl))
+    .then((songs) => songs.filter(isLocalPl))
     .then(sortSongs);
 }
 

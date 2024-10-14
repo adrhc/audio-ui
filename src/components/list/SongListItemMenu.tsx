@@ -16,7 +16,7 @@ function SongListItemMenu({
   goToNextPage,
   scrollTo,
   onReloadList: onRealoadList,
-  onAddAllSongs,
+  addManySongs,
   bottom,
 }: SongListItemMenuParam) {
   return (
@@ -42,8 +42,8 @@ function SongListItemMenu({
           <CachedOutlinedIcon />
         </Button>
       )}
-      {onAddAllSongs && songs.length && (
-        <Button variant="outlined" onClick={() => onAddAllSongs(songs)}>
+      {addManySongs && songs.length && (
+        <Button variant="outlined" onClick={() => addManySongs(songs)}>
           <AddBoxOutlinedIcon />
         </Button>
       )}

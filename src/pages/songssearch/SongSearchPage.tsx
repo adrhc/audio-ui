@@ -6,13 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import SongList from '../../components/list/SongList';
 import { useMaxEdge } from '../../constants';
-import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
+import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { ScrollPosition } from '../../hooks/list/useScrollableCachedList';
-import './SongSearchPage.scss';
 import { SONG_SEARCH } from '../../hooks/cache/cache-names';
+import { ThinSongListState } from '../../domain/song';
+import './SongSearchPage.scss';
 
 interface RawSongsSearchPageState extends ThinSongListState {
   draftExpression?: string | null;
@@ -30,9 +31,9 @@ function SongSearchPage() {
     state,
     sustain,
     setState,
-    handleSelection,
-    handleAdd,
-    handleInsert,
+    addSongThenPlay,
+    addSongOrPlaylist,
+    insertSongOrPlaylist,
     scrollObserver,
     scrollTo,
     getCache,
@@ -128,9 +129,9 @@ function SongSearchPage() {
         songs={state.songs}
         loading={state.loading}
         lastUsed={state.lastUsed}
-        onClick={handleSelection}
-        onAdd={handleAdd}
-        onInsert={handleInsert}
+        onClick={addSongThenPlay}
+        onAdd={addSongOrPlaylist}
+        onInsert={insertSongOrPlaylist}
         onScroll={scrollObserver}
         {...partialSongsListParam}
       />
