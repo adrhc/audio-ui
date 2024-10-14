@@ -11,7 +11,11 @@ export const YOUTUBE_LIBRARY = 'youtube-library';
  */
 export function plCacheName(plUri?: string) {
   console.log(`[ytPlCacheName] playlist/${plUri}`);
-  return plUri ? `playlist/${plUri}` : undefined;
+  if (plUri) {
+    return `playlist/${plUri}`;
+  } else {
+    throw new Error('Empty uri is not allowed!');
+  }
 }
 
 export function toPlCacheName(plSelection: LocationSelection) {
