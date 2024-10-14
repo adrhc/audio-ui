@@ -13,7 +13,7 @@ import './TrackList.scss';
 
 interface TrackListParam extends ScrollableList {
   songs: TrackSong[] | SelectableTrackSong[];
-  currentSong?: TrackSong;
+  currentSong?: TrackSong | null;
   onRemove?: (song: TrackSong) => void;
   onClick?: (song: TrackSong) => void;
   onSelect?: (song: SelectableTrackSong) => void;
