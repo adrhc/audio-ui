@@ -11,12 +11,13 @@ export interface UseCachedPositionScrollable {
   listRef: RefObject<HTMLUListElement>;
   scrollObserver: (e: React.UIEvent<HTMLUListElement>) => void;
   scrollTo: ScrollToFn;
+  getScrollPosition(): number;
 }
 
 export default function useCachedPositionScrollable(cacheName: string): UseCachedPositionScrollable {
   const [scrollTo, listRef] = useScrollable<HTMLUListElement>();
 
-  const { mergeCache } = useNamedCache<ScrollPosition>(cacheName);
+  const { getCache, mergeCache } = useNamedCache<ScrollPosition>(cacheName);
 
   const scrollObserver = useCallback(
     (e: React.UIEvent<HTMLUListElement>) => {
@@ -30,9 +31,14 @@ export default function useCachedPositionScrollable(cacheName: string): UseCache
     [mergeCache]
   );
 
+  const getScrollPosition = useCallback(() => {
+    return getCache()?.scrollTop ?? 0;
+  }, [getCache]);
+
   return {
     listRef,
     scrollObserver,
     scrollTo,
+    getScrollPosition,
   };
 }

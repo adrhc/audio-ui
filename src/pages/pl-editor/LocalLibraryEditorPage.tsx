@@ -26,15 +26,13 @@ function LocalLibraryEditorPage() {
     scrollTo,
     goToPlAdd,
     currentSong,
-    getCache,
     mergeCache,
+    getScrollPosition,
   } = useCachedSongsScrollable<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
   const { removePlaylist } = useLibrary(sustain);
 
-  const cache = getCache();
-  const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[PlaylistEditorPage]`, currentSong, cache, state, credentials);
+  console.log(`[PlaylistEditorPage]`, currentSong, state, credentials);
 
   const handleReload = useCallback(() => {
     console.log(`[PlaylistEditorPage.useEffect] loading the Mopidy playlists`);
@@ -54,16 +52,17 @@ function LocalLibraryEditorPage() {
   }, [handleReload, online, songsIsEmpty]);
 
   // scroll after loading the library
+  const scrollPosition = getScrollPosition();
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
       console.log(`[PlaylistEditorPage.useEffect] the library isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[PlaylistEditorPage] scrolling to ${cachedScrollTop} after loading the library`);
+    console.log(`[PlaylistEditorPage] scrolling to ${scrollPosition} after loading the library`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
-    scrollTo(cachedScrollTop);
-  }, [cachedScrollTop, scrollTo, songsIsEmpty]);
+    scrollTo(scrollPosition);
+  }, [scrollPosition, scrollTo, songsIsEmpty]);
 
   // cache the current state
   useEffect(() => {
