@@ -3,14 +3,15 @@ import SongListItemMenu from './SongListItemMenu.tsx';
 import SongListItem from './SongListItem';
 import { Song } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
-import { SongListItemMenuParam, shouldShowListItemMenu } from '../../domain/SongListItemMenuParam.ts';
+import { SongListItemMenuParam, shouldShowListItemMenu } from './SongListItemMenuParam.ts';
 import { LoadingState } from '../../lib/sustain.ts';
 import LoadingList from './LoadingList.tsx';
+import ScrollableList from '../../domain/scroll.ts';
 import './SongList.scss';
 
 type SongHandler = (song: Song) => void;
 
-interface SongsListParam extends SongListItemMenuParam {
+interface SongsListParam extends ScrollableList, SongListItemMenuParam {
   prevSongsCount?: number;
   currentSong?: TrackSong | null;
   onAdd?: SongHandler;
@@ -18,7 +19,6 @@ interface SongsListParam extends SongListItemMenuParam {
   onDelete?: SongHandler;
   onClick?: SongHandler;
   lastUsed?: Song | null;
-  onScroll?: (e: React.UIEvent<HTMLUListElement>) => void;
   className?: string;
 }
 

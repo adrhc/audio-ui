@@ -5,16 +5,16 @@ import VerticalAlignBottomOutlinedIcon from '@mui/icons-material/VerticalAlignBo
 import VerticalAlignTopOutlinedIcon from '@mui/icons-material/VerticalAlignTopOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import { SongListItemMenuParam, showScrollTo } from '../../domain/SongListItemMenuParam';
+import { SongListItemMenuParam, showScrollTo } from './SongListItemMenuParam';
 
 function SongListItemMenu({
   songs,
   listRef,
+  scrollTo,
   pageBeforeExists,
   pageAfterExists,
   goToPreviousPage,
   goToNextPage,
-  scrollTo,
   onReloadList: onRealoadList,
   addManySongs,
   bottom,

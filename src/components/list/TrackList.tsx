@@ -8,9 +8,10 @@ import { toQueryParams } from '../../lib/path-param-utils';
 import { LoadingState } from '../../lib/sustain';
 import LoadingList from './LoadingList';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
+import ScrollableList from '../../domain/scroll';
 import './TrackList.scss';
 
-type TrackListParam = {
+interface TrackListParam extends ScrollableList {
   songs: TrackSong[] | SelectableTrackSong[];
   currentSong?: TrackSong;
   onRemove?: (song: TrackSong) => void;
@@ -19,9 +20,7 @@ type TrackListParam = {
   songCloseToLastRemoved?: TrackSong;
   menu?: ReactNode;
   className?: string;
-  listRef?: React.RefObject<HTMLUListElement>;
-  onScroll?: (e: React.UIEvent<HTMLUListElement>) => void;
-};
+}
 
 function TrackList({
   songs,

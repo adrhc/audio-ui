@@ -1,5 +1,5 @@
 import { RefObject, useCallback, useRef } from 'react';
-import { ScrollToFn } from '../domain/scroll';
+import { ScrollToFn } from '../../domain/scroll';
 
 export default function useScrollable<T extends Element>(): [ScrollToFn, RefObject<T>] {
   const listRef = useRef<T>(null);

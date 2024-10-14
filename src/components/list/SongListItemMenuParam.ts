@@ -1,11 +1,11 @@
-import { AddManySongsFn } from '../hooks/usePlayingList';
-import { ScrollToFn } from './scroll';
-import { Song } from './song';
-import { NoArgsProc } from './types';
+import { AddManySongsFn } from '../../hooks/usePlayingList';
+import { ListRef, ScrollToFn } from '../../domain/scroll';
+import { Song } from '../../domain/song';
+import { NoArgsProc } from '../../domain/types';
 
 export interface SongListItemMenuParam {
   songs: Song[];
-  listRef?: React.RefObject<HTMLUListElement>;
+  listRef?: ListRef;
   scrollTo?: ScrollToFn;
   pageBeforeExists?: boolean | null;
   pageAfterExists?: boolean | null;
