@@ -3,7 +3,7 @@ import { Song, formatUri } from './song';
 import Selectable from './Selectable';
 import { uriEqual } from './media-location';
 
-export function areSameTrack(tk1: TrackSong, tk2?: TrackSong): boolean {
+export function areSameTrack(tk1: TrackSong, tk2?: TrackSong | null): boolean {
   return tk1.tlid == tk2?.tlid && tk1.uri == tk2.uri;
 }
 
