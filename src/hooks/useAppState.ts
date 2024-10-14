@@ -8,7 +8,7 @@ import { PlaybackState } from '../domain/types';
 import { AlertColor } from '@mui/material';
 import { useURLQueryParams } from './useURLSearchParams';
 import { Credentials, credentialsOf } from '../domain/credentials';
-import { CurrentSongAware, TrackSong } from '../domain/track-song';
+import { CurrentSongAware } from '../domain/track-song';
 
 export const DEFAULT_APP_STATE_WTHOUT_MOPIDY = {
   online: false,
