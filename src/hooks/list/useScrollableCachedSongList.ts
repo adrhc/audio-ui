@@ -1,7 +1,6 @@
 import Mopidy from 'mopidy';
 import { useCallback, useContext } from 'react';
 import { AppContext } from '../AppContext';
-import { addSongThenPlay } from '../../services/tracklist';
 import { LoadingState, SetLoadingState } from '../../lib/sustain';
 import { Song, ThinSongListState } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
