@@ -19,6 +19,8 @@ type TrackListParam = {
   songCloseToLastRemoved?: TrackSong;
   menu?: ReactNode;
   className?: string;
+  listRef?: React.RefObject<HTMLUListElement>;
+  onScroll?: (e: React.UIEvent<HTMLUListElement>) => void;
 };
 
 function TrackList({
@@ -31,6 +33,8 @@ function TrackList({
   songCloseToLastRemoved,
   menu,
   className,
+  listRef,
+  onScroll,
 }: LoadingState<TrackListParam>) {
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
   const shouldAutoFocus = useCallback(
@@ -41,7 +45,13 @@ function TrackList({
   );
 
   return (
-    <LoadingList className={`${className} track-list`} loading={loading} length={songs.length}>
+    <LoadingList
+      className={`${className} track-list`}
+      loading={loading}
+      length={songs.length}
+      onScroll={onScroll}
+      listRef={listRef}
+    >
       {menu && (
         <ListItem key="TrackListItemTopMenu" className="MENU" disablePadding>
           {menu}

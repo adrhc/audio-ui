@@ -5,6 +5,7 @@ export const LOCAL_LIBRARY_EDIT_CACHE = 'local-library/edit';
 export const PLAYLIST_HISTORY = 'history';
 export const SONG_SEARCH = 'search';
 export const YOUTUBE_LIBRARY = 'youtube-library';
+export const CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE = 'CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE';
 
 /**
  * @param plUri e.g. m3u/colinde

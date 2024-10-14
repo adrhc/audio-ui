@@ -14,9 +14,10 @@ import TrackList from '../tracks/TrackList';
 import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { useGoBack } from '../../hooks/useGoBack';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
-import { plCacheName } from '../../hooks/cache/cache-names';
+import { CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE, plCacheName } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
 import './CurrentPlayToPlaylistAllocatorPage.scss';
+import useCachedPositionScrollable from '../../hooks/scrollable/useCachedPositionScrollable';
 
 interface PlEditFromCurrentPlayPageState {
   selections: SelectableTrackSong[];
@@ -34,6 +35,10 @@ function CurrentPlayToPlaylistAllocatorPage() {
   const imgMaxEdge = useMaxEdge();
   const goBack = useGoBack();
 
+  const { getScrollPosition, scrollTo, listRef, scrollObserver } = useCachedPositionScrollable(
+    CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE
+  );
+
   useEffect(() => {
     if (uri && online) {
       console.log(`[TrackListPage:online] loading the track list`);
@@ -43,6 +48,20 @@ function CurrentPlayToPlaylistAllocatorPage() {
       );
     }
   }, [imgMaxEdge, mopidy, online, sustain, uri]);
+
+  // scroll after loading the library
+  const scrollPosition = getScrollPosition();
+  useEffect(() => {
+    // this "if" is critical for correct scrolling position!
+    if (selections.length) {
+      console.log(`[CurrentPlayToPlaylistAllocatorPage.useEffect] scrolling to ${scrollPosition}`);
+      // setTimeout(scrollTo, 0, cachedScrollTop);
+      scrollTo(scrollPosition);
+    } else {
+      console.log(`[CurrentPlayToPlaylistAllocatorPage.useEffect] there are no songs scheduled to play!`);
+      return;
+    }
+  }, [scrollPosition, scrollTo, selections.length]);
 
   const handleSelection = useCallback(
     (newSelection: SelectableTrackSong) => {
@@ -90,7 +109,10 @@ function CurrentPlayToPlaylistAllocatorPage() {
       title={<PageTitle>{title}</PageTitle>}
       hideTop={true}
       bottom={
-        <CreateConfirmButtonMenu onAccept={persistSelection} acceptDisabled={!uri || !online || !selections.length} />
+        <CreateConfirmButtonMenu
+          onAccept={persistSelection}
+          acceptDisabled={!uri || !online || !selections.length}
+        />
       }
       disableSpinner={true}
     >
@@ -100,6 +122,8 @@ function CurrentPlayToPlaylistAllocatorPage() {
         loading={loading}
         onSelect={handleSelection}
         menu={<ListItemMinusPlusMenu onMinus={removeAll} onPlus={selectAll} />}
+        listRef={listRef}
+        onScroll={scrollObserver}
       />
     </PageTemplate>
   );

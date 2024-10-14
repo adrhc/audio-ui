@@ -24,10 +24,10 @@ function LocalLibraryEditorPage() {
     listRef,
     scrollObserver,
     scrollTo,
+    getScrollPosition,
     goToPlAdd,
     currentSong,
     mergeCache,
-    getScrollPosition,
   } = useCachedSongsScrollable<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
   const { removePlaylist } = useLibrary(sustain);
 
@@ -109,8 +109,8 @@ function LocalLibraryEditorPage() {
         addManySongs={goToPlAdd}
         onReloadList={handleReload}
         lastUsed={state.lastUsed}
-        onScroll={scrollObserver}
         listRef={listRef}
+        onScroll={scrollObserver}
         scrollTo={scrollTo}
       />
     </PageTemplate>
