@@ -6,7 +6,7 @@ import { Song, ThinSongListState } from '../../domain/song';
 import { TrackSong } from '../../domain/track-song';
 import { NoArgsProc } from '../../domain/types';
 import { useNavigate } from 'react-router-dom';
-import useScrollableCachedList, { ScrollPosition, UseScrollableCachedList } from './useScrollableCachedList';
+import useCachedPositionScrollable, { ScrollPosition, UseScrollableCachedList } from '../scrollable/useCachedPositionScrollable';
 import { SustainVoidFn, useSustainableState } from '../useSustainableState';
 import { UsePlayingList, usePlayingList } from './usePlayingList';
 
@@ -27,7 +27,7 @@ export default function useScrollableCachedSongList<S extends ThinSongListState>
   const navigate = useNavigate();
   const { mopidy, currentSong } = useContext(AppContext);
 
-  const { getCache, ...scrollableCachedList } = useScrollableCachedList<S>(cacheName);
+  const { getCache, ...scrollableCachedList } = useCachedPositionScrollable<S>(cacheName);
 
   const properDefaultState = {
     songs: [],

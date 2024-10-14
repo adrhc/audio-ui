@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
-import { CacheOperations } from './useCache';
+import { useCallback, useContext } from 'react';
 import { NoArgsProc } from '../../domain/types';
+import { AppContext } from '../AppContext';
 
 export type GetCacheFn<S> = () => S | null | undefined;
 export type SetCacheFn<S> = (value: S) => void;
@@ -22,17 +22,14 @@ export interface NamedTypedCacheOperations<S> {
  * Useful only while in page because after exiting the cache is
  * lost; use the cache with useContext(AppContext) to not lose it!
  */
-export function useNamedTypedCache<S>(
-  cacheName: string,
-  cacheOperations: CacheOperations<unknown>
-): NamedTypedCacheOperations<S> {
+export function useTypedCache<S>(cacheName: string): NamedTypedCacheOperations<S> {
   const {
     getCache: getTypedCache,
     setCache: setTypedCache,
     mergeCache: mergeTypedCache,
     clearCache: clearTypedCache,
     cacheContains: typedCacheContains,
-  } = cacheOperations;
+  } = useContext(AppContext); // must use the cache through AppContext to persist between pages!
 
   const getCache = useCallback(() => {
     // console.log(`[getCache] cacheName = ${cacheName}`);

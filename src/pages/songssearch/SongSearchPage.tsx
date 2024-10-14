@@ -10,7 +10,7 @@ import useScrollableCachedSongList from '../../hooks/list/useScrollableCachedSon
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
-import { ScrollPosition } from '../../hooks/list/useScrollableCachedList';
+import { ScrollPosition } from '../../hooks/scrollable/useCachedPositionScrollable';
 import { SONG_SEARCH } from '../../hooks/cache/cache-names';
 import { ThinSongListState } from '../../domain/song';
 import './SongSearchPage.scss';

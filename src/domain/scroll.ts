@@ -1,4 +1,4 @@
-import { ScrollPosition } from "../hooks/list/useScrollableCachedList";
+import { ScrollPosition } from "../hooks/scrollable/useCachedPositionScrollable";
 
 export type ScrollToFn = (top?: number) => void;
 
