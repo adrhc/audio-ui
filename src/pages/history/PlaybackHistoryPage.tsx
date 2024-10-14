@@ -9,6 +9,7 @@ import { AppContext } from '../../hooks/AppContext';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import '/src/styles/wide-page.scss';
+import { PLAYLIST_HISTORY } from '../../hooks/cache/cache-names';
 
 function PlaybackHistoryPage() {
   const { mopidy } = useContext(AppContext);
@@ -25,7 +26,7 @@ function PlaybackHistoryPage() {
     currentSong,
     getCache,
     mergeCache,
-  } = useSongList<RawPlaybackHistoryPageState>('history');
+  } = useSongList<RawPlaybackHistoryPageState>(PLAYLIST_HISTORY);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

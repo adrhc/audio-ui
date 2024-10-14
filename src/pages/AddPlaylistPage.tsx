@@ -6,8 +6,7 @@ import { createPlaylist } from '../services/audio-ws/audio-ws';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
-import { LOCAL_PLAYLISTS_CACHE } from './local-playlists/LocalPlaylistsPage';
-import { PLAYLISTS_EDIT_CACHE } from './pl-editor/M3u8LibraryEditorPage';
+import { LOCAL_LIBRARY_EDIT_CACHE, LOCAL_LIBRARY_PLAY_CACHE } from '../hooks/cache/cache-names';
 
 const MIN_PL_NAME_LENGTH = 3;
 interface NewPlaylistPageState {
@@ -36,7 +35,7 @@ function AddPlaylistPage() {
         if (!success) {
           return { error: failMessage } as Partial<LoadingStateOrProvider<NewPlaylistPageState>>;
         } else {
-          clearCache(LOCAL_PLAYLISTS_CACHE, PLAYLISTS_EDIT_CACHE);
+          clearCache(LOCAL_LIBRARY_PLAY_CACHE, LOCAL_LIBRARY_EDIT_CACHE);
           goBack();
         }
       }),

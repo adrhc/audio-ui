@@ -15,10 +15,9 @@ import {
 import { getM3u8Playlists } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-page.scss';
+import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
 
-export const LOCAL_PLAYLISTS_CACHE = 'playlists/local';
-
-function LocalPlaylistsPage() {
+function M3u8LibraryPlayerPage() {
   const navigate = useNavigate();
   const { mopidy, online } = useContext(AppContext);
   const {
@@ -33,7 +32,7 @@ function LocalPlaylistsPage() {
     getCache,
     mergeCache,
     clearCache,
-  } = useSongList<ThinSongListState>(LOCAL_PLAYLISTS_CACHE);
+  } = useSongList<ThinSongListState>(LOCAL_LIBRARY_PLAY_CACHE);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -144,4 +143,4 @@ function LocalPlaylistsPage() {
   );
 }
 
-export default LocalPlaylistsPage;
+export default M3u8LibraryPlayerPage;

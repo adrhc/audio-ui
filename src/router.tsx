@@ -15,14 +15,14 @@ import PlaybackHistoryPage from './pages/history/PlaybackHistoryPage';
 import LoginPage from './pages/login/LoginPage';
 import YouTubePlContentPage from './pages/ytmlibrary/YouTubePlContentPage';
 import YTMusicLibraryPage from './pages/ytmlibrary/YTMusicLibraryPage';
-import LocalPlaylistsPage from './pages/local-playlists/LocalPlaylistsPage';
+import M3u8LibraryPlayerPage from './pages/local-playlists/M3u8LibraryPlayerPage';
 import LocalPlContentPage from './pages/local-playlists/LocalPlContentPage';
-import PlaylistToEditSelectorPage from './pages/pl-editor/PlaylistToEditSelectorPage';
+import PlaylistToSongAllocatorPage from './pages/pl-editor/PlaylistToSongAllocatorPage';
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
 import AdminMenuPage from './pages/AdminMenuPage';
 import M3u8LibraryEditorPage from './pages/pl-editor/M3u8LibraryEditorPage';
-import PlEditFromCurrentPlayPage from './pages/pl-editor/PlEditFromCurrentPlayPage';
+import CurrentPlayToPlaylistAllocatorPage from './pages/pl-editor/CurrentPlayToPlaylistAllocatorPage';
 
 const ROUTER = createHashRouter([
   {
@@ -48,7 +48,7 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'song-playlists-editor/:uri',
-        element: <PlaylistToEditSelectorPage />,
+        element: <PlaylistToSongAllocatorPage />,
       },
       {
         path: 'local-playlist-content/:uri',
@@ -56,7 +56,7 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'local-playlists',
-        element: <LocalPlaylistsPage />,
+        element: <M3u8LibraryPlayerPage />,
       },
       {
         path: 'playlist-edit-options',
@@ -64,7 +64,7 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'playlist-edit-from-current-play/:uri',
-        element: <PlEditFromCurrentPlayPage />,
+        element: <CurrentPlayToPlaylistAllocatorPage />,
       },
       {
         path: 'ytplcontent/:uri',

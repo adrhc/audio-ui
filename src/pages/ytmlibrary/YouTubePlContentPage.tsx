@@ -7,6 +7,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
+import { plCacheName } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
 
 interface YouTubePlContentCache extends ThinSongListState {
@@ -15,7 +16,7 @@ interface YouTubePlContentCache extends ThinSongListState {
 
 function YouTubePlContentPage() {
   const { uri } = useParams();
-  const cacheName = `ytplcontent/${uri}`;
+  const cacheName = plCacheName(uri);
   const {
     state,
     sustain,

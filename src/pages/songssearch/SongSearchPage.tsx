@@ -12,6 +12,7 @@ import { toQueryParams } from '../../lib/path-param-utils';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { ScrollPosition } from '../../hooks/list/useScrollableCachedList';
 import './SongSearchPage.scss';
+import { SONG_SEARCH } from '../../hooks/cache/cache-names';
 
 interface RawSongsSearchPageState extends ThinSongListState {
   draftExpression?: string | null;
@@ -39,7 +40,7 @@ function SongSearchPage() {
     ...partialSongsListParam
     // the cache, if exists, it overwrites "draftExpression: searchExpression" with its draftExpression!
     // "state" receives "searchExpression" from the cache despite the fact that it doesn't declare it!
-  } = useSongList<RawSongsSearchPageState>('songs-search', { draftExpression: searchExpression });
+  } = useSongList<RawSongsSearchPageState>(SONG_SEARCH, { draftExpression: searchExpression });
 
   const cache = getCache() as SongSearchCache;
 

@@ -7,12 +7,12 @@ import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { getPlaylistItems } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
-import { plContentCacheName } from './LocalPlContentUtils';
+import { plCacheName } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
 
 function LocalPlContentPage() {
   const { uri } = useParams();
-  const cacheName = plContentCacheName(uri);
+  const cacheName = plCacheName(uri);
   const {
     state,
     sustain,

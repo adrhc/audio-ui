@@ -13,16 +13,16 @@ import { SelectableTrackSong } from '../../domain/track-song';
 import TrackList from '../tracks/TrackList';
 import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { useGoBack } from '../../hooks/useGoBack';
-import { plContentCacheName } from '../local-playlists/LocalPlContentUtils';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
+import { plCacheName } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
-import './PlEditFromCurrentPlayPage.scss';
+import './CurrentPlayToPlaylistAllocatorPage.scss';
 
 interface PlEditFromCurrentPlayPageState {
   selections: SelectableTrackSong[];
 }
 
-function PlEditFromCurrentPlayPage() {
+function CurrentPlayToPlaylistAllocatorPage() {
   const { uri } = useParams();
   const { title } = useURLQueryParams('title');
   // const decodedUri = uri ? decodeURIComponent(uri) : uri;
@@ -62,7 +62,7 @@ function PlEditFromCurrentPlayPage() {
     if (uri) {
       sustain(
         updateDiskPlContent(uri, selections).then(() => {
-          clearCache(plContentCacheName(uri));
+          clearCache(plCacheName(uri));
           goBack();
         }),
         'Failed to save the selection!'
@@ -105,4 +105,4 @@ function PlEditFromCurrentPlayPage() {
   );
 }
 
-export default PlEditFromCurrentPlayPage;
+export default CurrentPlayToPlaylistAllocatorPage;

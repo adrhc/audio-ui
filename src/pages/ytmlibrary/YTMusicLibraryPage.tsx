@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import '/src/styles/wide-page.scss';
+import { YOUTUBE_LIBRARY } from '../../hooks/cache/cache-names';
 
 function YTMusicLibraryPage() {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function YTMusicLibraryPage() {
     currentSong,
     getCache,
     mergeCache,
-  } = useSongList<ThinSongListState>('ytmlibrary');
+  } = useSongList<ThinSongListState>(YOUTUBE_LIBRARY);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

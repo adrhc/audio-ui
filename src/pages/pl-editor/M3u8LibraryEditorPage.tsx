@@ -12,8 +12,7 @@ import { toQueryParams } from '../../lib/path-param-utils';
 import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
 import { removeDiskPlaylist } from '../../services/audio-db/audio-db';
-
-export const PLAYLISTS_EDIT_CACHE = 'playlists/edit';
+import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
 
 function M3u8LibraryEditorPage() {
   const navigate = useNavigate();
@@ -29,7 +28,7 @@ function M3u8LibraryEditorPage() {
     currentSong,
     getCache,
     mergeCache,
-  } = useSongList<ThinSongListState>(PLAYLISTS_EDIT_CACHE);
+  } = useSongList<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
 
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
