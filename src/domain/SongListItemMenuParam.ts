@@ -1,4 +1,4 @@
-import { AddManySongsFn } from '../hooks/list/usePlayingList';
+import { AddManySongsFn } from '../hooks/usePlayingList';
 import { ScrollToFn } from './scroll';
 import { Song } from './song';
 import { NoArgsProc } from './types';

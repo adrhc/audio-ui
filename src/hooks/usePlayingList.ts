@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
-import { isPlaylist, isYtMusicPl, Song, LastUsedMediaAware } from '../../domain/song';
-import { SustainVoidFn } from '../useSustainableState';
-import { AppContext } from '../AppContext';
+import { isPlaylist, isYtMusicPl, Song, LastUsedMediaAware } from '../domain/song';
+import { SustainVoidFn } from './useSustainableState';
+import { AppContext } from './AppContext';
 import {
   addMopidyPlAfterAndRemember,
   addMopidyPlAndRemember,
@@ -10,8 +10,8 @@ import {
   addSongThenPlay as remotelyAddSongThenPlay,
   addYtMusicPlAfterAndRemember,
   addYtMusicPlAndRemember,
-} from '../../services/tracklist';
-import { CurrentSongAware } from '../../domain/track-song';
+} from '../services/tracklist';
+import { CurrentSongAware } from '../domain/track-song';
 
 export type AddManySongsFn = (songs: Song[]) => void;
 

@@ -1,9 +1,9 @@
 import { useCallback, useContext } from 'react';
-import { createPlaylist as remotelyCreatePlaylist } from '../../services/audio-ws/audio-ws';
-import { LoadingStateOrProvider, SustainVoidFn } from '../useSustainableState';
-import { AppContext } from '../AppContext';
-import { Song } from '../../domain/song';
-import { removeDiskPlaylist } from '../../services/audio-db/audio-db';
+import { createPlaylist as remotelyCreatePlaylist } from '../services/audio-ws/audio-ws';
+import { LoadingStateOrProvider, SustainVoidFn } from './useSustainableState';
+import { AppContext } from './AppContext';
+import { Song } from '../domain/song';
+import { removeDiskPlaylist } from '../services/audio-db/audio-db';
 
 export interface UseLibrary {
   createPlaylist: (plName: string) => Promise<void>;

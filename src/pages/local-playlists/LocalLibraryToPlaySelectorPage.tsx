@@ -3,7 +3,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../hooks/AppContext';
-import useCachedSongsScrollable from '../../hooks/list/useCachedSongsScrollable';
+import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { getM3u8Playlists } from '../../services/pl-content';

@@ -5,7 +5,7 @@ import { AppContext } from '../hooks/AppContext';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
-import useLibrary from '../hooks/list/useLibrary';
+import useLibrary from '../hooks/useLibrary';
 
 const MIN_PL_NAME_LENGTH = 3;
 interface NewPlaylistPageState {

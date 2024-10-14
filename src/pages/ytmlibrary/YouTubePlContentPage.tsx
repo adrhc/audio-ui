@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import useCachedSongsScrollable from '../../hooks/list/useCachedSongsScrollable';
+import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { useParams } from 'react-router-dom';
 import { getYTPlContent } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';

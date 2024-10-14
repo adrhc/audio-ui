@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
-import { LoadingState, SetLoadingState } from '../../lib/sustain';
-import { Song, ThinSongListState } from '../../domain/song';
-import { NoArgsProc } from '../../domain/types';
+import { LoadingState, SetLoadingState } from '../lib/sustain';
+import { Song, ThinSongListState } from '../domain/song';
+import { NoArgsProc } from '../domain/types';
 import { useNavigate } from 'react-router-dom';
 import useCachedPositionScrollable, {
   ScrollPosition,
   UseCachedPositionScrollable,
-} from '../scrollable/useCachedPositionScrollable';
-import { SustainVoidFn, useSustainableState } from '../useSustainableState';
+} from './scrollable/useCachedPositionScrollable';
+import { SustainVoidFn, useSustainableState } from './useSustainableState';
 import { UsePlayingList, usePlayingList } from './usePlayingList';
 
 export interface UseSongList<S extends ThinSongListState>

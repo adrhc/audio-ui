@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import SongList from '../../components/list/SongList';
 import { useMaxEdge } from '../../constants';
-import useCachedSongsScrollable from '../../hooks/list/useCachedSongsScrollable';
+import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';

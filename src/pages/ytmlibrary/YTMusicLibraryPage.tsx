@@ -2,7 +2,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useEffect } from 'react';
-import useCachedSongsScrollable from '../../hooks/list/useCachedSongsScrollable';
+import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { getYTPlaylists } from '../../services/audio-db/audio-db';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
