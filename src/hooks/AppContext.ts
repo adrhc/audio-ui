@@ -1,12 +1,12 @@
 import { createContext } from 'react';
 import { VolumeBoost } from '../services/boost';
-import { UnknownCacheTypeOperations } from './cache/useCache';
+import { UnknownCacheTypeOperations } from '../hooks/cache/useCache';
 import {
   AppState,
   DEFAULT_APP_STATE_WTHOUT_MOPIDY,
   SetCredentialsFn,
   SetNotificationFn,
-} from './useAppState';
+} from '../hooks/useAppState';
 import { Credentials } from '../domain/credentials';
 
 interface AppContextValue extends AppState, UnknownCacheTypeOperations {
@@ -30,6 +30,7 @@ export const AppContext = createContext<AppContextValue>({
   setCache: () => {},
   mergeCache: () => {},
   clearCache: () => {},
+  clearLocalLibraryCache: () => {},
   cacheContains: () => false,
   setNotification: () => {},
   reloadState: () => {},
