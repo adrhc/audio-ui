@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
+import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
@@ -28,7 +28,7 @@ function LocalPlContentPage() {
     getCache,
     mergeCache,
     clearCache,
-  } = useSongList<ThinSongListState>(cacheName);
+  } = useScrollableCachedSongList<ThinSongListState>(cacheName);
   const cache = getCache();
   console.log(`[LocalPlContentPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
     currentSong,

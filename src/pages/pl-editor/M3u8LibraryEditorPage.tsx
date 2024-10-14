@@ -3,16 +3,16 @@ import PageTemplate from '../../templates/PageTemplate';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import SongList from '../../components/list/SongList';
 import { AppContext } from '../../hooks/AppContext';
-import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
+import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
 import { getM3u8Playlists } from '../../services/pl-content';
 import { Song } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
+import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
+import useLibrary from '../../hooks/list/useLibrary';
 import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
-import { removeDiskPlaylist } from '../../services/audio-db/audio-db';
-import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
 
 function M3u8LibraryEditorPage() {
   const navigate = useNavigate();
@@ -28,12 +28,13 @@ function M3u8LibraryEditorPage() {
     currentSong,
     getCache,
     mergeCache,
-  } = useSongList<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
+  } = useScrollableCachedSongList<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
+  const { removePlaylist } = useLibrary(sustain);
 
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[PlaylistEditorPage]`, { currentSong, cache, state });
+  console.log(`[PlaylistEditorPage]`, currentSong, cache, state, credentials);
 
   const handleReload = useCallback(() => {
     console.log(`[PlaylistEditorPage.useEffect] loading the Mopidy playlists`);
@@ -81,22 +82,13 @@ function M3u8LibraryEditorPage() {
     [mergeCache, navigate]
   );
 
-  const removePlaylist = useCallback(
+  const removePl = useCallback(
     (playlist: Song) => {
-      console.info(`[PlaylistEditorPage.removePlaylist] playlist:`, playlist);
-      sustain(
-        removeDiskPlaylist(playlist).then((removed) => {
-          if (removed) {
-            setState((old) => ({ ...old, songs: old.songs.filter((s) => s.uri != playlist.uri) }));
-          } else {
-            // console.log(`Couldn't find the playlist to remove! ${playlist.formattedUri}`);
-            return { error: `Couldn't find the playlist to remove! ${playlist.formattedUri}` };
-          }
-        }),
-        `Failed to remove the playlist ${playlist.formattedUri}!`
+      removePlaylist(playlist).then(() =>
+        setState((old) => ({ ...old, songs: old.songs.filter((s) => s.uri != playlist.uri) }))
       );
     },
-    [setState, sustain]
+    [removePlaylist, setState]
   );
 
   return (
@@ -114,7 +106,7 @@ function M3u8LibraryEditorPage() {
         loading={state.loading}
         currentSong={currentSong}
         onClick={handleClick}
-        onDelete={credentials.isValid() ? removePlaylist : undefined}
+        onDelete={credentials.isValid() ? removePl : undefined}
         onAddAllSongs={goToPlAdd}
         onReloadList={handleReload}
         lastUsed={state.lastUsed}

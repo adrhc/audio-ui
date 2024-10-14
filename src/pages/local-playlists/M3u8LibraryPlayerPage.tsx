@@ -3,7 +3,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useContext, useEffect } from 'react';
 import { AppContext } from '../../hooks/AppContext';
-import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
+import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
 import { Song, isYtMusicPl } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -32,7 +32,7 @@ function M3u8LibraryPlayerPage() {
     getCache,
     mergeCache,
     clearCache,
-  } = useSongList<ThinSongListState>(LOCAL_LIBRARY_PLAY_CACHE);
+  } = useScrollableCachedSongList<ThinSongListState>(LOCAL_LIBRARY_PLAY_CACHE);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

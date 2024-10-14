@@ -1,12 +1,11 @@
 import { Stack, TextField } from '@mui/material';
-import { LoadingStateOrProvider, useSustainableState } from '../hooks/useSustainableState';
+import { useSustainableState } from '../hooks/useSustainableState';
 import { useCallback, useContext } from 'react';
 import { AppContext } from '../hooks/AppContext';
-import { createPlaylist } from '../services/audio-ws/audio-ws';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
-import { LOCAL_LIBRARY_EDIT_CACHE, LOCAL_LIBRARY_PLAY_CACHE } from '../hooks/cache/cache-names';
+import useLibrary from '../hooks/list/useLibrary';
 
 const MIN_PL_NAME_LENGTH = 3;
 interface NewPlaylistPageState {
@@ -15,8 +14,9 @@ interface NewPlaylistPageState {
 
 function AddPlaylistPage() {
   const goBack = useGoBack();
-  const { online, clearCache } = useContext(AppContext);
+  const { online } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<NewPlaylistPageState>({ name: '' });
+  const { createPlaylist } = useLibrary(sustain);
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,19 +29,8 @@ function AddPlaylistPage() {
 
   const trimmedName = state.name.trim();
   const createPl = useCallback(() => {
-    const failMessage = `Failed to create ${trimmedName} playlist!`;
-    sustain(
-      createPlaylist(trimmedName).then((success) => {
-        if (!success) {
-          return { error: failMessage } as Partial<LoadingStateOrProvider<NewPlaylistPageState>>;
-        } else {
-          clearCache(LOCAL_LIBRARY_PLAY_CACHE, LOCAL_LIBRARY_EDIT_CACHE);
-          goBack();
-        }
-      }),
-      failMessage
-    );
-  }, [trimmedName, sustain, clearCache, goBack]);
+    createPlaylist(trimmedName).then(goBack);
+  }, [createPlaylist, goBack, trimmedName]);
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {

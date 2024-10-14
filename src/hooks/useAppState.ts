@@ -38,15 +38,17 @@ export type AppState = {
 export type SetNotificationFn = (notification?: string | null) => void;
 export type SetCredentialsFn = (credentials: Credentials) => void;
 
-export default function useAppState(): [
-  LoadingState<AppState>,
-  SustainVoidFn<AppState>,
-  SetLoadingState<AppState>,
-  (vb: VolumeBoost) => void,
-  NoArgsProc,
-  SetNotificationFn,
-  SetCredentialsFn,
-] {
+export interface UseAppState {
+  state: LoadingState<AppState>;
+  sustain: SustainVoidFn<AppState>;
+  setState: SetLoadingState<AppState>;
+  setBoost: (vb: VolumeBoost) => void;
+  clearNotification: NoArgsProc;
+  setNotification: SetNotificationFn;
+  setCredentials: SetCredentialsFn;
+}
+
+export default function useAppState(): UseAppState {
   const credentials = credentialsOf(useURLQueryParams('user', 'password'));
   // console.log(`[useAppState] credentials (incomplete = ${credentials.isIncomplete()}):`, credentials);
   const [state, sustain, setState] = useSustainableState<AppState>(() => newAppState(credentials));
@@ -84,7 +86,7 @@ export default function useAppState(): [
     [setState]
   );
 
-  return [state, sustain, setState, setBoost, clearNotification, setNotification, setCredentials];
+  return { state, sustain, setState, setBoost, clearNotification, setNotification, setCredentials };
 }
 
 export function newAppState(credentials: Credentials): AppState {

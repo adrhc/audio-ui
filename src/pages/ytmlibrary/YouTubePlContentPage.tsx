@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
+import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
 import { useParams } from 'react-router-dom';
 import { getYTPlContent } from '../../services/audio-db/audio-db';
 import PageTemplate from '../../templates/PageTemplate';
@@ -31,7 +31,7 @@ function YouTubePlContentPage() {
     currentSong,
     getCache,
     mergeCache,
-  } = useSongList<ThinSongListState>(cacheName);
+  } = useScrollableCachedSongList<ThinSongListState>(cacheName);
   const cache = getCache() as YouTubePlContentCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;

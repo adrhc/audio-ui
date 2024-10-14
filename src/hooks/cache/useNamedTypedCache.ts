@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { CacheOperations } from './useCache';
+import { NoArgsProc } from '../../domain/types';
 
 export type GetCacheFn<S> = () => S | null | undefined;
 export type SetCacheFn<S> = (value: S) => void;
@@ -11,9 +12,10 @@ export type CacheContainsFn = () => boolean;
 export interface NamedTypedCacheOperations<S> {
   getCache: GetCacheFn<S>;
   setCache: SetCacheFn<S>;
+  cacheContains: CacheContainsFn;
   mergeCache: MergeCacheFn<S>;
   clearCache: ClearCacheFn;
-  cacheContains: CacheContainsFn;
+  clearLocalLibraryCache: NoArgsProc;
 }
 
 /**
@@ -56,5 +58,5 @@ export function useNamedTypedCache<S>(
   const clearCache = useCallback(() => clearTypedCache(cacheName), [cacheName, clearTypedCache]);
   const cacheContains = useCallback(() => typedCacheContains(cacheName), [cacheName, typedCacheContains]);
 
-  return { getCache, setCache, mergeCache, clearCache, cacheContains };
+  return { ...cacheOperations, getCache, setCache, mergeCache, clearCache, cacheContains };
 }

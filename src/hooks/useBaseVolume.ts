@@ -3,12 +3,12 @@ import useRefEx from './useRefEx';
 import { NullOrUndefined } from '../domain/types';
 import { truncateVolume } from '../services/mpc';
 
-export type UseBaseVolumeResult = [
-  () => NullOrUndefined<number>,
-  (defaultIfNull: number) => number,
-  (value: NullOrUndefined<number>) => void,
-  (increment: number) => void,
-];
+export type UseBaseVolumeResult = {
+  getBaseVolume: () => NullOrUndefined<number>;
+  getBaseVolumeOr: (defaultIfNull: number) => number;
+  setBaseVolume: (value: NullOrUndefined<number>) => void;
+  incrementBaseVolume: (increment: number) => void;
+};
 
 export function useBaseVolume(): UseBaseVolumeResult {
   const [getBaseVolume, setRawBaseVolume] = useRefEx<number>();
@@ -54,5 +54,5 @@ export function useBaseVolume(): UseBaseVolumeResult {
     [getBaseVolume, setBaseVolume]
   );
 
-  return [getBaseVolume, getBaseVolumeOr, setBaseVolume, incrementBaseVolume];
+  return { getBaseVolume, getBaseVolumeOr, setBaseVolume, incrementBaseVolume };
 }

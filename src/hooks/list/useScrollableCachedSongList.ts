@@ -39,7 +39,7 @@ export interface UseSongList<S extends ThinSongListState> extends UseScrollableC
   mopidy?: Mopidy;
 }
 
-export default function useSongList<S extends ThinSongListState>(
+export default function useScrollableCachedSongList<S extends ThinSongListState>(
   cacheName: string,
   defaultState?: Partial<LoadingState<S>> | null
 ): UseSongList<S> {

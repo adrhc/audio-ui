@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import SongList from '../../components/list/SongList';
 import { useMaxEdge } from '../../constants';
-import useSongList, { ThinSongListState } from '../../hooks/list/useSongList';
+import useScrollableCachedSongList, { ThinSongListState } from '../../hooks/list/useScrollableCachedSongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
@@ -40,7 +40,7 @@ function SongSearchPage() {
     ...partialSongsListParam
     // the cache, if exists, it overwrites "draftExpression: searchExpression" with its draftExpression!
     // "state" receives "searchExpression" from the cache despite the fact that it doesn't declare it!
-  } = useSongList<RawSongsSearchPageState>(SONG_SEARCH, { draftExpression: searchExpression });
+  } = useScrollableCachedSongList<RawSongsSearchPageState>(SONG_SEARCH, { draftExpression: searchExpression });
 
   const cache = getCache() as SongSearchCache;
 

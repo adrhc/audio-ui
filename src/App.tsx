@@ -20,9 +20,8 @@ import { areSameTrack, toTrackSong } from './domain/track-song';
 
 export default function App() {
   const theme = useTheme();
-  const { getCache, setCache, mergeCache, clearCache, cacheContains } = useCache();
-  const [getBaseVolume, getBaseVolumeOr, setBaseVolume, incrementBaseVolume] = useBaseVolume();
-  const [state, sustain, setState, setBoost, clearNotification, setNotification, setCredentials] =
+  const { setBaseVolume, ...baseVolume } = useBaseVolume();
+  const { state, sustain, setState, setBoost, clearNotification, setNotification, setCredentials } =
     useAppState();
 
   const { mopidy, loading, currentSong, pbStatus, notification, severity, credentials } = state;
@@ -314,6 +313,7 @@ export default function App() {
    * even if the same it'll still be seen as a change by this effect!
    */
   const playingSongUri = pbStatus == 'playing' ? currentSong?.uri : null;
+
   useEffect(() => {
     if (playingSongUri == null) {
       console.warn(`[useEffect:playingSongUri] bad song (uri is null) or no song is playing`);
@@ -339,11 +339,13 @@ export default function App() {
   }, [playingSongUri, setState]);
 
   useEffect(() => {
-    const protocol = window.location.protocol == 'http:' ? 'ws:' : 'wss:';
+    const securedProtocol = window.location.protocol == 'https:';
     let webSocketUrl: string | undefined;
-    if (credentials.isValid()) {
-      // webSocketUrl = credentials.isValid() ? `${protocol}//${window.location.host}/mopidy/ws` : undefined;
-      webSocketUrl = `${protocol}//${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`;
+    if (securedProtocol && credentials.isValid()) {
+      console.log(
+        `[App.useEffect] wss://${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`
+      );
+      webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`;
       setGlobalAuthorization(credentials.token());
     } else {
       setGlobalAuthorization(undefined);
@@ -367,7 +369,7 @@ export default function App() {
     });
   }, [credentials, setState]);
 
-  const elevatingHeight = useMemo(() => ifIPhone(theme.spacing(1.25), '0px'), [theme]);
+  const iphoneBottomSpace = useMemo(() => ifIPhone(theme.spacing(1.25), '0px'), [theme]);
 
   return (
     <>
@@ -375,7 +377,7 @@ export default function App() {
       <Stack
         sx={{
           p: [0.5, 1],
-          height: `calc(100% - ${elevatingHeight})`,
+          height: `calc(100% - ${iphoneBottomSpace})`,
           alignItems: 'center',
           justifyContent: 'center',
           alignContent: 'center',
@@ -402,16 +404,10 @@ export default function App() {
         <AppContext.Provider
           value={{
             ...omitProps(state, ['error', 'loading', 'notification']),
-            getBaseVolume,
-            getBaseVolumeOr,
             setBaseVolume,
-            incrementBaseVolume,
+            ...baseVolume,
             setBoost,
-            getCache,
-            setCache,
-            mergeCache,
-            clearCache,
-            cacheContains,
+            ...useCache(),
             setNotification,
             reloadState,
             setCredentials,
@@ -421,7 +417,7 @@ export default function App() {
           <Outlet />
         </AppContext.Provider>
       </Stack>
-      {isIPhone() && <Box role="elevating" sx={{ height: elevatingHeight }} />}
+      {isIPhone() && <Box role="elevating" sx={{ height: iphoneBottomSpace }} />}
     </>
   );
 }
