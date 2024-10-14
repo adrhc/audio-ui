@@ -22,18 +22,18 @@ import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
 import '/src/styles/wide-page.scss';
 
-interface SongPlaylistsEditorPageState {
+interface PlaylistToEditSelectorPageState {
   selections: LocationSelection[];
 }
 
-function SongPlaylistsEditorPage() {
+function PlaylistToEditSelectorPage() {
   const goBack = useGoBack();
   const { uri } = useParams();
   const { title } = useURLQueryParams('title');
   const decodedUri = uri ? decodeURIComponent(uri) : uri;
   const decodedTitle = title ? decodeURIComponent(title) : title;
   const { online, clearCache } = useContext(AppContext);
-  const [state, sustain, setState] = useSustainableState<SongPlaylistsEditorPageState>({ selections: [] });
+  const [state, sustain, setState] = useSustainableState<PlaylistToEditSelectorPageState>({ selections: [] });
   const { loading, selections } = state;
   /* console.log(
     `[SongPlaylistsEditorPage]\nuri: ${uri}\ndecodedUri: ${decodedUri}\ntitle: ${title}\ndecodedTitle: ${decodedTitle}`
@@ -68,7 +68,7 @@ function SongPlaylistsEditorPage() {
         .map(toPlContentCacheName)
         .forEach((cn) => clearCache(cn));
       if (result.failedToChange.length) {
-        return toError<SongPlaylistsEditorPageState>(result.failedToChange);
+        return toError<PlaylistToEditSelectorPageState>(result.failedToChange);
       } else {
         // console.log(`[SongPlaylistsEditorPage] selections: `, selections);
         goBack();
@@ -111,4 +111,4 @@ function SongPlaylistsEditorPage() {
   );
 }
 
-export default SongPlaylistsEditorPage;
+export default PlaylistToEditSelectorPage;

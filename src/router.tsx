@@ -17,7 +17,7 @@ import YouTubePlContentPage from './pages/ytmlibrary/YouTubePlContentPage';
 import YTMusicLibraryPage from './pages/ytmlibrary/YTMusicLibraryPage';
 import LocalPlaylistsPage from './pages/local-playlists/LocalPlaylistsPage';
 import LocalPlContentPage from './pages/local-playlists/LocalPlContentPage';
-import SongPlaylistsEditorPage from './pages/pl-editor/SongPlaylistsEditorPage';
+import PlaylistToEditSelectorPage from './pages/pl-editor/PlaylistToEditSelectorPage';
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
 import AdminMenuPage from './pages/AdminMenuPage';
@@ -48,7 +48,7 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'song-playlists-editor/:uri',
-        element: <SongPlaylistsEditorPage />,
+        element: <PlaylistToEditSelectorPage />,
       },
       {
         path: 'local-playlist-content/:uri',
