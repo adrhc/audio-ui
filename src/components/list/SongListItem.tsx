@@ -9,7 +9,7 @@ type SongHandler = (song: Song) => void;
 type SongListItemParam = {
   prevSongsCount: number;
   lastUsed?: Song | null;
-  currentSong?: TrackSong;
+  currentSong?: TrackSong | null;
   song: Song;
   index: number;
   onAdd?: SongHandler;

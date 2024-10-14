@@ -34,7 +34,7 @@ export interface TrackSong extends Song {
   artists?: string | null;
 }
 
-export function songEqual(song: Song, currentSong?: Song) {
+export function songEqual(song: Song, currentSong?: Song | null) {
   return song.uri == currentSong?.uri;
 }
 

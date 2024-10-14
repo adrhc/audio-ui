@@ -22,7 +22,7 @@ export interface NamedTypedCacheOperations<S> {
  * Useful only while in page because after exiting the cache is
  * lost; use the cache with useContext(AppContext) to not lose it!
  */
-export function useTypedCache<S>(cacheName: string): NamedTypedCacheOperations<S> {
+export function useNamedCache<S>(cacheName: string): NamedTypedCacheOperations<S> {
   const {
     getCache: getTypedCache,
     setCache: setTypedCache,

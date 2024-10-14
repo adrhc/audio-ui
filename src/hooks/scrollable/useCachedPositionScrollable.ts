@@ -1,33 +1,30 @@
 import { RefObject, useCallback } from 'react';
 import { ScrollToFn } from '../../domain/scroll';
-import { NamedTypedCacheOperations, useTypedCache } from '../cache/useTypedCache';
+import { useNamedCache } from '../cache/useNamedCache';
 import useScrollable from './useScrollable';
 
 export interface ScrollPosition {
   scrollTop?: number | null;
 }
 
-export interface UseCachedPositionScrollable<S extends ScrollPosition> extends NamedTypedCacheOperations<S> {
+export interface UseCachedPositionScrollable {
   listRef: RefObject<HTMLUListElement>;
   scrollObserver: (e: React.UIEvent<HTMLUListElement>) => void;
   scrollTo: ScrollToFn;
 }
 
-export default function useCachedPositionScrollable<S extends ScrollPosition>(
-  cacheName: string
-): UseCachedPositionScrollable<S> {
+export default function useCachedPositionScrollable(cacheName: string): UseCachedPositionScrollable {
   const [scrollTo, listRef] = useScrollable<HTMLUListElement>();
 
-  const typedCacheOperations = useTypedCache<S>(cacheName);
-  const { mergeCache } = typedCacheOperations;
+  const { mergeCache } = useNamedCache<ScrollPosition>(cacheName);
 
   const scrollObserver = useCallback(
     (e: React.UIEvent<HTMLUListElement>) => {
-      const scrollTop = e.currentTarget.scrollTop;
+      const scrollPosition = e.currentTarget.scrollTop;
       mergeCache((old) => {
         // console.log(`[useScrollableCachedList.scrollObserver] old "${cacheName}" cache:`, old);
         // console.log(`[useScrollableCachedList.scrollObserver] scroll from ${old?.scrollTop} to ${scrollTop}`);
-        return { ...old, scrollTop };
+        return { ...old, scrollTop: scrollPosition };
       });
     },
     [mergeCache]
@@ -37,6 +34,5 @@ export default function useCachedPositionScrollable<S extends ScrollPosition>(
     listRef,
     scrollObserver,
     scrollTo,
-    ...typedCacheOperations,
   };
 }

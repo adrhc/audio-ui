@@ -2,7 +2,6 @@ import { models } from 'mopidy';
 import { sortByAbsDiff } from '../lib/image';
 import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName, UriImagesMap } from '../services/mpc';
 import { MediaLocation } from './media-location';
-import { ScrollPosition } from '../hooks/scrollable/useCachedPositionScrollable';
 
 const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;
 
@@ -22,7 +21,7 @@ export interface LastUsedMediaAware {
  * The purpose of this structure is to provide the basic state
  * (and cache) structure for the features extending useSongList.
  */
-export interface ThinSongListState extends LastUsedMediaAware, ScrollPosition {
+export interface ThinSongListState extends LastUsedMediaAware {
   songs: Song[];
 }
 

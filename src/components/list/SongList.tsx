@@ -12,7 +12,7 @@ type SongHandler = (song: Song) => void;
 
 interface SongsListParam extends SongListItemMenuParam {
   prevSongsCount?: number;
-  currentSong?: TrackSong;
+  currentSong?: TrackSong | null;
   onAdd?: SongHandler;
   onInsert?: SongHandler;
   onDelete?: SongHandler;

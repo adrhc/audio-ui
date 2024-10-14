@@ -28,7 +28,7 @@ export function useCache(): UnknownCacheTypeOperations {
   return { ...useTypedCache() };
 }
 
-export function useTypedCache<S>(): CacheOperations<S> {
+function useTypedCache<S>(): CacheOperations<S> {
   const ref = useRef<Cache<S>>({});
   const cacheContains = useCallback((cacheName: string) => ref.current[cacheName] == null, [ref]);
   // return a copy to avoid subtle errors
