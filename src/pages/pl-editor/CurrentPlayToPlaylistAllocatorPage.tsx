@@ -10,7 +10,7 @@ import { AppContext } from '../../hooks/AppContext';
 import { getSelectableTrackSongs } from '../../services/track-song';
 import { useMaxEdge } from '../../constants';
 import { SelectableTrackSong } from '../../domain/track-song';
-import TrackList from '../tracks/TrackList';
+import TrackList from '../../components/list/TrackList';
 import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { useGoBack } from '../../hooks/useGoBack';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';

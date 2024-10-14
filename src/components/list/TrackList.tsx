@@ -1,12 +1,12 @@
 import { IconButton, ListItem, ListItemButton, Stack } from '@mui/material';
 import { ReactNode, useCallback } from 'react';
 import { SelectableTrackSong, TrackSong } from '../../domain/track-song';
-import TrackListItemText from '../../components/list/TrackListItemText';
-import SongListItemAvatar from '../../components/list/SongListItemAvatar';
+import TrackListItemText from './TrackListItemText';
+import SongListItemAvatar from './SongListItemAvatar';
 import { Link } from 'react-router-dom';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { LoadingState } from '../../lib/sustain';
-import LoadingList from '../../components/list/LoadingList';
+import LoadingList from './LoadingList';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import './TrackList.scss';
 

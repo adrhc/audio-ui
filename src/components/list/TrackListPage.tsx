@@ -8,7 +8,7 @@ import { removeTlid } from '../../services/mpc';
 import TrackList from './TrackList';
 import { useMaxEdge } from '../../constants';
 import { TrackSong, removeSong } from '../../domain/track-song';
-import TrackListMenu from '../../components/menu/TrackListBottomPageMenu';
+import TrackListMenu from '../menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-page.scss';
 
