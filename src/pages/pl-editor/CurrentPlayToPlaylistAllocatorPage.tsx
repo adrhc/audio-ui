@@ -79,7 +79,7 @@ function CurrentPlayToPlaylistAllocatorPage() {
   }, [setState]);
 
   if (!uri) {
-    return <PageTitle>The playlist to edit is wrong!</PageTitle>;
+    return <PageTitle>The uri for the playlist to edit is missing!</PageTitle>;
   }
 
   return (
