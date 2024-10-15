@@ -6,7 +6,7 @@ import { AppContext } from '../../hooks/AppContext';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
-import { getM3u8Playlists } from '../../services/pl-content';
+import { getLocalPlaylists } from '../../services/pl-content';
 import { Song, ThinSongListState } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
@@ -37,7 +37,7 @@ function LocalLibraryEditFromPlayingPage() {
   const handleReload = useCallback(() => {
     console.log(`[LocalLibraryEditFromPlayingPage.useEffect] loading the Mopidy playlists`);
     sustain(
-      getM3u8Playlists(mopidy).then((songs) => ({ songs })),
+      getLocalPlaylists(mopidy).then((songs) => ({ songs })),
       `Failed to load the Mopidy playlists!`
     );
   }, [mopidy, sustain]);

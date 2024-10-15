@@ -6,7 +6,7 @@ import { AppContext } from '../../hooks/AppContext';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
-import { getM3u8Playlists } from '../../services/pl-content';
+import { getLocalPlaylists } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
@@ -37,7 +37,7 @@ function LocalLibraryToPlaySelectorPage() {
   const handleReaload = useCallback(() => {
     console.log(`[handleReaload] loading the local playlists`);
     sustain(
-      getM3u8Playlists(mopidy).then((songs) => ({ songs })),
+      getLocalPlaylists(mopidy).then((songs) => ({ songs })),
       `Failed to load the local playlists!`
     );
   }, [mopidy, sustain]);
