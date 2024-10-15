@@ -1,5 +1,4 @@
 import { useCallback, useContext } from 'react';
-import { NoArgsProc } from '../../domain/types';
 import { AppContext } from '../AppContext';
 
 export type GetCacheFn<S> = () => S | null | undefined;
@@ -15,7 +14,6 @@ export interface NamedTypedCacheOperations<S> {
   cacheContains: CacheContainsFn;
   mergeCache: MergeCacheFn<S>;
   clearCache: ClearCacheFn;
-  clearLocalLibraryCache: NoArgsProc;
 }
 
 /**
@@ -29,7 +27,6 @@ export function useNamedCache<S>(cacheName: string): NamedTypedCacheOperations<S
     cacheContains: typedCacheContains,
     mergeCache: mergeTypedCache,
     clearCache: clearTypedCache,
-    clearLocalLibraryCache,
   } = useContext(AppContext); // must use the cache through AppContext to persist between pages!
 
   const getCache = useCallback(() => {
@@ -56,5 +53,5 @@ export function useNamedCache<S>(cacheName: string): NamedTypedCacheOperations<S
   const clearCache = useCallback(() => clearTypedCache(cacheName), [cacheName, clearTypedCache]);
   const cacheContains = useCallback(() => typedCacheContains(cacheName), [cacheName, typedCacheContains]);
 
-  return { getCache, setCache, mergeCache, cacheContains, clearCache, clearLocalLibraryCache };
+  return { getCache, setCache, mergeCache, cacheContains, clearCache };
 }

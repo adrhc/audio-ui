@@ -1,6 +1,4 @@
 import { useCallback, useRef } from 'react';
-import { LOCAL_LIBRARY_EDIT_CACHE, LOCAL_LIBRARY_PLAY_CACHE } from './cache-names';
-import { NoArgsProc } from '../../domain/types';
 
 type Cache<S> = {
   [cacheName: string]: S;
@@ -19,20 +17,29 @@ export interface CacheOperations<S> {
   cacheContains: CacheContainsFn;
   mergeCache: MergeCacheFn<S>;
   clearCache: ClearCacheFn;
-  clearLocalLibraryCache: NoArgsProc;
 }
 
 export interface UnknownCacheTypeOperations extends CacheOperations<unknown> {}
 
+/**
+ * Don't use this directly because won't preserve the cache between pages!
+ * Use it from AppContext!
+ */
 export function useCache(): UnknownCacheTypeOperations {
   return { ...useTypedCache() };
 }
 
+/**
+ * Don't use this directly because won't preserve the cache between pages!
+ * Use it from AppContext!
+ */
 function useTypedCache<S>(): CacheOperations<S> {
   const ref = useRef<Cache<S>>({});
   const cacheContains = useCallback((cacheName: string) => ref.current[cacheName] == null, [ref]);
+
   // return a copy to avoid subtle errors
   const getCache = useCallback((cacheName: string) => ({ ...ref.current[cacheName] }), [ref]);
+
   const setCache = useCallback(
     (cacheName: string, value: S) => {
       console.log(`[useTypedCache.setCache] set "${cacheName}" cache to:`, value);
@@ -40,6 +47,7 @@ function useTypedCache<S>(): CacheOperations<S> {
     },
     [ref]
   );
+
   const mergeCache = useCallback(
     (cacheName: string, mergeFn: (oldValue: S) => S) => {
       // const oldCache = ref.current[cacheName];
@@ -51,6 +59,7 @@ function useTypedCache<S>(): CacheOperations<S> {
     },
     [ref]
   );
+
   const clearCache = useCallback(
     (...cacheName: string[]) => {
       cacheName.forEach((cn) => {
@@ -60,8 +69,10 @@ function useTypedCache<S>(): CacheOperations<S> {
     },
     [ref]
   );
-  const clearLocalLibraryCache = useCallback(() => {
+
+  /* const clearLocalLibraryCache = useCallback(() => {
     clearCache(LOCAL_LIBRARY_PLAY_CACHE, LOCAL_LIBRARY_EDIT_CACHE);
-  }, [clearCache]);
-  return { getCache, setCache, cacheContains, mergeCache, clearCache, clearLocalLibraryCache };
+  }, [clearCache]); */
+
+  return { getCache, setCache, cacheContains, mergeCache, clearCache };
 }

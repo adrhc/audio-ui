@@ -17,13 +17,15 @@ export interface LastUsedMediaAware {
   lastUsed?: Song | null;
 }
 
+export interface SongsAware {
+  songs: Song[];
+}
+
 /**
  * The purpose of this structure is to provide the basic state
  * (and cache) structure for the features extending useSongList.
  */
-export interface ThinSongListState extends LastUsedMediaAware {
-  songs: Song[];
-}
+export interface ThinSongListState extends SongsAware, LastUsedMediaAware {}
 
 export function formatUri(uri: string | null | undefined) {
   if (!uri) {

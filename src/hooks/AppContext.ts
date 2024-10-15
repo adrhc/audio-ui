@@ -30,7 +30,6 @@ export const AppContext = createContext<AppContextValue>({
   setCache: () => {},
   mergeCache: () => {},
   clearCache: () => {},
-  clearLocalLibraryCache: () => {},
   cacheContains: () => false,
   setNotification: () => {},
   reloadState: () => {},

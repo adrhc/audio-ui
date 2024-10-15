@@ -4,6 +4,7 @@ import { LoadingStateOrProvider, SustainVoidFn } from './useSustainableState';
 import { AppContext } from './AppContext';
 import { Song } from '../domain/song';
 import { removeDiskPlaylist } from '../services/audio-db/audio-db';
+import { LOCAL_LIBRARY_PLAY_CACHE, LOCAL_LIBRARY_EDIT_CACHE } from './cache/cache-names';
 
 export interface UseLibrary {
   createPlaylist: (plName: string) => Promise<void>;
@@ -11,13 +12,19 @@ export interface UseLibrary {
 }
 
 export default function useLibrary<S>(sustain: SustainVoidFn<S>): UseLibrary {
-  const { clearLocalLibraryCache, credentials } = useContext(AppContext);
+  const { credentials, mergeCache } = useContext(AppContext);
+
+  const clearSongsCache = useCallback(() => {
+    [LOCAL_LIBRARY_PLAY_CACHE, LOCAL_LIBRARY_EDIT_CACHE].forEach((cn) =>
+      mergeCache(cn, (old) => ({ ...(old as object), songs: [] }))
+    );
+  }, [mergeCache]);
 
   const createPlaylist = useCallback(
     (playlistName: string) => {
       console.info(`[UseLibrary.createPlaylist] playlistName:`, playlistName);
       const failMessage = `Failed to create ${playlistName} playlist!`;
-      clearLocalLibraryCache();
+      clearSongsCache();
       return sustain(
         remotelyCreatePlaylist(playlistName).then((success) => {
           if (!success) {
@@ -27,7 +34,7 @@ export default function useLibrary<S>(sustain: SustainVoidFn<S>): UseLibrary {
         failMessage
       );
     },
-    [clearLocalLibraryCache, sustain]
+    [clearSongsCache, sustain]
   );
 
   const removePlaylist = useCallback(
@@ -38,7 +45,7 @@ export default function useLibrary<S>(sustain: SustainVoidFn<S>): UseLibrary {
       }
       console.info(`[UseLibrary.removePlaylist] playlist:`, playlist);
       const failMessage = `Failed to remove the playlist ${playlist.formattedUri}!`;
-      clearLocalLibraryCache();
+      clearSongsCache();
       return sustain(
         removeDiskPlaylist(playlist).then((removed) => {
           if (!removed) {
@@ -49,7 +56,7 @@ export default function useLibrary<S>(sustain: SustainVoidFn<S>): UseLibrary {
         failMessage
       );
     },
-    [clearLocalLibraryCache, credentials, sustain]
+    [clearSongsCache, credentials, sustain]
   );
 
   return { createPlaylist, removePlaylist };

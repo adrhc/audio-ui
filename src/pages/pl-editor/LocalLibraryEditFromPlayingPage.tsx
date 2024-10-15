@@ -6,20 +6,17 @@ import { AppContext } from '../../hooks/AppContext';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useNavigate } from 'react-router-dom';
-import { getLocalPlaylists } from '../../services/pl-content';
 import { Song, ThinSongListState } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
-import useLibrary from '../../hooks/useLibrary';
 import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
 
 function LocalLibraryEditFromPlayingPage() {
   const navigate = useNavigate();
-  const { mopidy, online, credentials } = useContext(AppContext);
+  const { online, credentials } = useContext(AppContext);
   const {
     state,
-    sustain,
     setState,
     listRef,
     scrollObserver,
@@ -28,28 +25,21 @@ function LocalLibraryEditFromPlayingPage() {
     goToPlAdd,
     currentSong,
     mergeCache,
+    loadLocalLibrary,
+    removePlaylist,
   } = useCachedSongsScrollable<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
-  const { removePlaylist } = useLibrary(sustain);
 
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[LocalLibraryEditFromPlayingPage]`, currentSong, state, credentials);
-
-  const handleReload = useCallback(() => {
-    console.log(`[LocalLibraryEditFromPlayingPage.useEffect] loading the Mopidy playlists`);
-    sustain(
-      getLocalPlaylists(mopidy).then((songs) => ({ songs })),
-      `Failed to load the Mopidy playlists!`
-    );
-  }, [mopidy, sustain]);
+  // console.log(`[LocalLibraryEditFromPlayingPage]`, currentSong, state, credentials);
 
   // loading the library if not already loaded
   useEffect(() => {
-    if (!songsIsEmpty) {
-      console.log(`[LocalLibraryEditFromPlayingPage.useEffect] the Mopidy playlists are already loaded!`);
-      return;
+    if (songsIsEmpty) {
+      online && loadLocalLibrary();
+    } else {
+      console.log(`[LocalLibraryEditFromPlayingPage.useEffect] the local library is already loaded!`);
     }
-    online && handleReload();
-  }, [handleReload, online, songsIsEmpty]);
+  }, [loadLocalLibrary, online, songsIsEmpty]);
 
   // scroll after loading the library
   const scrollPosition = getScrollPosition();
@@ -57,11 +47,11 @@ function LocalLibraryEditFromPlayingPage() {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
       console.log(`[LocalLibraryEditFromPlayingPage.useEffect] the library isn't loaded yet or is empty!`);
-      return;
+    } else {
+      console.log(`[LocalLibraryEditFromPlayingPage.useEffect] scrolling to ${scrollPosition}`);
+      // setTimeout(scrollTo, 0, cachedScrollTop);
+      scrollTo(scrollPosition);
     }
-    console.log(`[LocalLibraryEditFromPlayingPage] scrolling to ${scrollPosition} after loading the library`);
-    // setTimeout(scrollTo, 0, cachedScrollTop);
-    scrollTo(scrollPosition);
   }, [scrollPosition, scrollTo, songsIsEmpty]);
 
   // cache the current state
@@ -69,25 +59,14 @@ function LocalLibraryEditFromPlayingPage() {
     mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
   }, [mergeCache, state]);
 
-  const handleClick = useCallback(
+  const goToPlToEdit = useCallback(
     (playlist: Song) => {
       // console.log(`[LocalLibraryEditFromPlayingPage.handlePlSelection] song:`, song);
       mergeCache((old) => ({ ...old, lastUsed: playlist }));
-      // navigate(`/playlist-edit-from-current-play/${encodeURIComponent(song.uri)}?${toQueryParams(['title', encodeURIComponent(song.title)])}`);
-      navigate(
-        `/playlist-edit-from-current-play/${playlist.uri}?${toQueryParams(['title', playlist.title])}`
-      );
+      // navigate(`/playlist-edit-from-playing/${encodeURIComponent(song.uri)}?${toQueryParams(['title', encodeURIComponent(song.title)])}`);
+      navigate(`/playlist-edit-from-playing/${playlist.uri}?${toQueryParams(['title', playlist.title])}`);
     },
     [mergeCache, navigate]
-  );
-
-  const removePl = useCallback(
-    (playlist: Song) => {
-      removePlaylist(playlist).then(() =>
-        setState((old) => ({ ...old, songs: old.songs.filter((s) => s.uri != playlist.uri) }))
-      );
-    },
-    [removePlaylist, setState]
   );
 
   return (
@@ -104,10 +83,10 @@ function LocalLibraryEditFromPlayingPage() {
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
-        onClick={handleClick}
-        onDelete={credentials.isValid() ? removePl : undefined}
+        onClick={goToPlToEdit}
+        onDelete={credentials.isValid() ? removePlaylist : undefined}
         addManySongs={goToPlAdd}
-        onReloadList={handleReload}
+        onReloadList={loadLocalLibrary}
         lastUsed={state.lastUsed}
         listRef={listRef}
         onScroll={scrollObserver}

@@ -42,9 +42,9 @@ function MainMenuPage() {
           </ListItemIcon>
           <ListItemText>Administration</ListItemText>
         </MenuItem>
-        <MenuItem component={Link} to="/playlist-edit-options">
+        <MenuItem component={Link} to="/local-library-edit-from-playing">
           <ListItemIcon>
-            <img src="btn/audio-playlist-icon-70.svg" className="playlist-edit-options" />
+            <img src="btn/audio-playlist-icon-70.svg" className="local-library-edit-from-playing" />
           </ListItemIcon>
           <ListItemText>Edit from Playing</ListItemText>
         </MenuItem>

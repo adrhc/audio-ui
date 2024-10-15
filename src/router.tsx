@@ -59,11 +59,11 @@ const ROUTER = createHashRouter([
         element: <LocalLibraryToPlaySelectorPage />,
       },
       {
-        path: 'playlist-edit-options',
+        path: 'local-library-edit-from-playing',
         element: <LocalLibraryEditFromPlayingPage />,
       },
       {
-        path: 'playlist-edit-from-current-play/:uri',
+        path: 'playlist-edit-from-playing/:uri',
         element: <PlaylistEditFromPlayingPage />,
       },
       {

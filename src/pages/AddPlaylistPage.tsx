@@ -28,16 +28,16 @@ function AddPlaylistPage() {
   );
 
   const trimmedName = state.name.trim();
-  const createPl = useCallback(() => {
+  const createPlaylistThenGoBack = useCallback(() => {
     createPlaylist(trimmedName).then(goBack);
   }, [createPlaylist, goBack, trimmedName]);
 
   const handleSubmit = useCallback(
     (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      createPl();
+      createPlaylistThenGoBack();
     },
-    [createPl]
+    [createPlaylistThenGoBack]
   );
 
   const createBtnDisabled = !online || state.name.length < MIN_PL_NAME_LENGTH;
@@ -46,7 +46,7 @@ function AddPlaylistPage() {
       state={state}
       setState={setState as SetFeedbackState}
       title="Create a Playlist"
-      onAccept={createPl}
+      onAccept={createPlaylistThenGoBack}
       acceptDisabled={createBtnDisabled}
     >
       <Stack component="form" onSubmit={handleSubmit} spacing={2}>
