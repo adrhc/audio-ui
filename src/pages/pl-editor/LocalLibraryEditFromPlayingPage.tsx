@@ -14,7 +14,7 @@ import useLibrary from '../../hooks/useLibrary';
 import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
 
-function LocalLibraryEditorPage() {
+function LocalLibraryEditFromPlayingPage() {
   const navigate = useNavigate();
   const { mopidy, online, credentials } = useContext(AppContext);
   const {
@@ -32,10 +32,10 @@ function LocalLibraryEditorPage() {
   const { removePlaylist } = useLibrary(sustain);
 
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[PlaylistEditorPage]`, currentSong, state, credentials);
+  console.log(`[LocalLibraryEditFromPlayingPage]`, currentSong, state, credentials);
 
   const handleReload = useCallback(() => {
-    console.log(`[PlaylistEditorPage.useEffect] loading the Mopidy playlists`);
+    console.log(`[LocalLibraryEditFromPlayingPage.useEffect] loading the Mopidy playlists`);
     sustain(
       getM3u8Playlists(mopidy).then((songs) => ({ songs })),
       `Failed to load the Mopidy playlists!`
@@ -45,7 +45,7 @@ function LocalLibraryEditorPage() {
   // loading the library if not already loaded
   useEffect(() => {
     if (!songsIsEmpty) {
-      console.log(`[PlaylistEditorPage.useEffect] the Mopidy playlists are already loaded!`);
+      console.log(`[LocalLibraryEditFromPlayingPage.useEffect] the Mopidy playlists are already loaded!`);
       return;
     }
     online && handleReload();
@@ -56,10 +56,10 @@ function LocalLibraryEditorPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[PlaylistEditorPage.useEffect] the library isn't loaded yet or is empty!`);
+      console.log(`[LocalLibraryEditFromPlayingPage.useEffect] the library isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[PlaylistEditorPage] scrolling to ${scrollPosition} after loading the library`);
+    console.log(`[LocalLibraryEditFromPlayingPage] scrolling to ${scrollPosition} after loading the library`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(scrollPosition);
   }, [scrollPosition, scrollTo, songsIsEmpty]);
@@ -71,7 +71,7 @@ function LocalLibraryEditorPage() {
 
   const handleClick = useCallback(
     (playlist: Song) => {
-      // console.log(`[PlaylistEditorPage.handlePlSelection] song:`, song);
+      // console.log(`[LocalLibraryEditFromPlayingPage.handlePlSelection] song:`, song);
       mergeCache((old) => ({ ...old, lastUsed: playlist }));
       // navigate(`/playlist-edit-from-current-play/${encodeURIComponent(song.uri)}?${toQueryParams(['title', encodeURIComponent(song.title)])}`);
       navigate(
@@ -117,4 +117,4 @@ function LocalLibraryEditorPage() {
   );
 }
 
-export default LocalLibraryEditorPage;
+export default LocalLibraryEditFromPlayingPage;

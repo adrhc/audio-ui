@@ -1,4 +1,4 @@
-import { MenuList, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { MenuList, MenuItem, ListItemIcon, ListItemText, Divider } from '@mui/material';
 import { Link } from 'react-router-dom';
 import PageTemplate from '../templates/PageTemplate';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
@@ -30,18 +30,25 @@ function MainMenuPage() {
           </ListItemIcon>
           <ListItemText>Reset The Index</ListItemText>
         </MenuItem> */}
-        <MenuItem component={Link} to="/admin">
-          <ListItemIcon>
-            <PersonIcon />
-          </ListItemIcon>
-          <ListItemText>Administration</ListItemText>
-        </MenuItem>
         <MenuItem component={Link} to="/login">
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
           <ListItemText>Login</ListItemText>
         </MenuItem>
+        <MenuItem component={Link} to="/admin">
+          <ListItemIcon>
+            <PersonIcon />
+          </ListItemIcon>
+          <ListItemText>Administration</ListItemText>
+        </MenuItem>
+        <MenuItem component={Link} to="/playlist-edit-options">
+          <ListItemIcon>
+            <img src="btn/audio-playlist-icon-70.svg" className="playlist-edit-options" />
+          </ListItemIcon>
+          <ListItemText>Edit from Playing</ListItemText>
+        </MenuItem>
+        {<Divider />}
         <MenuItem component={Link} to="/songssearch">
           <ListItemIcon>
             <img className="search" src="btn/find-icon.svg" />
@@ -67,13 +74,6 @@ function MainMenuPage() {
           </ListItemIcon>
           <ListItemText>Local Playlists</ListItemText>
         </MenuItem>
-        <MenuItem component={Link} to="/playlist-edit-options">
-          <ListItemIcon>
-            <img src="btn/audio-playlist-icon-70.svg" className="playlist-edit-options" />
-          </ListItemIcon>
-          <ListItemText>Playlist Editor</ListItemText>
-        </MenuItem>
-        {/* <Divider /> */}
         <MenuItem component={Link} to="/player">
           <ListItemIcon>
             <HomeIcon />

@@ -15,15 +15,15 @@ import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { useGoBack } from '../../hooks/useGoBack';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
 import { CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE, plCacheName } from '../../hooks/cache/cache-names';
-import '/src/styles/wide-page.scss';
-import './CurrentPlayToPlaylistAllocatorPage.scss';
 import useCachedPositionScrollable from '../../hooks/scrollable/useCachedPositionScrollable';
+import '/src/styles/wide-page.scss';
+import './PlaylistEditFromPlayingPage.scss';
 
 interface PlEditFromCurrentPlayPageState {
   selections: SelectableTrackSong[];
 }
 
-function CurrentPlayToPlaylistAllocatorPage() {
+function PlaylistEditFromPlayingPage() {
   const { uri } = useParams();
   const { title } = useURLQueryParams('title');
   // const decodedUri = uri ? decodeURIComponent(uri) : uri;
@@ -31,7 +31,7 @@ function CurrentPlayToPlaylistAllocatorPage() {
   const { mopidy, online, clearCache } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<PlEditFromCurrentPlayPageState>({ selections: [] });
   const { loading, selections } = state;
-  console.log(`[PlEditFromCurrentPlayPage]\nuri: ${uri}\ntitle: ${title}`);
+  console.log(`[PlaylistEditFromPlayingPage]\nuri: ${uri}\ntitle: ${title}`);
   const imgMaxEdge = useMaxEdge();
   const goBack = useGoBack();
 
@@ -41,7 +41,7 @@ function CurrentPlayToPlaylistAllocatorPage() {
 
   useEffect(() => {
     if (uri && online) {
-      console.log(`[TrackListPage:online] loading the track list`);
+      console.log(`[PlaylistEditFromPlayingPage:online] loading the track list`);
       sustain(
         getSelectableTrackSongs(mopidy, uri, imgMaxEdge)?.then((selections) => ({ selections })),
         "Can't load the track list!"
@@ -54,11 +54,11 @@ function CurrentPlayToPlaylistAllocatorPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (selections.length) {
-      console.log(`[CurrentPlayToPlaylistAllocatorPage.useEffect] scrolling to ${scrollPosition}`);
+      console.log(`[PlaylistEditFromPlayingPage.useEffect] scrolling to ${scrollPosition}`);
       // setTimeout(scrollTo, 0, cachedScrollTop);
       scrollTo(scrollPosition);
     } else {
-      console.log(`[CurrentPlayToPlaylistAllocatorPage.useEffect] there are no songs scheduled to play!`);
+      console.log(`[PlaylistEditFromPlayingPage.useEffect] there are no songs scheduled to play!`);
       return;
     }
   }, [scrollPosition, scrollTo, selections.length]);
@@ -129,4 +129,4 @@ function CurrentPlayToPlaylistAllocatorPage() {
   );
 }
 
-export default CurrentPlayToPlaylistAllocatorPage;
+export default PlaylistEditFromPlayingPage;

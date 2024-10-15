@@ -21,8 +21,8 @@ import PlaylistToSongAllocatorPage from './pages/pl-editor/PlaylistToSongAllocat
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
 import AdminMenuPage from './pages/AdminMenuPage';
-import LocalLibraryEditorPage from './pages/pl-editor/LocalLibraryEditorPage';
-import CurrentPlayToPlaylistAllocatorPage from './pages/pl-editor/CurrentPlayToPlaylistAllocatorPage';
+import LocalLibraryEditFromPlayingPage from './pages/pl-editor/LocalLibraryEditFromPlayingPage';
+import PlaylistEditFromPlayingPage from './pages/pl-editor/PlaylistEditFromPlayingPage';
 
 const ROUTER = createHashRouter([
   {
@@ -60,11 +60,11 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'playlist-edit-options',
-        element: <LocalLibraryEditorPage />,
+        element: <LocalLibraryEditFromPlayingPage />,
       },
       {
         path: 'playlist-edit-from-current-play/:uri',
-        element: <CurrentPlayToPlaylistAllocatorPage />,
+        element: <PlaylistEditFromPlayingPage />,
       },
       {
         path: 'ytplcontent/:uri',
