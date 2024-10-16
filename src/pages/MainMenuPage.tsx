@@ -6,6 +6,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import PersonIcon from '@mui/icons-material/Person';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useSustainableUnknownState } from '../hooks/useSustainableState';
 import { useContext } from 'react';
 import { AppContext } from '../hooks/AppContext';
@@ -47,6 +48,12 @@ function MainMenuPage() {
             <img src="btn/audio-playlist-icon-70.svg" className="local-library-edit-from-playing" />
           </ListItemIcon>
           <ListItemText>Edit from Playing</ListItemText>
+        </MenuItem>
+        <MenuItem component={Link} to="/local-library-edit-from-search">
+          <ListItemIcon>
+            <EditOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText>Edit from Search</ListItemText>
         </MenuItem>
         {<Divider />}
         <MenuItem component={Link} to="/songssearch">

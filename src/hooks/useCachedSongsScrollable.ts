@@ -52,7 +52,7 @@ function toCacheBasedDefaultState<S extends SongsAware>(
   defaultState?: Partial<LoadingState<S>> | null
 ): LoadingState<S> {
   if (cache && (!defaultState || (defaultState && !('scrollTop' in defaultState)))) {
-    console.warn(`[useSongList] removing scrollTop from the cache used to construct the default state`);
+    // console.warn(`[useSongList] removing scrollTop from the cache used to initialize the state`);
     delete cache.scrollTop;
   } else {
     console.warn(`[useSongList] cache.scrollTop overwrites defaultState.scrollTop:`, {

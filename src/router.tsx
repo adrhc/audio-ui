@@ -23,6 +23,8 @@ import AddTrackPage from './pages/AddTrackPage';
 import AdminMenuPage from './pages/AdminMenuPage';
 import LocalLibraryEditFromPlayingPage from './pages/pl-editor/LocalLibraryEditFromPlayingPage';
 import PlaylistEditFromPlayingPage from './pages/pl-editor/PlaylistEditFromPlayingPage';
+import LocalLibraryEditFromSearchPage from './pages/pl-editor/LocalLibraryEditFromSearchPage';
+import PlaylistEditFromPlayingSearch from './pages/pl-editor/PlaylistEditFromPlayingSearch';
 
 const ROUTER = createHashRouter([
   {
@@ -65,6 +67,14 @@ const ROUTER = createHashRouter([
       {
         path: 'playlist-edit-from-playing/:uri',
         element: <PlaylistEditFromPlayingPage />,
+      },
+      {
+        path: 'local-library-edit-from-search',
+        element: <LocalLibraryEditFromSearchPage />,
+      },
+      {
+        path: 'playlist-edit-from-search/:uri',
+        element: <PlaylistEditFromPlayingSearch />,
       },
       {
         path: 'ytplcontent/:uri',
