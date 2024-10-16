@@ -7,14 +7,17 @@ import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { Song, ThinSongListState } from '../../domain/song';
 import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
+import { useNavigate } from 'react-router-dom';
+import { toQueryParams } from '../../lib/path-param-utils';
 import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
 
 export interface LocalLibraryEditTemplatePageParams {
-  goToPlToEdit: (playlist: Song) => void;
+  playlistEditorPath: string;
 }
 
-function LocalLibraryEditTemplatePage({ goToPlToEdit }: LocalLibraryEditTemplatePageParams) {
+function LocalLibraryEditTemplatePage({ playlistEditorPath }: LocalLibraryEditTemplatePageParams) {
+  const navigate = useNavigate();
   const { online, credentials } = useContext(AppContext);
   const {
     state,
@@ -60,13 +63,14 @@ function LocalLibraryEditTemplatePage({ goToPlToEdit }: LocalLibraryEditTemplate
     mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
   }, [mergeCache, state]);
 
-  const setLastUsedThenGoToPlToEdit = useCallback(
+  const goToPlaylistEditor = useCallback(
     (playlist: Song) => {
       // console.log(`[LocalLibraryEditTemplatePage.setLastUsedThenGoToPlToEdit] playlist:`, playlist);
       mergeCache((old) => ({ ...old, lastUsed: playlist }));
-      goToPlToEdit(playlist);
+      // navigate(`/playlist-edit-from-search/${encodeURIComponent(song.uri)}?${toQueryParams(['title', encodeURIComponent(song.title)])}`);
+      navigate(`${playlistEditorPath}/${playlist.uri}?${toQueryParams(['title', playlist.title])}`);
     },
-    [goToPlToEdit, mergeCache]
+    [mergeCache, navigate, playlistEditorPath]
   );
 
   return (
@@ -83,7 +87,7 @@ function LocalLibraryEditTemplatePage({ goToPlToEdit }: LocalLibraryEditTemplate
         songs={state.songs}
         loading={state.loading}
         currentSong={currentSong}
-        onClick={setLastUsedThenGoToPlToEdit}
+        onClick={goToPlaylistEditor}
         onDelete={credentials.isValid() ? removePlaylist : undefined}
         addManySongs={goToPlAdd}
         onReloadList={loadLocalLibrary}
