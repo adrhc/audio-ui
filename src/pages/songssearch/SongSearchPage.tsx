@@ -41,8 +41,8 @@ function SongSearchPage() {
 
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const imgMaxEdge = useMaxEdge();
-  const { draftExpression, songs } = state;
-  const songsIsEmpty = songs.length == 0;
+  const { draftExpression } = state;
+  const songsIsEmpty = state.songs.length == 0;
 
   const doSearch = useCallback(
     (searchExpression: string, scrollTop?: boolean) => {
@@ -117,13 +117,11 @@ function SongSearchPage() {
         searchRef={searchRef}
       />
       <SongList
-        songs={songs}
-        loading={state.loading}
-        lastUsed={state.lastUsed}
         onClick={addSongThenPlay}
         onAdd={addSongOrPlaylist}
         onInsert={insertSongOrPlaylist}
         onScroll={scrollObserver}
+        {...state}
         {...partialSongsListParam}
       />
     </PageTemplate>
