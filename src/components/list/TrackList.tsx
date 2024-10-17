@@ -9,11 +9,11 @@ import { LoadingState } from '../../lib/sustain';
 import LoadingList from './LoadingList';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import ScrollableList from '../../domain/scroll';
-import './TrackList.scss';
 import { AppContext } from '../../hooks/AppContext';
+import './TrackList.scss';
 
 interface TrackListParam extends ScrollableList {
-  songs: TrackSong[] | SelectableTrackSong[];
+  songs: SelectableTrackSong[];
   onRemove?: (song: TrackSong) => void;
   onClick?: (song: TrackSong) => void;
   onSelect?: (song: SelectableTrackSong) => void;
@@ -77,7 +77,7 @@ function TrackList({
                   <img src="btn/recycle-bin-line-icon.svg" />
                 </IconButton>
               )}
-              {'selected' in track && track.selected && onSelect && (
+              {track.selected && onSelect && (
                 // <CheckBoxOutlinedIcon className="secondary-action-btn" onClick={() => onSelect(track)} />
                 <IconButton className="select-btn" onClick={() => onSelect(track)}>
                   <CheckBoxOutlinedIcon />

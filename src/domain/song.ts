@@ -2,6 +2,7 @@ import { models } from 'mopidy';
 import { sortByAbsDiff } from '../lib/image';
 import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName, UriImagesMap } from '../services/mpc';
 import { MediaLocation } from './media-location';
+import Selectable from './Selectable';
 
 const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;
 
@@ -9,7 +10,7 @@ export type SongsPage = {
   entries: Song[];
 };
 
-// export interface SelectableSong extends Song, Selectable {}
+export interface SelectableSong extends Song, Selectable {}
 
 export interface Song extends MediaLocation {
   imgUri?: string | null;
