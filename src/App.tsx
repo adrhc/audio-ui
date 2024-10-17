@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/cache/useCache';
 import { setGlobalAuthorization } from './domain/credentials';
-import { areSameTrack, toTrackSong } from './domain/track-song';
+import { areSameTrack, toTrackSong } from './domain/track';
 
 export default function App() {
   const theme = useTheme();

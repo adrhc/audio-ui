@@ -1,6 +1,6 @@
 import { ListItem, IconButton, ListItemButton, ListItemText, Stack } from '@mui/material';
 import { useCallback, useContext } from 'react';
-import { songEqual } from '../../domain/track-song';
+import { songEqual } from '../../domain/track';
 import { SelectableSong, Song } from '../../domain/song';
 import SongListItemAvatar from './SongListItemAvatar';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';

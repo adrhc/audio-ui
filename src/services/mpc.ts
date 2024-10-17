@@ -1,6 +1,6 @@
 import Mopidy, { models } from 'mopidy';
 import { MOPIDY_DISCONNECTED_ERROR } from '../constants';
-import { getArtists } from '../domain/track-song';
+import { getArtists } from '../domain/track';
 
 export type UriImagesMap = { [index: string]: models.Image[] };
 

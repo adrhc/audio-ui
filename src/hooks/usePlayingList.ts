@@ -11,7 +11,7 @@ import {
   addYtMusicPlAfterAndRemember,
   addYtMusicPlAndRemember,
 } from '../services/tracks-update';
-import { CurrentSongAware } from '../domain/track-song';
+import { CurrentSongAware } from '../domain/track';
 
 export type AddManySongsFn = (songs: Song[]) => void;
 

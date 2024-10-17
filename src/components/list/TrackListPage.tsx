@@ -7,7 +7,7 @@ import { AppContext } from '../../hooks/AppContext';
 import { removeTlid } from '../../services/mpc';
 import TrackList from './TrackList';
 import { useMaxEdge } from '../../constants';
-import { TrackSong, removeTrack } from '../../domain/track-song';
+import { TrackSong, removeTrack } from '../../domain/track';
 import TrackListMenu from '../menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-page.scss';

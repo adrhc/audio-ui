@@ -9,7 +9,7 @@ import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { AppContext } from '../../hooks/AppContext';
 import { getSelectableTrackSongs } from '../../services/tracks-load';
 import { useMaxEdge } from '../../constants';
-import { SelectableTrackSong } from '../../domain/track-song';
+import { SelectableTrackSong } from '../../domain/track';
 import TrackList from '../../components/list/TrackList';
 import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { useGoBack } from '../../hooks/useGoBack';

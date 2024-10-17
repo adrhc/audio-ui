@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 import { get, postVoid } from './rest';
 import { getCurrentTrackSong } from './tracks-load';
-import { TrackSong, title } from '../domain/track-song';
+import { TrackSong, title } from '../domain/track';
 
 const ROOT = '/audio-ui/api';
 

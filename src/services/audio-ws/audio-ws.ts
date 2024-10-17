@@ -1,6 +1,6 @@
 import { models } from 'mopidy';
 import { get, post } from '../rest';
-import { TrackSong, toTrackSong } from '../../domain/track-song';
+import { TrackSong, toTrackSong } from '../../domain/track';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { Song } from '../../domain/song';
 import * as audiows from './types';

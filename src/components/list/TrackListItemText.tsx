@@ -1,5 +1,5 @@
 import { ListItemText } from '@mui/material';
-import { TrackSong } from '../../domain/track-song';
+import { TrackSong } from '../../domain/track';
 
 function TrackListItemText({ track, index }: { track: TrackSong; index: number }) {
   const primary = `${index}. ${track.title}`;

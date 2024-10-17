@@ -1,6 +1,6 @@
 import { IconButton, ListItem, ListItemButton, Stack } from '@mui/material';
 import { ReactNode, useCallback, useContext } from 'react';
-import { SelectableTrackSong, TrackSong } from '../../domain/track-song';
+import { SelectableTrackSong, TrackSong } from '../../domain/track';
 import TrackListItemText from './TrackListItemText';
 import SongListItemAvatar from './SongListItemAvatar';
 import { Link } from 'react-router-dom';

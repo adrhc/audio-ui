@@ -1,6 +1,6 @@
 import Mopidy from 'mopidy';
 import { getCurrentTlTrack, getImages, getTlTracks } from './mpc';
-import { SelectableTrackSong, TrackSong, toSelectableTrackSong, toTrackSong } from '../domain/track-song';
+import { SelectableTrackSong, TrackSong, toSelectableTrackSong, toTrackSong } from '../domain/track';
 import { toSongExtsWithImgUri, toSongUris } from '../domain/song';
 import { getNoImgPlContent } from './audio-ws/audio-ws';
 
