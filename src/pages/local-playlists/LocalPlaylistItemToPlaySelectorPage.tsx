@@ -25,14 +25,12 @@ function LocalPlaylistItemToPlaySelectorPage() {
     listRef,
     scrollTo,
     scrollObserver,
-    currentSong,
     getCache,
     mergeCache,
     clearCache,
   } = useCachedSongsScrollable<ThinSongListState>(cacheName);
   const cache = getCache();
-  console.log(`[LocalPlContentPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
-    currentSong,
+  console.log(`[LocalPlaylistItemToPlaySelectorPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
     state,
     cache,
   });
@@ -44,13 +42,13 @@ function LocalPlaylistItemToPlaySelectorPage() {
 
   const loadPlContent = useCallback(() => {
     if (uri) {
-      console.log(`[LocalPlContentPage.loadPlContent] loading ${uri}`);
+      console.log(`[LocalPlaylistItemToPlaySelectorPage.loadPlContent] loading ${uri}`);
       sustain(
         getPlaylistItems(imgMaxEdge, uri).then((songs) => ({ songs })),
         `Failed to load the playlist!`
       );
     } else {
-      console.log(`[LocalPlContentPage.loadPlContent] "uri" is empty!`);
+      console.log(`[LocalPlaylistItemToPlaySelectorPage.loadPlContent] "uri" is empty!`);
     }
   }, [imgMaxEdge, sustain, uri]);
 
@@ -65,10 +63,10 @@ function LocalPlaylistItemToPlaySelectorPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[LocalPlContentPage.useEffect] ${uri} isn't loaded yet or is empty!`);
+      console.log(`[LocalPlaylistItemToPlaySelectorPage.useEffect] ${uri} isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[LocalPlContentPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
+    console.log(`[LocalPlaylistItemToPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty, uri]);
@@ -90,7 +88,6 @@ function LocalPlaylistItemToPlaySelectorPage() {
       <SongList
         songs={state.songs}
         loading={state.loading}
-        currentSong={currentSong}
         onAdd={addSongOrPlaylist}
         onInsert={insertSongOrPlaylist}
         onClick={addSongThenPlay}

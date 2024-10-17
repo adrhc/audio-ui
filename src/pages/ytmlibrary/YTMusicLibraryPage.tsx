@@ -22,14 +22,13 @@ function YTMusicLibraryPage() {
     listRef,
     scrollObserver,
     scrollTo,
-    currentSong,
     getCache,
     mergeCache,
   } = useCachedSongsScrollable<ThinSongListState>(YOUTUBE_LIBRARY);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[YTMusicLibraryPage]`, { currentSong, cache, state });
+  console.log(`[YTMusicLibraryPage]`, { cache, state });
 
   const imgMaxEdge = useMaxEdge();
 
@@ -86,7 +85,6 @@ function YTMusicLibraryPage() {
       <SongList
         songs={state.songs}
         loading={state.loading}
-        currentSong={currentSong}
         onAdd={addSongOrPlaylist}
         onInsert={insertSongOrPlaylist}
         onClick={handleSelection}

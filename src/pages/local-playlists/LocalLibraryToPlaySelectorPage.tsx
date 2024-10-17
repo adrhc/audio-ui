@@ -24,7 +24,6 @@ function LocalLibraryToPlaySelectorPage() {
     goToPlAdd,
     addSongOrPlaylist,
     insertSongOrPlaylist,
-    currentSong,
     getCache,
     mergeCache,
     clearCache,
@@ -32,7 +31,7 @@ function LocalLibraryToPlaySelectorPage() {
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[LocalPlaylistsPage]`, { currentSong, cache, state });
+  console.log(`[LocalLibraryToPlaySelectorPage]`, { cache, state });
 
   const handleReaload = useCallback(() => {
     console.log(`[handleReaload] loading the local playlists`);
@@ -45,10 +44,10 @@ function LocalLibraryToPlaySelectorPage() {
   // loading the library if not already loaded
   useEffect(() => {
     if (songsIsEmpty) {
-      console.log(`[LocalPlaylistsPage.useEffect] online = ${online}`);
+      console.log(`[LocalLibraryToPlaySelectorPage.useEffect] online = ${online}`);
       online && handleReaload();
     } else {
-      console.log(`[LocalPlaylistsPage.useEffect] the local playlists are already loaded!`);
+      console.log(`[LocalLibraryToPlaySelectorPage.useEffect] the local playlists are already loaded!`);
     }
   }, [handleReaload, online, songsIsEmpty]);
 
@@ -56,10 +55,10 @@ function LocalLibraryToPlaySelectorPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[LocalPlaylistsPage.useEffect] the library isn't loaded yet or is empty!`);
+      console.log(`[LocalLibraryToPlaySelectorPage.useEffect] the library isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[LocalPlaylistsPage.useEffect] scrolling to ${cachedScrollTop} after loading the library`);
+    console.log(`[LocalLibraryToPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading the library`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
@@ -69,7 +68,7 @@ function LocalLibraryToPlaySelectorPage() {
     mergeCache((old) => {
       // state doesn't contain scrollTop hence won't overwrite the cache!
       const backup = { ...old, ...removeLoadingAttributes(state) };
-      console.log(`[LocalPlaylistsPage.useEffect/mergeCache] backup:`, { old, backup });
+      console.log(`[LocalLibraryToPlaySelectorPage.useEffect/mergeCache] backup:`, { old, backup });
       return backup;
     });
   }, [clearCache, mergeCache, state]);
@@ -78,7 +77,7 @@ function LocalLibraryToPlaySelectorPage() {
     (song: Song) => {
       mergeCache((old) => {
         const backup = { ...old, lastUsed: song };
-        console.log(`[LocalPlaylistsPage] stateBackup:`, backup);
+        console.log(`[LocalLibraryToPlaySelectorPage] stateBackup:`, backup);
         return backup;
       });
       navigate(`/local-playlist-content/${song.uri}`);
@@ -98,7 +97,6 @@ function LocalLibraryToPlaySelectorPage() {
       <SongList
         songs={state.songs}
         loading={state.loading}
-        currentSong={currentSong}
         onAdd={addSongOrPlaylist}
         addManySongs={goToPlAdd}
         onInsert={insertSongOrPlaylist}

@@ -403,7 +403,7 @@ export default function App() {
         </Snackbar>
         <AppContext.Provider
           value={{
-            ...omitProps(state, ['error', 'loading', 'notification']),
+            ...omitProps(state, ['error', 'loading', 'notification', 'severity', 'logs']),
             setBaseVolume,
             ...baseVolume,
             setBoost,

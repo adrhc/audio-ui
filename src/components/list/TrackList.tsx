@@ -1,5 +1,5 @@
 import { IconButton, ListItem, ListItemButton, Stack } from '@mui/material';
-import { ReactNode, useCallback } from 'react';
+import { ReactNode, useCallback, useContext } from 'react';
 import { SelectableTrackSong, TrackSong } from '../../domain/track-song';
 import TrackListItemText from './TrackListItemText';
 import SongListItemAvatar from './SongListItemAvatar';
@@ -10,10 +10,10 @@ import LoadingList from './LoadingList';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import ScrollableList from '../../domain/scroll';
 import './TrackList.scss';
+import { AppContext } from '../../hooks/AppContext';
 
 interface TrackListParam extends ScrollableList {
   songs: TrackSong[] | SelectableTrackSong[];
-  currentSong?: TrackSong | null;
   onRemove?: (song: TrackSong) => void;
   onClick?: (song: TrackSong) => void;
   onSelect?: (song: SelectableTrackSong) => void;
@@ -25,7 +25,6 @@ interface TrackListParam extends ScrollableList {
 function TrackList({
   songs,
   loading,
-  currentSong,
   onRemove,
   onClick,
   onSelect,
@@ -36,11 +35,13 @@ function TrackList({
   onScroll,
 }: LoadingState<TrackListParam>) {
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
+  const { currentSong } = useContext(AppContext);
+  const tlid = currentSong?.tlid;
   const shouldAutoFocus = useCallback(
     (sa: TrackSong) => {
-      return sa.tlid == currentSong?.tlid || sa.tlid == songCloseToLastRemoved?.tlid;
+      return sa.tlid == tlid || sa.tlid == songCloseToLastRemoved?.tlid;
     },
-    [songCloseToLastRemoved, currentSong?.tlid]
+    [songCloseToLastRemoved, tlid]
   );
 
   return (
@@ -87,7 +88,7 @@ function TrackList({
         >
           <ListItemButton
             autoFocus={shouldAutoFocus(track)}
-            selected={track.tlid == currentSong?.tlid}
+            selected={track.tlid == tlid}
             onClick={() => (onClick ?? onSelect)?.(track)}
           >
             <SongListItemAvatar song={track} />

@@ -27,14 +27,13 @@ function LocalLibraryEditTemplatePage({ playlistEditorPath }: LocalLibraryEditTe
     scrollTo,
     getScrollPosition,
     goToPlAdd,
-    currentSong,
     mergeCache,
     loadLocalLibrary,
     removePlaylist,
   } = useCachedSongsScrollable<ThinSongListState>(LOCAL_LIBRARY_EDIT_CACHE);
 
   const songsIsEmpty = state.songs.length == 0;
-  // console.log(`[LocalLibraryEditTemplatePage]`, currentSong, state, credentials);
+  // console.log(`[LocalLibraryEditTemplatePage]`, state, credentials);
 
   // loading the library if not already loaded
   useEffect(() => {
@@ -86,7 +85,6 @@ function LocalLibraryEditTemplatePage({ playlistEditorPath }: LocalLibraryEditTe
         className="list-with-1x-secondary-action"
         songs={state.songs}
         loading={state.loading}
-        currentSong={currentSong}
         onClick={goToPlaylistEditor}
         onDelete={credentials.isValid() ? removePlaylist : undefined}
         addManySongs={goToPlAdd}

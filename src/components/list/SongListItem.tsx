@@ -1,15 +1,15 @@
 import { ListItem, IconButton, ListItemButton, ListItemText, Stack } from '@mui/material';
-import { useCallback } from 'react';
-import { TrackSong, songEqual } from '../../domain/track-song';
+import { useCallback, useContext } from 'react';
+import { songEqual } from '../../domain/track-song';
 import { Song } from '../../domain/song';
 import SongListItemAvatar from './SongListItemAvatar';
+import { AppContext } from '../../hooks/AppContext';
 
 type SongHandler = (song: Song) => void;
 
 type SongListItemParam = {
   prevSongsCount: number;
   lastUsed?: Song | null;
-  currentSong?: TrackSong | null;
   song: Song;
   index: number;
   onAdd?: SongHandler;
@@ -21,7 +21,6 @@ type SongListItemParam = {
 function SongListItem({
   prevSongsCount,
   lastUsed,
-  currentSong,
   song,
   index,
   onAdd,
@@ -30,6 +29,7 @@ function SongListItem({
   onClick,
 }: SongListItemParam) {
   // console.log(`[SongListItem]`, { song, lastUsed });
+  const { currentSong } = useContext(AppContext);
   const isLastUsed = useCallback(
     (song: Song) => {
       return song.uri == lastUsed?.uri;

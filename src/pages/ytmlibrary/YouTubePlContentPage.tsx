@@ -29,18 +29,13 @@ function YouTubePlContentPage() {
     listRef,
     scrollObserver,
     scrollTo,
-    currentSong,
     getCache,
     mergeCache,
   } = useCachedSongsScrollable<ThinSongListState>(cacheName);
   const cache = getCache() as YouTubePlContentCache;
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[YouTubePlContentPage] cacheName = ${cacheName}:`, {
-    currentSong,
-    cache,
-    state,
-  });
+  console.log(`[YouTubePlContentPage] cacheName = ${cacheName}:`, { cache, state });
 
   const imgMaxEdge = useMaxEdge();
 
@@ -94,7 +89,6 @@ function YouTubePlContentPage() {
       <SongList
         songs={state.songs}
         loading={state.loading}
-        currentSong={currentSong}
         onAdd={addSongOrPlaylist}
         onInsert={insertSongOrPlaylist}
         onClick={addSongThenPlay}

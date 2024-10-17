@@ -18,9 +18,8 @@ type TrackListPageState = {
 };
 
 export default function TrackListPage() {
-  const { mopidy, online, currentSong } = useContext(AppContext);
+  const { mopidy, online } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<TrackListPageState>({ songs: [] });
-  // console.log(`[TrackListPage] online = ${online}, currentSong:`, currentSong);
   // console.log(`[TrackListPage] online = ${online}, state:`, state);
   const imgMaxEdge = useMaxEdge();
 
@@ -76,7 +75,6 @@ export default function TrackListPage() {
       <TrackList
         songs={state.songs}
         loading={state.loading}
-        currentSong={currentSong}
         onRemove={handleRemove}
         onClick={handleSelection}
         songCloseToLastRemoved={state.songCloseToLastRemoved}

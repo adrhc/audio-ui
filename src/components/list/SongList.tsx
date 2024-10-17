@@ -13,7 +13,6 @@ type SongHandler = (song: Song) => void;
 
 interface SongsListParam extends ScrollableList, SongListItemMenuParam {
   prevSongsCount?: number;
-  currentSong?: TrackSong | null;
   onAdd?: SongHandler;
   onInsert?: SongHandler;
   onDelete?: SongHandler;
@@ -26,7 +25,6 @@ function SongList({
   prevSongsCount = 0,
   songs,
   loading,
-  currentSong,
   onAdd,
   onInsert,
   onDelete,
@@ -70,7 +68,6 @@ function SongList({
           index={index}
           prevSongsCount={prevSongsCount}
           lastUsed={lastUsed}
-          currentSong={currentSong}
           onAdd={onAdd}
           onInsert={onInsert}
           onDelete={onDelete}
