@@ -29,7 +29,7 @@ function SongSearchPage() {
     scrollTo,
     getCache,
     mergeCache,
-    ...partialSongsListParam
+    ...useCachedSongsScrollableRest
     // the cache.draftExpression, if exists, it overwrites state's "draftExpression"!
     // "state" receives "searchExpression" from the cache despite the fact that it doesn't declare it!
   } = useCachedSongsScrollable<RawSongsSearchPageState>(SONG_SEARCH, { draftExpression: searchExpression });
@@ -122,7 +122,7 @@ function SongSearchPage() {
         onInsert={insertSongOrPlaylist}
         onScroll={scrollObserver}
         {...state}
-        {...partialSongsListParam}
+        {...useCachedSongsScrollableRest}
       />
     </PageTemplate>
   );
