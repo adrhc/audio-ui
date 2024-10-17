@@ -8,20 +8,11 @@ import SongList from '../../components/list/SongList';
 import { useMaxEdge } from '../../constants';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import { toQueryParams } from '../../lib/path-param-utils';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
-import { ScrollPosition } from '../../hooks/scrollable/useCachedPositionScrollable';
 import { SONG_SEARCH } from '../../hooks/cache/cache-names';
-import { ThinSongListState } from '../../domain/song';
+import { toRawSongsSearchPageState, toSongsSearchParams } from './SongSearchUtils';
+import { SongSearchCache, RawSongsSearchPageState } from './model';
 import './SongSearchPage.scss';
-
-interface RawSongsSearchPageState extends ThinSongListState {
-  draftExpression?: string | null;
-}
-
-interface SongSearchCache extends ScrollPosition, RawSongsSearchPageState {
-  searchExpression: string;
-}
 
 function SongSearchPage() {
   const searchRef = useRef<HTMLInputElement>(null);
@@ -39,7 +30,7 @@ function SongSearchPage() {
     getCache,
     mergeCache,
     ...partialSongsListParam
-    // the cache, if exists, it overwrites "draftExpression: searchExpression" with its draftExpression!
+    // the cache.draftExpression, if exists, it overwrites state's "draftExpression"!
     // "state" receives "searchExpression" from the cache despite the fact that it doesn't declare it!
   } = useCachedSongsScrollable<RawSongsSearchPageState>(SONG_SEARCH, { draftExpression: searchExpression });
 
@@ -85,7 +76,7 @@ function SongSearchPage() {
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
 
   // cache the current state
-  const curatedState = keepRawSongsSearchPageStateOnly(removeLoadingAttributes(state) as SongSearchCache);
+  const curatedState = toRawSongsSearchPageState(removeLoadingAttributes(state) as SongSearchCache);
   useEffect(() => {
     mergeCache((old) => ({ ...old, ...curatedState, searchExpression }));
   }, [mergeCache, searchExpression, curatedState]);
@@ -119,10 +110,10 @@ function SongSearchPage() {
       <TextSearchButton
         placeholder="Search for songs"
         required={true}
-        text={state.draftExpression ?? ''}
+        text={draftExpression ?? ''}
         onChange={handleDraftChange}
         onSearch={handleSearch}
-        autoFocus={state.songs.length == 0}
+        autoFocus={songsIsEmpty}
         searchRef={searchRef}
       />
       <SongList
@@ -140,14 +131,3 @@ function SongSearchPage() {
 }
 
 export default SongSearchPage;
-
-function keepRawSongsSearchPageStateOnly(state: SongSearchCache): RawSongsSearchPageState {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { searchExpression, ...result } = { ...state };
-  return result;
-}
-
-function toSongsSearchParams(search: string) {
-  // return toQueryParams(['search', search], ['rand', `${Math.random()}`]);
-  return toQueryParams(['search', search]);
-}
