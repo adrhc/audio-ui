@@ -7,7 +7,7 @@ import { AppContext } from '../../hooks/AppContext';
 import { removeTlid } from '../../services/mpc';
 import TrackList from './TrackList';
 import { useMaxEdge } from '../../constants';
-import { TrackSong, removeSong } from '../../domain/track-song';
+import { TrackSong, removeTrack } from '../../domain/track-song';
 import TrackListMenu from '../menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-page.scss';
@@ -28,7 +28,7 @@ export default function TrackListPage() {
       // console.log(`[TrackListPage:onRemove] song:\n`, song);
       if (song.tlid) {
         sustain(
-          removeTlid(mopidy, song.tlid)?.then(() => removeSong(state.songs, song)),
+          removeTlid(mopidy, song.tlid)?.then(() => removeTrack(state.songs, song)),
           { error: `Failed to remove ${song.title}!`, songCloseToLastRemoved: song }
         );
       } else {

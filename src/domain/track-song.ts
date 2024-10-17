@@ -7,16 +7,16 @@ export function areSameTrack(tk1: TrackSong, tk2?: TrackSong | null): boolean {
   return tk1.tlid == tk2?.tlid && tk1.uri == tk2.uri;
 }
 
-export function removeSong(songs: TrackSong[], song: TrackSong) {
-  const idxToRemove = songs.indexOf(song);
-  const newSongs = songs.filter((it) => it.tlid != song.tlid);
+export function removeTrack(tracks: TrackSong[], trackToRemove: TrackSong) {
+  const idxToRemove = tracks.indexOf(trackToRemove);
+  const remainingTracks = tracks.filter((it) => it.tlid != trackToRemove.tlid);
   let songCloseToLastRemoved;
-  if (newSongs.length > idxToRemove) {
-    songCloseToLastRemoved = newSongs[idxToRemove];
-  } else if (newSongs.length > 0) {
-    songCloseToLastRemoved = newSongs[idxToRemove - 1];
+  if (remainingTracks.length > idxToRemove) {
+    songCloseToLastRemoved = remainingTracks[idxToRemove];
+  } else if (remainingTracks.length > 0) {
+    songCloseToLastRemoved = remainingTracks[idxToRemove - 1];
   }
-  return { songs: newSongs, songCloseToLastRemoved };
+  return { songs: remainingTracks, songCloseToLastRemoved };
 }
 
 export function toSelectableTrackSong(songs: Song[], track: TrackSong): SelectableTrackSong {
