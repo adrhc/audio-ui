@@ -1,10 +1,10 @@
 import { AddManySongsFn } from '../../hooks/usePlayingList';
 import { ListRef, ScrollToFn } from '../../domain/scroll';
-import { Song } from '../../domain/song';
+import { SelectableSong } from '../../domain/song';
 import { NoArgsProc } from '../../domain/types';
 
 export interface SongListItemMenuParam {
-  songs: Song[];
+  songs: SelectableSong[];
   listRef?: ListRef;
   scrollTo?: ScrollToFn;
   pageBeforeExists?: boolean | null;
@@ -13,6 +13,9 @@ export interface SongListItemMenuParam {
   goToNextPage?: NoArgsProc;
   addManySongs?: AddManySongsFn;
   onReloadList?: NoArgsProc;
+  onMinus?: NoArgsProc;
+  onPlus?: NoArgsProc;
+  addManyDisabled?: boolean;
   bottom?: boolean;
 }
 
@@ -22,19 +25,25 @@ export function shouldShowListItemMenu({
   pageAfterExists,
   goToPreviousPage,
   goToNextPage,
-  addManySongs,
   onReloadList,
+  onMinus,
+  onPlus,
   ...scrollToParam
 }: SongListItemMenuParam) {
   return (
-    (pageBeforeExists && !!goToPreviousPage) ||
+    (pageBeforeExists && goToPreviousPage) ||
     showScrollTo({ songs, ...scrollToParam }) ||
-    (pageAfterExists && !!goToNextPage) ||
-    !!onReloadList ||
-    (!!addManySongs && !!songs.length)
+    (pageAfterExists && goToNextPage) ||
+    onReloadList ||
+    showAddMany({ songs, ...scrollToParam }) ||
+    ((onMinus || onPlus) && songs.length)
   );
 }
 
+export function showAddMany({ addManyDisabled, addManySongs, songs }: SongListItemMenuParam) {
+  return !addManyDisabled && addManySongs && songs.length;
+}
+
 export function showScrollTo({ songs, listRef, scrollTo, bottom }: SongListItemMenuParam) {
-  return !!scrollTo && (bottom ? true : !!listRef) && !!songs.length;
+  return scrollTo && (bottom || listRef) && songs.length;
 }

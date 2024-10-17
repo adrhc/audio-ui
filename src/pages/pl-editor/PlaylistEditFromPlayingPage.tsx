@@ -121,7 +121,7 @@ function PlaylistEditFromPlayingPage() {
         songs={selections}
         loading={loading}
         onSelect={handleSelection}
-        menu={<ListItemMinusPlusMenu onMinus={removeAll} onPlus={selectAll} />}
+        menu={selections.length && <ListItemMinusPlusMenu onMinus={removeAll} onPlus={selectAll} />}
         listRef={listRef}
         onScroll={scrollObserver}
       />

@@ -5,7 +5,9 @@ import VerticalAlignBottomOutlinedIcon from '@mui/icons-material/VerticalAlignBo
 import VerticalAlignTopOutlinedIcon from '@mui/icons-material/VerticalAlignTopOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
-import { SongListItemMenuParam, showScrollTo } from './SongListItemMenuParam';
+import { SongListItemMenuParam, showAddMany, showScrollTo } from './SongListItemMenuParam';
+import CheckBoxOutlineBlankOutlinedIcon from '@mui/icons-material/CheckBoxOutlineBlankOutlined';
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 
 function SongListItemMenu({
   songs,
@@ -17,6 +19,9 @@ function SongListItemMenu({
   goToNextPage,
   onReloadList: onRealoadList,
   addManySongs,
+  addManyDisabled,
+  onMinus,
+  onPlus,
   bottom,
 }: SongListItemMenuParam) {
   return (
@@ -42,9 +47,19 @@ function SongListItemMenu({
           <CachedOutlinedIcon />
         </Button>
       )}
-      {addManySongs && songs.length && (
-        <Button variant="outlined" onClick={() => addManySongs(songs)}>
+      {showAddMany({ songs, addManySongs, addManyDisabled }) && (
+        <Button variant="outlined" onClick={() => addManySongs!(songs)}>
           <AddBoxOutlinedIcon />
+        </Button>
+      )}
+      {onMinus && songs.length && (
+        <Button variant="outlined" onClick={onMinus}>
+          <CheckBoxOutlineBlankOutlinedIcon />
+        </Button>
+      )}
+      {onPlus && songs.length && (
+        <Button variant="outlined" onClick={onPlus}>
+          <CheckBoxOutlinedIcon />
         </Button>
       )}
     </ButtonGroup>

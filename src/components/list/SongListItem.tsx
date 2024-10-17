@@ -1,8 +1,9 @@
 import { ListItem, IconButton, ListItemButton, ListItemText, Stack } from '@mui/material';
 import { useCallback, useContext } from 'react';
 import { songEqual } from '../../domain/track-song';
-import { Song } from '../../domain/song';
+import { SelectableSong, Song } from '../../domain/song';
 import SongListItemAvatar from './SongListItemAvatar';
+import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import { AppContext } from '../../hooks/AppContext';
 
 type SongHandler = (song: Song) => void;
@@ -10,12 +11,13 @@ type SongHandler = (song: Song) => void;
 type SongListItemParam = {
   prevSongsCount: number;
   lastUsed?: Song | null;
-  song: Song;
+  song: SelectableSong;
   index: number;
   onAdd?: SongHandler;
   onInsert?: SongHandler;
   onDelete?: SongHandler;
   onClick?: SongHandler;
+  onSelect?: (song: SelectableSong) => void;
 };
 
 function SongListItem({
@@ -27,6 +29,7 @@ function SongListItem({
   onInsert,
   onDelete,
   onClick,
+  onSelect,
 }: SongListItemParam) {
   // console.log(`[SongListItem]`, { song, lastUsed });
   const { currentSong } = useContext(AppContext);
@@ -38,7 +41,7 @@ function SongListItem({
   );
 
   const songCount = 1 + prevSongsCount + index;
-  const showActions = onInsert || onAdd || onDelete;
+  const showActions = onInsert || onAdd || onDelete || (song.selected && onSelect);
   return (
     <ListItem
       disablePadding
@@ -67,6 +70,12 @@ function SongListItem({
             {onDelete && (
               <IconButton className="del-btn" onClick={() => onDelete(song)}>
                 <img src="btn/recycle-bin-line-icon.svg" />
+              </IconButton>
+            )}
+            {song.selected && onSelect && (
+              // <CheckBoxOutlinedIcon className="secondary-action-btn" onClick={() => onSelect(song)} />
+              <IconButton className="select-btn" onClick={() => onSelect(song)}>
+                <CheckBoxOutlinedIcon />
               </IconButton>
             )}
           </Stack>

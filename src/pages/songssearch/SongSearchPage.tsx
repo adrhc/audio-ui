@@ -123,6 +123,7 @@ function SongSearchPage() {
         onAdd={addSongOrPlaylist}
         onInsert={insertSongOrPlaylist}
         onScroll={scrollObserver}
+        addManyDisabled={true}
         {...state}
         {...useCachedSongsScrollableRest}
       />

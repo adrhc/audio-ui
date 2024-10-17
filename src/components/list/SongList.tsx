@@ -1,8 +1,7 @@
 import { ListItem, ListItemText } from '@mui/material';
 import SongListItemMenu from './SongListItemMenu.tsx';
 import SongListItem from './SongListItem';
-import { Song } from '../../domain/song';
-import { TrackSong } from '../../domain/track-song';
+import { SelectableSong, Song } from '../../domain/song';
 import { SongListItemMenuParam, shouldShowListItemMenu } from './SongListItemMenuParam.ts';
 import { LoadingState } from '../../lib/sustain.ts';
 import LoadingList from './LoadingList.tsx';
@@ -17,6 +16,7 @@ interface SongsListParam extends ScrollableList, SongListItemMenuParam {
   onInsert?: SongHandler;
   onDelete?: SongHandler;
   onClick?: SongHandler;
+  onSelect?: (song: SelectableSong) => void;
   lastUsed?: Song | null;
   className?: string;
 }
@@ -29,6 +29,7 @@ function SongList({
   onInsert,
   onDelete,
   onClick,
+  onSelect,
   lastUsed,
   listRef,
   onScroll,
@@ -72,6 +73,7 @@ function SongList({
           onInsert={onInsert}
           onDelete={onDelete}
           onClick={onClick}
+          onSelect={onSelect}
         />
       ))}
 
