@@ -16,6 +16,7 @@ import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMe
 import { loadSelectablePlaylist, updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { AppContext } from '../../hooks/AppContext';
 import { getNoImgPlContent } from '../../services/audio-ws/audio-ws';
+import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
 import '../songssearch/SongSearchPage.scss';
 
 function PlaylistEditFromSearchPage() {
@@ -154,6 +155,14 @@ function PlaylistEditFromSearchPage() {
     }
   }, [uri, sustain, songs, clearCache, searchExpression]);
 
+  const removeAll = useCallback(() => {
+    setState((old) => ({ ...old, songs: toNoneSelected(old.songs) }));
+  }, [setState]);
+
+  const selectAll = useCallback(() => {
+    setState((old) => ({ ...old, songs: toAllSelected(old.songs) }));
+  }, [setState]);
+
   if (!uri) {
     return <PageTitle>The uri for the playlist to edit is missing!</PageTitle>;
   }
@@ -180,6 +189,8 @@ function PlaylistEditFromSearchPage() {
       <SongList
         onReloadList={reloadPlaylist}
         onSelect={handleSelection}
+        onMinus={removeAll}
+        onPlus={selectAll}
         onScroll={scrollObserver}
         addManyDisabled={true}
         {...state}

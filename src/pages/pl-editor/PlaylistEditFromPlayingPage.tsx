@@ -18,6 +18,7 @@ import { CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE, plCacheName } from '../../hooks/cach
 import useCachedPositionScrollable from '../../hooks/scrollable/useCachedPositionScrollable';
 import '/src/styles/wide-page.scss';
 import './PlaylistEditFromPlayingPage.scss';
+import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
 
 interface PlEditFromCurrentPlayPageState {
   selections: SelectableTrack[];
@@ -90,11 +91,11 @@ function PlaylistEditFromPlayingPage() {
   }, [clearCache, goBack, selections, sustain, uri]);
 
   const removeAll = useCallback(() => {
-    setState((old) => ({ ...old, selections: old.selections.map((it) => ({ ...it, selected: false })) }));
+    setState((old) => ({ ...old, selections: toNoneSelected(old.selections) }));
   }, [setState]);
 
   const selectAll = useCallback(() => {
-    setState((old) => ({ ...old, selections: old.selections.map((it) => ({ ...it, selected: true })) }));
+    setState((old) => ({ ...old, selections: toAllSelected(old.selections) }));
   }, [setState]);
 
   if (!uri) {
@@ -109,10 +110,7 @@ function PlaylistEditFromPlayingPage() {
       title={<PageTitle>{title}</PageTitle>}
       hideTop={true}
       bottom={
-        <CreateConfirmButtonMenu
-          onAccept={persistSelection}
-          acceptDisabled={!uri || !selections.length}
-        />
+        <CreateConfirmButtonMenu onAccept={persistSelection} acceptDisabled={!uri || !selections.length} />
       }
       disableSpinner={true}
     >
