@@ -111,7 +111,7 @@ function PlaylistEditFromPlayingPage() {
       bottom={
         <CreateConfirmButtonMenu
           onAccept={persistSelection}
-          acceptDisabled={!uri || !online || !selections.length}
+          acceptDisabled={!uri || !selections.length}
         />
       }
       disableSpinner={true}

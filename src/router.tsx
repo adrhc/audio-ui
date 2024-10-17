@@ -24,7 +24,7 @@ import AdminMenuPage from './pages/AdminMenuPage';
 import LocalLibraryEditFromPlayingPage from './pages/pl-editor/LocalLibraryEditFromPlayingPage';
 import PlaylistEditFromPlayingPage from './pages/pl-editor/PlaylistEditFromPlayingPage';
 import LocalLibraryEditFromSearchPage from './pages/pl-editor/LocalLibraryEditFromSearchPage';
-import PlaylistEditFromPlayingSearch from './pages/pl-editor/PlaylistEditFromPlayingSearch';
+import PlaylistEditFromSearchPage from './pages/pl-editor/PlaylistEditFromSearchPage';
 
 const ROUTER = createHashRouter([
   {
@@ -74,7 +74,7 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'playlist-edit-from-search/:uri',
-        element: <PlaylistEditFromPlayingSearch />,
+        element: <PlaylistEditFromSearchPage />,
       },
       {
         path: 'ytplcontent/:uri',

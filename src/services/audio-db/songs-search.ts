@@ -7,8 +7,8 @@ import * as audiodb from './types';
 const ROOT = '/audio-ui/db-api/songs-search';
 
 export async function searchSelectableSongs(
-  playlistUri: string,
   imgMaxEdge: number,
+  playlistUri: string,
   text: string
 ): Promise<SelectableSong[]> {
   const songs = await searchSongs(imgMaxEdge, text);

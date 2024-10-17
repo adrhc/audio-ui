@@ -11,7 +11,7 @@ import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { SONG_SEARCH } from '../../hooks/cache/cache-names';
 import { removeSearchExpression, toSongsSearchParams } from './SongSearchUtils';
-import { SongSearchCache, RawSongsSearchPageState } from './model';
+import { SongSearchCache, SongSearchResult } from './model';
 import './SongSearchPage.scss';
 
 function SongSearchPage() {
@@ -32,7 +32,7 @@ function SongSearchPage() {
     ...useCachedSongsScrollableRest
     // the cache.draftExpression, if exists, it overwrites state's "draftExpression"!
     // "state" receives "searchExpression" from the cache despite the fact that it doesn't declare it!
-  } = useCachedSongsScrollable<RawSongsSearchPageState>(SONG_SEARCH, { draftExpression: searchExpression });
+  } = useCachedSongsScrollable<SongSearchResult>(SONG_SEARCH, { draftExpression: searchExpression });
 
   const cache = getCache() as SongSearchCache;
 
@@ -76,7 +76,7 @@ function SongSearchPage() {
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
 
   // cache the current state
-  const curatedState: RawSongsSearchPageState = removeSearchExpression(
+  const curatedState: SongSearchResult = removeSearchExpression(
     removeLoadingAttributes(state as SongSearchCache)
   );
   useEffect(() => {

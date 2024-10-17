@@ -1,10 +1,10 @@
 import { ThinSongListState } from '../../domain/song';
 import { ScrollPosition } from '../../hooks/scrollable/useCachedPositionScrollable';
 
-export interface RawSongsSearchPageState extends ThinSongListState {
+export interface SongSearchResult extends ThinSongListState {
   draftExpression?: string | null;
 }
 
-export interface SongSearchCache extends ScrollPosition, RawSongsSearchPageState {
+export interface SongSearchCache extends ScrollPosition, SongSearchResult {
   searchExpression: string;
 }

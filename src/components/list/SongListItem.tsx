@@ -82,12 +82,10 @@ function SongListItem({
         )
       }
     >
-      {onClick && (
-        <ListItemButton selected={songEqual(song, currentSong)} onClick={() => onClick(song)}>
-          <SongListItemAvatar song={song} />
-          <ListItemText primary={`${songCount}. ${song.title}`} secondary={song.formattedUri} />
-        </ListItemButton>
-      )}
+      <ListItemButton selected={songEqual(song, currentSong)} onClick={() => (onClick ?? onSelect)?.(song)}>
+        <SongListItemAvatar song={song} />
+        <ListItemText primary={`${songCount}. ${song.title}`} secondary={song.formattedUri} />
+      </ListItemButton>
     </ListItem>
   );
 }

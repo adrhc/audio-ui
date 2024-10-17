@@ -25,7 +25,7 @@ export interface LastUsedMediaAware {
 }
 
 export interface SongsAware {
-  songs: Song[];
+  songs: SelectableSong[];
 }
 
 /**

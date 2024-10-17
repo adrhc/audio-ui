@@ -1,11 +1,13 @@
 import Mopidy, { models } from 'mopidy';
 import { get, post, postVoid, remove } from '../rest';
-import { Song, toSongExtsWithImgUri, toSongUris } from '../../domain/song';
+import { SelectableSong, Song, toSongExtsWithImgUri, toSongUris } from '../../domain/song';
 import { HistoryPosition, HistoryPage } from '../../domain/history';
 import { LocationSelection, MediaLocation, UriPlAllocationResult } from '../../domain/media-location';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { getImages } from '../mpc';
 import * as audiodb from './types';
+import { getPlContent } from '../audio-ws/audio-ws';
+import { toSelected } from '../../domain/Selectable';
 
 const YOUTUBE_PLAYLIST = '/audio-ui/db-api/youtube/playlist';
 const DISK_PLAYLIST = '/audio-ui/db-api/disk/playlist';
@@ -119,4 +121,8 @@ export function updateDiskPlContent(diskPlUri: string, selections: LocationSelec
 export function removeDiskPlaylist(playlist: MediaLocation): Promise<boolean> {
   // console.log(`[removeDiskPlaylist] playlist:`, playlist);
   return remove<boolean>(DISK_PLAYLIST, JSON.stringify(audiodb.toDiskPlaylistRemoveRequest(playlist)));
+}
+
+export function loadSelectablePlaylist(imgMaxEdge: number, playlistUri: string): Promise<SelectableSong[]> {
+  return getPlContent(imgMaxEdge, playlistUri).then((playlist) => playlist.map((s) => toSelected(s)));
 }
