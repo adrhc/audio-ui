@@ -1,8 +1,8 @@
 import { get } from '../rest';
 import { SelectableSong, Song, toSelectableSong } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
-import * as audiodb from './types';
 import { getNoImgPlContent } from '../audio-ws/audio-ws';
+import * as audiodb from './types';
 
 const ROOT = '/audio-ui/db-api/songs-search';
 
