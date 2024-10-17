@@ -9,6 +9,8 @@ export type SongsPage = {
   entries: Song[];
 };
 
+// export interface SelectableSong extends Song, Selectable {}
+
 export interface Song extends MediaLocation {
   imgUri?: string | null;
 }

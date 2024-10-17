@@ -10,7 +10,7 @@ import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { SONG_SEARCH } from '../../hooks/cache/cache-names';
-import { toRawSongsSearchPageState, toSongsSearchParams } from './SongSearchUtils';
+import { removeSearchExpression, toSongsSearchParams } from './SongSearchUtils';
 import { SongSearchCache, RawSongsSearchPageState } from './model';
 import './SongSearchPage.scss';
 
@@ -76,7 +76,9 @@ function SongSearchPage() {
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
 
   // cache the current state
-  const curatedState = toRawSongsSearchPageState(removeLoadingAttributes(state) as SongSearchCache);
+  const curatedState: RawSongsSearchPageState = removeSearchExpression(
+    removeLoadingAttributes(state as SongSearchCache)
+  );
   useEffect(() => {
     mergeCache((old) => ({ ...old, ...curatedState, searchExpression }));
   }, [mergeCache, searchExpression, curatedState]);

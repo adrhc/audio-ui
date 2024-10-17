@@ -1,10 +1,9 @@
 import { toQueryParams } from '../../lib/path-param-utils';
-import { SongSearchCache, RawSongsSearchPageState } from './model';
 
-export function toRawSongsSearchPageState(state: SongSearchCache): RawSongsSearchPageState {
+export function removeSearchExpression<S>(o: { searchExpression?: string }): S {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { searchExpression, ...result } = { ...state };
-  return result;
+  const { searchExpression, ...result } = o;
+  return result as S;
 }
 
 export function toSongsSearchParams(search: string): URLSearchParams {

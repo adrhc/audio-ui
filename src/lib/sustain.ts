@@ -12,10 +12,9 @@ export type SetLoading = Dispatch<SetStateAction<Loading>>;
 export type SetState<S> = Dispatch<SetStateAction<S>>;
 
 export function removeLoadingAttributes<S>(loadingState: LoadingState<S>): S {
-  const state = { ...loadingState };
-  delete state.loading;
-  delete state.error;
-  return state;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { loading, error, ...result } = loadingState;
+  return result as S;
 }
 
 export type SustainPromise<S> = Promise<Partial<LoadingState<S>> | null | undefined | void>;
