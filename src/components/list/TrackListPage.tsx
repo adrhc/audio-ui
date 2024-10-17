@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { getTrackSongs } from '../../services/track-song';
+import { getTrackSongs } from '../../services/tracks-load';
 import { play } from '../../services/player';
 import PageTemplate from '../../templates/PageTemplate';
 import { useSustainableState } from '../../hooks/useSustainableState';

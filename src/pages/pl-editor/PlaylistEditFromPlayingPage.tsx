@@ -7,7 +7,7 @@ import { SetFeedbackState } from '../../lib/sustain';
 import PageTemplate from '../../templates/PageTemplate';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { AppContext } from '../../hooks/AppContext';
-import { getSelectableTrackSongs } from '../../services/track-song';
+import { getSelectableTrackSongs } from '../../services/tracks-load';
 import { useMaxEdge } from '../../constants';
 import { SelectableTrackSong } from '../../domain/track-song';
 import TrackList from '../../components/list/TrackList';
