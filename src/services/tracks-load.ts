@@ -10,11 +10,11 @@ export function getCurrentTrackSong(mopidy?: Mopidy): Promise<TrackSong | null> 
 
 export async function getSelectableTrackSongs(
   mopidy: Mopidy | undefined,
-  plUri: string,
+  playlistUri: string,
   imgMaxEdge: number
 ): Promise<SelectableTrackSong[]> {
   const tracks = await getTrackSongs(mopidy, imgMaxEdge);
-  const songs = await getNoImgPlContent(plUri);
+  const songs = await getNoImgPlContent(playlistUri);
   return tracks.map((t) => toSelectableTrackSong(songs, t));
 }
 
