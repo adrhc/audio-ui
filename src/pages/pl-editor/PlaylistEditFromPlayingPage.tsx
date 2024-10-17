@@ -16,9 +16,9 @@ import { useGoBack } from '../../hooks/useGoBack';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
 import { CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE, plCacheName } from '../../hooks/cache/cache-names';
 import useCachedPositionScrollable from '../../hooks/scrollable/useCachedPositionScrollable';
+import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
 import '/src/styles/wide-page.scss';
 import './PlaylistEditFromPlayingPage.scss';
-import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
 
 interface PlEditFromCurrentPlayPageState {
   selections: SelectableTrack[];
