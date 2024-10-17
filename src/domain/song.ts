@@ -1,7 +1,7 @@
 import { models } from 'mopidy';
 import { sortByAbsDiff } from '../lib/image';
 import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName, UriImagesMap } from '../services/mpc';
-import { MediaLocation } from './media-location';
+import { MediaLocation, uriEqual } from './media-location';
 import Selectable from './Selectable';
 
 const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;
@@ -9,6 +9,10 @@ const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base
 export type SongsPage = {
   entries: Song[];
 };
+
+export function toSelectableSong(songs: Song[], song: Song): SelectableSong {
+  return { ...song, selected: !!songs.find((s) => uriEqual(s.uri, song.uri)) };
+}
 
 export interface SelectableSong extends Song, Selectable {}
 

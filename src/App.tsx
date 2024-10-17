@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/cache/useCache';
 import { setGlobalAuthorization } from './domain/credentials';
-import { areSameTrack, toTrackSong } from './domain/track';
+import { areSameTrack, toTrack } from './domain/track';
 
 export default function App() {
   const theme = useTheme();
@@ -154,7 +154,7 @@ export default function App() {
     (params: { tl_track: models.TlTrack }) => {
       // console.log(`[App:event:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
       // logTlTrack(params.tl_track);
-      const currentSong = toTrackSong(params.tl_track);
+      const currentSong = toTrack(params.tl_track);
       if (currentSong) {
         // this catches prev/next navigation only when a track is playing
         setState((old) => {
@@ -188,7 +188,7 @@ export default function App() {
     (params: { tl_track: models.TlTrack }) => {
       // console.log(`[App:event:trackPlaybackResumed] ${Date.now()}, TlTrack:`);
       // logTlTrack(params.tl_track);
-      const currentSong = toTrackSong(params.tl_track);
+      const currentSong = toTrack(params.tl_track);
       if (!currentSong) {
         console.log(`[App:event:trackPlaybackResumed] can't switch to:`, currentSong);
         setState((old) => ({ ...old, error: 'The current song has no uri!' }));

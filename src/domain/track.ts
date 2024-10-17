@@ -3,11 +3,11 @@ import { Song, formatUri } from './song';
 import Selectable from './Selectable';
 import { uriEqual } from './media-location';
 
-export function areSameTrack(tk1: TrackSong, tk2?: TrackSong | null): boolean {
+export function areSameTrack(tk1: Track, tk2?: Track | null): boolean {
   return tk1.tlid == tk2?.tlid && tk1.uri == tk2.uri;
 }
 
-export function removeTrack(tracks: TrackSong[], trackToRemove: TrackSong) {
+export function removeTrack(tracks: Track[], trackToRemove: Track) {
   const idxToRemove = tracks.indexOf(trackToRemove);
   const remainingTracks = tracks.filter((it) => it.tlid != trackToRemove.tlid);
   let songCloseToLastRemoved;
@@ -19,17 +19,17 @@ export function removeTrack(tracks: TrackSong[], trackToRemove: TrackSong) {
   return { songs: remainingTracks, songCloseToLastRemoved };
 }
 
-export function toSelectableTrackSong(songs: Song[], track: TrackSong): SelectableTrackSong {
+export function toSelectableTrack(songs: Song[], track: Track): SelectableTrack {
   return { ...track, selected: !!songs.find((s) => uriEqual(s.uri, track.uri)) };
 }
 
-export interface SelectableTrackSong extends TrackSong, Selectable {}
+export interface SelectableTrack extends Track, Selectable {}
 
 export interface CurrentSongAware {
-  currentSong?: TrackSong | null;
+  currentSong?: Track | null;
 }
 
-export interface TrackSong extends Song {
+export interface Track extends Song {
   tlid: number;
   artists?: string | null;
 }
@@ -38,11 +38,11 @@ export function songEqual(song: Song, currentSong?: Song | null) {
   return song.uri == currentSong?.uri;
 }
 
-export function title(sa?: TrackSong) {
+export function title(sa?: Track) {
   return sa?.artists ? `${sa.title} - ${sa.artists}` : sa?.title;
 }
 
-export function toTrackSong(tlt: models.TlTrack | null): TrackSong | null {
+export function toTrack(tlt: models.TlTrack | null): Track | null {
   // logTlTrack(tlt);
   if (tlt?.track == null) {
     return null;

@@ -4,14 +4,14 @@ import { useCallback, useContext } from 'react';
 import { AppContext } from '../../hooks/AppContext';
 import { clearTrackList as clearMopidyTrackList } from '../../services/mpc';
 import { SustainVoidFn } from '../../hooks/useSustainableState';
-import { TrackSong } from '../../domain/track';
+import { Track } from '../../domain/track';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import BackButtonMenu from './BackButtonMenu';
 import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import AddIcon from '@mui/icons-material/Add';
 
 interface TrackListMenuState {
-  songs: TrackSong[];
+  songs: Track[];
 }
 
 type TrackListMenuParam = {

@@ -1,6 +1,6 @@
 import { models } from 'mopidy';
 import { get, post } from '../rest';
-import { TrackSong, toTrackSong } from '../../domain/track';
+import { Track, toTrack } from '../../domain/track';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { Song } from '../../domain/song';
 import * as audiows from './types';
@@ -10,7 +10,7 @@ const DISK_PLAYLIST = '/audio-ui/api/disk-playlist';
 const MOPIDY_PLAYLIST = '/audio-ui/api/mopidy-playlist';
 
 export type AudioServerState = {
-  currentSong: TrackSong;
+  currentSong: Track;
   streamTitle: string;
   pbStatus: string;
   baseVolume: number;
@@ -80,7 +80,7 @@ function toAudioServerState({
     baseVolume,
     boost,
     mute,
-    currentSong: toTrackSong(tlTrack),
+    currentSong: toTrack(tlTrack),
     streamTitle,
   } as AudioServerState;
 }

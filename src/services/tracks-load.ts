@@ -1,26 +1,26 @@
 import Mopidy from 'mopidy';
 import { getCurrentTlTrack, getImages, getTlTracks } from './mpc';
-import { SelectableTrackSong, TrackSong, toSelectableTrackSong, toTrackSong } from '../domain/track';
+import { SelectableTrack, Track, toSelectableTrack, toTrack } from '../domain/track';
 import { toSongExtsWithImgUri, toSongUris } from '../domain/song';
 import { getNoImgPlContent } from './audio-ws/audio-ws';
 
-export function getCurrentTrackSong(mopidy?: Mopidy): Promise<TrackSong | null> {
-  return getCurrentTlTrack(mopidy)?.then(toTrackSong);
+export function getCurrentTrack(mopidy?: Mopidy): Promise<Track | null> {
+  return getCurrentTlTrack(mopidy)?.then(toTrack);
 }
 
-export async function getSelectableTrackSongs(
+export async function getSelectableTracks(
   mopidy: Mopidy | undefined,
   playlistUri: string,
   imgMaxEdge: number
-): Promise<SelectableTrackSong[]> {
-  const tracks = await getTrackSongs(mopidy, imgMaxEdge);
+): Promise<SelectableTrack[]> {
+  const tracks = await getTracks(mopidy, imgMaxEdge);
   const songs = await getNoImgPlContent(playlistUri);
-  return tracks.map((t) => toSelectableTrackSong(songs, t));
+  return tracks.map((t) => toSelectableTrack(songs, t));
 }
 
-export function getTrackSongs(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<TrackSong[]> {
+export function getTracks(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<Track[]> {
   return getTlTracks(mopidy)
-    ?.then((tlt) => tlt.map(toTrackSong).filter((it) => it != null) as TrackSong[])
+    ?.then((tlt) => tlt.map(toTrack).filter((it) => it != null) as Track[])
     .then((traks) =>
       getImages(mopidy, toSongUris(traks))?.then((imagesMap) =>
         toSongExtsWithImgUri(imgMaxEdge, traks, imagesMap)

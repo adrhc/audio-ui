@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { getTrackSongs } from '../../services/tracks-load';
+import { getTracks } from '../../services/tracks-load';
 import { play } from '../../services/player';
 import PageTemplate from '../../templates/PageTemplate';
 import { useSustainableState } from '../../hooks/useSustainableState';
@@ -7,14 +7,14 @@ import { AppContext } from '../../hooks/AppContext';
 import { removeTlid } from '../../services/mpc';
 import TrackList from './TrackList';
 import { useMaxEdge } from '../../constants';
-import { TrackSong, removeTrack } from '../../domain/track';
+import { Track, removeTrack } from '../../domain/track';
 import TrackListMenu from '../menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain';
 import '/src/styles/wide-page.scss';
 
 type TrackListPageState = {
-  songs: TrackSong[];
-  songCloseToLastRemoved?: TrackSong;
+  songs: Track[];
+  songCloseToLastRemoved?: Track;
 };
 
 export default function TrackListPage() {
@@ -24,7 +24,7 @@ export default function TrackListPage() {
   const imgMaxEdge = useMaxEdge();
 
   const handleRemove = useCallback(
-    (song: TrackSong) => {
+    (song: Track) => {
       // console.log(`[TrackListPage:onRemove] song:\n`, song);
       if (song.tlid) {
         sustain(
@@ -39,7 +39,7 @@ export default function TrackListPage() {
   );
 
   const handleSelection = useCallback(
-    (song: TrackSong) => {
+    (song: Track) => {
       if (song.tlid) {
         sustain(play(mopidy, song.tlid), `Failed to play ${song.title}!`);
       } else {
@@ -53,7 +53,7 @@ export default function TrackListPage() {
     if (online) {
       console.log(`[TrackListPage:online] loading the track list`);
       sustain(
-        getTrackSongs(mopidy, imgMaxEdge)?.then((songs) => ({ songs })),
+        getTracks(mopidy, imgMaxEdge)?.then((songs) => ({ songs })),
         "Can't load the track list!"
       );
     }

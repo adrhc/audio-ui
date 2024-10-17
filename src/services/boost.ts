@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 import { get, postVoid } from './rest';
-import { getCurrentTrackSong } from './tracks-load';
-import { TrackSong, title } from '../domain/track';
+import { getCurrentTrack } from './tracks-load';
+import { Track, title } from '../domain/track';
 
 const ROOT = '/audio-ui/api';
 
@@ -21,14 +21,14 @@ export class CurrentBoost {
 }
 
 export type VolumeBoost = { uri: string; title: string; boost: number };
-export type SongAndBoost = { boost?: CurrentBoost; currentSong: TrackSong };
+export type SongAndBoost = { boost?: CurrentBoost; currentSong: Track };
 
 export function toCurrentBoost(vb?: VolumeBoost | null) {
   return vb ? new CurrentBoost(vb.uri, vb.boost) : null;
 }
 
 export function getSongAndBoost(mopidy?: Mopidy) {
-  return getCurrentTrackSong(mopidy)?.then((currentSong) => {
+  return getCurrentTrack(mopidy)?.then((currentSong) => {
     if (currentSong?.uri) {
       return getVolumeBoost(currentSong.uri).then((volumeBoost) => {
         const boost = volumeBoost ? new CurrentBoost(volumeBoost.uri, volumeBoost.boost) : undefined;
@@ -53,7 +53,7 @@ export function boostVolume(volumeBoost: VolumeBoost) {
 export function volumeBoost(
   baseVolume: number | null | undefined,
   volume: number | null | undefined,
-  songAndArtists: TrackSong | null | undefined
+  songAndArtists: Track | null | undefined
 ) {
   if (baseVolume == null || volume == null || songAndArtists?.uri == null) {
     return null;

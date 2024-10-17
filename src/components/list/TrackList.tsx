@@ -1,6 +1,6 @@
 import { IconButton, ListItem, ListItemButton, Stack } from '@mui/material';
 import { ReactNode, useCallback, useContext } from 'react';
-import { SelectableTrackSong, TrackSong } from '../../domain/track';
+import { SelectableTrack, Track } from '../../domain/track';
 import TrackListItemText from './TrackListItemText';
 import SongListItemAvatar from './SongListItemAvatar';
 import { Link } from 'react-router-dom';
@@ -13,11 +13,11 @@ import { AppContext } from '../../hooks/AppContext';
 import './TrackList.scss';
 
 interface TrackListParam extends ScrollableList {
-  songs: SelectableTrackSong[];
-  onRemove?: (song: TrackSong) => void;
-  onClick?: (song: TrackSong) => void;
-  onSelect?: (song: SelectableTrackSong) => void;
-  songCloseToLastRemoved?: TrackSong;
+  songs: SelectableTrack[];
+  onRemove?: (song: Track) => void;
+  onClick?: (song: Track) => void;
+  onSelect?: (song: SelectableTrack) => void;
+  songCloseToLastRemoved?: Track;
   menu?: ReactNode;
   className?: string;
 }
@@ -38,7 +38,7 @@ function TrackList({
   const { currentSong } = useContext(AppContext);
   const tlid = currentSong?.tlid;
   const shouldAutoFocus = useCallback(
-    (sa: TrackSong) => {
+    (sa: Track) => {
       return sa.tlid == tlid || sa.tlid == songCloseToLastRemoved?.tlid;
     },
     [songCloseToLastRemoved, tlid]

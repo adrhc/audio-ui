@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 import { addUris, addUrisAfter } from './mpc';
 import { addToHistory, getYTPlContent } from './audio-db/audio-db';
-import { TrackSong } from '../domain/track';
+import { Track } from '../domain/track';
 import { Song } from '../domain/song';
 import { play } from './player';
 import { getMopidyPlItems } from './pl-content';
@@ -11,7 +11,7 @@ import { getMopidyPlItems } from './pl-content';
  */
 export function addYtMusicPlAfterAndRemember(
   mopidy: Mopidy | undefined,
-  after: TrackSong | undefined | null,
+  after: Track | undefined | null,
   ytm: Song
 ) {
   // console.log(`[addYtMusicPlAfterAndRemember] playlist:`, ytm);
@@ -43,7 +43,7 @@ export function addYtMusicPlAndRemember(mopidy: Mopidy | undefined, ytm: Song) {
  */
 export function addMopidyPlAfterAndRemember(
   mopidy: Mopidy | undefined,
-  after: TrackSong | undefined | null,
+  after: Track | undefined | null,
   playlist: Song
 ) {
   console.log(`[addMopidyPlAfterAndRemember] playlist:`, playlist);
@@ -72,7 +72,7 @@ export function addMopidyPlAndRemember(mopidy: Mopidy | undefined, playlist: Son
 
 export function addSongsAfterAndRemember(
   mopidy: Mopidy | undefined,
-  after: TrackSong | undefined | null,
+  after: Track | undefined | null,
   ...song: Song[]
 ) {
   if (after?.tlid == null) {

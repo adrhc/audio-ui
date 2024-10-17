@@ -1,7 +1,7 @@
 import { ListItemText } from '@mui/material';
-import { TrackSong } from '../../domain/track';
+import { Track } from '../../domain/track';
 
-function TrackListItemText({ track, index }: { track: TrackSong; index: number }) {
+function TrackListItemText({ track, index }: { track: Track; index: number }) {
   const primary = `${index}. ${track.title}`;
   // console.log(`primary: ${primary}\nartists: ${value.artists}\nformattedUri: ${track.formattedUri}`);
   if (track.artists) {

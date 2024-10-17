@@ -7,9 +7,9 @@ import { SetFeedbackState } from '../../lib/sustain';
 import PageTemplate from '../../templates/PageTemplate';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { AppContext } from '../../hooks/AppContext';
-import { getSelectableTrackSongs } from '../../services/tracks-load';
+import { getSelectableTracks } from '../../services/tracks-load';
 import { useMaxEdge } from '../../constants';
-import { SelectableTrackSong } from '../../domain/track';
+import { SelectableTrack } from '../../domain/track';
 import TrackList from '../../components/list/TrackList';
 import { updateDiskPlContent } from '../../services/audio-db/audio-db';
 import { useGoBack } from '../../hooks/useGoBack';
@@ -20,7 +20,7 @@ import '/src/styles/wide-page.scss';
 import './PlaylistEditFromPlayingPage.scss';
 
 interface PlEditFromCurrentPlayPageState {
-  selections: SelectableTrackSong[];
+  selections: SelectableTrack[];
 }
 
 function PlaylistEditFromPlayingPage() {
@@ -43,7 +43,7 @@ function PlaylistEditFromPlayingPage() {
     if (uri && online) {
       console.log(`[PlaylistEditFromPlayingPage:online] loading the track list`);
       sustain(
-        getSelectableTrackSongs(mopidy, uri, imgMaxEdge)?.then((selections) => ({ selections })),
+        getSelectableTracks(mopidy, uri, imgMaxEdge)?.then((selections) => ({ selections })),
         "Can't load the track list!"
       );
     }
@@ -64,7 +64,7 @@ function PlaylistEditFromPlayingPage() {
   }, [scrollPosition, scrollTo, selections.length]);
 
   const handleSelection = useCallback(
-    (newSelection: SelectableTrackSong) => {
+    (newSelection: SelectableTrack) => {
       setState((old) => ({
         ...old,
         selections: old.selections.map((oldSelection) =>
