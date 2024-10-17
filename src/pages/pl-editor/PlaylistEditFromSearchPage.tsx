@@ -47,12 +47,25 @@ function PlaylistEditFromSearchPage() {
   const { draftExpression } = state;
   const songsIsEmpty = state.songs.length == 0;
 
+  const showSelectablePlaylist = useCallback(() => {
+    if (!uri) {
+      return;
+    }
+    console.log(`[PlaylistEditFromSearchPage.showSelectablePlaylist] loading ${title} playlist`);
+    sustain(
+      loadSelectablePlaylist(imgMaxEdge, uri).then(
+        (songs) => ({ songs, searchExpression }) as Partial<SongSearchCache>
+      ),
+      `Failed to load ${title}!`
+    );
+  }, [imgMaxEdge, searchExpression, sustain, title, uri]);
+
   const doSearch = useCallback(
     (searchExpression?: string | null, scrollTop?: boolean) => {
       if (!uri) {
         return;
       } else if (searchExpression) {
-        console.log(`[PlaylistEditFromSearchPage.useEffect/search] searching for:`, searchExpression);
+        console.log(`[PlaylistEditFromSearchPage.doSearch] searching for:`, searchExpression);
         sustain(
           searchSelectableSongs(imgMaxEdge, uri, searchExpression).then((songs) => {
             if (scrollTop) {
@@ -63,17 +76,11 @@ function PlaylistEditFromSearchPage() {
           `Failed to search for ${searchExpression}!`
         );
       } else {
-        console.log(`[PlaylistEditFromSearchPage.useEffect/search] loading ${title} playlist`);
-        // setState((old) => ({ ...old, error: 'The search expression must not be empty!' }));
-        sustain(
-          loadSelectablePlaylist(imgMaxEdge, uri).then(
-            (songs) => ({ songs, searchExpression }) as Partial<SongSearchCache>
-          ),
-          `Failed to load ${title}!`
-        );
+        console.log(`[PlaylistEditFromSearchPage.doSearch]`);
+        showSelectablePlaylist();
       }
     },
-    [imgMaxEdge, mergeCache, sustain, title, uri]
+    [imgMaxEdge, mergeCache, showSelectablePlaylist, sustain, uri]
   );
 
   const reloadPlaylist = useCallback(() => {
@@ -87,6 +94,12 @@ function PlaylistEditFromSearchPage() {
       `Failed to load ${title}!`
     );
   }, [uri, sustain, setState, title]);
+
+  useEffect(() => {
+    if (songsIsEmpty && !searchExpression) {
+      showSelectablePlaylist();
+    }
+  }, [songsIsEmpty, searchExpression, showSelectablePlaylist]);
 
   // scroll position after loading the search result
   useEffect(() => {
