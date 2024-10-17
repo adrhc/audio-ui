@@ -1,9 +1,20 @@
 import { get } from '../rest';
-import { Song } from '../../domain/song';
+import { SelectableSong, Song, toSelectableSong } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
 import * as audiodb from './types';
+import { getNoImgPlContent } from '../audio-ws/audio-ws';
 
 const ROOT = '/audio-ui/db-api/songs-search';
+
+export async function searchSelectableSongs(
+  playlistUri: string,
+  imgMaxEdge: number,
+  text: string
+): Promise<SelectableSong[]> {
+  const songs = await searchSongs(imgMaxEdge, text);
+  const playlist = await getNoImgPlContent(playlistUri);
+  return songs.map((s) => toSelectableSong(playlist, s));
+}
 
 export function searchSongs(imgMaxEdge: number, text: string): Promise<Song[]> {
   return searchAudioDbSongs(text).then((songs) => audiodb.toSongsWithImgUri(imgMaxEdge, songs));
