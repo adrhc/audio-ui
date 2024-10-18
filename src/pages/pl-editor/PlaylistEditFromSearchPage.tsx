@@ -17,8 +17,8 @@ import { updateLocalPlaylist } from '../../services/audio-db/playlist';
 import { AppContext } from '../../hooks/AppContext';
 import { getNoImgPlContent } from '../../services/audio-ws/playlist';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
-import '../songssearch/SongSearchPage.scss';
 import { getSelectablePlContent } from '../../services/playlist';
+import '../songssearch/SongSearchPage.scss';
 
 function PlaylistEditFromSearchPage() {
   const { uri } = useParams();
@@ -115,6 +115,7 @@ function PlaylistEditFromSearchPage() {
 
   const handleSearch = useCallback(() => {
     console.log(`[PlaylistEditFromSearchPage.handleSearch] draftExpression:`, draftExpression);
+    searchRef.current?.blur();
     if (searchExpression) {
       doSearchSelectableSongs(searchExpression, draftExpression != searchExpression);
     } else {

@@ -88,6 +88,7 @@ function SongSearchPage() {
       if (draftExpression != cache.searchExpression) {
         navigate(`/songssearch?${toSongsSearchParams(draftExpression)}`, { replace: true });
       } else {
+        searchRef.current?.blur();
         doSearch(draftExpression);
       }
     } else {
