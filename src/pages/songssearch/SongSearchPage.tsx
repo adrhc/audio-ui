@@ -86,9 +86,9 @@ function SongSearchPage() {
   const handleSearch = useCallback(() => {
     if (draftExpression) {
       if (draftExpression != cache.searchExpression) {
+        searchRef.current?.blur();
         navigate(`/songssearch?${toSongsSearchParams(draftExpression)}`, { replace: true });
       } else {
-        searchRef.current?.blur();
         doSearch(draftExpression);
       }
     } else {
