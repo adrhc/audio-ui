@@ -20,7 +20,7 @@ import PageTitle from '../../components/PageTitle';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
 import { toPlCacheName } from '../../hooks/cache/cache-names';
-import { updateUriPlaylists } from '../../services/audio-db/playlist';
+import { updateManyLocalPlaylists } from '../../services/audio-db/playlist';
 import '/src/styles/wide-page.scss';
 
 interface PlaylistToEditSelectorPageState {
@@ -80,7 +80,7 @@ function PlaylistToSongAllocatorPage() {
 
   const allocate = useCallback(() => {
     sustain(
-      updateUriPlaylists(decodedUri!, decodedTitle, filterSelected(selections)).then((result) =>
+      updateManyLocalPlaylists(decodedUri!, decodedTitle, filterSelected(selections)).then((result) =>
         handleChangeResult(selections, result)
       ),
       'Failed to save the selection!'

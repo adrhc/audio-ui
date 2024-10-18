@@ -13,7 +13,7 @@ import { SongSearchCache } from '../songssearch/model';
 import PageTitle from '../../components/PageTitle';
 import { SelectableSong, toSelectableSong } from '../../domain/song';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
-import { updateLocalPlContent } from '../../services/audio-db/playlist';
+import { updateLocalPlaylist } from '../../services/audio-db/playlist';
 import { AppContext } from '../../hooks/AppContext';
 import { getNoImgPlContent } from '../../services/audio-ws/audio-ws';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
@@ -145,7 +145,7 @@ function PlaylistEditFromSearchPage() {
     if (uri) {
       console.log(`[PlaylistEditFromSearchPage.persistSelection] searchExpression:`, searchExpression);
       sustain(
-        updateLocalPlContent(uri, songs).then(() => {
+        updateLocalPlaylist(uri, songs).then(() => {
           clearCache(plCacheName(uri));
           /* if (!searchExpression) {
             return loadSelectablePlaylist(imgMaxEdge, uri).then((songs) => ({ songs }));

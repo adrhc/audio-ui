@@ -15,7 +15,7 @@ export function getYTPlContent(imgMaxEdge: number, ytUri: string): Promise<Song[
  * @param playlists the playlists to add the song to
  * @returns allocation outcome
  */
-export function updateUriPlaylists(
+export function updateManyLocalPlaylists(
   songUri: string,
   songTitle: string | null | undefined,
   playlists: LocationSelection[]
@@ -29,7 +29,7 @@ export function updateUriPlaylists(
 /**
  * plUri e.g.: m3u/colinde.m3u8
  */
-export function updateLocalPlContent(diskPlUri: string, selections: LocationSelection[]): Promise<void> {
+export function updateLocalPlaylist(diskPlUri: string, selections: LocationSelection[]): Promise<void> {
   // console.log(`[updatePlContent] plUri = ${diskPlUri}, selections:`, selections);
   return postVoid(audiodb.DISK_PLAYLIST, JSON.stringify(audiodb.toPlContentUpdateRequest(diskPlUri, selections)));
 }

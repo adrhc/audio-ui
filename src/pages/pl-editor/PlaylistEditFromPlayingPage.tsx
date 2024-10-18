@@ -11,7 +11,7 @@ import { getSelectableTracks } from '../../services/tracks-load';
 import { useMaxEdge } from '../../constants';
 import { SelectableTrack } from '../../domain/track';
 import TrackList from '../../components/list/TrackList';
-import { updateLocalPlContent } from '../../services/audio-db/playlist';
+import { updateLocalPlaylist } from '../../services/audio-db/playlist';
 import { useGoBack } from '../../hooks/useGoBack';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
 import { CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE, plCacheName } from '../../hooks/cache/cache-names';
@@ -81,7 +81,7 @@ function PlaylistEditFromPlayingPage() {
   const persistSelection = useCallback(() => {
     if (uri) {
       sustain(
-        updateLocalPlContent(uri, selections).then(() => {
+        updateLocalPlaylist(uri, selections).then(() => {
           clearCache(plCacheName(uri));
           goBack();
         }),
