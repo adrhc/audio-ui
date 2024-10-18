@@ -2,7 +2,7 @@ import Mopidy from 'mopidy';
 import { getCurrentTlTrack, getImages, getTlTracks } from './mpc';
 import { SelectableTrack, Track, toSelectableTrack, toTrack } from '../domain/track';
 import { toSongExtsWithImgUri, toSongUris } from '../domain/song';
-import { getNoImgPlContent } from './audio-ws/audio-ws';
+import { getNoImgPlContent } from './audio-ws/playlist';
 
 export function getCurrentTrack(mopidy?: Mopidy): Promise<Track | null> {
   return getCurrentTlTrack(mopidy)?.then(toTrack);

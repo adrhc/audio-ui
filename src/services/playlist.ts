@@ -2,7 +2,7 @@ import Mopidy from 'mopidy';
 import { getYTPlContent } from './audio-db/playlist';
 import { SelectableSong, Song, isYtMusicPl, refsToSongs } from '../domain/song';
 import { getPlContent as getMpcPlContent, isM3uMpcRefUri } from './mpc';
-import { getPlContent as getAWSPlContent } from './audio-ws/audio-ws';
+import { getPlContent as getAWSPlContent } from './audio-ws/playlist';
 import { sortMediaLocations } from '../domain/media-location';
 import { toSelected } from '../domain/Selectable';
 

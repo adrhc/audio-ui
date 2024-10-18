@@ -15,7 +15,7 @@ import { SelectableSong, toSelectableSong } from '../../domain/song';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
 import { updateLocalPlaylist } from '../../services/audio-db/playlist';
 import { AppContext } from '../../hooks/AppContext';
-import { getNoImgPlContent } from '../../services/audio-ws/audio-ws';
+import { getNoImgPlContent } from '../../services/audio-ws/playlist';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
 import '../songssearch/SongSearchPage.scss';
 import { getSelectablePlContent } from '../../services/playlist';
