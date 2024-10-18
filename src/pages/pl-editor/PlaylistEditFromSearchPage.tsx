@@ -116,8 +116,8 @@ function PlaylistEditFromSearchPage() {
   const handleSearch = useCallback(() => {
     console.log(`[PlaylistEditFromSearchPage.handleSearch] draftExpression:`, draftExpression);
     searchRef.current?.blur();
-    if (searchExpression) {
-      doSearchSelectableSongs(searchExpression, draftExpression != searchExpression);
+    if (draftExpression) {
+      doSearchSelectableSongs(draftExpression, draftExpression != searchExpression);
     } else {
       loadSelectablePlContent();
     }
