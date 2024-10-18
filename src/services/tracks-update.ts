@@ -1,6 +1,7 @@
 import Mopidy from 'mopidy';
 import { addUris, addUrisAfter } from './mpc';
-import { addToHistory, getYTPlContent } from './audio-db/audio-db';
+import { getYTPlContent } from './audio-db/audio-db';
+import { addToHistory } from './audio-db/history';
 import { Track } from '../domain/track';
 import { Song } from '../domain/song';
 import { play } from './player';

@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
-import { getHistory, getHistoryAfter, getHistoryBefore } from '../../services/audio-db/audio-db';
+import { getHistory, getHistoryAfter, getHistoryBefore } from '../../services/audio-db/history';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
