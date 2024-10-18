@@ -1,5 +1,5 @@
 import Mopidy from 'mopidy';
-import { getYTPlContent } from './audio-db/audio-db';
+import { getYTPlContent } from './audio-db/pl-content';
 import { Song, isLocalPl, isYtMusicPl, refsToSongs, sortSongs } from '../domain/song';
 import { getPlItems as getMpcPlItems, getPlaylists, isM3uMpcRefUri } from './mpc';
 import { getPlContent } from './audio-ws/audio-ws';

@@ -13,7 +13,7 @@ import { SongSearchCache } from '../songssearch/model';
 import PageTitle from '../../components/PageTitle';
 import { SelectableSong, toSelectableSong } from '../../domain/song';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
-import { loadSelectablePlContent, updateDiskPlContent } from '../../services/audio-db/audio-db';
+import { loadSelectablePlContent, updateDiskPlContent } from '../../services/audio-db/pl-content';
 import { AppContext } from '../../hooks/AppContext';
 import { getNoImgPlContent } from '../../services/audio-ws/audio-ws';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';

@@ -6,6 +6,9 @@ import { sortByAbsDiff } from '../../lib/image';
 import Selectable from '../../domain/Selectable';
 import { m3uMpcRefUriToDecodedFileName } from '../mpc';
 
+export const YOUTUBE_PLAYLIST = '/audio-ui/db-api/youtube/playlist';
+export const DISK_PLAYLIST = '/audio-ui/db-api/disk/playlist';
+
 export function toSongsWithImgUri(imgMaxEdge: number, audioDbSongs: Song[]): appsong.Song[] {
   if (imgMaxEdge <= 0) {
     return toSongs(audioDbSongs);
