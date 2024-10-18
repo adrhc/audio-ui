@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import { getPlContent } from '../../services/pl-content';
+import { getPlContent } from '../../services/playlist';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import { plCacheName } from '../../hooks/cache/cache-names';

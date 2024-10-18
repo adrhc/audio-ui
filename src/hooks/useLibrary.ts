@@ -3,7 +3,7 @@ import { createPlaylist as remotelyCreatePlaylist } from '../services/audio-ws/a
 import { LoadingStateOrProvider, SustainVoidFn } from './useSustainableState';
 import { AppContext } from './AppContext';
 import { Song } from '../domain/song';
-import { removeDiskPlaylist } from '../services/audio-db/audio-db';
+import { removeDiskPlaylist } from '../services/audio-db/library';
 import { LOCAL_LIBRARY_PLAY_CACHE, LOCAL_LIBRARY_EDIT_CACHE } from './cache/cache-names';
 
 export interface UseLibrary {

@@ -2,7 +2,7 @@ import { useCallback, useContext } from 'react';
 import { Song, SongsAware } from '../domain/song';
 import { SetLoadingState } from '../lib/sustain';
 import { SustainVoidFn } from './useSustainableState';
-import { getLocalPlaylists } from '../services/pl-content';
+import { getLocalLibrary } from '../services/library';
 import { AppContext } from './AppContext';
 import useLibrary from './useLibrary';
 
@@ -22,7 +22,7 @@ export default function useLibraryAwareState<S extends SongsAware>(
   const loadLocalLibrary = useCallback(() => {
     console.log(`[useCachedSongsScrollable.loadLocalLibrary] loading the local library`);
     return sustain(
-      getLocalPlaylists(mopidy).then((songs) => ({ songs }) as Partial<S>),
+      getLocalLibrary(mopidy).then((songs) => ({ songs }) as Partial<S>),
       `Failed to load the local library!`
     );
   }, [mopidy, sustain]);

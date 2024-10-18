@@ -1,36 +1,27 @@
 import Mopidy from 'mopidy';
-import { getYTPlContent } from './audio-db/pl-content';
-import { Song, isLocalPl, isYtMusicPl, refsToSongs } from '../domain/song';
-import { getPlContent as getMpcPlContent, getPlaylists, isM3uMpcRefUri } from './mpc';
+import { getYTPlContent } from './audio-db/playlist';
+import { SelectableSong, Song, isYtMusicPl, refsToSongs } from '../domain/song';
+import { getPlContent as getMpcPlContent, isM3uMpcRefUri } from './mpc';
 import { getPlContent as getAWSPlContent } from './audio-ws/audio-ws';
 import { sortMediaLocations } from '../domain/media-location';
+import { toSelected } from '../domain/Selectable';
 
 /**
- * using Mopidy WebSocket
+ * Same as getPlContent(imgMaxArea, playlistUri) but using SelectableSong instead of Song.
  */
-export function getLocalPlaylists(mopidy: Mopidy | undefined): Promise<Song[]> {
-  return getPlaylists(mopidy)
-    .then(refsToSongs)
-    .then((songs) => songs.filter(isLocalPl))
-    .then(sortMediaLocations);
-}
-
-/**
- * using Mopidy WebSocket
- */
-export function getAllPlaylists(mopidy: Mopidy | undefined): Promise<Song[]> {
-  return getPlaylists(mopidy).then(refsToSongs).then(sortMediaLocations);
+export function getSelectablePlContent(imgMaxEdge: number, playlistUri: string): Promise<SelectableSong[]> {
+  return getPlContent(imgMaxEdge, playlistUri).then((playlist) => playlist.map((s) => toSelected(s)));
 }
 
 /**
  * Get the playlist content from audio-db if it's an YouTube Music playlist.
  * Use Mopidy WebSocket for any other type of playlist.
  */
-export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
-  if (isYtMusicPl(uri)) {
-    return getYTPlContent(imgMaxArea, uri).then(sortMediaLocations);
+export function getPlContent(imgMaxArea: number, playlistUri: string): Promise<Song[]> {
+  if (isYtMusicPl(playlistUri)) {
+    return getYTPlContent(imgMaxArea, playlistUri).then(sortMediaLocations);
   } else {
-    return getAWSSortedPlContent(imgMaxArea, uri);
+    return getAWSSortedPlContent(imgMaxArea, playlistUri);
   }
 }
 

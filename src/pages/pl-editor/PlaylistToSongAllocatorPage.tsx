@@ -9,7 +9,7 @@ import {
   getChanged,
 } from '../../domain/media-location';
 import { useSustainableState } from '../../hooks/useSustainableState';
-import { getDiskPlaylists } from '../../services/audio-db/audio-db';
+import { getDiskPlaylists } from '../../services/audio-db/library';
 import PageTemplate from '../../templates/PageTemplate';
 import LocationSelectionList from '../../components/list/LocationSelectionList';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
@@ -20,7 +20,7 @@ import PageTitle from '../../components/PageTitle';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
 import { toPlCacheName } from '../../hooks/cache/cache-names';
-import { updateUriPlaylists } from '../../services/audio-db/pl-content';
+import { updateUriPlaylists } from '../../services/audio-db/playlist';
 import '/src/styles/wide-page.scss';
 
 interface PlaylistToEditSelectorPageState {

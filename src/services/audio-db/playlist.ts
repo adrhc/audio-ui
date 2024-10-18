@@ -1,13 +1,7 @@
 import { get, post, postVoid } from '../rest';
-import { SelectableSong, Song } from '../../domain/song';
+import { Song } from '../../domain/song';
 import { LocationSelection, UriPlAllocationResult } from '../../domain/media-location';
-import { getPlContent } from '../audio-ws/audio-ws';
-import { toSelected } from '../../domain/Selectable';
 import * as audiodb from './types';
-
-export function loadSelectablePlContent(imgMaxEdge: number, playlistUri: string): Promise<SelectableSong[]> {
-  return getPlContent(imgMaxEdge, playlistUri).then((playlist) => playlist.map((s) => toSelected(s)));
-}
 
 export function getYTPlContent(imgMaxEdge: number, ytUri: string): Promise<Song[]> {
   return get<audiodb.SongsPage>(`${audiodb.YOUTUBE_PLAYLIST}/${encodeURIComponent(ytUri)}`).then((pg) =>

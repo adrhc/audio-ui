@@ -13,11 +13,12 @@ import { SongSearchCache } from '../songssearch/model';
 import PageTitle from '../../components/PageTitle';
 import { SelectableSong, toSelectableSong } from '../../domain/song';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
-import { loadSelectablePlContent, updateDiskPlContent } from '../../services/audio-db/pl-content';
+import { updateDiskPlContent } from '../../services/audio-db/playlist';
 import { AppContext } from '../../hooks/AppContext';
 import { getNoImgPlContent } from '../../services/audio-ws/audio-ws';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
 import '../songssearch/SongSearchPage.scss';
+import { getSelectablePlContent } from '../../services/playlist';
 
 function PlaylistEditFromSearchPage() {
   const { uri } = useParams();
@@ -54,7 +55,7 @@ function PlaylistEditFromSearchPage() {
     }
     console.log(`[PlaylistEditFromSearchPage.showSelectablePlaylist] loading ${title} playlist`);
     sustain(
-      loadSelectablePlContent(imgMaxEdge, uri).then(
+      getSelectablePlContent(imgMaxEdge, uri).then(
         (songs) => ({ songs, searchExpression }) as Partial<SongSearchCache>
       ),
       `Failed to load ${title}!`

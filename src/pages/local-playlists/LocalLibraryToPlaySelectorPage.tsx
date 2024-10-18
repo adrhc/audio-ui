@@ -6,17 +6,15 @@ import { AppContext } from '../../hooks/AppContext';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
-import { getLocalPlaylists } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
 
 function LocalLibraryToPlaySelectorPage() {
   const navigate = useNavigate();
-  const { mopidy, online } = useContext(AppContext);
+  const { online } = useContext(AppContext);
   const {
     state,
-    sustain,
     setState,
     listRef,
     scrollObserver,
@@ -27,29 +25,22 @@ function LocalLibraryToPlaySelectorPage() {
     getCache,
     mergeCache,
     clearCache,
+    loadLocalLibrary
   } = useCachedSongsScrollable<ThinSongListState>(LOCAL_LIBRARY_PLAY_CACHE);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
   console.log(`[LocalLibraryToPlaySelectorPage]`, { cache, state });
 
-  const handleReaload = useCallback(() => {
-    console.log(`[handleReaload] loading the local playlists`);
-    sustain(
-      getLocalPlaylists(mopidy).then((songs) => ({ songs })),
-      `Failed to load the local playlists!`
-    );
-  }, [mopidy, sustain]);
-
   // loading the library if not already loaded
   useEffect(() => {
     if (songsIsEmpty) {
       console.log(`[LocalLibraryToPlaySelectorPage.useEffect] online = ${online}`);
-      online && handleReaload();
+      online && loadLocalLibrary();
     } else {
       console.log(`[LocalLibraryToPlaySelectorPage.useEffect] the local playlists are already loaded!`);
     }
-  }, [handleReaload, online, songsIsEmpty]);
+  }, [loadLocalLibrary, online, songsIsEmpty]);
 
   // scroll after loading the library
   useEffect(() => {
@@ -58,7 +49,7 @@ function LocalLibraryToPlaySelectorPage() {
       console.log(`[LocalLibraryToPlaySelectorPage.useEffect] the library isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[LocalLibraryToPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading the library`);
+    console.log(`[LocalLibraryToPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop}`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
@@ -101,7 +92,7 @@ function LocalLibraryToPlaySelectorPage() {
         addManySongs={goToPlAdd}
         onInsert={insertSongOrPlaylist}
         onClick={handlePlSelection}
-        onReloadList={handleReaload}
+        onReloadList={loadLocalLibrary}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}
         listRef={listRef}
