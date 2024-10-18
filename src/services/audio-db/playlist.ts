@@ -29,7 +29,7 @@ export function updateUriPlaylists(
 /**
  * plUri e.g.: m3u/colinde.m3u8
  */
-export function updateDiskPlContent(diskPlUri: string, selections: LocationSelection[]): Promise<void> {
+export function updateLocalPlContent(diskPlUri: string, selections: LocationSelection[]): Promise<void> {
   // console.log(`[updatePlContent] plUri = ${diskPlUri}, selections:`, selections);
   return postVoid(audiodb.DISK_PLAYLIST, JSON.stringify(audiodb.toPlContentUpdateRequest(diskPlUri, selections)));
 }
