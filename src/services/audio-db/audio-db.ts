@@ -9,7 +9,7 @@ import * as audiodb from './types';
 const YOUTUBE_PLAYLIST = '/audio-ui/db-api/youtube/playlist';
 const DISK_PLAYLIST = '/audio-ui/db-api/disk/playlist';
 
-export function loadSelectablePlaylist(imgMaxEdge: number, playlistUri: string): Promise<SelectableSong[]> {
+export function loadSelectablePlContent(imgMaxEdge: number, playlistUri: string): Promise<SelectableSong[]> {
   return getPlContent(imgMaxEdge, playlistUri).then((playlist) => playlist.map((s) => toSelected(s)));
 }
 
