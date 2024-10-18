@@ -8,7 +8,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { AppContext } from '../../hooks/AppContext';
 import { getSelectableTracks } from '../../services/tracks-load';
-import { useMaxEdge } from '../../constants';
+import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { SelectableTrack } from '../../domain/track';
 import TrackList from '../../components/list/TrackList';
 import { updateLocalPlaylist } from '../../services/audio-db/playlist';

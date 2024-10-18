@@ -5,7 +5,7 @@ import TextSearchButton from '../../components/button/TextSearchButton';
 import { useNavigate } from 'react-router-dom';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import SongList from '../../components/list/SongList';
-import { useMaxEdge } from '../../constants';
+import { useMaxEdge } from '../../hooks/useMaxEdge';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';

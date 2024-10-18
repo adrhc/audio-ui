@@ -1,13 +1,7 @@
-import { Theme, useTheme } from '@mui/material';
-import { useMemo } from 'react';
+import { Theme } from '@mui/material';
 
 export function spacing(size: number, important?: boolean) {
   return (th: Theme) => (important ? `${th.spacing(size)} !important` : th.spacing(size));
-}
-
-export function useSize(size: number) {
-  const theme = useTheme();
-  return useMemo(() => pxCount(theme, size), [theme, size]);
 }
 
 export function pxCount(theme: Theme, size: number) {

@@ -7,7 +7,7 @@ import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { RawPlaybackHistoryPageState, toRawPlaybackHistoryPageState } from './history-utils';
 import { AppContext } from '../../hooks/AppContext';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
-import { useMaxEdge } from '../../constants';
+import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { PLAYLIST_HISTORY } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
 

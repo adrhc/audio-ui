@@ -7,7 +7,7 @@ import { getYTLibrary } from '../../services/audio-db/library';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
-import { useMaxEdge } from '../../constants';
+import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { YOUTUBE_LIBRARY } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
 
