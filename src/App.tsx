@@ -11,7 +11,11 @@ import CloseableAlert from './components/feedback/ErrorAlert';
 import { AppContext } from './hooks/AppContext';
 import { useBaseVolume } from './hooks/useBaseVolume';
 import useAppState, { AppState } from './hooks/useAppState';
-import { AudioServerState, refreshSharedStateAndGet, reloadServerState } from './services/audio-ws/audio-ws';
+import {
+  AudioServerState,
+  refreshSharedStateAndGet,
+  reloadServerState,
+} from './services/audio-ws/server-state';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/cache/useCache';
