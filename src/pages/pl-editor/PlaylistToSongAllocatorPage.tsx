@@ -9,7 +9,7 @@ import {
   getChanged,
 } from '../../domain/media-location';
 import { useSustainableState } from '../../hooks/useSustainableState';
-import { getDiskPlaylists } from '../../services/audio-db/library';
+import { getLocalLibrary } from '../../services/audio-db/library';
 import PageTemplate from '../../templates/PageTemplate';
 import LocationSelectionList from '../../components/list/LocationSelectionList';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
@@ -46,7 +46,7 @@ function PlaylistToSongAllocatorPage() {
     }
     console.log(`[TrackListPage:online] loading the track list`);
     sustain(
-      getDiskPlaylists(decodedUri)?.then((selections) => ({ selections })),
+      getLocalLibrary(decodedUri)?.then((selections) => ({ selections })),
       "Can't load the locations!"
     );
   }, [decodedUri, online, sustain]);

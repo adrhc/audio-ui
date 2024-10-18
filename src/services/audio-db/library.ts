@@ -4,7 +4,7 @@ import { LocationSelection, MediaLocation } from '../../domain/media-location';
 import { toQueryParams } from '../../lib/path-param-utils';
 import * as audiodb from './types';
 
-export function getYTPlaylists(imgMaxEdge: number): Promise<Song[]> {
+export function getYTLibrary(imgMaxEdge: number): Promise<Song[]> {
   return get<audiodb.SongsPage>(`${audiodb.YOUTUBE_PLAYLIST}`).then((pg) =>
     audiodb.toSongsWithImgUri(imgMaxEdge, pg.entries)
   );
@@ -14,7 +14,7 @@ export function getYTPlaylists(imgMaxEdge: number): Promise<Song[]> {
  * @param songUri
  * @returns the playlists containing songUris
  */
-export function getDiskPlaylists(songUri: string): Promise<LocationSelection[]> {
+export function getLocalLibrary(songUri: string): Promise<LocationSelection[]> {
   // must use encodeURI!
   return get<audiodb.LocationSelections>(
     `${audiodb.DISK_PLAYLIST}?${toQueryParams(['uri', encodeURI(songUri)])}`
@@ -24,7 +24,7 @@ export function getDiskPlaylists(songUri: string): Promise<LocationSelection[]> 
 /**
  * plUri e.g.: m3u/colinde.m3u8
  */
-export function removeDiskPlaylist(playlist: MediaLocation): Promise<boolean> {
+export function removeLocalPlaylist(playlist: MediaLocation): Promise<boolean> {
   // console.log(`[removeDiskPlaylist] playlist:`, playlist);
   return remove<boolean>(audiodb.DISK_PLAYLIST, JSON.stringify(audiodb.toDiskPlaylistRemoveRequest(playlist)));
 }

@@ -3,7 +3,7 @@ import { createPlaylist as remotelyCreatePlaylist } from '../services/audio-ws/a
 import { LoadingStateOrProvider, SustainVoidFn } from './useSustainableState';
 import { AppContext } from './AppContext';
 import { Song } from '../domain/song';
-import { removeDiskPlaylist } from '../services/audio-db/library';
+import { removeLocalPlaylist } from '../services/audio-db/library';
 import { LOCAL_LIBRARY_PLAY_CACHE, LOCAL_LIBRARY_EDIT_CACHE } from './cache/cache-names';
 
 export interface UseLibrary {
@@ -47,7 +47,7 @@ export default function useLibrary<S>(sustain: SustainVoidFn<S>): UseLibrary {
       const failMessage = `Failed to remove the playlist ${playlist.formattedUri}!`;
       clearSongsCache();
       return sustain(
-        removeDiskPlaylist(playlist).then((removed) => {
+        removeLocalPlaylist(playlist).then((removed) => {
           if (!removed) {
             // console.log(`Couldn't find the playlist to remove! ${playlist.formattedUri}`);
             return Promise.reject({ error: failMessage });

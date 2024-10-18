@@ -3,7 +3,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useEffect } from 'react';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
-import { getYTPlaylists } from '../../services/audio-db/library';
+import { getYTLibrary } from '../../services/audio-db/library';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
@@ -35,7 +35,7 @@ function YTMusicLibraryPage() {
   const handleReaload = useCallback(() => {
     console.log(`[YTMusicLibraryPage.useEffect] loading the YT Music library`);
     sustain(
-      getYTPlaylists(imgMaxEdge).then((songs) => ({ songs })),
+      getYTLibrary(imgMaxEdge).then((songs) => ({ songs })),
       `Failed to load the YouTube Music playlists!`
     );
   }, [imgMaxEdge, sustain]);
