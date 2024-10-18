@@ -49,11 +49,11 @@ function PlaylistEditFromSearchPage() {
   const { draftExpression } = state;
   const songsIsEmpty = state.songs.length == 0;
 
-  const showSelectablePlaylist = useCallback(() => {
+  const loadSelectablePlContent = useCallback(() => {
     if (!uri) {
       return;
     }
-    console.log(`[PlaylistEditFromSearchPage.showSelectablePlaylist] loading ${title} playlist`);
+    console.log(`[PlaylistEditFromSearchPage.loadSelectablePlContent] loading ${title} playlist`);
     sustain(
       getSelectablePlContent(imgMaxEdge, uri).then(
         (songs) => ({ songs, searchExpression }) as Partial<SongSearchCache>
@@ -62,27 +62,23 @@ function PlaylistEditFromSearchPage() {
     );
   }, [imgMaxEdge, searchExpression, sustain, title, uri]);
 
-  const doSearch = useCallback(
-    (searchExpression?: string | null, scrollTop?: boolean) => {
+  const doSearchSelectableSongs = useCallback(
+    (searchExpression: string, isNewSearch?: boolean) => {
       if (!uri) {
         return;
-      } else if (searchExpression) {
-        console.log(`[PlaylistEditFromSearchPage.doSearch] searching for:`, searchExpression);
-        sustain(
-          searchSelectableSongs(imgMaxEdge, uri, searchExpression).then((songs) => {
-            if (scrollTop) {
-              mergeCache((old) => ({ ...old, scrollTop: 0 }));
-            }
-            return { songs, searchExpression };
-          }),
-          `Failed to search for ${searchExpression}!`
-        );
-      } else {
-        console.log(`[PlaylistEditFromSearchPage.doSearch]`);
-        showSelectablePlaylist();
       }
+      console.log(`[PlaylistEditFromSearchPage.loadSelectableSongs] searching for:`, searchExpression);
+      sustain(
+        searchSelectableSongs(imgMaxEdge, uri, searchExpression).then((songs) => {
+          if (isNewSearch) {
+            mergeCache((old) => ({ ...old, scrollTop: 0 }));
+          }
+          return { songs, searchExpression };
+        }),
+        `Failed to search for ${searchExpression}!`
+      );
     },
-    [imgMaxEdge, mergeCache, showSelectablePlaylist, sustain, uri]
+    [imgMaxEdge, mergeCache, sustain, uri]
   );
 
   const reloadPlaylist = useCallback(() => {
@@ -99,9 +95,9 @@ function PlaylistEditFromSearchPage() {
 
   useEffect(() => {
     if (songsIsEmpty && !searchExpression) {
-      showSelectablePlaylist();
+      loadSelectablePlContent();
     }
-  }, [songsIsEmpty, searchExpression, showSelectablePlaylist]);
+  }, [songsIsEmpty, searchExpression, loadSelectablePlContent]);
 
   // scroll position after loading the search result
   useEffect(() => {
@@ -119,8 +115,12 @@ function PlaylistEditFromSearchPage() {
 
   const handleSearch = useCallback(() => {
     console.log(`[PlaylistEditFromSearchPage.handleSearch] draftExpression:`, draftExpression);
-    doSearch(draftExpression, draftExpression != searchExpression);
-  }, [searchExpression, doSearch, draftExpression]);
+    if (searchExpression) {
+      doSearchSelectableSongs(searchExpression, draftExpression != searchExpression);
+    } else {
+      loadSelectablePlContent();
+    }
+  }, [draftExpression, searchExpression, doSearchSelectableSongs, loadSelectablePlContent]);
 
   const handleDraftChange = useCallback(
     (draftExpression?: string) => setState((old) => ({ ...old, draftExpression: draftExpression?.trim() })),
@@ -143,18 +143,12 @@ function PlaylistEditFromSearchPage() {
 
   const persistSelection = useCallback(() => {
     if (uri) {
-      console.log(`[PlaylistEditFromSearchPage.persistSelection] searchExpression:`, searchExpression);
       sustain(
-        updateLocalPlaylist(uri, songs).then(() => {
-          clearCache(plCacheName(uri));
-          /* if (!searchExpression) {
-            return loadSelectablePlaylist(imgMaxEdge, uri).then((songs) => ({ songs }));
-          } */
-        }),
+        updateLocalPlaylist(uri, songs).then(() => clearCache(plCacheName(uri))),
         'Failed to save the selection!'
       );
     }
-  }, [uri, sustain, songs, clearCache, searchExpression]);
+  }, [uri, sustain, songs, clearCache]);
 
   const removeAll = useCallback(() => {
     setState((old) => ({ ...old, songs: toNoneSelected(old.songs) }));
