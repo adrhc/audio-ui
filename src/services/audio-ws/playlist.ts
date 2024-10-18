@@ -30,8 +30,8 @@ export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
   );
 }
 
-export function getNoImgPlContent(uri: string): Promise<Song[]> {
-  const doubleEncodedUri = encodeURIComponent(encodeURIComponent(uri));
+export function getNoImgPlContent(playlistUri: string): Promise<Song[]> {
+  const doubleEncodedUri = encodeURIComponent(encodeURIComponent(playlistUri));
   // console.log(`[getYTPlContent] double encoded ytUri = `, doubleEncodedUri);
   return get<audiows.RefWithImages[]>(`${MOPIDY_PLAYLIST}/${doubleEncodedUri}`).then((rwis) =>
     audiows.refWithImagesToSongs(rwis)

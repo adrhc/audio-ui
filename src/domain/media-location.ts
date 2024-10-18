@@ -32,6 +32,19 @@ export interface UriPlAllocationResult {
 
 export interface LocationSelection extends MediaLocation, Selectable {}
 
+export function sortMediaLocationsIfNotFromLocalPl<T extends MediaLocation>(
+  uri: string,
+  songsPromise: Promise<T[]>
+): Promise<T[]> {
+  if (isM3uMpcRefUri(uri)) {
+    // keeping the playlist order
+    return songsPromise;
+  } else {
+    // sorting the playlist
+    return songsPromise.then(sortMediaLocations);
+  }
+}
+
 export function sortMediaLocations<T extends MediaLocation>(ml: T[]) {
   return ml.sort((a, b) => compare(a.title, b.title));
 }
