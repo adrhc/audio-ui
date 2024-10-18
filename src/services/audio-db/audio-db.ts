@@ -8,14 +8,9 @@ import * as audiodb from './types';
 
 const YOUTUBE_PLAYLIST = '/audio-ui/db-api/youtube/playlist';
 const DISK_PLAYLIST = '/audio-ui/db-api/disk/playlist';
-const INDEX_MANAGER = '/audio-ui/db-api/index-manager';
 
-export function reset() {
-  return postVoid(`${INDEX_MANAGER}/reset`);
-}
-
-export function shallowDiskUpdate() {
-  return postVoid(`${INDEX_MANAGER}/shallowDiskUpdate`);
+export function loadSelectablePlaylist(imgMaxEdge: number, playlistUri: string): Promise<SelectableSong[]> {
+  return getPlContent(imgMaxEdge, playlistUri).then((playlist) => playlist.map((s) => toSelected(s)));
 }
 
 export function getYTPlaylists(imgMaxEdge: number): Promise<Song[]> {
@@ -72,8 +67,4 @@ export function updateDiskPlContent(diskPlUri: string, selections: LocationSelec
 export function removeDiskPlaylist(playlist: MediaLocation): Promise<boolean> {
   // console.log(`[removeDiskPlaylist] playlist:`, playlist);
   return remove<boolean>(DISK_PLAYLIST, JSON.stringify(audiodb.toDiskPlaylistRemoveRequest(playlist)));
-}
-
-export function loadSelectablePlaylist(imgMaxEdge: number, playlistUri: string): Promise<SelectableSong[]> {
-  return getPlContent(imgMaxEdge, playlistUri).then((playlist) => playlist.map((s) => toSelected(s)));
 }
