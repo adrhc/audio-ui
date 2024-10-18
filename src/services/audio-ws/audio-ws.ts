@@ -40,7 +40,7 @@ export function createPlaylist(name: string) {
 }
 
 /**
- * alternative to getPlItems from mpc.ts
+ * alternative to getPlItems from mpc.ts (though still using Mopidy)
  */
 export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
   // Nginx decodes 1x the received requests so 1x encoded "m3u:[Radio Streams].m3u8"

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import { getPlaylistItems } from '../../services/pl-content';
+import { getPlContent } from '../../services/pl-content';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
 import { useMaxEdge } from '../../constants';
 import { plCacheName } from '../../hooks/cache/cache-names';
@@ -44,7 +44,7 @@ function LocalPlaylistItemToPlaySelectorPage() {
     if (uri) {
       console.log(`[LocalPlaylistItemToPlaySelectorPage.loadPlContent] loading ${uri}`);
       sustain(
-        getPlaylistItems(imgMaxEdge, uri).then((songs) => ({ songs })),
+        getPlContent(imgMaxEdge, uri).then((songs) => ({ songs })),
         `Failed to load the playlist!`
       );
     } else {

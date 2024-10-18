@@ -1,6 +1,8 @@
 import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName } from '../services/mpc';
 import Selectable from './Selectable';
 
+const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;
+
 export function uriEqual(uri1: string, uri2: string) {
   // console.log(`uri1: ${fixUriEncoding(uri1)}`);
   // console.log(`uri2: ${fixUriEncoding(uri2)}`);
@@ -29,6 +31,10 @@ export interface UriPlAllocationResult {
 }
 
 export interface LocationSelection extends MediaLocation, Selectable {}
+
+export function sortMediaLocations<T extends MediaLocation>(ml: T[]) {
+  return ml.sort((a, b) => compare(a.title, b.title));
+}
 
 export interface MediaLocation {
   type: string;

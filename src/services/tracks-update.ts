@@ -5,7 +5,7 @@ import { addToHistory } from './audio-db/history';
 import { Track } from '../domain/track';
 import { Song } from '../domain/song';
 import { play } from './player';
-import { getMopidyPlItems } from './pl-content';
+import { getMpcSortedPlContent } from './pl-content';
 
 /**
  * Get the playlist content from audio-db.
@@ -48,7 +48,7 @@ export function addMopidyPlAfterAndRemember(
   playlist: Song
 ) {
   console.log(`[addMopidyPlAfterAndRemember] playlist:`, playlist);
-  return getMopidyPlItems(mopidy, playlist.uri).then((songs) => {
+  return getMpcSortedPlContent(mopidy, playlist.uri).then((songs) => {
     if (songs.length) {
       addSongsAfterAndRemember(mopidy, after, ...songs);
     } else {
@@ -62,7 +62,7 @@ export function addMopidyPlAfterAndRemember(
  */
 export function addMopidyPlAndRemember(mopidy: Mopidy | undefined, playlist: Song) {
   console.log(`[addMopidyPlAndRemember] playlist:`, playlist);
-  return getMopidyPlItems(mopidy, playlist.uri).then((songs) => {
+  return getMpcSortedPlContent(mopidy, playlist.uri).then((songs) => {
     if (songs.length) {
       addSongsAndRemember(mopidy, ...songs);
     } else {

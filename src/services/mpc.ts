@@ -30,7 +30,7 @@ export function clearTrackList(mopidy: Mopidy | undefined) {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function getPlItems(mopidy: Mopidy | undefined, uri: string): Promise<models.Ref<any>[]> {
+export function getPlContent(mopidy: Mopidy | undefined, uri: string): Promise<models.Ref<any>[]> {
   return mopidy?.playlists == null
     ? Promise.reject(MOPIDY_DISCONNECTED_ERROR)
     : mopidy.playlists.getItems({ uri }).then((it) => it ?? []);

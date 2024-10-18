@@ -4,8 +4,6 @@ import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName, UriImagesMap } from '../
 import { MediaLocation, uriEqual } from './media-location';
 import Selectable from './Selectable';
 
-const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;
-
 export type SongsPage = {
   entries: Song[];
 };
@@ -91,10 +89,6 @@ export function isLocalPl(song: Song | string) {
     // return song.uri.endsWith('.m3u8');
     return song.type == 'playlist' && song.uri.startsWith('m3u:');
   }
-}
-
-export function sortSongs(songs: Song[]) {
-  return songs.sort((a, b) => compare(a.title, b.title));
 }
 
 /* export function sortRefs(refs: models.Ref<models.ModelType>[]) {
