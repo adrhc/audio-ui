@@ -1,6 +1,6 @@
-import { get } from '../rest';
-import { Song } from '../../domain/song';
-import * as audiows from './RefWithImages';
+import { get } from '../../rest';
+import { Song } from '../../../domain/song';
+import { RefWithImages, refWithImagesToSongs } from './RefWithImages';
 
 const MOPIDY_PLAYLIST = '/audio-ui/api/mopidy-playlist';
 
@@ -19,15 +19,15 @@ export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
   // decode the encoded : character (i.e. %3A); solved with java.net.URLDecoder.decode.
   const doubleEncodedUri = encodeURIComponent(encodeURIComponent(uri));
   // console.log(`[getYTPlContent] double encoded ytUri = `, doubleEncodedUri);
-  return get<audiows.RefWithImages[]>(`${MOPIDY_PLAYLIST}/${doubleEncodedUri}`).then((rwis) =>
-    audiows.refWithImagesToSongs(rwis, imgMaxArea)
+  return get<RefWithImages[]>(`${MOPIDY_PLAYLIST}/${doubleEncodedUri}`).then((rwis) =>
+    refWithImagesToSongs(rwis, imgMaxArea)
   );
 }
 
 export function getNoImgPlContent(playlistUri: string): Promise<Song[]> {
   const doubleEncodedUri = encodeURIComponent(encodeURIComponent(playlistUri));
   // console.log(`[getYTPlContent] double encoded ytUri = `, doubleEncodedUri);
-  return get<audiows.RefWithImages[]>(`${MOPIDY_PLAYLIST}/${doubleEncodedUri}`).then((rwis) =>
-    audiows.refWithImagesToSongs(rwis)
+  return get<RefWithImages[]>(`${MOPIDY_PLAYLIST}/${doubleEncodedUri}`).then((rwis) =>
+    refWithImagesToSongs(rwis)
   );
 }

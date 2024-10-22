@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { MopidyEvent, PlaybackState } from './domain/types';
 import { ifIPhone, isIPhone } from './lib/agent';
 import { omitProps } from './lib/object';
-import { getSongAndBoost, getVolumeBoost } from './services/audio-ws/boost';
+import { getSongAndBoost, getVolumeBoost } from './services/audio-ws/boost/boost';
 import Spinner from './components/feedback/Spinner';
 import CloseableAlert from './components/feedback/ErrorAlert';
 import { AppContext } from './hooks/AppContext';

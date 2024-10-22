@@ -1,6 +1,6 @@
 import { models } from 'mopidy';
-import { Song, refToSong } from '../../domain/song';
-import { sortByAbsDiff } from '../../lib/image';
+import { Song, refToSong } from '../../../domain/song';
+import { sortByAbsDiff } from '../../../lib/image';
 
 export interface RefWithImages extends models.Ref<models.ModelType> {
   thumbnails?: models.Image[];
