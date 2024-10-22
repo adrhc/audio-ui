@@ -3,7 +3,7 @@ import VolumeButtonsPanel from '../components/panel/VolumeButtonsPanel';
 import PageTemplate from '../templates/PageTemplate';
 import { useSustainableState } from '../hooks/useSustainableState';
 import { useCallback, useContext } from 'react';
-import { boostVolume, volumeBoost } from '../services/boost';
+import { boostVolume, toVolumeBoost } from '../services/audio-ws/boost';
 import { setVolume as setMopidyVolume, truncateVolume } from '../services/mpc';
 import { useGoBack } from '../hooks/useGoBack';
 import { AppContext } from '../hooks/AppContext';
@@ -34,7 +34,7 @@ const AudioBoostPage = () => {
   const baseVolume = getBaseVolume();
   // whilst oldBoost remains unchanged till setBoost(boost)
   // is invoked, "boost" does change when "volume" changes
-  const draftBoost = volumeBoost(baseVolume, draftVolume, currentSong);
+  const draftBoost = toVolumeBoost(baseVolume, draftVolume, currentSong);
   /* console.log(
     `[AudioBoostPage] baseVolume = ${baseVolume ?? 'undefined'}, draftBoost = ${draftBoost?.boost}`
   ); */

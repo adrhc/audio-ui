@@ -1,9 +1,9 @@
 import Mopidy from 'mopidy';
-import { get, postVoid } from './rest';
-import { getCurrentTrack } from './tracks-load';
-import { Track, title } from '../domain/track';
+import { get, postVoid } from '../rest';
+import { getCurrentTrack } from '../tracks-load';
+import { Track, title } from '../../domain/track';
 
-const ROOT = '/audio-ui/api';
+const VOLUME_BOOST = '/audio-ui/api/volume-boost';
 
 export class CurrentBoost {
   constructor(
@@ -20,11 +20,35 @@ export class CurrentBoost {
   }
 }
 
-export type VolumeBoost = { uri: string; title: string; boost: number };
-export type SongAndBoost = { boost?: CurrentBoost; currentSong: Track };
+export interface VolumeBoost {
+  uri: string;
+  title: string;
+  boost: number;
+}
+
+export interface SongAndBoost {
+  boost?: CurrentBoost;
+  currentSong: Track;
+}
 
 export function toCurrentBoost(vb?: VolumeBoost | null) {
   return vb ? new CurrentBoost(vb.uri, vb.boost) : null;
+}
+
+export function toVolumeBoost(
+  baseVolume: number | null | undefined,
+  volume: number | null | undefined,
+  songAndArtists: Track | null | undefined
+) {
+  if (baseVolume == null || volume == null || songAndArtists?.uri == null) {
+    return null;
+  } else {
+    return {
+      uri: songAndArtists?.uri,
+      title: title(songAndArtists),
+      boost: volume - baseVolume,
+    } as VolumeBoost;
+  }
 }
 
 export function getSongAndBoost(mopidy?: Mopidy) {
@@ -43,25 +67,9 @@ export function getSongAndBoost(mopidy?: Mopidy) {
 export function getVolumeBoost(uri: string) {
   const params = new URLSearchParams();
   params.set('uri', uri);
-  return get<VolumeBoost | null>(`${ROOT}/volume-boost?${params.toString()}`);
+  return get<VolumeBoost | null>(`${VOLUME_BOOST}?${params.toString()}`);
 }
 
 export function boostVolume(volumeBoost: VolumeBoost) {
-  return postVoid(`${ROOT}/volume-boost`, JSON.stringify(volumeBoost));
-}
-
-export function volumeBoost(
-  baseVolume: number | null | undefined,
-  volume: number | null | undefined,
-  songAndArtists: Track | null | undefined
-) {
-  if (baseVolume == null || volume == null || songAndArtists?.uri == null) {
-    return null;
-  } else {
-    return {
-      uri: songAndArtists?.uri,
-      title: title(songAndArtists),
-      boost: volume - baseVolume,
-    } as VolumeBoost;
-  }
+  return postVoid(`${VOLUME_BOOST}`, JSON.stringify(volumeBoost));
 }

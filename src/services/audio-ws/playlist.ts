@@ -1,14 +1,8 @@
-import { get, post } from '../rest';
-import { toQueryParams } from '../../lib/path-param-utils';
+import { get } from '../rest';
 import { Song } from '../../domain/song';
-import * as audiows from './types';
+import * as audiows from './RefWithImages';
 
-const DISK_PLAYLIST = '/audio-ui/api/disk-playlist';
 const MOPIDY_PLAYLIST = '/audio-ui/api/mopidy-playlist';
-
-export function createPlaylist(name: string) {
-  return post<boolean>(`${DISK_PLAYLIST}?${toQueryParams(['name', encodeURI(name)])}`);
-}
 
 /**
  * alternative to getPlItems from mpc.ts (though still using Mopidy)

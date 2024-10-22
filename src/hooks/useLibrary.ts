@@ -1,5 +1,5 @@
 import { useCallback, useContext } from 'react';
-import { createPlaylist as remotelyCreatePlaylist } from '../services/audio-ws/playlist';
+import { createPlaylist as remotelyCreatePlaylist } from '../services/audio-ws/library';
 import { LoadingStateOrProvider, SustainVoidFn } from './useSustainableState';
 import { AppContext } from './AppContext';
 import { Song } from '../domain/song';

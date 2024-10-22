@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { VolumeBoost } from '../services/boost';
+import { VolumeBoost } from '../services/audio-ws/boost';
 import { UnknownCacheTypeOperations } from '../hooks/cache/useCache';
 import {
   AppState,
