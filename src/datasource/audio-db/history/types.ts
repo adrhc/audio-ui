@@ -2,8 +2,9 @@ import Mopidy from 'mopidy';
 import { toSongExtsWithImgUri, toSongUris } from '../../../domain/song';
 import { HistoryPosition } from '../../../domain/history';
 import { getImages } from '../../../services/mpc';
-import * as app from '../../../domain/history';
 import { SongsPage } from '../types';
+import { toNoImgSongs } from '../converters';
+import * as app from '../../../domain/history';
 
 export interface HistoryPage extends SongsPage {
   first: HistoryPosition;
@@ -22,4 +23,13 @@ export function toHistoryPageWithImages(
     const entries = toSongExtsWithImgUri(imgMaxEdge, hp.entries, imagesMap);
     return { ...hp, entries };
   });
+}
+
+/**
+ * DB/HistoryPage -> HistoryPage
+ */
+export function toHistoryPage(audioDbHistoryPage: HistoryPage): app.HistoryPage {
+  const { entries, ...dbHistoryPageRest } = audioDbHistoryPage;
+  // return { ...dbHistoryPageRest, entries: toSongsWithImgUri(imgMaxArea, entries) };
+  return { ...dbHistoryPageRest, entries: toNoImgSongs(entries) };
 }
