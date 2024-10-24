@@ -3,7 +3,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { useCallback, useEffect } from 'react';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
-import { getYTLibrary } from '../../services/audio-db/library';
+import { getYTLibrary } from '../../datasource/audio-db/library';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';

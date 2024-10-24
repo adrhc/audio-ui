@@ -4,7 +4,7 @@ import * as medialoc from '../../domain/media-location';
 import * as apphistory from '../../domain/history';
 import { sortByAbsDiff } from '../../lib/image';
 import Selectable from '../../domain/Selectable';
-import { m3uMpcRefUriToDecodedFileName } from '../mpc';
+import { m3uMpcRefUriToDecodedFileName } from '../../services/mpc';
 
 export const YOUTUBE_PLAYLIST = '/audio-ui/db-api/youtube/playlist';
 export const DISK_PLAYLIST = '/audio-ui/db-api/disk/playlist';

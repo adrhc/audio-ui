@@ -1,6 +1,6 @@
 import Mopidy from 'mopidy';
 import { useCallback } from 'react';
-import { VolumeBoost } from '../services/audio-ws/boost/VolumeBoost';
+import { VolumeBoost } from '../datasource/audio-ws/boost/VolumeBoost';
 import { SustainVoidFn, useSustainableState } from './useSustainableState';
 import { LoadingState, SetLoadingState } from '../lib/sustain';
 import { NoArgsProc } from '../domain/types';

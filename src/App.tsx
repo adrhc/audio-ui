@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { MopidyEvent, PlaybackState } from './domain/types';
 import { ifIPhone, isIPhone } from './lib/agent';
 import { omitProps } from './lib/object';
-import { getSongAndBoost, getVolumeBoost } from './services/audio-ws/boost/boost';
+import { getSongAndBoost, getVolumeBoost } from './datasource/audio-ws/boost/boost';
 import Spinner from './components/feedback/Spinner';
 import CloseableAlert from './components/feedback/ErrorAlert';
 import { AppContext } from './hooks/AppContext';
@@ -15,7 +15,7 @@ import {
   AudioServerState,
   refreshSharedStateAndGet,
   reloadServerState,
-} from './services/audio-ws/server-state';
+} from './datasource/audio-ws/server-state';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/cache/useCache';

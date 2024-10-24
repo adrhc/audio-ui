@@ -1,4 +1,4 @@
-import { postVoid } from '../rest';
+import { postVoid } from '../../services/rest';
 
 const INDEX_MANAGER = '/audio-ui/db-api/index-manager';
 

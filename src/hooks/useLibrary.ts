@@ -1,9 +1,9 @@
 import { useCallback, useContext } from 'react';
-import { createPlaylist as remotelyCreatePlaylist } from '../services/audio-ws/library';
+import { createPlaylist as remotelyCreatePlaylist } from '../datasource/audio-ws/library';
 import { LoadingStateOrProvider, SustainVoidFn } from './useSustainableState';
 import { AppContext } from './AppContext';
 import { Song } from '../domain/song';
-import { removeLocalPlaylist } from '../services/audio-db/library';
+import { removeLocalPlaylist } from '../datasource/audio-db/library';
 import { LOCAL_LIBRARY_PLAY_CACHE, LOCAL_LIBRARY_EDIT_CACHE } from './cache/cache-names';
 
 export interface UseLibrary {

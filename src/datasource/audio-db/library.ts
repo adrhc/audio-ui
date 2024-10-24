@@ -1,4 +1,4 @@
-import { get, remove } from '../rest';
+import { get, remove } from '../../services/rest';
 import { Song } from '../../domain/song';
 import { LocationSelection, MediaLocation } from '../../domain/media-location';
 import { toQueryParams } from '../../lib/path-param-utils';

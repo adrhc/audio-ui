@@ -1,6 +1,6 @@
 import Mopidy from 'mopidy';
-import { get, postVoid } from '../../rest';
-import { getCurrentTrack } from '../../tracks-load';
+import { get, postVoid } from '../../../services/rest';
+import { getCurrentTrack } from '../../../services/tracks-load';
 import { VolumeBoost } from './VolumeBoost';
 import { CurrentBoost } from './CurrentBoost';
 import { SongAndBoost } from './SongAndBoost';

@@ -1,4 +1,4 @@
-import { post } from '../rest';
+import { post } from '../../services/rest';
 import { toQueryParams } from '../../lib/path-param-utils';
 
 const DISK_PLAYLIST = '/audio-ui/api/disk-playlist';

@@ -1,4 +1,4 @@
-import { get } from '../../rest';
+import { get } from '../../../services/rest';
 import { Song } from '../../../domain/song';
 import { RefWithImages, refWithImagesToSongs } from './RefWithImages';
 

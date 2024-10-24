@@ -1,4 +1,4 @@
-import { get, post, postVoid } from '../rest';
+import { get, post, postVoid } from '../../services/rest';
 import { Song } from '../../domain/song';
 import { LocationSelection, UriPlAllocationResult } from '../../domain/media-location';
 import * as audiodb from './types';

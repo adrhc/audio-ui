@@ -1,6 +1,6 @@
 import { models } from 'mopidy';
 import { Track, toTrack } from '../../domain/track';
-import { get, post } from '../rest';
+import { get, post } from '../../services/rest';
 
 const URI = '/audio-ui/api/audio-state';
 
