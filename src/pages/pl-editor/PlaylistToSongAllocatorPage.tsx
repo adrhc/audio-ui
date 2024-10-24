@@ -20,7 +20,7 @@ import PageTitle from '../../components/PageTitle';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
 import { toPlCacheName } from '../../hooks/cache/cache-names';
-import { updateManyLocalPlaylists } from '../../datasource/audio-db/playlist';
+import { updateManyLocalPlaylists } from '../../datasource/audio-db/playlist/playlist';
 import '/src/styles/wide-page.scss';
 
 interface PlaylistToEditSelectorPageState {

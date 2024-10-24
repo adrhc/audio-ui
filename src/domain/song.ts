@@ -4,9 +4,9 @@ import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName, UriImagesMap } from '../
 import { MediaLocation, uriEqual } from './media-location';
 import Selectable from './Selectable';
 
-export type SongsPage = {
+export interface SongsPage {
   entries: Song[];
-};
+}
 
 export function toSelectableSong(songs: Song[], song: Song): SelectableSong {
   return { ...song, selected: !!songs.find((s) => uriEqual(s.uri, song.uri)) };

@@ -1,5 +1,5 @@
 import PageTemplate from '../../templates/PageTemplate';
-import { searchSelectableSongs } from '../../datasource/audio-db/songs-search';
+import { searchSelectableSongs } from '../../datasource/audio-db/search';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 import TextSearchButton from '../../components/button/TextSearchButton';
 import { useParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { SongSearchCache } from '../songssearch/model';
 import PageTitle from '../../components/PageTitle';
 import { SelectableSong, toSelectableSong } from '../../domain/song';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
-import { updateLocalPlaylist } from '../../datasource/audio-db/playlist';
+import { updateLocalPlaylist } from '../../datasource/audio-db/playlist/playlist';
 import { AppContext } from '../../hooks/AppContext';
 import { getNoImgPlContent } from '../../datasource/audio-ws/playlist/playlist';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';

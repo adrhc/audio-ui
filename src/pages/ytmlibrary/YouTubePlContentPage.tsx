@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { useParams } from 'react-router-dom';
-import { getYTPlContent } from '../../datasource/audio-db/playlist';
+import { getYTPlContent } from '../../datasource/audio-db/playlist/playlist';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';

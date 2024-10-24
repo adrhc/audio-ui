@@ -2,10 +2,14 @@ import { get } from '../../services/rest';
 import { SelectableSong, Song, toSelectableSong } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { getNoImgPlContent } from '../audio-ws/playlist/playlist';
+import { toSongsWithImgUri } from './converters';
 import * as audiodb from './types';
 
 const ROOT = '/audio-ui/db-api/songs-search';
 
+/**
+ * Search for songs by text but select only those from playlistUri.
+ */
 export async function searchSelectableSongs(
   imgMaxEdge: number,
   playlistUri: string,
@@ -17,7 +21,7 @@ export async function searchSelectableSongs(
 }
 
 export function searchSongs(imgMaxEdge: number, text: string): Promise<Song[]> {
-  return searchAudioDbSongs(text).then((songs) => audiodb.toSongsWithImgUri(imgMaxEdge, songs));
+  return searchAudioDbSongs(text).then((songs) => toSongsWithImgUri(imgMaxEdge, songs));
 }
 
 function searchAudioDbSongs(text: string): Promise<audiodb.Song[]> {

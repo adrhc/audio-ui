@@ -11,7 +11,7 @@ import { getSelectableTracks } from '../../services/tracks-load';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { SelectableTrack } from '../../domain/track';
 import TrackList from '../../components/list/TrackList';
-import { updateLocalPlaylist } from '../../datasource/audio-db/playlist';
+import { updateLocalPlaylist } from '../../datasource/audio-db/playlist/playlist';
 import { useGoBack } from '../../hooks/useGoBack';
 import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
 import { CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE, plCacheName } from '../../hooks/cache/cache-names';
