@@ -23,8 +23,6 @@ export function getTracks(mopidy: Mopidy | undefined, imgMaxEdge: number): Promi
   return getTlTracks(mopidy)
     ?.then((tlt) => tlt.map(toTrack).filter((it) => it != null) as Track[])
     .then((traks) =>
-      getImages(mopidy, toSongUris(traks))?.then((imagesMap) =>
-        addImgUriToMany(imgMaxEdge, traks, imagesMap)
-      )
+      getImages(mopidy, toSongUris(traks))?.then((imagesMap) => addImgUriToMany(imgMaxEdge, traks, imagesMap))
     );
 }

@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { getTracks } from '../../datasource/mpc/track/tracks-read';
+import { getTracks } from '../../datasource/mpc/track/read';
 import { play } from '../../datasource/mpc/player';
 import PageTemplate from '../../templates/PageTemplate';
 import { useSustainableState } from '../../hooks/useSustainableState';
