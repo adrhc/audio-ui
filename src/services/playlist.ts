@@ -2,7 +2,7 @@ import Mopidy from 'mopidy';
 import { getYTPlContent } from '../datasource/audio-db/playlist/playlist';
 import { SelectableSong, Song, isYtMusicPl, refsToSongs } from '../domain/song';
 import { getPlContent as getMpcPlContent } from './mpc';
-import { getPlContent as getAWSPlContent, getNoImgPlContent } from '../datasource/audio-ws/playlist/playlist';
+import { getSortedPlContent } from '../datasource/audio-ws/playlist/playlist';
 import { sortMediaLocations, sortMediaLocationsIfNotFromLocalPl } from '../domain/media-location';
 import { toSelected } from '../domain/Selectable';
 
@@ -23,27 +23,6 @@ export function getPlContent(imgMaxArea: number, playlistUri: string): Promise<S
   } else {
     return getSortedPlContent(imgMaxArea, playlistUri);
   }
-}
-
-/**
- * Get the playlist content using/from audio-web-services (which uses Mopidy).
- */
-export function getSortedPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
-  const songsPromise = getAWSPlContent(imgMaxArea, uri);
-  return sortMediaLocationsIfNotFromLocalPl(uri, songsPromise);
-}
-
-export function getSelectableNoImgPlContent(playlistUri: string): Promise<SelectableSong[]> {
-  return getNoImgPlContent(playlistUri).then((playlist) => playlist.map((s) => toSelected(s)));
-}
-
-/**
- * Get the playlist content from audio-web-services (no images!).
- * Alternative to getMpcSortedNoImgPlContent.
- */
-export function getSortedNoImgPlContent(playlistUri: string): Promise<Song[]> {
-  const noImgSongs = getNoImgPlContent(playlistUri);
-  return sortMediaLocationsIfNotFromLocalPl(playlistUri, noImgSongs);
 }
 
 /**
