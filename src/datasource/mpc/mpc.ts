@@ -1,27 +1,7 @@
 import Mopidy, { models } from 'mopidy';
 import { MOPIDY_DISCONNECTED_ERROR } from '../../constants';
-import { getArtists } from '../../domain/track';
-
-/**
- * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8
- */
-export function isM3uMpcRefUri(uri: string) {
-  return uri.startsWith('m3u:');
-}
-
-/**
- * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8
- */
-export function m3uMpcRefUriToDecodedFileName(mpcRefUri: string) {
-  return decodeURIComponent(m3uMpcRefUriToEncodedFileName(mpcRefUri));
-}
-
-/**
- * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8
- */
-export function m3uMpcRefUriToEncodedFileName(mpcRefUri: string) {
-  return mpcRefUri.substring(4);
-}
+import { PlayOptions, UriImagesMap } from './types';
+import { truncateVolume } from '../../domain/utils';
 
 export function clearTrackList(mopidy: Mopidy | undefined) {
   return mopidy?.tracklist == null ? Promise.reject(MOPIDY_DISCONNECTED_ERROR) : mopidy.tracklist.clear();
@@ -175,12 +155,6 @@ export function setVolume(mopidy: Mopidy | undefined, newVolume: number) {
       });
 }
 
-export function truncateVolume(volume?: number | null) {
-  return volume == null ? 0 : Math.max(0, Math.min(100, volume));
-}
-
-export type PlayOptions = { consume?: boolean; random?: boolean; repeat?: boolean; single?: boolean };
-
 export function getPlayOptions(mopidy?: Mopidy): Promise<PlayOptions> {
   return Promise.all([
     mopidy?.tracklist?.getConsume(),
@@ -188,19 +162,6 @@ export function getPlayOptions(mopidy?: Mopidy): Promise<PlayOptions> {
     mopidy?.tracklist?.getRepeat(),
     mopidy?.tracklist?.getSingle(),
   ]).then(([consume, random, repeat, single]) => ({ consume, random, repeat, single }) as PlayOptions);
-}
-
-export function logTlTrack(tlt: models.TlTrack | null) {
-  const track = tlt?.track;
-  if (!track) {
-    return;
-  }
-  const artists = getArtists(track);
-  const composers = track?.composers?.map((a) => a.name).join(', ');
-  const performers = track?.performers?.map((a) => a.name).join(', ');
-  console.log(
-    `${Date.now()}\ntlid = ${tlt?.tlid}\nuri = ${track?.uri}\nname = ${track?.name}\nalbum: ${track?.album?.name}\nartists: ${artists}\nlength = ${track?.length}\ncomment = ${track?.comment}\ncomposers: ${composers}\nperformers: ${performers}\ntrack_no = ${track?.track_no}\ndisc_no = ${track?.disc_no}\ngenre = ${track?.genre}\nbitrate = ${track?.bitrate}\nMusicBrainz ID = ${track?.musicbrainz_id}`
-  );
 }
 
 export async function showPlaybackInfo(mopidy: Mopidy) {

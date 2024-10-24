@@ -2,7 +2,16 @@ import { models } from 'mopidy';
 import { Song } from '../../domain/song';
 import { sortByAbsDiff } from '../../lib/image';
 
-export type UriImagesMap = { [index: string]: models.Image[] };
+export interface UriImagesMap {
+  [index: string]: models.Image[];
+}
+
+export interface PlayOptions {
+  consume?: boolean;
+  random?: boolean;
+  repeat?: boolean;
+  single?: boolean;
+}
 
 export function addImgUriToMany<T extends Song>(
   imgMaxEdge: number,

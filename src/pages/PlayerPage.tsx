@@ -10,7 +10,6 @@ import {
   pause as pauseMopidy,
   next,
   previous,
-  truncateVolume,
 } from '../datasource/mpc/mpc';
 import { play, resume } from '../services/player';
 import PlaybackPanel from '../components/panel/PlaybackPanel';
@@ -23,6 +22,7 @@ import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import PlayerBottomPageMenu from '../components/menu/PlayerBottomPageMenu';
 import { SetFeedbackState } from '../lib/sustain';
 import PageTitle from '../components/PageTitle';
+import { truncateVolume } from '../domain/utils';
 import '/src/styles/panel.scss';
 import './PlayerPage.scss';
 

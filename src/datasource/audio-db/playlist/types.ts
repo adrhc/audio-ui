@@ -1,9 +1,9 @@
 import { LocationSelection } from '../../../domain/media-location';
-import { m3uMpcRefUriToDecodedFileName } from '../../mpc/mpc';
 import { MediaLocation } from '../types';
 import { toPlMediaLocation } from '../converters';
 import * as app from '../../../domain/media-location';
 import * as db from '../types';
+import { m3uMpcRefUriToDecodedFileName } from '../../mpc/utils';
 
 export interface UriPlAllocationResult {
   addedTo: MediaLocation[];

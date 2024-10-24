@@ -1,4 +1,4 @@
-import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName } from '../datasource/mpc/mpc';
+import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName } from '../datasource/mpc/utils';
 import Selectable from './Selectable';
 
 const compare = new Intl.Collator('en', { caseFirst: 'upper', sensitivity: 'base' }).compare;

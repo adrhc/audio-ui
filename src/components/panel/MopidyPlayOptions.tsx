@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../../datasource/mpc/mpc';
+import { setConsume, setRandom, setRepeat, setSingle } from '../../datasource/mpc/mpc';
 import { getPlayOptions } from '../../datasource/mpc/mpc';
 import { MopidyEvent } from '../../domain/types';
 import Mopidy from 'mopidy';
@@ -14,6 +14,7 @@ import SpinnerPannel from './SpinnerPannel';
 import { LoadingState } from '../../lib/sustain';
 import { AppContext } from '../../hooks/AppContext';
 import { useSustainableState } from '../../hooks/useSustainableState';
+import { PlayOptions } from '../../datasource/mpc/types';
 import './MopidyPlayOptions.scss';
 
 type MopidyPlayOptionsState = LoadingState<PlayOptions>;
