@@ -6,7 +6,6 @@ import { Track } from '../../../domain/track';
 import { Song } from '../../../domain/song';
 import { play } from '../player';
 import { getMpcSortedNoImgPlContent } from '../../playlist';
-import { MOPIDY_DISCONNECTED_ERROR } from '../../../constants';
 
 /**
  * Get the playlist content from audio-db.
