@@ -11,7 +11,7 @@ import {
   next,
   previous,
   truncateVolume,
-} from '../services/mpc';
+} from '../datasource/mpc/mpc';
 import { play, resume } from '../services/player';
 import PlaybackPanel from '../components/panel/PlaybackPanel';
 import ExactVolumePanel from '../components/panel/ExactVolumePanel';

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import useRefEx from './useRefEx';
 import { NullOrUndefined } from '../domain/types';
-import { truncateVolume } from '../services/mpc';
+import { truncateVolume } from '../datasource/mpc/mpc';
 
 export type UseBaseVolumeResult = {
   getBaseVolume: () => NullOrUndefined<number>;

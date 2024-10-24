@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../../services/mpc';
-import { getPlayOptions } from '../../services/mpc';
+import { PlayOptions, setConsume, setRandom, setRepeat, setSingle } from '../../datasource/mpc/mpc';
+import { getPlayOptions } from '../../datasource/mpc/mpc';
 import { MopidyEvent } from '../../domain/types';
 import Mopidy from 'mopidy';
 import ShuffleIcon from '@mui/icons-material/Shuffle';

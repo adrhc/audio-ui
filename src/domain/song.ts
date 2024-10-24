@@ -1,6 +1,5 @@
 import { models } from 'mopidy';
-import { sortByAbsDiff } from '../lib/image';
-import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName, UriImagesMap } from '../services/mpc';
+import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName } from '../datasource/mpc/mpc';
 import { MediaLocation, uriEqual } from './media-location';
 import Selectable from './Selectable';
 
@@ -97,21 +96,4 @@ export function isLocalPl(song: Song | string) {
 
 export function toSongUris(songs: Song[]): string[] {
   return songs.map((s) => s.uri).filter((it) => !!it) as string[];
-}
-
-export function toSongExtsWithImgUri<T extends Song>(
-  imgMaxEdge: number,
-  songs: T[],
-  imagesMap: UriImagesMap
-): T[] {
-  const imgMaxArea = imgMaxEdge * imgMaxEdge;
-  // console.log(`imagesMap:\n`, imagesMap);
-  return songs.map((song) => toSongExtWithImgUri(imgMaxArea, imagesMap, song));
-}
-
-function toSongExtWithImgUri<T extends Song>(imgMaxArea: number, imagesMap: UriImagesMap, song: T): T {
-  let images = song.uri ? imagesMap[song.uri] : undefined;
-  images = sortByAbsDiff(imgMaxArea, images);
-  // images.length && console.log(`images of ${track.uri}:\n`, images);
-  return { ...song, imgUri: images?.[0]?.uri };
 }

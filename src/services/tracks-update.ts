@@ -1,5 +1,5 @@
 import Mopidy from 'mopidy';
-import { addUris, addUrisAfter } from './mpc';
+import { addUris, addUrisAfter } from '../datasource/mpc/mpc';
 import { getYTPlContent } from '../datasource/audio-db/playlist/playlist';
 import { addToHistory } from '../datasource/audio-db/history/history';
 import { Track } from '../domain/track';

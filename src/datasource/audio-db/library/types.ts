@@ -1,4 +1,4 @@
-import { m3uMpcRefUriToDecodedFileName } from '../../../services/mpc';
+import { m3uMpcRefUriToDecodedFileName } from '../../mpc/mpc';
 import { LocationSelection, MediaLocation } from '../../../domain/media-location';
 import { toPlMediaLocation } from '../converters';
 import * as db from '../types';

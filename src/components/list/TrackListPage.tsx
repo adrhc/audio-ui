@@ -4,7 +4,7 @@ import { play } from '../../services/player';
 import PageTemplate from '../../templates/PageTemplate';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import { AppContext } from '../../hooks/AppContext';
-import { removeTlid } from '../../services/mpc';
+import { removeTlid } from '../../datasource/mpc/mpc';
 import TrackList from './TrackList';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { Track, removeTrack } from '../../domain/track';

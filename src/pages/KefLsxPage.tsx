@@ -9,7 +9,7 @@ import { useSustainableState } from '../hooks/useSustainableState';
 import { Button, Icon, Stack } from '@mui/material';
 import { SetFeedbackState } from '../lib/sustain';
 import KefLsxButtonMenu from '../components/menu/KefLsxButtonMenu';
-import { truncateVolume } from '../services/mpc';
+import { truncateVolume } from '../datasource/mpc/mpc';
 import './KefLsxPage.scss';
 
 export default function KefLsxPage() {

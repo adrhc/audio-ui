@@ -1,8 +1,9 @@
 import Mopidy from 'mopidy';
-import { getCurrentTlTrack, getImages, getTlTracks } from './mpc';
+import { getCurrentTlTrack, getImages, getTlTracks } from '../datasource/mpc/mpc';
 import { SelectableTrack, Track, toSelectableTrack, toTrack } from '../domain/track';
-import { toSongExtsWithImgUri, toSongUris } from '../domain/song';
+import { toSongUris } from '../domain/song';
 import { getNoImgPlContent } from '../datasource/audio-ws/playlist/playlist';
+import { addImgUriToMany } from '../datasource/mpc/types';
 
 export function getCurrentTrack(mopidy?: Mopidy): Promise<Track | null> {
   return getCurrentTlTrack(mopidy)?.then(toTrack);
@@ -23,7 +24,7 @@ export function getTracks(mopidy: Mopidy | undefined, imgMaxEdge: number): Promi
     ?.then((tlt) => tlt.map(toTrack).filter((it) => it != null) as Track[])
     .then((traks) =>
       getImages(mopidy, toSongUris(traks))?.then((imagesMap) =>
-        toSongExtsWithImgUri(imgMaxEdge, traks, imagesMap)
+        addImgUriToMany(imgMaxEdge, traks, imagesMap)
       )
     );
 }

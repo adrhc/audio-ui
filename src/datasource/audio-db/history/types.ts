@@ -1,9 +1,10 @@
 import Mopidy from 'mopidy';
-import { toSongExtsWithImgUri, toSongUris } from '../../../domain/song';
+import { toSongUris } from '../../../domain/song';
 import { HistoryPosition } from '../../../domain/history';
-import { getImages } from '../../../services/mpc';
+import { getImages } from '../../mpc/mpc';
 import { SongsPage } from '../types';
 import { toNoImgSongs } from '../converters';
+import { addImgUriToMany } from '../../mpc/types';
 import * as app from '../../../domain/history';
 
 export interface HistoryPage extends SongsPage {
@@ -20,7 +21,7 @@ export function toHistoryPageWithImages(
   hp: app.HistoryPage
 ): Promise<app.HistoryPage> {
   return getImages(mopidy, toSongUris(hp.entries))?.then((imagesMap) => {
-    const entries = toSongExtsWithImgUri(imgMaxEdge, hp.entries, imagesMap);
+    const entries = addImgUriToMany(imgMaxEdge, hp.entries, imagesMap);
     return { ...hp, entries };
   });
 }

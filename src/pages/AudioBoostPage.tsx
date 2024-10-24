@@ -4,7 +4,7 @@ import PageTemplate from '../templates/PageTemplate';
 import { useSustainableState } from '../hooks/useSustainableState';
 import { useCallback, useContext } from 'react';
 import { boostVolume } from '../datasource/audio-ws/boost/boost';
-import { setVolume as setMopidyVolume, truncateVolume } from '../services/mpc';
+import { setVolume as setMopidyVolume, truncateVolume } from '../datasource/mpc/mpc';
 import { useGoBack } from '../hooks/useGoBack';
 import { AppContext } from '../hooks/AppContext';
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';

@@ -1,8 +1,6 @@
 import Mopidy, { models } from 'mopidy';
-import { MOPIDY_DISCONNECTED_ERROR } from '../constants';
-import { getArtists } from '../domain/track';
-
-export type UriImagesMap = { [index: string]: models.Image[] };
+import { MOPIDY_DISCONNECTED_ERROR } from '../../constants';
+import { getArtists } from '../../domain/track';
 
 /**
  * models.Ref.uri example: m3u:Marcin%20Patrzalek.m3u8

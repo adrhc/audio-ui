@@ -1,5 +1,5 @@
 import { LocationSelection } from '../../../domain/media-location';
-import { m3uMpcRefUriToDecodedFileName } from '../../../services/mpc';
+import { m3uMpcRefUriToDecodedFileName } from '../../mpc/mpc';
 import { MediaLocation } from '../types';
 import { toPlMediaLocation } from '../converters';
 import * as app from '../../../domain/media-location';
