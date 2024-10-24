@@ -2,7 +2,7 @@ import Mopidy, { models } from 'mopidy';
 import { get, post, postVoid } from '../../../services/rest';
 import { HistoryPosition, HistoryPage } from '../../../domain/history';
 import { toNoImgSongs } from '../converters';
-import * as db from './types';
+import * as hst from './types';
 
 const HISTORY = '/audio-ui/db-api/history';
 
@@ -19,9 +19,9 @@ export function getHistoryBefore(
   imgMaxEdge: number,
   before: HistoryPosition
 ): Promise<HistoryPage> {
-  return post<db.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before))
+  return post<hst.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before))
     .then(toHistoryPage)
-    .then((hp) => db.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
+    .then((hp) => hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
 }
 
 export function getHistoryAfter(
@@ -29,21 +29,21 @@ export function getHistoryAfter(
   imgMaxEdge: number,
   after: HistoryPosition
 ): Promise<HistoryPage> {
-  return post<db.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after))
+  return post<hst.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after))
     .then(toHistoryPage)
-    .then((hp) => db.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
+    .then((hp) => hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
 }
 
 export function getHistory(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<HistoryPage> {
-  return get<db.HistoryPage>(HISTORY)
+  return get<hst.HistoryPage>(HISTORY)
     .then(toHistoryPage)
-    .then((hp) => db.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
+    .then((hp) => hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
 }
 
 /**
  * DB/HistoryPage -> HistoryPage
  */
-function toHistoryPage(audioDbHistoryPage: db.HistoryPage): HistoryPage {
+function toHistoryPage(audioDbHistoryPage: hst.HistoryPage): HistoryPage {
   const { entries, ...dbHistoryPageRest } = audioDbHistoryPage;
   // return { ...dbHistoryPageRest, entries: toSongsWithImgUri(imgMaxArea, entries) };
   return { ...dbHistoryPageRest, entries: toNoImgSongs(entries) };
