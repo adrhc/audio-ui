@@ -1,9 +1,7 @@
 import Mopidy from 'mopidy';
 import { get, postVoid } from '../../../services/rest';
 import { getCurrentTrack } from '../../../services/tracks-load';
-import { VolumeBoost } from './VolumeBoost';
-import { CurrentBoost } from './CurrentBoost';
-import { SongAndBoost } from './SongAndBoost';
+import { SongAndBoost, VolumeBoost, CurrentBoost } from './types';
 
 const VOLUME_BOOST = '/audio-ui/api/volume-boost';
 

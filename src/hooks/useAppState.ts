@@ -1,6 +1,5 @@
 import Mopidy from 'mopidy';
 import { useCallback } from 'react';
-import { VolumeBoost } from '../datasource/audio-ws/boost/VolumeBoost';
 import { SustainVoidFn, useSustainableState } from './useSustainableState';
 import { LoadingState, SetLoadingState } from '../lib/sustain';
 import { NoArgsProc } from '../domain/types';
@@ -9,6 +8,7 @@ import { AlertColor } from '@mui/material';
 import { useURLQueryParams } from './useURLSearchParams';
 import { Credentials, credentialsOf } from '../domain/credentials';
 import { CurrentSongAware } from '../domain/track';
+import { VolumeBoost } from '../datasource/audio-ws/boost/types';
 
 export const DEFAULT_APP_STATE_WTHOUT_MOPIDY = {
   online: false,

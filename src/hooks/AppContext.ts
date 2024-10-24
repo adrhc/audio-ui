@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { VolumeBoost } from '../datasource/audio-ws/boost/VolumeBoost';
 import { UnknownCacheTypeOperations } from '../hooks/cache/useCache';
 import {
   AppState,
@@ -8,6 +7,7 @@ import {
   SetNotificationFn,
 } from '../hooks/useAppState';
 import { Credentials } from '../domain/credentials';
+import { VolumeBoost } from '../datasource/audio-ws/boost/types';
 
 interface AppContextValue extends AppState, UnknownCacheTypeOperations {
   getBaseVolume: () => number | null | undefined;

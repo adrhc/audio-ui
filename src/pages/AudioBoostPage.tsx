@@ -10,8 +10,8 @@ import { AppContext } from '../hooks/AppContext';
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
 import { SetFeedbackState } from '../lib/sustain';
 import PageTitle from '../components/PageTitle';
+import { toVolumeBoost } from '../datasource/audio-ws/boost/types';
 import './AudioBoostPage.scss';
-import { toVolumeBoost } from '../datasource/audio-ws/boost/VolumeBoost';
 
 type AudioBoostPageState = { draftVolume?: number };
 
