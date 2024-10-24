@@ -3,8 +3,19 @@ import { get, post, removeVoid } from '../services/rest';
 
 const ROOT = '/easyeffects/api/ee';
 
-export type EEPresets = { input: string[]; output: string[] };
-export interface EEPreset { name: string; amount: number; blend: number; harmonics: number; floor: number; scope: number }
+export interface EEPresets {
+  input: string[];
+  output: string[];
+}
+
+export interface EEPreset {
+  name: string;
+  amount: number;
+  blend: number;
+  harmonics: number;
+  floor: number;
+  scope: number;
+}
 
 export function areEqual(source: EEPreset, updated: EEPreset) {
   // console.log(`[areEqual] source:`, source);
@@ -14,7 +25,7 @@ export function areEqual(source: EEPreset, updated: EEPreset) {
   );
 }
 
-export function floorActive(preset: EEPreset) {
+export function isPositiveFloor(preset: EEPreset) {
   return preset.floor > 0;
 }
 

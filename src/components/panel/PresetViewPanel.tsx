@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
-import { EEPreset, floorActive } from '../../datasource/easyeffects';
+import { EEPreset, isPositiveFloor } from '../../datasource/easyeffects';
 import './PresetViewPanel.scss';
 import ShowIf from '../ShowIf';
 
@@ -19,7 +19,7 @@ const PresetViewPanel = ({ preset }: { preset: EEPreset }) => {
           <TableCell>Harmonics:</TableCell>
           <TableCell>{preset.harmonics}</TableCell>
         </TableRow>
-        {floorActive(preset) && (
+        {isPositiveFloor(preset) && (
           <TableRow>
             <TableCell>Frequencies:</TableCell>
             <TableCell>
@@ -27,7 +27,7 @@ const PresetViewPanel = ({ preset }: { preset: EEPreset }) => {
             </TableCell>
           </TableRow>
         )}
-        <ShowIf condition={!floorActive(preset)}>
+        <ShowIf condition={!isPositiveFloor(preset)}>
           <TableRow>
             <TableCell>Max Frequency:</TableCell>
             <TableCell>{preset.scope}Hz</TableCell>
