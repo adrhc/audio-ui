@@ -1,24 +1,7 @@
-import { LocationSelection, MediaLocation, uriToTitle } from '../../domain/media-location';
+import { MediaLocation, uriToTitle } from '../../domain/media-location';
 import { formatUri, Song } from '../../domain/song';
 import { sortByAbsDiff } from '../../lib/image';
 import * as db from './types';
-
-/**
- * DB/LocationSelections -> LocationSelection[]
- */
-export function toPlSelections(audioDbMarkedPls: db.LocationSelections): LocationSelection[] {
-  return audioDbMarkedPls.selections.map(toPlSelection);
-}
-
-/**
- * DB/LocationSelection -> LocationSelection
- */
-export function toPlSelection(audioDbLocationSelection: db.LocationSelection): LocationSelection {
-  return {
-    ...toPlMediaLocation(audioDbLocationSelection.location),
-    selected: audioDbLocationSelection.selected,
-  };
-}
 
 /**
  * DB/MediaLocation -> MediaLocation

@@ -9,7 +9,7 @@ import {
   getChanged,
 } from '../../domain/media-location';
 import { useSustainableState } from '../../hooks/useSustainableState';
-import { getLocalLibrary } from '../../datasource/audio-db/library';
+import { getLocalLibrary } from '../../datasource/audio-db/library/library';
 import PageTemplate from '../../templates/PageTemplate';
 import LocationSelectionList from '../../components/list/LocationSelectionList';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';

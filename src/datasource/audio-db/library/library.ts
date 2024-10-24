@@ -1,10 +1,10 @@
-import { get, remove } from '../../services/rest';
-import { Song } from '../../domain/song';
-import { LocationSelection, MediaLocation } from '../../domain/media-location';
-import { toQueryParams } from '../../lib/path-param-utils';
-import { toPlSelections, toSongsWithImgUri } from './converters';
-import { m3uMpcRefUriToDecodedFileName } from '../../services/mpc';
-import * as audiodb from './types';
+import { get, remove } from '../../../services/rest';
+import { Song } from '../../../domain/song';
+import { LocationSelection, MediaLocation } from '../../../domain/media-location';
+import { toQueryParams } from '../../../lib/path-param-utils';
+import { toSongsWithImgUri } from '../converters';
+import { toDiskPlaylistRemoveRequest, toPlSelections } from './types';
+import * as audiodb from '../types';
 
 export function getYTLibrary(imgMaxEdge: number): Promise<Song[]> {
   return get<audiodb.SongsPage>(`${audiodb.YOUTUBE_PLAYLIST}`).then((pg) =>
@@ -29,13 +29,4 @@ export function getLocalLibrary(songUri: string): Promise<LocationSelection[]> {
 export function removeLocalPlaylist(playlist: MediaLocation): Promise<boolean> {
   // console.log(`[removeDiskPlaylist] playlist:`, playlist);
   return remove<boolean>(audiodb.DISK_PLAYLIST, JSON.stringify(toDiskPlaylistRemoveRequest(playlist)));
-}
-
-/**
- * Works with playlists loaded from MPC (i.e. models.Ref) but not audio-web-services.
- */
-function toDiskPlaylistRemoveRequest(playlist: MediaLocation) {
-  const { type, title, uri } = playlist;
-  // console.log(`[toDbPlMediaLocation] uri:`, m3uMpcRefUriToFileName(uri));
-  return { type, name: title, uri, fileName: m3uMpcRefUriToDecodedFileName(uri) };
 }

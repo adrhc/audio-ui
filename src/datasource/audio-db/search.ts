@@ -21,11 +21,9 @@ export async function searchSelectableSongs(
 }
 
 export function searchSongs(imgMaxEdge: number, text: string): Promise<Song[]> {
-  return searchAudioDbSongs(text).then((songs) => toSongsWithImgUri(imgMaxEdge, songs));
-}
-
-function searchAudioDbSongs(text: string): Promise<audiodb.Song[]> {
-  return get<audiodb.SongsPage>(`${ROOT}?${toParams(text)}`).then(toAudioDbSongs);
+  return get<audiodb.SongsPage>(`${ROOT}?${toParams(text)}`).then((songsPage) =>
+    toSongsWithImgUri(imgMaxEdge, songsPage.entries)
+  );
 }
 
 /* function searchDiskSongs(text: string): audiodb.AudioDbSong[] {
@@ -39,10 +37,6 @@ function searchYouTubeVideos(text: string): audiodb.AudioDbSong[] {
 function searchYouTubeMusic(text: string): audiodb.AudioDbSong[] {
   return get<audiodb.AudioDbSongsPage>(`${ROOT}/ytmusic?${toParams(text)}`).then(toAudioDbSongs);
 } */
-
-function toAudioDbSongs(page: audiodb.SongsPage): audiodb.Song[] {
-  return page.entries;
-}
 
 function toParams(text: string) {
   return toQueryParams(['text', text]);
