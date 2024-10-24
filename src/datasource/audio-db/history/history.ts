@@ -1,8 +1,8 @@
 import Mopidy, { models } from 'mopidy';
 import { get, post, postVoid } from '../../../services/rest';
 import { HistoryPosition, HistoryPage } from '../../../domain/history';
-import * as db from './types';
 import { toNoImgSongs } from '../converters';
+import * as db from './types';
 
 const HISTORY = '/audio-ui/db-api/history';
 
