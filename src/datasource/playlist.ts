@@ -1,8 +1,8 @@
 import Mopidy from 'mopidy';
-import { getYTPlContent } from '../datasource/audio-db/playlist/playlist';
+import { getYTPlContent } from './audio-db/playlist/playlist';
 import { SelectableSong, Song, isYtMusicPl, refsToSongs } from '../domain/song';
-import { getPlContent as getMpcPlContent } from './mpc';
-import { getSortedPlContent } from '../datasource/audio-ws/playlist/playlist';
+import { getPlContent as getMpcPlContent } from '../services/mpc';
+import { getSortedPlContent } from './audio-ws/playlist/playlist';
 import { sortMediaLocations, sortMediaLocationsIfNotFromLocalPl } from '../domain/media-location';
 import { toSelected } from '../domain/Selectable';
 

@@ -17,7 +17,7 @@ import { updateLocalPlaylist } from '../../datasource/audio-db/playlist/playlist
 import { AppContext } from '../../hooks/AppContext';
 import { getNoImgPlContent } from '../../datasource/audio-ws/playlist/playlist';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
-import { getSelectablePlContent } from '../../services/playlist';
+import { getSelectablePlContent } from '../../datasource/playlist';
 import '../songssearch/SongSearchPage.scss';
 
 function PlaylistEditFromSearchPage() {

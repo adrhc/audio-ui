@@ -5,7 +5,7 @@ import { addToHistory } from '../datasource/audio-db/history/history';
 import { Track } from '../domain/track';
 import { Song } from '../domain/song';
 import { play } from './player';
-import { getMpcSortedNoImgPlContent } from './playlist';
+import { getMpcSortedNoImgPlContent } from '../datasource/playlist';
 
 /**
  * Get the playlist content from audio-db.
