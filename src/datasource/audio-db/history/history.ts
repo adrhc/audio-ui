@@ -1,5 +1,5 @@
 import Mopidy, { models } from 'mopidy';
-import { get, post, postVoid } from '../../../services/rest';
+import { get, post, postVoid } from '../../../lib/rest';
 import { HistoryPosition, HistoryPage } from '../../../domain/history';
 import * as hst from './types';
 

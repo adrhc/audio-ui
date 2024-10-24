@@ -1,4 +1,4 @@
-import { get } from '../../services/rest';
+import { get } from '../../lib/rest';
 import { SelectableSong, Song, toSelectableSong } from '../../domain/song';
 import { toQueryParams } from '../../lib/path-param-utils';
 import { getNoImgPlContent } from '../audio-ws/playlist/playlist';

@@ -1,4 +1,4 @@
-import { get, post, postVoid } from '../../../services/rest';
+import { get, post, postVoid } from '../../../lib/rest';
 import { Song } from '../../../domain/song';
 import { LocationSelection, UriPlAllocationResult } from '../../../domain/media-location';
 import { toSongsWithImgUri } from '../converters';

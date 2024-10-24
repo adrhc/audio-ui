@@ -1,4 +1,4 @@
-import { get, post } from '../../../services/rest';
+import { get, post } from '../../../lib/rest';
 import { RawAudioWSState, toAudioServerState } from './types';
 
 const URI = '/audio-ui/api/audio-state';

@@ -1,4 +1,4 @@
-import { get, post } from '../services/rest';
+import { get, post } from '../lib/rest';
 
 const ROOT = '/audio-ui/api/keflsx';
 
