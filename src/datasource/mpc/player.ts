@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
-import { setPower } from '../datasource/kef';
-import { play as playMopidy, resume as resumeMopidy } from '../datasource/mpc/mpc';
-import { isAdrhc } from '../lib/adrhc';
+import { setPower } from '../kef';
+import { play as playMopidy, resume as resumeMopidy } from './mpc';
+import { isAdrhc } from '../../lib/adrhc';
 
 export function resume(mopidy?: Mopidy) {
   isAdrhc() && setPower(true);

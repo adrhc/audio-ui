@@ -11,7 +11,7 @@ import {
   next,
   previous,
 } from '../datasource/mpc/mpc';
-import { play, resume } from '../services/player';
+import { play, resume } from '../datasource/mpc/player';
 import PlaybackPanel from '../components/panel/PlaybackPanel';
 import ExactVolumePanel from '../components/panel/ExactVolumePanel';
 import MopidyPlayOptions from '../components/panel/MopidyPlayOptions';

@@ -10,7 +10,7 @@ import {
   addSongThenPlay as remotelyAddSongThenPlay,
   addYtMusicPlAfterAndRemember,
   addYtMusicPlAndRemember,
-} from '../services/tracks-update';
+} from '../datasource/mpc/track/tracks-update';
 import { CurrentSongAware } from '../domain/track';
 
 export type AddManySongsFn = (songs: Song[]) => void;

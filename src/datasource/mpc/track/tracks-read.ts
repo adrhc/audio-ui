@@ -1,9 +1,9 @@
 import Mopidy from 'mopidy';
-import { getCurrentTlTrack, getImages, getTlTracks } from '../datasource/mpc/mpc';
-import { SelectableTrack, Track, toSelectableTrack, toTrack } from '../domain/track';
-import { toSongUris } from '../domain/song';
-import { getNoImgPlContent } from '../datasource/audio-ws/playlist/playlist';
-import { addImgUriToMany } from '../datasource/mpc/types';
+import { getCurrentTlTrack, getImages, getTlTracks } from '../mpc';
+import { SelectableTrack, Track, toSelectableTrack, toTrack } from '../../../domain/track';
+import { toSongUris } from '../../../domain/song';
+import { getNoImgPlContent } from '../../audio-ws/playlist/playlist';
+import { addImgUriToMany } from '../types';
 
 export function getCurrentTrack(mopidy?: Mopidy): Promise<Track | null> {
   return getCurrentTlTrack(mopidy)?.then(toTrack);

@@ -1,11 +1,11 @@
 import Mopidy from 'mopidy';
-import { addUris, addUrisAfter } from '../datasource/mpc/mpc';
-import { getYTPlContent } from '../datasource/audio-db/playlist/playlist';
-import { addToHistory } from '../datasource/audio-db/history/history';
-import { Track } from '../domain/track';
-import { Song } from '../domain/song';
-import { play } from './player';
-import { getMpcSortedNoImgPlContent } from '../datasource/playlist';
+import { addUris, addUrisAfter } from '../mpc';
+import { getYTPlContent } from '../../audio-db/playlist/playlist';
+import { addToHistory } from '../../audio-db/history/history';
+import { Track } from '../../../domain/track';
+import { Song } from '../../../domain/song';
+import { play } from '../player';
+import { getMpcSortedNoImgPlContent } from '../../playlist';
 
 /**
  * Get the playlist content from audio-db.
