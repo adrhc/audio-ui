@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from 'react';
 import PageTemplate from './PageTemplate';
 import { LoadingState, SetFeedbackState, SetLoadingState } from '../lib/sustain';
-import { EEPreset, getPreset } from '../services/easyeffects';
+import { EEPreset, getPreset } from '../datasource/easyeffects';
 import { SustainVoidFn } from '../hooks/useSustainableState';
 import { useParams } from 'react-router-dom';
 

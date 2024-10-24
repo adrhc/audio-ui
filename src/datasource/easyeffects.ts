@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { get, post, removeVoid } from './rest';
+import { get, post, removeVoid } from '../services/rest';
 
 const ROOT = '/easyeffects/api/ee';
 

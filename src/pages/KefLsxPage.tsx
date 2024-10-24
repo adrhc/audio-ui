@@ -1,4 +1,4 @@
-import { KefLSXState, getState, setPower as setKefPower, setVolume as setKefVolume } from '../services/kef';
+import { KefLSXState, getState, setPower as setKefPower, setVolume as setKefVolume } from '../datasource/kef';
 import { useCallback, useEffect } from 'react';
 import kefctrlstop from '../assets/kef-control-stop.png';
 import ShowIf from '../components/ShowIf';

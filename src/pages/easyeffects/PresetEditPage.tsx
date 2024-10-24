@@ -1,5 +1,5 @@
 import { useGoBack } from '../../hooks/useGoBack';
-import { EEPreset, areEqual, newPreset, updatePreset } from '../../services/easyeffects';
+import { EEPreset, areEqual, newPreset, updatePreset } from '../../datasource/easyeffects';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import PresetEditForm from './PresetEditForm';
 import ConfirmationButtonMenu from '../../components/menu/ConfirmationButtonMenu';

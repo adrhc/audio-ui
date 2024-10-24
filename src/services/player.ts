@@ -1,5 +1,5 @@
 import Mopidy from 'mopidy';
-import { setPower } from './kef';
+import { setPower } from '../datasource/kef';
 import { play as playMopidy, resume as resumeMopidy } from './mpc';
 import { isAdrhc } from '../lib/adrhc';
 
