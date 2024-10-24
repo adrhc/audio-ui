@@ -15,7 +15,7 @@ import {
   AudioServerState,
   refreshSharedStateAndGet,
   reloadServerState,
-} from './datasource/audio-ws/server-state';
+} from './datasource/audio-ws/playback/playback';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/cache/useCache';

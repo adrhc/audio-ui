@@ -1,6 +1,6 @@
 import { get } from '../../../services/rest';
 import { Song } from '../../../domain/song';
-import { RefWithImages, refWithImagesToSongs } from './RefWithImages';
+import { RefWithImages, refWithImagesToSongs } from './types';
 
 const MOPIDY_PLAYLIST = '/audio-ui/api/mopidy-playlist';
 

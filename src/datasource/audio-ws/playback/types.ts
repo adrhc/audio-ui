@@ -1,8 +1,5 @@
 import { models } from 'mopidy';
-import { Track, toTrack } from '../../domain/track';
-import { get, post } from '../../services/rest';
-
-const URI = '/audio-ui/api/audio-state';
+import { Track, toTrack } from '../../../domain/track';
 
 export type AudioServerState = {
   currentSong: Track;
@@ -13,7 +10,7 @@ export type AudioServerState = {
   boost: number;
 };
 
-type RawAudioWSState = {
+export type RawAudioWSState = {
   tlTrack: models.TlTrack;
   streamTitle: string;
   playbackState: string;
@@ -22,15 +19,7 @@ type RawAudioWSState = {
   boost: number;
 };
 
-export function reloadServerState() {
-  return post<RawAudioWSState>(URI).then(toAudioServerState);
-}
-
-export function refreshSharedStateAndGet() {
-  return get<RawAudioWSState>(URI).then(toAudioServerState);
-}
-
-function toAudioServerState({
+export function toAudioServerState({
   tlTrack,
   streamTitle,
   playbackState,
