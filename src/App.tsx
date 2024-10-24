@@ -12,7 +12,6 @@ import { AppContext } from './hooks/AppContext';
 import { useBaseVolume } from './hooks/useBaseVolume';
 import useAppState, { AppState } from './hooks/useAppState';
 import {
-  AudioServerState,
   refreshSharedStateAndGet,
   reloadServerState,
 } from './datasource/audio-ws/playback/playback';
@@ -21,6 +20,7 @@ import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/cache/useCache';
 import { setGlobalAuthorization } from './domain/credentials';
 import { areSameTrack, toTrack } from './domain/track';
+import { AudioServerState } from './datasource/audio-ws/playback/types';
 
 export default function App() {
   const theme = useTheme();
