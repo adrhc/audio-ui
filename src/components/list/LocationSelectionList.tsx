@@ -1,6 +1,6 @@
 import { ListItem, ListItemButton, ListItemText } from '@mui/material';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
-import { LocationSelection, MediaLocation } from '../../domain/media-location/types';
+import { LocationSelection, MediaLocation } from '../../domain/location/types';
 import LoadingList from './LoadingList';
 import { LoadingState } from '../../lib/sustain/types';
 import './LocationSelectionList.scss';

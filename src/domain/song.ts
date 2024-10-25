@@ -1,5 +1,5 @@
 import { models } from 'mopidy';
-import { MediaLocation, uriEqual } from './media-location/utils';
+import { MediaLocation, uriEqual } from './location/utils';
 import Selectable from './Selectable';
 import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName } from '../infrastructure/mopidy/utils';
 

@@ -3,7 +3,7 @@ import { getYTPlContent } from './audio-db/playlist/playlist';
 import { SelectableSong, Song, isYtMusicPl, refsToSongs } from '../domain/song';
 import { getPlContent as getMpcPlContent } from './mopidy/mpc/mpc';
 import { getSortedPlContent } from './audio-ws/playlist/playlist';
-import { sortMediaLocations, sortMediaLocationsIfNotFromLocalPl } from '../domain/media-location/utils';
+import { sortMediaLocations, sortMediaLocationsIfNotFromLocalPl } from '../domain/location/utils';
 import { toSelected } from '../domain/Selectable';
 
 /**

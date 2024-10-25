@@ -1,8 +1,8 @@
-import { LocationSelection } from '../../../domain/media-location/types';
+import { LocationSelection } from '../../../domain/location/types';
 import { MediaLocation } from '../types';
 import { toPlMediaLocation } from '../converters';
 import * as uripl from '../../../domain/UriPlAllocationResult';
-import * as ml from '../../../domain/media-location/types';
+import * as ml from '../../../domain/location/types';
 import * as db from '../types';
 import { m3uMpcRefUriToDecodedFileName } from '../../mopidy/utils';
 
