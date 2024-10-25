@@ -1,4 +1,4 @@
-import { MediaLocation } from "./location/utils";
+import { MediaLocation } from "./location/types";
 
 export interface UriPlAllocationResult {
   addedTo: MediaLocation[];
