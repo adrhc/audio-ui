@@ -1,4 +1,4 @@
-import { MediaLocation, uriToTitle } from '../../domain/media-location';
+import { MediaLocation, uriToTitle } from '../../domain/media-location/utils';
 import { formatUri, Song } from '../../domain/song';
 import { sortByAbsDiff } from '../../lib/image';
 import * as db from './types';

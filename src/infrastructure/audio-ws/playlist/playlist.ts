@@ -2,7 +2,7 @@ import { get } from '../../../lib/rest';
 import { SelectableSong, Song } from '../../../domain/song';
 import { RefWithImages, refWithImagesToSongs } from './types';
 import { toSelected } from '../../../domain/Selectable';
-import { sortMediaLocationsIfNotFromLocalPl } from '../../../domain/media-location';
+import { sortMediaLocationsIfNotFromLocalPl } from '../../../domain/media-location/utils';
 
 const MOPIDY_PLAYLIST = '/audio-ui/api/mopidy-playlist';
 

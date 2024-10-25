@@ -1,7 +1,7 @@
 import { models } from 'mopidy';
 import { Song, formatUri } from './song';
 import Selectable from './Selectable';
-import { uriEqual } from './media-location';
+import { uriEqual } from './media-location/utils';
 
 export function areSameTrack(tk1: Track, tk2?: Track | null): boolean {
   return tk1.tlid == tk2?.tlid && tk1.uri == tk2.uri;

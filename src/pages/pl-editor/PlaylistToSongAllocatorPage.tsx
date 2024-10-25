@@ -1,7 +1,8 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../hooks/AppContext';
-import { LocationSelection, MediaLocation, filterByMediaLocations } from '../../domain/media-location';
+import { LocationSelection, MediaLocation } from '../../domain/media-location/types';
+import { filterSelectionsByMediaLocations } from '../../domain/media-location/utils';
 import { UriPlAllocationResult, getChanged } from '../../domain/UriPlAllocationResult';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import { getLocalLibrary } from '../../infrastructure/audio-db/library/library';
@@ -60,7 +61,7 @@ function PlaylistToSongAllocatorPage() {
 
   const handleChangeResult = useCallback(
     (selections: LocationSelection[], result: UriPlAllocationResult) => {
-      filterByMediaLocations(getChanged(result), selections)
+      filterSelectionsByMediaLocations(getChanged(result), selections)
         .map(toPlCacheName)
         .forEach((cn) => clearCache(cn));
       if (result.failedToChange.length) {

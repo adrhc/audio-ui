@@ -1,4 +1,4 @@
-import { LocationSelection } from '../../domain/media-location';
+import { LocationSelection } from '../../domain/media-location/types';
 
 export const LOCAL_LIBRARY_PLAY_CACHE = 'local-library/play';
 export const LOCAL_LIBRARY_EDIT_CACHE = 'local-library/edit';

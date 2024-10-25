@@ -1,4 +1,4 @@
-import { LocationSelection, MediaLocation } from '../../../domain/media-location';
+import { LocationSelection, MediaLocation } from '../../../domain/media-location/types';
 import { m3uMpcRefUriToDecodedFileName } from '../../mopidy/utils';
 import { toPlMediaLocation } from '../converters';
 import * as db from '../types';

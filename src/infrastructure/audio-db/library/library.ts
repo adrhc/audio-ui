@@ -1,6 +1,6 @@
 import { get, remove } from '../../../lib/rest';
 import { Song } from '../../../domain/song';
-import { LocationSelection, MediaLocation } from '../../../domain/media-location';
+import { LocationSelection, MediaLocation } from '../../../domain/media-location/types';
 import { toQueryParams } from '../../../lib/url-search-params';
 import { toSongsWithImgUri } from '../converters';
 import { toDiskPlaylistRemoveRequest, toPlSelections } from './types';

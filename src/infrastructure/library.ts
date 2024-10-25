@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 import { getPlaylists } from './mopidy/mpc/mpc';
 import { Song, isLocalPl, refsToSongs } from '../domain/song';
-import { sortMediaLocations } from '../domain/media-location';
+import { sortMediaLocations } from '../domain/media-location/utils';
 
 /**
  * using Mopidy WebSocket
