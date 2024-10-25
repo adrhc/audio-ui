@@ -1,10 +1,10 @@
 import Mopidy from 'mopidy';
 import { toSongUris } from '../../../domain/song';
 import { HistoryPosition } from '../../../domain/history';
-import { getImages } from '../../mpc/mpc';
+import { getImages } from '../../mopidy/mpc';
 import { SongsPage } from '../types';
 import { toNoImgSongs } from '../converters';
-import { addImgUriToMany } from '../../mpc/types';
+import { addImgUriToMany } from '../../mopidy/types';
 import * as app from '../../../domain/history';
 
 export interface HistoryPage extends SongsPage {

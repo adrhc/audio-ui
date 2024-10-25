@@ -1,7 +1,7 @@
 import { models } from 'mopidy';
 import { MediaLocation, uriEqual } from './media-location';
 import Selectable from './Selectable';
-import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName } from '../infrastructure/mpc/utils';
+import { isM3uMpcRefUri, m3uMpcRefUriToDecodedFileName } from '../infrastructure/mopidy/utils';
 
 export interface SongsPage {
   entries: Song[];

@@ -10,8 +10,8 @@ import {
   pause as pauseMopidy,
   next,
   previous,
-} from '../infrastructure/mpc/mpc';
-import { play, resume } from '../infrastructure/mpc/player';
+} from '../infrastructure/mopidy/mpc';
+import { play, resume } from '../infrastructure/mopidy/player';
 import PlaybackPanel from '../components/panel/PlaybackPanel';
 import ExactVolumePanel from '../components/panel/ExactVolumePanel';
 import MopidyPlayOptions from '../components/panel/MopidyPlayOptions';

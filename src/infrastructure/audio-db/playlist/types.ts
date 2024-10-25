@@ -3,7 +3,7 @@ import { MediaLocation } from '../types';
 import { toPlMediaLocation } from '../converters';
 import * as app from '../../../domain/media-location';
 import * as db from '../types';
-import { m3uMpcRefUriToDecodedFileName } from '../../mpc/utils';
+import { m3uMpcRefUriToDecodedFileName } from '../../mopidy/utils';
 
 export interface UriPlAllocationResult {
   addedTo: MediaLocation[];

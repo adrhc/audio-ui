@@ -3,15 +3,13 @@ import { isPlaylist, isYtMusicPl, Song, LastUsedMediaAware } from '../domain/son
 import { SustainVoidFn } from './useSustainableState';
 import { AppContext } from './AppContext';
 import {
-  addMopidyPlAfterAndRemember,
-  addMopidyPlAndRemember,
   addSongsAfterAndRemember,
   addSongsAndRemember,
   addSongThenPlay as remotelyAddSongThenPlay,
-  addYtMusicPlAfterAndRemember,
-  addYtMusicPlAndRemember,
-} from '../infrastructure/mpc/track/write';
+} from '../infrastructure/mopidy/track/add-song';
 import { CurrentSongAware } from '../domain/track';
+import { addMopidyPlAndRemember, addMopidyPlAfterAndRemember } from '../infrastructure/mopidy/track/add-mopidy-pl';
+import { addYtMusicPlAndRemember, addYtMusicPlAfterAndRemember } from '../infrastructure/mopidy/track/add-yt-pl';
 
 export type AddManySongsFn = (songs: Song[]) => void;
 

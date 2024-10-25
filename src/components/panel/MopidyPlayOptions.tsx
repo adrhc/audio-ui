@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { setConsume, setRandom, setRepeat, setSingle } from '../../infrastructure/mpc/mpc';
-import { getPlayOptions } from '../../infrastructure/mpc/mpc';
+import { setConsume, setRandom, setRepeat, setSingle } from '../../infrastructure/mopidy/mpc';
+import { getPlayOptions } from '../../infrastructure/mopidy/mpc';
 import { MopidyEvent } from '../../domain/types';
 import Mopidy from 'mopidy';
 import ShuffleIcon from '@mui/icons-material/Shuffle';
@@ -14,7 +14,7 @@ import SpinnerPannel from './SpinnerPannel';
 import { LoadingState } from '../../lib/sustain';
 import { AppContext } from '../../hooks/AppContext';
 import { useSustainableState } from '../../hooks/useSustainableState';
-import { PlayOptions } from '../../infrastructure/mpc/types';
+import { PlayOptions } from '../../infrastructure/mopidy/types';
 import './MopidyPlayOptions.scss';
 
 type MopidyPlayOptionsState = LoadingState<PlayOptions>;

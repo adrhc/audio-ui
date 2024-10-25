@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
 import { AppContext } from '../../hooks/AppContext';
-import { clearTrackList as clearMopidyTrackList } from '../../infrastructure/mpc/mpc';
+import { clearTrackList as clearMopidyTrackList } from '../../infrastructure/mopidy/mpc';
 import { SustainVoidFn } from '../../hooks/useSustainableState';
 import { Track } from '../../domain/track';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';

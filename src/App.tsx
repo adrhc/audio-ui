@@ -14,13 +14,13 @@ import useAppState, { AppState } from './hooks/useAppState';
 import {
   refreshSharedStateAndGet,
   reloadServerState,
-} from './infrastructure/audio-ws/playback/playback';
+} from './infrastructure/audio-ws/server/server';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/cache/useCache';
 import { setGlobalAuthorization } from './domain/credentials';
 import { areSameTrack, toTrack } from './domain/track';
-import { AudioServerState } from './infrastructure/audio-ws/playback/types';
+import { AudioServerState } from './infrastructure/audio-ws/server/types';
 
 export default function App() {
   const theme = useTheme();
