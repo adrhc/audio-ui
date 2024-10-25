@@ -1,6 +1,6 @@
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { fillWithLastElem, valueAtIndexOrLast } from '../lib/array';
+import { fillWithLastElem, getValueAtIndexOrLast } from '../lib/array';
 
 export function useSpaceEvenly() {
   return useBreakpointValue('center', 'space-evenly');
@@ -13,12 +13,12 @@ export function useBreakpointValue<T>(...breakpointValues: T[]): T {
   const isDesktop = useMediaQuery(theme.breakpoints.up('desktop'), { noSsr: true });
   if (isDesktop) {
     // console.log(`[useBreakpointValue] isDesktop: true`);
-    return valueAtIndexOrLast(breakpointValues, 2); // desktop
+    return getValueAtIndexOrLast(breakpointValues, 2); // desktop
   } else if (isTablet) {
     // console.log(`[useBreakpointValue] isTablet: true`);
-    return valueAtIndexOrLast(breakpointValues, 1); // tablet
+    return getValueAtIndexOrLast(breakpointValues, 1); // tablet
   } else {
     // console.log(`[useBreakpointValue] isMobile: true`);
-    return valueAtIndexOrLast(breakpointValues, 0); // mobile
+    return getValueAtIndexOrLast(breakpointValues, 0); // mobile
   }
 }

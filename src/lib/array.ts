@@ -9,7 +9,7 @@ export function fillWithLastElem<T>(arr: T[], length: number) {
   return newArr;
 }
 
-export function valueAtIndexOrLast<T>(arr: T[], index: number): T {
+export function getValueAtIndexOrLast<T>(arr: T[], index: number): T {
   return arr.length <= index ? arr[arr.length - 1] : arr[index];
 }
 
@@ -21,9 +21,9 @@ export function toArray<T>(t: T) {
  * Example:
  *
  * arr1 = {a, b, c}
- * arr1 = {u, v, w, x, y, z}
+ * arr2 = {u, v, w, x, y, z}
  *
- * arr1 is changed to:
+ * before _.zipWith, arr1 is changed to:
  * arr1 = {a, b, c, c, c, c}
  *
  * @returns _.zipWith(arr1, arr2, iteratee)
