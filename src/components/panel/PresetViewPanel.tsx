@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCell, TableRow } from '@mui/material';
-import { EEPreset, isPositiveFloor } from '../../infrastructure/easyeffects';
+import { EEPreset, isPositiveFloor } from '../../infrastructure/easyeffects/types';
 import './PresetViewPanel.scss';
 import ShowIf from '../ShowIf';
 
