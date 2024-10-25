@@ -1,7 +1,8 @@
 import { LocationSelection } from '../../../domain/media-location/types';
 import { MediaLocation } from '../types';
 import { toPlMediaLocation } from '../converters';
-import * as app from '../../../domain/media-location/utils';
+import * as uripl from '../../../domain/UriPlAllocationResult';
+import * as ml from '../../../domain/media-location/types';
 import * as db from '../types';
 import { m3uMpcRefUriToDecodedFileName } from '../../mopidy/utils';
 
@@ -14,7 +15,7 @@ export interface UriPlAllocationResult {
 /**
  * DB/UriPlAllocationResult -> UriPlAllocationResult
  */
-export function toUriPlAllocationResult(r: UriPlAllocationResult): app.UriPlAllocationResult {
+export function toUriPlAllocationResult(r: UriPlAllocationResult): uripl.UriPlAllocationResult {
   return {
     addedTo: toMediaLocations(r.addedTo),
     removedFrom: toMediaLocations(r.removedFrom),
@@ -25,7 +26,7 @@ export function toUriPlAllocationResult(r: UriPlAllocationResult): app.UriPlAllo
 /**
  * DB/MediaLocation[] -> MediaLocation[]
  */
-export function toMediaLocations(audioDbLocations: db.MediaLocation[]): app.MediaLocation[] {
+export function toMediaLocations(audioDbLocations: db.MediaLocation[]): ml.MediaLocation[] {
   return audioDbLocations.map(toPlMediaLocation);
 }
 
