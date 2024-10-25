@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { Outlet } from 'react-router-dom';
 import { MopidyEvent, PlaybackState } from './domain/types';
 import { ifIPhone, isIPhone } from './lib/agent';
-import { omitProps } from './lib/object';
+import { removeProps } from './lib/object';
 import { getSongAndBoost, getVolumeBoost } from './infrastructure/audio-ws/boost/boost';
 import Spinner from './components/feedback/Spinner';
 import CloseableAlert from './components/feedback/ErrorAlert';
@@ -407,7 +407,7 @@ export default function App() {
         </Snackbar>
         <AppContext.Provider
           value={{
-            ...omitProps(state, ['error', 'loading', 'notification', 'severity', 'logs']),
+            ...removeProps(state, ['error', 'loading', 'notification', 'severity', 'logs']),
             setBaseVolume,
             ...baseVolume,
             setBoost,

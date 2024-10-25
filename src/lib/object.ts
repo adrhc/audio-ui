@@ -16,13 +16,13 @@ export function removeEmptyProps<T>(obj: T): Partial<T> {
   return obj;
 }
 
-export function omitProps<T, P extends keyof T>(o: T, prop: P | P[]) {
+export function removeProps<T, P extends keyof T>(obj: T, prop: P | P[]) {
   if (_.isArray(prop)) {
     for (const k of prop) {
-      delete o[k];
+      delete obj[k];
     }
   } else {
-    delete o[prop];
+    delete obj[prop];
   }
-  return o;
+  return obj;
 }
