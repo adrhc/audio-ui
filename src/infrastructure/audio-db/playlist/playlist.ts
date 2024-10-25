@@ -1,6 +1,7 @@
 import { get, post, postVoid } from '../../../lib/rest';
 import { Song } from '../../../domain/song';
-import { LocationSelection, UriPlAllocationResult } from '../../../domain/media-location';
+import { LocationSelection } from '../../../domain/media-location';
+import { UriPlAllocationResult } from '../../../domain/UriPlAllocationResult';
 import { toSongsWithImgUri } from '../converters';
 import * as db from '../types';
 import * as dbpl from './types';

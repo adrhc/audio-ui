@@ -1,13 +1,8 @@
 import { useCallback, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../../hooks/AppContext';
-import {
-  LocationSelection,
-  MediaLocation,
-  UriPlAllocationResult,
-  filterByMediaLocations,
-  getChanged,
-} from '../../domain/media-location';
+import { LocationSelection, MediaLocation, filterByMediaLocations } from '../../domain/media-location';
+import { UriPlAllocationResult, getChanged } from '../../domain/UriPlAllocationResult';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import { getLocalLibrary } from '../../infrastructure/audio-db/library/library';
 import PageTemplate from '../../templates/PageTemplate';
