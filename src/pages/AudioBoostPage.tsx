@@ -8,7 +8,7 @@ import { setVolume as setMopidyVolume } from '../infrastructure/mopidy/mpc/playe
 import { useGoBack } from '../hooks/useGoBack';
 import { AppContext } from '../hooks/AppContext';
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
-import { SetFeedbackState } from '../lib/sustain';
+import { SetFeedbackState } from '../lib/sustain/types';
 import PageTitle from '../components/PageTitle';
 import { toVolumeBoost } from '../infrastructure/audio-ws/boost/types';
 import './AudioBoostPage.scss';

@@ -1,24 +1,20 @@
-import { Dispatch, SetStateAction } from 'react';
-import { formatErr } from './format';
-
-export interface Loading {
-  loading?: boolean | null;
-  error?: string | null;
-}
-export type SetFeedbackState = Dispatch<SetStateAction<Loading>>;
-export type LoadingState<S> = Loading & S;
-export type SetLoadingState<S> = Dispatch<SetStateAction<LoadingState<S>>>;
-export type SetLoading = Dispatch<SetStateAction<Loading>>;
-export type SetState<S> = Dispatch<SetStateAction<S>>;
+import { formatErr } from '../format';
+import {
+  LoadingState,
+  Loading,
+  SetLoadingState,
+  SetLoading,
+  SustainFailState,
+  SustainPromise,
+  SustainUnknownFailState,
+  SustainUnknownPromise,
+} from './types';
 
 export function removeLoadingAttributes<S>(loadingState: LoadingState<S>): S {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { loading, error, ...result } = loadingState;
   return result as S;
 }
-
-export type SustainPromise<S> = Promise<Partial<LoadingState<S>> | null | undefined | void>;
-export type SustainFailState<S> = Partial<LoadingState<S> | Loading> | string | null | undefined;
 
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S>>>, promise: Promise<Partial<LoadingState<S>>>) : void;
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S> | undefined>>, promise: Promise<Partial<LoadingState<S>>>) : void {
@@ -52,9 +48,6 @@ function handleState<S>(
       } */
     });
 }
-
-export type SustainUnknownPromise = Promise<Partial<LoadingState<unknown> | Loading> | void>;
-export type SustainUnknownFailState = Partial<LoadingState<unknown> | Loading> | string | null | undefined;
 
 export function sustainUnknown(
   setState: SetLoading,

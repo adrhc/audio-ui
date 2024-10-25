@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { LoadingState } from '../../lib/sustain';
+import { LoadingState } from '../../lib/sustain/types';
 import SpinnerPannel from '../panel/SpinnerPannel';
 import EmptyList from './EmptyList';
 import { List, Stack } from '@mui/material';

@@ -5,7 +5,7 @@ import { useSustainableState } from '../../hooks/useSustainableState';
 import { useNavigate } from 'react-router-dom';
 import PresetList from './PresetList';
 import PageTemplate from '../../templates/PageTemplate';
-import { SetFeedbackState } from '../../lib/sustain';
+import { SetFeedbackState } from '../../lib/sustain/types';
 
 type EasyEffectsState = {
   current?: string;

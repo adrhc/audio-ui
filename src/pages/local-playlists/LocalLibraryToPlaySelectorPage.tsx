@@ -6,7 +6,8 @@ import { AppContext } from '../../hooks/AppContext';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
-import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
+import { SetFeedbackState } from '../../lib/sustain/types';
+import { removeLoadingAttributes } from '../../lib/sustain/sustain';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
 import '/src/styles/wide-page.scss';
 

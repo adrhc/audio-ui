@@ -11,7 +11,7 @@ import { ButtonGroup, ToggleButton } from '@mui/material';
 import { iconFontSize } from '../../pages/styles';
 import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 import SpinnerPannel from './SpinnerPannel';
-import { LoadingState } from '../../lib/sustain';
+import { LoadingState } from '../../lib/sustain/types';
 import { AppContext } from '../../hooks/AppContext';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import { PlayOptions } from '../../infrastructure/mopidy/types';

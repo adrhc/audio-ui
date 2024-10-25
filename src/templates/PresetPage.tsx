@@ -1,6 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import PageTemplate from './PageTemplate';
-import { LoadingState, SetFeedbackState, SetLoadingState } from '../lib/sustain';
+import { LoadingState, SetFeedbackState, SetLoadingState } from '../lib/sustain/types';
 import { EEPreset } from '../infrastructure/easyeffects/types';
 import { getPreset } from '../infrastructure/easyeffects/easyeffects';
 import { SustainVoidFn } from '../hooks/useSustainableState';

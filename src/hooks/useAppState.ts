@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 import { useCallback } from 'react';
 import { SustainVoidFn, useSustainableState } from './useSustainableState';
-import { LoadingState, SetLoadingState } from '../lib/sustain';
+import { LoadingState, SetLoadingState } from '../lib/sustain/types';
 import { NoArgsProc } from '../domain/types';
 import { PlaybackState } from '../domain/types';
 import { AlertColor } from '@mui/material';

@@ -4,13 +4,12 @@ import {
   LoadingState,
   SetFeedbackState,
   SetLoadingState,
-  sustain,
   SustainFailState,
   SustainPromise,
-  sustainUnknown,
   SustainUnknownFailState,
   SustainUnknownPromise,
-} from '../lib/sustain';
+} from '../lib/sustain/types';
+import { sustain, sustainUnknown } from '../lib/sustain/sustain';
 
 export type LoadingStateOrProvider<S> = LoadingState<S> | (() => LoadingState<S>);
 

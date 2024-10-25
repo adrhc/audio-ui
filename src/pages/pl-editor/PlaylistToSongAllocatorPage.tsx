@@ -15,7 +15,7 @@ import LocationSelectionList from '../../components/list/LocationSelectionList';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { useGoBack } from '../../hooks/useGoBack';
-import { SetFeedbackState } from '../../lib/sustain';
+import { SetFeedbackState } from '../../lib/sustain/types';
 import PageTitle from '../../components/PageTitle';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';

@@ -5,7 +5,8 @@ import { getYTPlContent } from '../../infrastructure/audio-db/playlist/playlist'
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import { removeLoadingAttributes, SetFeedbackState } from '../../lib/sustain';
+import { SetFeedbackState } from '../../lib/sustain/types';
+import { removeLoadingAttributes } from '../../lib/sustain/sustain';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { plCacheName } from '../../hooks/cache/cache-names';
 import { ThinSongListState } from '../../domain/song';

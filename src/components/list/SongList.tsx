@@ -2,10 +2,10 @@ import { ListItem, ListItemText } from '@mui/material';
 import SongListItemMenu from './SongListItemMenu.tsx';
 import SongListItem from './SongListItem';
 import { SelectableSong, Song } from '../../domain/song';
-import { SongListItemMenuParam, shouldShowListItemMenu } from './SongListItemMenuParam.ts';
-import { LoadingState } from '../../lib/sustain.ts';
+import { SongListItemMenuParam, shouldShowListItemMenu } from './SongListItemMenuParam';
+import { LoadingState } from '../../lib/sustain/types';
 import LoadingList from './LoadingList.tsx';
-import ScrollableList from '../../domain/scroll.ts';
+import ScrollableList from '../../domain/scroll';
 import './SongList.scss';
 
 type SongHandler = (song: Song) => void;

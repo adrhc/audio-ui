@@ -1,5 +1,5 @@
 import { Stack, TextField } from '@mui/material';
-import { SetFeedbackState } from '../lib/sustain';
+import { SetFeedbackState } from '../lib/sustain/types';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
 import { useCallback, useContext } from 'react';
 import { AppContext } from '../hooks/AppContext';

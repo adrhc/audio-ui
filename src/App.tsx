@@ -16,7 +16,7 @@ import {
   reloadServerState,
 } from './infrastructure/audio-ws/server/server';
 import CloseIcon from '@mui/icons-material/Close';
-import { LoadingState } from './lib/sustain';
+import { LoadingState } from './lib/sustain/types';
 import { useCache } from './hooks/cache/useCache';
 import { setGlobalAuthorization } from './domain/credentials';
 import { areSameTrack, toTrack } from './domain/track';

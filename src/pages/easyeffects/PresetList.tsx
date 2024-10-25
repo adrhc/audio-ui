@@ -1,7 +1,7 @@
 import { IconButton, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import EditIconButton from '../../components/button/EditIconButton';
 import LoadingList from '../../components/list/LoadingList';
-import { LoadingState } from '../../lib/sustain';
+import { LoadingState } from '../../lib/sustain/types';
 import './PresetList.scss';
 
 type PresetsListState = {

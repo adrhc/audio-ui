@@ -9,7 +9,7 @@ import TrackList from './TrackList';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { Track, removeTrack } from '../../domain/track';
 import TrackListMenu from '../menu/TrackListBottomPageMenu';
-import { SetFeedbackState } from '../../lib/sustain';
+import { SetFeedbackState } from '../../lib/sustain/types';
 import '/src/styles/wide-page.scss';
 
 type TrackListPageState = {

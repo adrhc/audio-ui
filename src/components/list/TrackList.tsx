@@ -5,7 +5,7 @@ import TrackListItemText from './TrackListItemText';
 import SongListItemAvatar from './SongListItemAvatar';
 import { Link } from 'react-router-dom';
 import { toQueryParams } from '../../lib/url-search-params';
-import { LoadingState } from '../../lib/sustain';
+import { LoadingState } from '../../lib/sustain/types';
 import LoadingList from './LoadingList';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import ScrollableList from '../../domain/scroll';

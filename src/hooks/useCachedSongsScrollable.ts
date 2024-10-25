@@ -1,4 +1,4 @@
-import { LoadingState, SetLoadingState } from '../lib/sustain';
+import { LoadingState, SetLoadingState } from '../lib/sustain/types';
 import { Song, SongsAware, ThinSongListState } from '../domain/song';
 import { NoArgsProc } from '../domain/types';
 import useCachedPositionScrollable, {

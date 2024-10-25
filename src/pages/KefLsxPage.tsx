@@ -7,7 +7,7 @@ import ExactVolumePanel from '../components/panel/ExactVolumePanel';
 import PageTemplate from '../templates/PageTemplate';
 import { useSustainableState } from '../hooks/useSustainableState';
 import { Button, Icon, Stack } from '@mui/material';
-import { SetFeedbackState } from '../lib/sustain';
+import { SetFeedbackState } from '../lib/sustain/types';
 import KefLsxButtonMenu from '../components/menu/KefLsxButtonMenu';
 import './KefLsxPage.scss';
 import { truncateVolume } from '../domain/utils';

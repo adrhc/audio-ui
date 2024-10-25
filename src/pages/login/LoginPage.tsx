@@ -5,7 +5,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import { AppContext } from '../../hooks/AppContext';
 import { useGoBack } from '../../hooks/useGoBack';
 import { Credentials } from '../../domain/credentials';
-import { SetFeedbackState } from '../../lib/sustain';
+import { SetFeedbackState } from '../../lib/sustain/types';
 import BackwardIcon from '../../components/BackwardIcon';
 import LoginIcon from '@mui/icons-material/Login';
 import './LoginPage.scss';

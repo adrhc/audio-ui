@@ -3,7 +3,7 @@ import { useSustainableState } from '../hooks/useSustainableState';
 import { useCallback, useContext } from 'react';
 import { AppContext } from '../hooks/AppContext';
 import { useGoBack } from '../hooks/useGoBack';
-import { SetFeedbackState } from '../lib/sustain';
+import { SetFeedbackState } from '../lib/sustain/types';
 import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
 import useLibrary from '../hooks/useLibrary';
 

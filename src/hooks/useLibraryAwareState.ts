@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 import { Song, SongsAware } from '../domain/song';
-import { SetLoadingState } from '../lib/sustain';
+import { SetLoadingState } from '../lib/sustain/types';
 import { SustainVoidFn } from './useSustainableState';
 import { getLocalLibrary } from '../infrastructure/library';
 import { AppContext } from './AppContext';

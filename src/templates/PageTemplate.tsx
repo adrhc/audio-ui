@@ -1,6 +1,6 @@
 import { ResponsiveStyleValue } from '@mui/system';
 import { Stack } from '@mui/material';
-import { Loading, SetFeedbackState } from '../lib/sustain';
+import { Loading, SetFeedbackState } from '../lib/sustain/types';
 import { NoArgsProc, Styles } from '../domain/types';
 import Spinner from '../components/feedback/Spinner';
 import CloseableAlert from '../components/feedback/ErrorAlert';

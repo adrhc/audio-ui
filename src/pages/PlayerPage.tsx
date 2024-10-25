@@ -20,7 +20,7 @@ import PageTemplate from '../templates/PageTemplate';
 import { AppContext } from '../hooks/AppContext';
 import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import PlayerBottomPageMenu from '../components/menu/PlayerBottomPageMenu';
-import { SetFeedbackState } from '../lib/sustain';
+import { SetFeedbackState } from '../lib/sustain/types';
 import PageTitle from '../components/PageTitle';
 import { truncateVolume } from '../domain/utils';
 import '/src/styles/panel.scss';
