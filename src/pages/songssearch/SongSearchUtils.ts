@@ -1,4 +1,4 @@
-import { toQueryParams } from '../../lib/path-param-utils';
+import { toQueryParams } from '../../lib/url-search-params';
 
 export function removeSearchExpression<S>(o: { searchExpression?: string }): S {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

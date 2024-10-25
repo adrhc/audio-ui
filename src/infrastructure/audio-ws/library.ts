@@ -1,5 +1,5 @@
 import { post } from '../../lib/rest';
-import { toQueryParams } from '../../lib/path-param-utils';
+import { toQueryParams } from '../../lib/url-search-params';
 
 const DISK_PLAYLIST = '/audio-ui/api/disk-playlist';
 

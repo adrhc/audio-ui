@@ -1,6 +1,6 @@
 import { get } from '../../lib/rest';
 import { SelectableSong, Song, toSelectableSong } from '../../domain/song';
-import { toQueryParams } from '../../lib/path-param-utils';
+import { toQueryParams } from '../../lib/url-search-params';
 import { getNoImgPlContent } from '../audio-ws/playlist/playlist';
 import { toSongsWithImgUri } from './converters';
 import * as audiodb from './types';

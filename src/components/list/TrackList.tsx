@@ -4,7 +4,7 @@ import { SelectableTrack, Track } from '../../domain/track';
 import TrackListItemText from './TrackListItemText';
 import SongListItemAvatar from './SongListItemAvatar';
 import { Link } from 'react-router-dom';
-import { toQueryParams } from '../../lib/path-param-utils';
+import { toQueryParams } from '../../lib/url-search-params';
 import { LoadingState } from '../../lib/sustain';
 import LoadingList from './LoadingList';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
