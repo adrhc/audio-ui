@@ -1,4 +1,4 @@
-import { MediaLocation } from '../../domain/location/utils';
+import { MediaLocation } from '../../domain/location/types';
 import { LoadingStateOrProvider } from '../../hooks/useSustainableState';
 
 export function toError<T>(failedToChange: MediaLocation[]): Partial<LoadingStateOrProvider<T>> {
