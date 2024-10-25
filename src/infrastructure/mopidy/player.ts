@@ -1,6 +1,6 @@
 import Mopidy from 'mopidy';
 import { setPower } from '../kef';
-import { play as playMopidy, resume as resumeMopidy } from './mpc';
+import { play as playMopidy, resume as resumeMopidy } from './mpc/player';
 import { isAdrhc } from '../../lib/adrhc';
 
 export function resume(mopidy?: Mopidy) {

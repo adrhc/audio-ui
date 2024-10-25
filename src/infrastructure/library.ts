@@ -1,5 +1,5 @@
 import Mopidy from 'mopidy';
-import { getPlaylists } from './mopidy/mpc';
+import { getPlaylists } from './mopidy/mpc/mpc';
 import { Song, isLocalPl, refsToSongs } from '../domain/song';
 import { sortMediaLocations } from '../domain/media-location';
 

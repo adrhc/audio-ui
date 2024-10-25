@@ -6,10 +6,10 @@ import {
   addSongsAfterAndRemember,
   addSongsAndRemember,
   addSongThenPlay as remotelyAddSongThenPlay,
-} from '../infrastructure/mopidy/track/add-song';
+} from '../infrastructure/mopidy/playing-list/add-song';
 import { CurrentSongAware } from '../domain/track';
-import { addMopidyPlAndRemember, addMopidyPlAfterAndRemember } from '../infrastructure/mopidy/track/add-mopidy-pl';
-import { addYtMusicPlAndRemember, addYtMusicPlAfterAndRemember } from '../infrastructure/mopidy/track/add-yt-pl';
+import { addMopidyPlAndRemember, addMopidyPlAfterAndRemember } from '../infrastructure/mopidy/playing-list/add-mopidy-pl';
+import { addYtMusicPlAndRemember, addYtMusicPlAfterAndRemember } from '../infrastructure/mopidy/playing-list/add-yt-pl';
 
 export type AddManySongsFn = (songs: Song[]) => void;
 

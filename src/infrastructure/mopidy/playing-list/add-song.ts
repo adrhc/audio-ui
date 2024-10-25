@@ -1,5 +1,5 @@
 import Mopidy from 'mopidy';
-import { addUris, addUrisAfter } from '../mpc';
+import { addUris, addUrisAfter } from '../mpc/playing-list';
 import { addToHistory } from '../../audio-db/history/history';
 import { Track } from '../../../domain/track';
 import { Song } from '../../../domain/song';

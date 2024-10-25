@@ -7,7 +7,7 @@ import { SetFeedbackState } from '../../lib/sustain';
 import PageTemplate from '../../templates/PageTemplate';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { AppContext } from '../../hooks/AppContext';
-import { getSelectableTracks } from '../../infrastructure/mopidy/track/read';
+import { getSelectableTracks } from '../../infrastructure/mopidy/playing-list/read';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { SelectableTrack } from '../../domain/track';
 import TrackList from '../../components/list/TrackList';

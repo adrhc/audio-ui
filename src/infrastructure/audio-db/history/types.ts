@@ -1,7 +1,7 @@
 import Mopidy from 'mopidy';
 import { toSongUris } from '../../../domain/song';
 import { HistoryPosition } from '../../../domain/history';
-import { getImages } from '../../mopidy/mpc';
+import { getImages } from '../../mopidy/mpc/mpc';
 import { SongsPage } from '../types';
 import { toNoImgSongs } from '../converters';
 import { addImgUriToMany } from '../../mopidy/types';

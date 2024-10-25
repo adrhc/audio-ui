@@ -1,10 +1,10 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { getTracks } from '../../infrastructure/mopidy/track/read';
+import { getTracks } from '../../infrastructure/mopidy/playing-list/read';
 import { play } from '../../infrastructure/mopidy/player';
 import PageTemplate from '../../templates/PageTemplate';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import { AppContext } from '../../hooks/AppContext';
-import { removeTlid } from '../../infrastructure/mopidy/mpc';
+import { removeTlid } from '../../infrastructure/mopidy/mpc/playing-list';
 import TrackList from './TrackList';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { Track, removeTrack } from '../../domain/track';
