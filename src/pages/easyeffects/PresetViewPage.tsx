@@ -1,4 +1,4 @@
-import { EEPreset, newPreset } from '../../datasource/easyeffects';
+import { EEPreset, newPreset } from '../../infrastructure/easyeffects';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import PresetViewPanel from '../../components/panel/PresetViewPanel';
 import PresetPage from '../../templates/PresetPage';

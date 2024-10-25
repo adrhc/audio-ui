@@ -1,5 +1,5 @@
 import PageTemplate from '../../templates/PageTemplate';
-import { searchSelectableSongs } from '../../datasource/audio-db/search';
+import { searchSelectableSongs } from '../../infrastructure/audio-db/search';
 import { useCallback, useContext, useEffect, useRef } from 'react';
 import TextSearchButton from '../../components/button/TextSearchButton';
 import { useParams } from 'react-router-dom';
@@ -13,11 +13,11 @@ import { SongSearchCache } from '../songssearch/model';
 import PageTitle from '../../components/PageTitle';
 import { SelectableSong, toSelectableSong } from '../../domain/song';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
-import { updateLocalPlaylist } from '../../datasource/audio-db/playlist/playlist';
+import { updateLocalPlaylist } from '../../infrastructure/audio-db/playlist/playlist';
 import { AppContext } from '../../hooks/AppContext';
-import { getNoImgPlContent } from '../../datasource/audio-ws/playlist/playlist';
+import { getNoImgPlContent } from '../../infrastructure/audio-ws/playlist/playlist';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
-import { getSelectablePlContent } from '../../datasource/playlist';
+import { getSelectablePlContent } from '../../infrastructure/playlist';
 import '../songssearch/SongSearchPage.scss';
 
 function PlaylistEditFromSearchPage() {

@@ -5,7 +5,7 @@ import { useCallback, useContext } from 'react';
 import { AppContext } from '../hooks/AppContext';
 import { useGoBack } from '../hooks/useGoBack';
 import { useSustainableState } from '../hooks/useSustainableState';
-import { addUrisThenPlay } from '../datasource/mpc/track/write';
+import { addUrisThenPlay } from '../infrastructure/mpc/track/write';
 
 const MIN_URI_LENGTH = 3;
 interface AddTrackPageState {

@@ -3,14 +3,14 @@ import VolumeButtonsPanel from '../components/panel/VolumeButtonsPanel';
 import PageTemplate from '../templates/PageTemplate';
 import { useSustainableState } from '../hooks/useSustainableState';
 import { useCallback, useContext } from 'react';
-import { boostVolume } from '../datasource/audio-ws/boost/boost';
-import { setVolume as setMopidyVolume } from '../datasource/mpc/mpc';
+import { boostVolume } from '../infrastructure/audio-ws/boost/boost';
+import { setVolume as setMopidyVolume } from '../infrastructure/mpc/mpc';
 import { useGoBack } from '../hooks/useGoBack';
 import { AppContext } from '../hooks/AppContext';
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
 import { SetFeedbackState } from '../lib/sustain';
 import PageTitle from '../components/PageTitle';
-import { toVolumeBoost } from '../datasource/audio-ws/boost/types';
+import { toVolumeBoost } from '../infrastructure/audio-ws/boost/types';
 import './AudioBoostPage.scss';
 import { truncateVolume } from '../domain/utils';
 

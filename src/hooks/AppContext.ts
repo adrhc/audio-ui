@@ -7,7 +7,7 @@ import {
   SetNotificationFn,
 } from '../hooks/useAppState';
 import { Credentials } from '../domain/credentials';
-import { VolumeBoost } from '../datasource/audio-ws/boost/types';
+import { VolumeBoost } from '../infrastructure/audio-ws/boost/types';
 
 interface AppContextValue extends AppState, UnknownCacheTypeOperations {
   getBaseVolume: () => number | null | undefined;

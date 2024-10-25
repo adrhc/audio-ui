@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import { MopidyEvent, PlaybackState } from './domain/types';
 import { ifIPhone, isIPhone } from './lib/agent';
 import { omitProps } from './lib/object';
-import { getSongAndBoost, getVolumeBoost } from './datasource/audio-ws/boost/boost';
+import { getSongAndBoost, getVolumeBoost } from './infrastructure/audio-ws/boost/boost';
 import Spinner from './components/feedback/Spinner';
 import CloseableAlert from './components/feedback/ErrorAlert';
 import { AppContext } from './hooks/AppContext';
@@ -14,13 +14,13 @@ import useAppState, { AppState } from './hooks/useAppState';
 import {
   refreshSharedStateAndGet,
   reloadServerState,
-} from './datasource/audio-ws/playback/playback';
+} from './infrastructure/audio-ws/playback/playback';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain';
 import { useCache } from './hooks/cache/useCache';
 import { setGlobalAuthorization } from './domain/credentials';
 import { areSameTrack, toTrack } from './domain/track';
-import { AudioServerState } from './datasource/audio-ws/playback/types';
+import { AudioServerState } from './infrastructure/audio-ws/playback/types';
 
 export default function App() {
   const theme = useTheme();

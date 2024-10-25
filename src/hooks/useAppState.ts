@@ -8,7 +8,7 @@ import { AlertColor } from '@mui/material';
 import { useURLQueryParams } from './useURLSearchParams';
 import { Credentials, credentialsOf } from '../domain/credentials';
 import { CurrentSongAware } from '../domain/track';
-import { VolumeBoost } from '../datasource/audio-ws/boost/types';
+import { VolumeBoost } from '../infrastructure/audio-ws/boost/types';
 
 export const DEFAULT_APP_STATE_WTHOUT_MOPIDY = {
   online: false,

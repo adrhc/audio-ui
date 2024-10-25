@@ -1,5 +1,5 @@
 import { Button, Stack, TextField } from '@mui/material';
-import { EEPreset } from '../../datasource/easyeffects';
+import { EEPreset } from '../../infrastructure/easyeffects';
 import { LoadingState, SetLoadingState } from '../../lib/sustain';
 import { NoArgsProc } from '../../domain/types';
 import { useCallback } from 'react';

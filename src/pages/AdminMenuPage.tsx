@@ -1,5 +1,5 @@
 import { MenuList, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
-import { shallowDiskUpdate as indexShallowDiskUpdate } from '../datasource/audio-db/index';
+import { shallowDiskUpdate as indexShallowDiskUpdate } from '../infrastructure/audio-db/index';
 import PageTemplate from '../templates/PageTemplate';
 import HomeIcon from '@mui/icons-material/Home';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';

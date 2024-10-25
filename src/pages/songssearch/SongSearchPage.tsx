@@ -1,5 +1,5 @@
 import PageTemplate from '../../templates/PageTemplate';
-import { searchSongs } from '../../datasource/audio-db/search';
+import { searchSongs } from '../../infrastructure/audio-db/search';
 import { useCallback, useEffect, useRef } from 'react';
 import TextSearchButton from '../../components/button/TextSearchButton';
 import { useNavigate } from 'react-router-dom';
