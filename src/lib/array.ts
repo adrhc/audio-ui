@@ -1,5 +1,8 @@
 import _ from 'lodash';
 
+/**
+ * arr must not be empty!
+ */
 export function fillWithLastElem<T>(arr: T[], length: number) {
   const last = arr[arr.length - 1];
   const newArr = [...arr];
