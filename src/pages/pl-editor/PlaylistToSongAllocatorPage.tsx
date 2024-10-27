@@ -17,7 +17,6 @@ import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
 import { toPlCacheName } from '../../hooks/cache/cache-names';
 import { updateManyLocalPlaylists } from '../../infrastructure/audio-db/playlist/playlist';
-import '/src/styles/wide-page.scss';
 
 interface PlaylistToEditSelectorPageState {
   selections: LocationSelection[];
@@ -89,7 +88,7 @@ function PlaylistToSongAllocatorPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       title={<PageTitle>{decodedTitle}</PageTitle>}

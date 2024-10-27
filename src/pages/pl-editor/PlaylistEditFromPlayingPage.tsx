@@ -17,7 +17,6 @@ import ListItemMinusPlusMenu from '../../components/list/ListItemMinusPlusMenu';
 import { CURRENT_PLAY_TO_PL_ALLOCATOR_PAGE, plCacheName } from '../../hooks/cache/cache-names';
 import useCachedPositionScrollable from '../../hooks/scrollable/useCachedPositionScrollable';
 import { toAllSelected, toNoneSelected } from '../../domain/Selectable';
-import '/src/styles/wide-page.scss';
 import './PlaylistEditFromPlayingPage.scss';
 
 interface PlEditFromCurrentPlayPageState {
@@ -104,7 +103,7 @@ function PlaylistEditFromPlayingPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       title={<PageTitle>{title}</PageTitle>}

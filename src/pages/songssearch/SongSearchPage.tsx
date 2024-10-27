@@ -104,7 +104,7 @@ function SongSearchPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       bottom={<TracksAccessMenu />}

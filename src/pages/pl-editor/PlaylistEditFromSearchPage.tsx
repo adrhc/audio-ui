@@ -166,7 +166,7 @@ function PlaylistEditFromSearchPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       title={title}
       setState={setState as SetFeedbackState}

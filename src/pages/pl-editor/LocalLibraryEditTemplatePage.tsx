@@ -10,7 +10,6 @@ import { Song, ThinSongListState } from '../../domain/song';
 import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
 import { useNavigate } from 'react-router-dom';
 import { toQueryParams } from '../../lib/url-search-params';
-import '/src/styles/wide-page.scss';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
 
 export interface LocalLibraryEditTemplatePageParams {
@@ -75,7 +74,7 @@ function LocalLibraryEditTemplatePage({ playlistEditorPath }: LocalLibraryEditTe
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       bottom={<TracksAccessMenu />}

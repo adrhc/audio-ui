@@ -10,7 +10,6 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingAttributes } from '../../lib/sustain/sustain';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { PLAYLIST_HISTORY } from '../../hooks/cache/cache-names';
-import '/src/styles/wide-page.scss';
 
 function PlaybackHistoryPage() {
   const { mopidy } = useContext(AppContext);
@@ -129,7 +128,7 @@ function PlaybackHistoryPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       bottom={<TracksAccessMenu />}

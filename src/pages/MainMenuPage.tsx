@@ -62,12 +62,6 @@ function MainMenuPage() {
           </ListItemIcon>
           <ListItemText>Search Songs</ListItemText>
         </MenuItem>
-        <MenuItem component={Link} to="/history">
-          <ListItemIcon>
-            <HistoryOutlinedIcon className="history" />
-          </ListItemIcon>
-          <ListItemText>Playback History</ListItemText>
-        </MenuItem>
         <MenuItem component={Link} to="/local-playlists">
           <ListItemIcon>
             {/* <img src="mopidy.png" className="local-playlists" /> */}
@@ -80,6 +74,12 @@ function MainMenuPage() {
             <YouTubeIcon className="ytmlibrary" />
           </ListItemIcon>
           <ListItemText>YouTube Playlists</ListItemText>
+        </MenuItem>
+        <MenuItem component={Link} to="/history">
+          <ListItemIcon>
+            <HistoryOutlinedIcon className="history" />
+          </ListItemIcon>
+          <ListItemText>Playback History</ListItemText>
         </MenuItem>
         <MenuItem component={Link} to="/player">
           <ListItemIcon>

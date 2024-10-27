@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingAttributes } from '../../lib/sustain/sustain';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
-import '/src/styles/wide-page.scss';
 
 function LocalLibraryToPlaySelectorPage() {
   const navigate = useNavigate();
@@ -79,7 +78,7 @@ function LocalLibraryToPlaySelectorPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       bottom={<TracksAccessMenu />}

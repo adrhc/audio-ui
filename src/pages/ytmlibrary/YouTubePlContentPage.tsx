@@ -10,7 +10,6 @@ import { removeLoadingAttributes } from '../../lib/sustain/sustain';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { plCacheName } from '../../hooks/cache/cache-names';
 import { ThinSongListState } from '../../domain/song';
-import '/src/styles/wide-page.scss';
 
 interface YouTubePlContentCache extends ThinSongListState {
   scrollTop: number;
@@ -80,7 +79,7 @@ function YouTubePlContentPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       bottom={<TracksAccessMenu />}

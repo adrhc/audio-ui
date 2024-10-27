@@ -23,6 +23,7 @@ export interface PageTemplateParam {
   bottom?: ReactNode;
   children: ReactNode;
   disableSpinner?: boolean;
+  widePage?: boolean;
 }
 
 const PageTemplate = ({
@@ -39,11 +40,16 @@ const PageTemplate = ({
   bottom,
   children,
   disableSpinner,
+  widePage,
 }: PageTemplateParam) => {
   return (
     <>
       <Spinner show={!disableSpinner && state?.loading} />
-      <Stack className={`page ${className ?? ''}`} spacing={pageSpacing} sx={sx}>
+      <Stack
+        className={`${className ?? ''} ${widePage ? 'wide-page page' : 'page'}`}
+        spacing={pageSpacing}
+        sx={sx}
+      >
         {/* {!hideTop && <Stack className="top" />} */}
         <Stack className="content" spacing={contentSpacing}>
           <CloseableAlert className="ignored" message={state?.error} onClose={onErrorClose} />

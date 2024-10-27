@@ -10,7 +10,6 @@ import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { Track, removeTrack } from '../../domain/track';
 import TrackListMenu from '../menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import '/src/styles/wide-page.scss';
 
 type TrackListPageState = {
   songs: Track[];
@@ -65,7 +64,7 @@ export default function TrackListPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       bottom={<TrackListMenu sustain={sustain} />}

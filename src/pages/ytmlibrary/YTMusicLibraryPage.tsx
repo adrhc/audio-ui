@@ -10,7 +10,6 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingAttributes } from '../../lib/sustain/sustain';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { YOUTUBE_LIBRARY } from '../../hooks/cache/cache-names';
-import '/src/styles/wide-page.scss';
 
 function YTMusicLibraryPage() {
   const navigate = useNavigate();
@@ -76,7 +75,7 @@ function YTMusicLibraryPage() {
 
   return (
     <PageTemplate
-      className="wide-page"
+      widePage={true}
       state={state}
       setState={setState as SetFeedbackState}
       bottom={<TracksAccessMenu />}
