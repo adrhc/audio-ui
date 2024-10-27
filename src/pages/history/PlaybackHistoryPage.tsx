@@ -4,7 +4,7 @@ import { getHistory, getHistoryAfter, getHistoryBefore } from '../../infrastruct
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
-import { RawPlaybackHistoryPageState, toRawPlaybackHistoryPageState } from './history-utils';
+import { RawPlaybackHistoryPageState, toRawPlaybackHistoryPageState } from './utils';
 import { AppContext } from '../../hooks/AppContext';
 import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingAttributes } from '../../lib/sustain/sustain';
