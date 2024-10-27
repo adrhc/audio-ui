@@ -1,8 +1,8 @@
 import { Badge, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useCallback, useContext } from 'react';
-import { useSustainableState } from '../hooks/useSustainableState';
-import VolumeButtonsPanel from '../components/panel/VolumeButtonsPanel';
+import { useSustainableState } from '../../hooks/useSustainableState';
+import VolumeButtonsPanel from '../../components/panel/VolumeButtonsPanel';
 import {
   setVolume as setMopidyVolume,
   mute as muteMopidy,
@@ -10,19 +10,19 @@ import {
   pause as pauseMopidy,
   next,
   previous,
-} from '../infrastructure/mopidy/mpc/player';
-import { play, resume } from '../infrastructure/mopidy/player';
-import PlaybackPanel from '../components/panel/PlaybackPanel';
-import ExactVolumePanel from '../components/panel/ExactVolumePanel';
-import MopidyPlayOptions from '../components/panel/MopidyPlayOptions';
-import PrevNextPanel from '../components/panel/PrevNextPanel';
-import PageTemplate from '../templates/PageTemplate';
-import { AppContext } from '../hooks/AppContext';
+} from '../../infrastructure/mopidy/mpc/player';
+import { play, resume } from '../../infrastructure/mopidy/player';
+import PlaybackPanel from '../../components/panel/PlaybackPanel';
+import ExactVolumePanel from '../../components/panel/ExactVolumePanel';
+import MopidyPlayOptions from '../../components/panel/MopidyPlayOptions';
+import PrevNextPanel from '../../components/panel/PrevNextPanel';
+import PageTemplate from '../../templates/PageTemplate';
+import { AppContext } from '../../hooks/AppContext';
 import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
-import PlayerBottomPageMenu from '../components/menu/PlayerBottomPageMenu';
-import { SetFeedbackState } from '../lib/sustain/types';
-import PageTitle from '../components/PageTitle';
-import { truncateVolume } from '../domain/utils';
+import PlayerBottomPageMenu from '../../components/menu/PlayerBottomPageMenu';
+import { SetFeedbackState } from '../../lib/sustain/types';
+import PageTitle from '../../components/PageTitle';
+import { truncateVolume } from '../../domain/utils';
 import '/src/styles/panel.scss';
 import './PlayerPage.scss';
 

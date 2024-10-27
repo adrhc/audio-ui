@@ -2,7 +2,7 @@ import { Navigate, createHashRouter } from 'react-router-dom';
 import App from './App';
 import ErrorPage from './pages/ErrorPage';
 import TrackListPage from './components/list/TrackListPage';
-import PlayerPage from './pages/PlayerPage';
+import PlayerPage from './pages/player/PlayerPage';
 import KefLsxPage from './pages/KefLsxPage';
 import EasyEffectsPage from './pages/easyeffects/EasyEffectsPage';
 import PresetEditPage from './pages/easyeffects/PresetEditPage';
