@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
-import PageTitle from '../../components/PageTitle';
+import PageTitle from '../../components/page-title/PageTitle';
 import { SetFeedbackState } from '../../lib/sustain/types';
 import PageTemplate from '../../templates/PageTemplate';
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';

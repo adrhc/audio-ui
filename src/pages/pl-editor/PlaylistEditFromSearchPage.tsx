@@ -11,7 +11,7 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingAttributes } from '../../lib/sustain/sustain';
 import { plCacheName, plEditSearchCacheName } from '../../hooks/cache/cache-names';
 import { SongSearchCache } from '../songssearch/model';
-import PageTitle from '../../components/PageTitle';
+import PageTitle from '../../components/page-title/PageTitle';
 import { SelectableSong, toSelectableSong } from '../../domain/song';
 import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMenu';
 import { updateLocalPlaylist } from '../../infrastructure/audio-db/playlist/playlist';

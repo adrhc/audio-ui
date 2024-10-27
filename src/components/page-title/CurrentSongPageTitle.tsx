@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AppContext } from '../../hooks/AppContext';
 import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
-import PageTitle from '../../components/PageTitle';
+import PageTitle from './PageTitle';
 
-export default function PlayerPageTitle() {
+export default function CurrentSongPageTitle() {
   const { currentSong, streamTitle, boost } = useContext(AppContext);
 
   return (

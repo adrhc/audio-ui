@@ -2,7 +2,6 @@ import { useSustainableState } from '../../hooks/useSustainableState';
 import PageTemplate from '../../templates/PageTemplate';
 import PlayerBottomPageMenu from '../../components/menu/PlayerBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import PlayerPageState from './PlayerPageState';
 import { useContext } from 'react';
 import ExactVolumePanel from '../../components/panel/ExactVolumePanel';
 import MopidyPlayOptions from '../../components/panel/MopidyPlayOptions';
@@ -20,9 +19,13 @@ import {
   previous,
 } from '../../infrastructure/mopidy/mpc/player';
 import { play, resume } from '../../infrastructure/mopidy/player';
-import PlayerPageTitle from './PlayerPageTitle';
+import CurrentSongPageTitle from '../../components/page-title/CurrentSongPageTitle';
 import '/src/styles/panel.scss';
 import './PlayerPage.scss';
+
+export interface PlayerPageState {
+  tuneOn: boolean;
+}
 
 export default function PlayerPage() {
   const [state, sustain, setState] = useSustainableState<PlayerPageState>({ tuneOn: false });
@@ -37,7 +40,7 @@ export default function PlayerPage() {
       setState={setState as SetFeedbackState}
       bottom={<PlayerBottomPageMenu />}
     >
-      <PlayerPageTitle />
+      <CurrentSongPageTitle />
       <ExactVolumePanel values={[5, 15, 25, 45, 65, 80]} onChange={setVolume} />
       <PlaybackPanel
         status={pbStatus}

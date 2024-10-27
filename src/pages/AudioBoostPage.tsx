@@ -9,7 +9,7 @@ import { useGoBack } from '../hooks/useGoBack';
 import { AppContext } from '../hooks/AppContext';
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
 import { SetFeedbackState } from '../lib/sustain/types';
-import PageTitle from '../components/PageTitle';
+import PageTitle from '../components/page-title/PageTitle';
 import { toVolumeBoost } from '../infrastructure/audio-ws/boost/types';
 import './AudioBoostPage.scss';
 import { truncateVolume } from '../domain/utils';

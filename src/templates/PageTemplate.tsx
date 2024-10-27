@@ -6,7 +6,7 @@ import Spinner from '../components/feedback/Spinner';
 import CloseableAlert from '../components/feedback/ErrorAlert';
 import BackAndHomeButtonsMenu from '../components/menu/BackAndHomeButtonsMenu';
 import { ReactNode } from 'react';
-import PageTitle from '../components/PageTitle';
+import PageTitle from '../components/page-title/PageTitle';
 import './PageTemplate.scss';
 
 export interface PageTemplateParam {

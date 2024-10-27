@@ -12,7 +12,7 @@ import CreateConfirmButtonMenu from '../../components/menu/CreateConfirmButtonMe
 import { useURLQueryParams } from '../../hooks/useURLSearchParams';
 import { useGoBack } from '../../hooks/useGoBack';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import PageTitle from '../../components/PageTitle';
+import PageTitle from '../../components/page-title/PageTitle';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
 import { toPlCacheName } from '../../hooks/cache/cache-names';
