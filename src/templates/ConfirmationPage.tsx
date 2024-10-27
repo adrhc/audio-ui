@@ -1,12 +1,12 @@
 import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
 import PageTemplate, { PageTemplateParam } from './PageTemplate';
 
-interface ConfirmationPageTmplParam extends PageTemplateParam {
+interface ConfirmationPageParams extends PageTemplateParam {
   onAccept: () => void;
   acceptDisabled?: boolean;
 }
 
-function ConfirmationPageTmpl({ onAccept, acceptDisabled, children, ...rest }: ConfirmationPageTmplParam) {
+function ConfirmationPage({ onAccept, acceptDisabled, children, ...rest }: ConfirmationPageParams) {
   return (
     <PageTemplate
       {...rest}
@@ -17,4 +17,4 @@ function ConfirmationPageTmpl({ onAccept, acceptDisabled, children, ...rest }: C
   );
 }
 
-export default ConfirmationPageTmpl;
+export default ConfirmationPage;

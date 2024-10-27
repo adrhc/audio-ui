@@ -1,6 +1,6 @@
 import { Stack, TextField } from '@mui/material';
 import { SetFeedbackState } from '../lib/sustain/types';
-import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
+import ConfirmationPage from '../templates/ConfirmationPage';
 import { useCallback, useContext } from 'react';
 import { AppContext } from '../hooks/AppContext';
 import { useGoBack } from '../hooks/useGoBack';
@@ -40,7 +40,7 @@ function AddTrackPage() {
 
   const addBtnDisabled = !online || state.uri.length < MIN_URI_LENGTH;
   return (
-    <ConfirmationPageTmpl
+    <ConfirmationPage
       state={state}
       setState={setState as SetFeedbackState}
       title="Add a Track"
@@ -57,7 +57,7 @@ function AddTrackPage() {
           onChange={handleChange}
         />
       </Stack>
-    </ConfirmationPageTmpl>
+    </ConfirmationPage>
   );
 }
 

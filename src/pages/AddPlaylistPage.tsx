@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 import { AppContext } from '../hooks/AppContext';
 import { useGoBack } from '../hooks/useGoBack';
 import { SetFeedbackState } from '../lib/sustain/types';
-import ConfirmationPageTmpl from '../templates/ConfirmationPageTmpl';
+import ConfirmationPage from '../templates/ConfirmationPage';
 import useLibrary from '../hooks/useLibrary';
 
 const MIN_PL_NAME_LENGTH = 3;
@@ -42,7 +42,7 @@ function AddPlaylistPage() {
 
   const createBtnDisabled = !online || state.name.length < MIN_PL_NAME_LENGTH;
   return (
-    <ConfirmationPageTmpl
+    <ConfirmationPage
       state={state}
       setState={setState as SetFeedbackState}
       title="Create a Playlist"
@@ -60,7 +60,7 @@ function AddPlaylistPage() {
           onChange={handleChange}
         />
       </Stack>
-    </ConfirmationPageTmpl>
+    </ConfirmationPage>
   );
 }
 
