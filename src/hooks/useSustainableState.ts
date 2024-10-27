@@ -25,15 +25,13 @@ export function useSustainableState<S>(
 ): [S, Dispatch<SetStateAction<S>>, (promise: Promise<Partial<S>>) => void];
 */
 
-export function useSustainableUnknownState(): [
-  Loading,
-  (
-    promise?: SustainUnknownPromise,
-    failState?: SustainUnknownFailState,
-    noWait?: boolean
-  ) => Promise<unknown>,
-  SetFeedbackState,
-] {
+export type SustainUnknownVoidFn = (
+  promise?: SustainUnknownPromise,
+  failState?: SustainUnknownFailState,
+  noWait?: boolean
+) => Promise<void>;
+
+export function useSustainableUnknownState(): [Loading, SustainUnknownVoidFn, SetFeedbackState] {
   const [loading, setState] = useState<Loading>({});
   const sustainFn = useCallback(
     (promise?: SustainUnknownPromise, failState?: SustainUnknownFailState, noWait?: boolean) =>
