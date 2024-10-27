@@ -64,7 +64,6 @@ export default function EasyEffectsPage() {
       state={state}
       setState={setState as SetFeedbackState}
       title="EasyEffects presets"
-      hideTop={true}
       disableSpinner={true}
     >
       <PresetList

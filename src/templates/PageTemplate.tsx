@@ -16,7 +16,6 @@ export interface PageTemplateParam {
   title?: string | ReactNode | null;
   hideContent?: boolean;
   onErrorClose?: NoArgsProc;
-  hideTop?: boolean;
   hideBottom?: boolean;
   className?: string;
   pageSpacing?: ResponsiveStyleValue<number | string>;
@@ -33,7 +32,6 @@ const PageTemplate = ({
   title,
   hideContent,
   onErrorClose = () => setState((old) => ({ ...old, error: '' })),
-  hideTop,
   hideBottom,
   className,
   pageSpacing = 0.5,
@@ -46,14 +44,14 @@ const PageTemplate = ({
     <>
       <Spinner show={!disableSpinner && state?.loading} />
       <Stack className={`page ${className ?? ''}`} spacing={pageSpacing} sx={sx}>
-        {!hideTop && <Stack className="top"></Stack>}
+        {/* {!hideTop && <Stack className="top" />} */}
         <Stack className="content" spacing={contentSpacing}>
           <CloseableAlert className="ignored" message={state?.error} onClose={onErrorClose} />
           <PageTitle title={title} />
           {!hideContent && children}
         </Stack>
         {bottom}
-        {!bottom && !hideBottom && <BackAndHomeButtonsMenu />}
+        {!hideBottom && !bottom && <BackAndHomeButtonsMenu />}
       </Stack>
     </>
   );

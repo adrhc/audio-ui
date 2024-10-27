@@ -68,7 +68,6 @@ export default function TrackListPage() {
       className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
-      hideTop={true}
       bottom={<TrackListMenu sustain={sustain} />}
       disableSpinner={true}
     >

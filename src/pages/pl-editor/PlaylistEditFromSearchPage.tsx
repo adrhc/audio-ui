@@ -170,7 +170,6 @@ function PlaylistEditFromSearchPage() {
       state={state}
       title={title}
       setState={setState as SetFeedbackState}
-      hideTop={true}
       bottom={<CreateConfirmButtonMenu onAccept={persistSelection} acceptDisabled={!uri || !songs.length} />}
       disableSpinner={true}
     >

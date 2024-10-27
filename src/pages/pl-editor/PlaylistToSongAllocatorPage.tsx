@@ -93,7 +93,6 @@ function PlaylistToSongAllocatorPage() {
       state={state}
       setState={setState as SetFeedbackState}
       title={<PageTitle>{decodedTitle}</PageTitle>}
-      hideTop={true}
       bottom={
         <CreateConfirmButtonMenu
           addPage="/add-playlist"

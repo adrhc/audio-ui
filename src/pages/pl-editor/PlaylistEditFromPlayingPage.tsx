@@ -108,7 +108,6 @@ function PlaylistEditFromPlayingPage() {
       state={state}
       setState={setState as SetFeedbackState}
       title={<PageTitle>{title}</PageTitle>}
-      hideTop={true}
       bottom={
         <CreateConfirmButtonMenu onAccept={persistSelection} acceptDisabled={!uri || !selections.length} />
       }

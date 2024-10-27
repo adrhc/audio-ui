@@ -25,7 +25,7 @@ const PresetEditPage = () => {
           goBack();
         } else {
           console.error(`[PresetEditPage.handleSubmit] different on server:`, { source: state, server: it });
-          return Promise.reject('The server returned a different updated value!');
+          return Promise.reject(`The server returned a different configuration for ${state.name}!`);
         }
       }),
       { ...state, error: 'Update failed!' }

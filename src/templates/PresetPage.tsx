@@ -23,14 +23,14 @@ function PresetPage({ state, sustain, setState, bottom, children }: PresetPagePa
 
   useEffect(() => {
     // console.log(`[PresetEditPage.useEffect] preset:`, preset);
-    preset && sustain(getPreset(preset), { error: 'Load failed!' });
+    preset && sustain(getPreset(preset), { error: `Failed to load ${preset}!` });
   }, [preset, sustain]);
 
   return (
     <PageTemplate
       state={state}
       setState={setState as SetFeedbackState}
-      title={`Preset: ${state.name}`}
+      title={`Preset: ${preset}`}
       bottom={bottom}
     >
       {children}

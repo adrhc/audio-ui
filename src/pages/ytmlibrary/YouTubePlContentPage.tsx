@@ -83,7 +83,6 @@ function YouTubePlContentPage() {
       className="wide-page"
       state={state}
       setState={setState as SetFeedbackState}
-      hideTop={true}
       bottom={<TracksAccessMenu />}
       disableSpinner={true}
     >
