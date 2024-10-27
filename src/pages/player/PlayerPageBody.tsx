@@ -18,7 +18,7 @@ import { LoadingState, SetLoadingState } from '../../lib/sustain/types';
 import { truncateVolume } from '../../domain/utils';
 import PlayerPageState from './PlayerPageState';
 import useMopidyVolume from '../../hooks/useMopidyVolume';
-import PlayerTitle from './PlayerTitle';
+import PlayerPageTitle from './PlayerPageTitle';
 
 interface PlayerPageBodyProps {
   state: LoadingState<PlayerPageState>;
@@ -33,7 +33,7 @@ function PlayerPageBody({ state, setState, sustain }: PlayerPageBodyProps) {
 
   return (
     <>
-      <PlayerTitle />
+      <PlayerPageTitle />
       <ExactVolumePanel values={[5, 15, 25, 45, 65, 80]} onChange={setVolume} />
       <PlaybackPanel
         status={pbStatus}

@@ -5,7 +5,7 @@ import { AppContext } from '../../hooks/AppContext';
 import SurroundSoundIcon from '@mui/icons-material/SurroundSound';
 import PageTitle from '../../components/PageTitle';
 
-export default function PlayerTitle() {
+export default function PlayerPageTitle() {
   const { currentSong, streamTitle, boost } = useContext(AppContext);
 
   return (
