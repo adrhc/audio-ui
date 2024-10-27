@@ -6,11 +6,7 @@ import { getPreset } from '../infrastructure/easyeffects/easyeffects';
 import { SustainVoidFn } from '../hooks/useSustainableState';
 import { useParams } from 'react-router-dom';
 
-export interface PresetState {
-  name: string;
-}
-
-interface PresetPageParam {
+interface EEPresetPageParam {
   state: LoadingState<EEPreset>;
   sustain: SustainVoidFn<EEPreset>;
   setState: SetLoadingState<EEPreset>;
@@ -18,7 +14,7 @@ interface PresetPageParam {
   children: ReactNode;
 }
 
-function PresetPage({ state, sustain, setState, bottom, children }: PresetPageParam) {
+function EEPresetPage({ state, sustain, setState, bottom, children }: EEPresetPageParam) {
   const { preset } = useParams();
 
   useEffect(() => {
@@ -38,4 +34,4 @@ function PresetPage({ state, sustain, setState, bottom, children }: PresetPagePa
   );
 }
 
-export default PresetPage;
+export default EEPresetPage;

@@ -4,7 +4,7 @@ import { updatePreset } from '../../infrastructure/easyeffects/easyeffects';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import PresetEditForm from './PresetEditForm';
 import ConfirmationButtonMenu from '../../components/menu/ConfirmationButtonMenu';
-import PresetPage from '../../templates/PresetPage';
+import EEPresetPage from '../../templates/EEPresetPage';
 import { useCallback } from 'react';
 import useButtonRef from '../../hooks/useButtonRef';
 
@@ -33,12 +33,12 @@ const PresetEditPage = () => {
   }, [goBack, setState, state, sustain]);
 
   return (
-    <PresetPage
+    <EEPresetPage
       {...{ state, sustain, setState }}
       bottom={<ConfirmationButtonMenu onAccept={submitBtnClick} />}
     >
       <PresetEditForm {...{ state, setState, submitBtnRef }} onSubmit={handleSubmit} />
-    </PresetPage>
+    </EEPresetPage>
   );
 };
 

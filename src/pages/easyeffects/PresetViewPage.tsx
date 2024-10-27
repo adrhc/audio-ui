@@ -1,15 +1,15 @@
 import { EEPreset, newPreset } from '../../infrastructure/easyeffects/types';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import PresetViewPanel from '../../components/panel/PresetViewPanel';
-import PresetPage from '../../templates/PresetPage';
+import EEPresetPage from '../../templates/EEPresetPage';
 
 const PresetViewPage = () => {
   const [state, sustain, setState] = useSustainableState<EEPreset>(newPreset());
 
   return (
-    <PresetPage {...{ state, sustain, setState }}>
+    <EEPresetPage {...{ state, sustain, setState }}>
       <PresetViewPanel preset={state} />
-    </PresetPage>
+    </EEPresetPage>
   );
 };
 

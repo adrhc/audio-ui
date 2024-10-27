@@ -4,7 +4,7 @@ import { removePreset } from '../../infrastructure/easyeffects/easyeffects';
 import { useSustainableState } from '../../hooks/useSustainableState';
 import PresetViewPanel from '../../components/panel/PresetViewPanel';
 import ConfirmationButtonMenu from '../../components/menu/ConfirmationButtonMenu';
-import PresetPage from '../../templates/PresetPage';
+import EEPresetPage from '../../templates/EEPresetPage';
 
 type UpdateError = { error?: string };
 type PresetDeletePageState = EEPreset & UpdateError;
@@ -24,9 +24,9 @@ const PresetDeletePage = () => {
   }
 
   return (
-    <PresetPage {...{ state, sustain, setState }} bottom={<ConfirmationButtonMenu onAccept={handleDelete} />}>
+    <EEPresetPage {...{ state, sustain, setState }} bottom={<ConfirmationButtonMenu onAccept={handleDelete} />}>
       <PresetViewPanel preset={state} />
-    </PresetPage>
+    </EEPresetPage>
   );
 };
 
