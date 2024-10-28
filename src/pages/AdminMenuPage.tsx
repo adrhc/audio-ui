@@ -4,6 +4,7 @@ import PageTemplate from '../templates/PageTemplate';
 import HomeIcon from '@mui/icons-material/Home';
 import CachedOutlinedIcon from '@mui/icons-material/CachedOutlined';
 import SettingsIcon from '@mui/icons-material/Settings';
+import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutlined';
 import { useCallback, useContext } from 'react';
 import { AppContext } from '../hooks/AppContext';
 import { useGoBack } from '../hooks/useGoBack';
@@ -58,6 +59,12 @@ export default function AdminMenuPage() {
             <CachedOutlinedIcon />
           </ListItemIcon>
           <ListItemText>Reload the State</ListItemText>
+        </MenuItem>
+        <MenuItem component={Link} to="/files-to-edit-selector">
+          <ListItemIcon>
+            <InsertDriveFileOutlinedIcon />
+          </ListItemIcon>
+          <ListItemText>Files Editor</ListItemText>
         </MenuItem>
         {/* <Divider /> */}
         <MenuItem onClick={goBackFn}>

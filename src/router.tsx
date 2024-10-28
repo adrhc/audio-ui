@@ -25,6 +25,7 @@ import LocalLibraryEditFromPlayingPage from './pages/pl-editor/LocalLibraryEditF
 import PlaylistEditFromPlayingPage from './pages/pl-editor/PlaylistEditFromPlayingPage';
 import LocalLibraryEditFromSearchPage from './pages/pl-editor/LocalLibraryEditFromSearchPage';
 import PlaylistEditFromSearchPage from './pages/pl-editor/PlaylistEditFromSearchPage';
+import RemoteFileToEditSelectorPage from './pages/files/RemoteFileToEditSelectorPage';
 
 const ROUTER = createHashRouter([
   {
@@ -39,6 +40,10 @@ const ROUTER = createHashRouter([
       {
         path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: 'files-to-edit-selector',
+        element: <RemoteFileToEditSelectorPage />,
       },
       {
         path: 'add-track',

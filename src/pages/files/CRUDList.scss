@@ -1,0 +1,62 @@
+@use '/src/styles/vars.scss' as *;
+@use '/src/styles/functions.scss' as *;
+
+.crud-list {
+  > li {
+    border-right: unset !important; // otherwise double border when the scroll bar is not present
+    .MuiListItemSecondaryAction-root {
+      right: spacing(1.25);
+    }
+  }
+}
+
+@mixin crudList($iconSize) {
+  // @debug "[crud-list] iconSize: #{$iconSize}";
+  .crud-list {
+    > li {
+      .view-btn,
+      .del-btn {
+        img {
+          width: spacing($iconSize - 0.25);
+          height: spacing($iconSize - 0.25);
+        }
+      }
+      .edit-btn {
+        img {
+          width: spacing($iconSize);
+          height: spacing($iconSize);
+        }
+      }
+    }
+  }
+
+  .crud-list.all-btn {
+    > li {
+        .MuiListItemButton-root {
+          // 7.5 = (3 * 2PX - (2 * 0.25 for view & del)) + 1.25 (action's right margin) + 0.75 (action's left space)
+          padding-right: spacing($iconSize * 3 + 7.5);
+          // 2.2 is for iconPT+0.1 and iconPB+0.1
+          height: spacing($iconSize + 2.2);
+        }
+    }
+  }
+
+  .crud-list.no-del-btn {
+    > li {
+        .MuiListItemButton-root {
+          // 5.25 = (2 * 2PX - (1 * 0.25 for view)) + 1.25 (action's right margin) + 0.75 (action's left space)
+          padding-right: spacing($iconSize * 2 + 5.25);
+          // 2.2 is for iconPT+0.1 and iconPB+0.1
+          height: spacing($iconSize + 2.2);
+        }
+    }
+  }
+}
+
+@media (max-width: $tablet) {
+  @include crudList(3.75);
+}
+
+@media (min-width: $tablet) {
+  @include crudList(3);
+}
