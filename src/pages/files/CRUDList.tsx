@@ -2,6 +2,7 @@ import { ListItem, IconButton, ListItemButton, ListItemText } from '@mui/materia
 import EditIconButton from '../../components/button/EditIconButton';
 import LoadingList from '../../components/list/LoadingList';
 import { LoadingState } from '../../lib/sustain/types';
+import './CRUDList.scss';
 
 type CRUDListState = {
   current?: string;

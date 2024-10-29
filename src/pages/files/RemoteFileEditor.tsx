@@ -6,7 +6,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import { useGoBack } from '../../hooks/useGoBack';
 import useButtonRef from '../../hooks/useButtonRef';
 import { useCallback } from 'react';
-import { RemoteFile, updateRemoteFile } from '../../infrastructure/files/files';
+import { FileNameAndContent, updateContent } from '../../infrastructure/files/files';
 import { useParams } from 'react-router-dom';
 import useFormEditor from '../../hooks/useFormEditor';
 
@@ -14,7 +14,7 @@ export default function RemoteFileEditor() {
   const { filename } = useParams();
   const goBack = useGoBack();
   const [submitBtnRef, submitBtnClick] = useButtonRef();
-  const [state, sustain, setState] = useSustainableState<RemoteFile>({
+  const [state, sustain, setState] = useSustainableState<FileNameAndContent>({
     filename: filename ?? '',
     content: '',
   });
@@ -23,7 +23,7 @@ export default function RemoteFileEditor() {
 
   const handleSubmit = useCallback(() => {
     setState((old) => ({ ...old, error: '' }));
-    sustain(updateRemoteFile(state).then(goBack), { ...state, error: 'Update failed!' });
+    sustain(updateContent(state).then(goBack), { ...state, error: 'Update failed!' });
   }, [goBack, setState, state, sustain]);
 
   <PageTemplate

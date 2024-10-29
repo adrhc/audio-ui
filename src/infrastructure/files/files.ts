@@ -1,20 +1,25 @@
-import { get, postVoid } from '../../lib/rest';
+import { get, post, postVoid } from '../../lib/rest';
 
-const FILES = '/audio-ui/api/files';
+const FILES = '/audio-ui/db-api/files';
 
-export interface RemoteFile {
+export interface FileNameAndContent {
   filename: string;
   content: string | null;
 }
 
-export function getRemoteFileNames(): Promise<string[]> {
+export function getFileNames(): Promise<string[]> {
   return get<string[]>(`${FILES}/names`);
 }
 
-export function getRemoteFile(): Promise<RemoteFile> {
-  return get<RemoteFile>(FILES);
+/**
+ * Drawback: the double encoding approach assumes there's a web proxy in front of the Java app.
+ */
+export function getByFileName(filename: string): Promise<FileNameAndContent> {
+  // const doubleEncoded = encodeURIComponent(encodeURIComponent(filename));
+  // return get<FileNameAndContent>(`${FILES}/${doubleEncoded}`);
+  return post<FileNameAndContent>(`${FILES}/query`, JSON.stringify({ filename }));
 }
 
-export function updateRemoteFile(remoteFile: RemoteFile): Promise<void> {
-  return postVoid(FILES, JSON.stringify(remoteFile));
+export function updateContent(nameAndContent: FileNameAndContent): Promise<void> {
+  return postVoid(FILES, JSON.stringify(nameAndContent));
 }

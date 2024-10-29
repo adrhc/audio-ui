@@ -3,7 +3,7 @@ import { useSustainableState } from '../../hooks/useSustainableState';
 import { SetFeedbackState } from '../../lib/sustain/types';
 import PageTemplate from '../../templates/PageTemplate';
 import { useCallback, useEffect } from 'react';
-import { getRemoteFileNames } from '../../infrastructure/files/files';
+import { getFileNames } from '../../infrastructure/files/files';
 import CRUDList from './CRUDList';
 
 interface RemoteFileToEditSelectorPageState {
@@ -16,7 +16,7 @@ export default function RemoteFileToEditSelectorPage() {
 
   useEffect(() => {
     sustain(
-      getRemoteFileNames().then((files) => ({ files })),
+      getFileNames().then((files) => ({ files })),
       'Failed to load the file names!'
     );
   }, [sustain]);
