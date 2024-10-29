@@ -10,7 +10,7 @@ import { FileNameAndContent, updateContent } from '../../infrastructure/files/fi
 import { useParams } from 'react-router-dom';
 import useFormEditor from '../../hooks/useFormEditor';
 
-export default function RemoteFileEditor() {
+export default function RemoteFileEditorPage() {
   const { filename } = useParams();
   const goBack = useGoBack();
   const [submitBtnRef, submitBtnClick] = useButtonRef();
