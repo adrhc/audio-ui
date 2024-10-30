@@ -9,6 +9,8 @@ import { useCallback } from 'react';
 import { FileNameAndContent, updateContent } from '../../infrastructure/files/files';
 import { useParams } from 'react-router-dom';
 import useFormEditor from '../../hooks/useFormEditor';
+import './RemoteFileEditorPage.scss';
+import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 
 export default function RemoteFileEditorPage() {
   const { filename } = useParams();
@@ -19,33 +21,38 @@ export default function RemoteFileEditorPage() {
     content: '',
   });
 
-  const { handleInputElementChange } = useFormEditor(setState);
+  const { handleTextElementChange } = useFormEditor(setState);
 
   const handleSubmit = useCallback(() => {
     setState((old) => ({ ...old, error: '' }));
     sustain(updateContent(state).then(goBack), { ...state, error: 'Update failed!' });
   }, [goBack, setState, state, sustain]);
 
-  <PageTemplate
-    state={state}
-    setState={setState as SetFeedbackState}
-    bottom={<ConfirmationButtonMenu onAccept={submitBtnClick} />}
-    title={filename}
-    widePage={true}
-  >
-    <Stack component="form" onSubmit={handleSubmit} spacing={2}>
-      <TextField
-        id="outlined-multiline-static"
-        required
-        multiline
-        rows={10}
-        defaultValue=""
-        inputProps={{ minLength: 3 }}
-        onChange={handleInputElementChange}
-        name="content"
-        value={state.content}
-      />
-      <Button ref={submitBtnRef} type="submit" sx={{ display: 'none' }} />
-    </Stack>
-  </PageTemplate>;
+  const maxRows = useBreakpointValue(15, 20, 25);
+  console.log(`[RemoteFileEditorPage] maxRows:`, maxRows);
+
+  return (
+    <PageTemplate
+      className='file-editor-page'
+      state={state}
+      setState={setState as SetFeedbackState}
+      bottom={<ConfirmationButtonMenu onAccept={submitBtnClick} />}
+      title={filename}
+      widePage={true}
+    >
+      <Stack component="form" onSubmit={handleSubmit} spacing={2}>
+        <TextField
+          className="file-content"
+          required
+          multiline
+          maxRows={maxRows}
+          inputProps={{ minLength: 3 }}
+          onChange={handleTextElementChange}
+          name="content"
+          value={state.content}
+        />
+        <Button ref={submitBtnRef} type="submit" sx={{ display: 'none' }} />
+      </Stack>
+    </PageTemplate>
+  );
 }

@@ -24,7 +24,7 @@ export default function RemoteFileToEditSelectorPage() {
   const handleEdit = useCallback(
     (filename: string) => {
       console.log(`[handleEdit] filename:`, filename);
-      navigate(`edit/${filename}`);
+      navigate(`/file-edit/${filename}`);
     },
     [navigate]
   );
@@ -32,7 +32,7 @@ export default function RemoteFileToEditSelectorPage() {
   const handleView = useCallback(
     (filename: string) => {
       console.log(`[handleView] filename:`, filename);
-      navigate(`view/${filename}`);
+      navigate(`/file-view/${filename}`);
     },
     [navigate]
   );
