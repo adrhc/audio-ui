@@ -3,7 +3,7 @@
 @use '/src/components/button/cornerbutton/CornerIconButton.scss' as cb;
 
 .player-page {
-  .content {
+  .page-content {
     > div:not(.ignored) {
       height: $panelHeight;
     }

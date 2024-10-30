@@ -2,7 +2,7 @@
 @use '/src/styles/functions.scss' as *;
 
 .audio-boost-page {
-  .content {
+  .page-content {
     > div:not(.ignored) {
       height: $panelHeight;
     }

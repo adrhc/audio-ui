@@ -51,7 +51,7 @@ const PageTemplate = ({
         sx={sx}
       >
         {/* {!hideTop && <Stack className="top" />} */}
-        <Stack className="content" spacing={contentSpacing}>
+        <Stack className="page-content" spacing={contentSpacing}>
           <CloseableAlert className="ignored" message={state?.error} onClose={onErrorClose} />
           <PageTitle title={title} />
           {!hideContent && children}

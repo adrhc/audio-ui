@@ -2,7 +2,7 @@
 @use '/src/styles/functions.scss' as *;
 
 .kefl-lsx-page {
-  .content {
+  .page-content {
     > div:not(.ignored) {
       height: $panelHeight;
     }
