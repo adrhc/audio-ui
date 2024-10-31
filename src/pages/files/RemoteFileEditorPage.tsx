@@ -5,8 +5,8 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import PageTemplate from '../../templates/PageTemplate';
 import { useGoBack } from '../../hooks/useGoBack';
 import useButtonRef from '../../hooks/useButtonRef';
-import { useCallback } from 'react';
-import { FileNameAndContent, updateContent } from '../../infrastructure/files/files';
+import { useCallback, useEffect } from 'react';
+import { FileNameAndContent, getByFileName, updateContent } from '../../infrastructure/files/files';
 import { useParams } from 'react-router-dom';
 import useFormEditor from '../../hooks/useFormEditor';
 import './RemoteFileEditorPage.scss';
@@ -21,6 +21,10 @@ export default function RemoteFileEditorPage() {
     content: '',
   });
 
+  useEffect(() => {
+    filename && sustain(getByFileName(filename), 'Failed to load the file!');
+  }, [filename, sustain]);
+
   const { handleTextElementChange } = useFormEditor(setState);
 
   const handleSubmit = useCallback(() => {
@@ -33,7 +37,7 @@ export default function RemoteFileEditorPage() {
 
   return (
     <PageTemplate
-      className='file-editor-page'
+      className="file-editor-page"
       state={state}
       setState={setState as SetFeedbackState}
       bottom={<ConfirmationButtonMenu onAccept={submitBtnClick} />}
@@ -45,8 +49,7 @@ export default function RemoteFileEditorPage() {
           className="file-content"
           required
           multiline
-          maxRows={maxRows}
-          inputProps={{ minLength: 3 }}
+          inputProps={{ minLength: 10 }}
           onChange={handleTextElementChange}
           name="content"
           value={state.content}

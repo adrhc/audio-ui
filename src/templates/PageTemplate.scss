@@ -23,6 +23,8 @@
     // align-content: center; -> disabled by "flex-wrap: nowrap"
     // align-items: center;
     // position: relative; // necessary for corner buttons
+
+    overflow: hidden;
   }
 }
 

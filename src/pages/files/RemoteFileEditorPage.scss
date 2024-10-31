@@ -1,10 +1,12 @@
 .file-editor-page {
-  .file-content {
-    // height: 100%;
-    // width: 100%;
-    // max-width: 100%;
-    // box-sizing: border-box;
+  form {
+    overflow: auto;
     flex-grow: 1;
-    align-self: stretch;
+    .file-content {
+      flex-grow: 1;
+      /* .MuiInputBase-root {
+        flex-grow: 1;
+      } */
+    }
   }
 }

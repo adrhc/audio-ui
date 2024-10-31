@@ -27,6 +27,7 @@ import LocalLibraryEditFromSearchPage from './pages/pl-editor/LocalLibraryEditFr
 import PlaylistEditFromSearchPage from './pages/pl-editor/PlaylistEditFromSearchPage';
 import RemoteFileToEditSelectorPage from './pages/files/RemoteFileToEditSelectorPage';
 import RemoteFileEditorPage from './pages/files/RemoteFileEditorPage';
+import RemoteFileViewPage from './pages/files/RemoteFileViewPage';
 
 const ROUTER = createHashRouter([
   {
@@ -45,6 +46,10 @@ const ROUTER = createHashRouter([
       {
         path: 'file-edit/:filename',
         element: <RemoteFileEditorPage />,
+      },
+      {
+        path: 'file-view/:filename',
+        element: <RemoteFileViewPage />,
       },
       {
         path: 'files-to-edit-selector',
