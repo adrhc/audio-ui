@@ -7,7 +7,7 @@ import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import { removeLoadingAttributes } from '../../lib/sustain/sustain';
+import { removeLoadingProps } from '../../lib/sustain/types';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
 
 function LocalLibraryToPlaySelectorPage() {
@@ -58,7 +58,7 @@ function LocalLibraryToPlaySelectorPage() {
   useEffect(() => {
     mergeCache((old) => {
       // state doesn't contain scrollTop hence won't overwrite the cache!
-      const backup = { ...old, ...removeLoadingAttributes(state) };
+      const backup = { ...old, ...removeLoadingProps(state) };
       console.log(`[LocalLibraryToPlaySelectorPage.useEffect/mergeCache] backup:`, { old, backup });
       return backup;
     });

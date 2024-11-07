@@ -7,7 +7,7 @@ import { getYTLibrary } from '../../infrastructure/audio-db/library/library';
 import { Song, ThinSongListState } from '../../domain/song';
 import { useNavigate } from 'react-router-dom';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import { removeLoadingAttributes } from '../../lib/sustain/sustain';
+import { removeLoadingProps } from '../../lib/sustain/types';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { YOUTUBE_LIBRARY } from '../../hooks/cache/cache-names';
 
@@ -62,7 +62,7 @@ function YTMusicLibraryPage() {
 
   // cache the current state
   useEffect(() => {
-    mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
+    mergeCache((old) => ({ ...old, ...removeLoadingProps(state) }));
   }, [mergeCache, state]);
 
   const handleSelection = useCallback(

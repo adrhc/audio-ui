@@ -8,7 +8,7 @@ import SongList from '../../components/list/SongList';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import { removeLoadingAttributes } from '../../lib/sustain/sustain';
+import { removeLoadingProps } from '../../lib/sustain/types';
 import { plCacheName, plEditSearchCacheName } from '../../hooks/cache/cache-names';
 import { SongSearchCache } from '../songssearch/model';
 import PageTitle from '../../components/page-title/PageTitle';
@@ -109,7 +109,7 @@ function PlaylistEditFromSearchPage() {
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
 
   // cache the current state
-  const curatedState = removeLoadingAttributes(state as SongSearchCache);
+  const curatedState = removeLoadingProps(state as SongSearchCache);
   useEffect(() => {
     mergeCache((old) => ({ ...old, ...curatedState }));
   }, [mergeCache, curatedState]);

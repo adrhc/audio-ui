@@ -9,7 +9,7 @@ import { useMaxEdge } from '../../hooks/useMaxEdge';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import { removeLoadingAttributes } from '../../lib/sustain/sustain';
+import { removeLoadingProps } from '../../lib/sustain/types';
 import { SONG_SEARCH } from '../../hooks/cache/cache-names';
 import { removeSearchExpression, toSongsSearchParams } from './SongSearchUtils';
 import { SongSearchCache, SongSearchResult } from './model';
@@ -78,7 +78,7 @@ function SongSearchPage() {
 
   // cache the current state
   const curatedState: SongSearchResult = removeSearchExpression(
-    removeLoadingAttributes(state as SongSearchCache)
+    removeLoadingProps(state as SongSearchCache)
   );
   useEffect(() => {
     mergeCache((old) => ({ ...old, ...curatedState, searchExpression }));

@@ -7,7 +7,7 @@ import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { RawPlaybackHistoryPageState, toRawPlaybackHistoryPageState } from './utils';
 import { AppContext } from '../../hooks/AppContext';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import { removeLoadingAttributes } from '../../lib/sustain/sustain';
+import { removeLoadingProps } from '../../lib/sustain/types';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { PLAYLIST_HISTORY } from '../../hooks/cache/cache-names';
 
@@ -65,7 +65,7 @@ function PlaybackHistoryPage() {
   // cache the current state
   useEffect(() => {
     mergeCache((old) => {
-      const backup = { ...old, ...removeLoadingAttributes(state) };
+      const backup = { ...old, ...removeLoadingProps(state) };
       console.log(`[PlaybackHistoryPage.useEffect/mergeCache] partialHistoryCache:`, backup);
       return backup;
     });

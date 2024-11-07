@@ -5,7 +5,7 @@ import SongList from '../../components/list/SongList';
 import { AppContext } from '../../hooks/AppContext';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import { removeLoadingAttributes } from '../../lib/sustain/sustain';
+import { removeLoadingProps } from '../../lib/sustain/types';
 import { Song, ThinSongListState } from '../../domain/song';
 import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
 import { useNavigate } from 'react-router-dom';
@@ -59,7 +59,7 @@ function LocalLibraryEditTemplatePage({ playlistEditorPath }: LocalLibraryEditTe
 
   // cache the current state
   useEffect(() => {
-    mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
+    mergeCache((old) => ({ ...old, ...removeLoadingProps(state) }));
   }, [mergeCache, state]);
 
   const goToPlaylistEditor = useCallback(

@@ -10,12 +10,6 @@ import {
   SustainUnknownPromise,
 } from './types';
 
-export function removeLoadingAttributes<S>(loadingState: LoadingState<S>): S {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { loading, error, ...result } = loadingState;
-  return result as S;
-}
-
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S>>>, promise: Promise<Partial<LoadingState<S>>>) : void;
 // export function sustain<S>(setState: Dispatch<SetStateAction<LoadingState<S> | undefined>>, promise: Promise<Partial<LoadingState<S>>>) : void {
 export function sustain<S>(

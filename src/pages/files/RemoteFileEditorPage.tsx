@@ -9,7 +9,6 @@ import { useCallback, useEffect } from 'react';
 import { FileNameAndContent, getByFileName, updateContent } from '../../infrastructure/files/files';
 import { useParams } from 'react-router-dom';
 import useFormEditor from '../../hooks/useFormEditor';
-import { useBreakpointValue } from '../../hooks/useBreakpointValue';
 import './RemoteFileEditorPage.scss';
 
 export default function RemoteFileEditorPage() {
@@ -28,12 +27,12 @@ export default function RemoteFileEditorPage() {
   const { handleTextElementChange } = useFormEditor(setState);
 
   const handleSubmit = useCallback(() => {
-    setState((old) => ({ ...old, error: '' }));
+    // setState((old) => ({ ...old, error: '' }));
     sustain(updateContent(state).then(goBack), { ...state, error: 'Update failed!' });
-  }, [goBack, setState, state, sustain]);
+  }, [goBack, state, sustain]);
 
-  const maxRows = useBreakpointValue(15, 20, 25);
-  console.log(`[RemoteFileEditorPage] maxRows:`, maxRows);
+  // const maxRows = useBreakpointValue(15, 20, 25);
+  // console.log(`[RemoteFileEditorPage] maxRows:`, maxRows);
 
   return (
     <PageTemplate

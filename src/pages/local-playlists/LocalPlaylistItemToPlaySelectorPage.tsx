@@ -6,7 +6,7 @@ import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
 import { getPlContent } from '../../infrastructure/playlist';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import { removeLoadingAttributes } from '../../lib/sustain/sustain';
+import { removeLoadingProps } from '../../lib/sustain/types';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { plCacheName } from '../../hooks/cache/cache-names';
 import { ThinSongListState } from '../../domain/song';
@@ -73,7 +73,7 @@ function LocalPlaylistItemToPlaySelectorPage() {
 
   // cache the current state
   useEffect(() => {
-    mergeCache((old) => ({ ...old, ...removeLoadingAttributes(state) }));
+    mergeCache((old) => ({ ...old, ...removeLoadingProps(state) }));
   }, [mergeCache, state, uri, clearCache]);
 
   return (

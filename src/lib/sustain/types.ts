@@ -15,3 +15,9 @@ export type SustainFailState<S> = Partial<LoadingState<S> | Loading> | string | 
 
 export type SustainUnknownPromise = Promise<Partial<LoadingState<unknown> | Loading> | void>;
 export type SustainUnknownFailState = Partial<LoadingState<unknown> | Loading> | string | null | undefined;
+
+export function removeLoadingProps<S>(loadingState: LoadingState<S>): S {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { loading, error, ...result } = loadingState;
+  return result as S;
+}
