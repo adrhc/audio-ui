@@ -1,6 +1,6 @@
 import { get, post, postVoid } from '../../lib/rest';
 
-const FILES = '/audio-ui/db-api/files';
+const FILES = '/audio-ui/db-api/config-file';
 
 export interface FileNameAndContent {
   filename: string;
@@ -8,7 +8,7 @@ export interface FileNameAndContent {
 }
 
 export function getFileNames(): Promise<string[]> {
-  return get<string[]>(`${FILES}/names`);
+  return get<string[]>(`${FILES}/names`).then(it => it.sort());
 }
 
 /**
