@@ -9,8 +9,8 @@ import { useCallback, useEffect } from 'react';
 import { FileNameAndContent, getByFileName, updateContent } from '../../infrastructure/files/files';
 import { useParams } from 'react-router-dom';
 import useFormEditor from '../../hooks/useFormEditor';
-import './RemoteFileEditorPage.scss';
 import { useBreakpointValue } from '../../hooks/useBreakpointValue';
+import './RemoteFileEditorPage.scss';
 
 export default function RemoteFileEditorPage() {
   const { filename } = useParams();
