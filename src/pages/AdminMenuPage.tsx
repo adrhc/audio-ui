@@ -64,7 +64,7 @@ export default function AdminMenuPage() {
           <ListItemIcon>
             <InsertDriveFileOutlinedIcon />
           </ListItemIcon>
-          <ListItemText>Files Editor</ListItemText>
+          <ListItemText>Configuration Files Editor</ListItemText>
         </MenuItem>
         {/* <Divider /> */}
         <MenuItem onClick={goBackFn}>
