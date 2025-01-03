@@ -7,7 +7,7 @@ import { ifIPhone, isIPhone } from './lib/agent';
 import { removeProps } from './lib/object';
 import { getSongAndBoost, getVolumeBoost } from './infrastructure/audio-ws/boost/boost';
 import Spinner from './components/feedback/Spinner';
-import CloseableAlert from './components/feedback/ErrorAlert';
+import CloseableAlert from './components/feedback/CloseableAlert';
 import { AppContext } from './hooks/AppContext';
 import { useBaseVolume } from './hooks/useBaseVolume';
 import useAppState, { AppState } from './hooks/useAppState';

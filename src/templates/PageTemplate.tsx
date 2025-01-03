@@ -3,7 +3,7 @@ import { Stack } from '@mui/material';
 import { Loading, SetFeedbackState } from '../lib/sustain/types';
 import { NoArgsProc, Styles } from '../domain/types';
 import Spinner from '../components/feedback/Spinner';
-import CloseableAlert from '../components/feedback/ErrorAlert';
+import CloseableAlert from '../components/feedback/CloseableAlert';
 import BackAndHomeButtonsMenu from '../components/menu/BackAndHomeButtonsMenu';
 import { ReactNode } from 'react';
 import PageTitle from '../components/page-title/PageTitle';
