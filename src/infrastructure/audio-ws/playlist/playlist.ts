@@ -54,7 +54,7 @@ export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
  * @param uri is a playlist URI
  */
 export function getNoImgPlContent(playlistUri: string): Promise<Song[]> {
-  console.log(`[getNoImgPlContent] playlistUri = `, playlistUri);
+  // console.log(`[getNoImgPlContent] playlistUri = `, playlistUri);
   return post<RefWithImages[]>(MOPIDY_PLAYLIST, JSON.stringify({ uri: playlistUri })).then(
     refWithImagesToSongs
   );
