@@ -1,4 +1,4 @@
-import { get } from '../../../lib/rest';
+import { get, post } from '../../../lib/rest';
 import { SelectableSong, Song } from '../../../domain/song';
 import { RefWithImages, refWithImagesToSongs } from './types';
 import { toSelected } from '../../../domain/Selectable';
@@ -29,6 +29,8 @@ export function getSortedNoImgPlContent(playlistUri: string): Promise<Song[]> {
 
 /**
  * alternative to getPlContent from mpc.ts (though still using Mopidy)
+ *
+ * @param uri is a playlist URI
  */
 export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
   // Nginx decodes 1x the received requests so 1x encoded "m3u:[Radio Streams].m3u8"
@@ -40,17 +42,20 @@ export function getPlContent(imgMaxArea: number, uri: string): Promise<Song[]> {
   // 2x encoded "m3u:[Radio Streams].m3u8" becomes "m3u%3A%5BRadio%20Streams%5D.m3u8"
   // for the upstream; PlaylistsService.getPlItems pass it to Mopidy but Mopidy can't
   // decode the encoded : character (i.e. %3A); solved with java.net.URLDecoder.decode.
-  const doubleEncodedUri = encodeURIComponent(encodeURIComponent(uri));
-  // console.log(`[getYTPlContent] double encoded ytUri = `, doubleEncodedUri);
-  return get<RefWithImages[]>(`${MOPIDY_PLAYLIST}/${doubleEncodedUri}`).then((rwis) =>
+  // const doubleEncodedUri = encodeURIComponent(encodeURIComponent(uri));
+  //
+  // console.log(`[getPlContent] uri = `, uri);
+  return post<RefWithImages[]>(MOPIDY_PLAYLIST, JSON.stringify({ uri })).then((rwis) =>
     refWithImagesToSongs(rwis, imgMaxArea)
   );
 }
 
+/**
+ * @param uri is a playlist URI
+ */
 export function getNoImgPlContent(playlistUri: string): Promise<Song[]> {
-  const doubleEncodedUri = encodeURIComponent(encodeURIComponent(playlistUri));
-  // console.log(`[getYTPlContent] double encoded ytUri = `, doubleEncodedUri);
-  return get<RefWithImages[]>(`${MOPIDY_PLAYLIST}/${doubleEncodedUri}`).then((rwis) =>
-    refWithImagesToSongs(rwis)
+  console.log(`[getNoImgPlContent] playlistUri = `, playlistUri);
+  return post<RefWithImages[]>(MOPIDY_PLAYLIST, JSON.stringify({ uri: playlistUri })).then(
+    refWithImagesToSongs
   );
 }
