@@ -24,35 +24,107 @@ export function getCurrentTlTrack(mopidy?: Mopidy): Promise<models.TlTrack | nul
     : mopidy.playback.getCurrentTlTrack();
 }
 
-export function addUrisAfter(mopidy: Mopidy | undefined, afterTlid: number, ...uris: string[]) {
+export function addUrisAfter(
+  mopidy: Mopidy | undefined,
+  afterTlid: number,
+  ...uris: string[]
+): Promise<models.TlTrack[]> {
   const tracklist = mopidy?.tracklist;
-  return tracklist == null
-    ? Promise.reject(MOPIDY_DISCONNECTED_ERROR)
-    : tracklist.index({ tlid: afterTlid })?.then((index) => {
-        if (index == null) {
-          return addUris(mopidy, ...uris);
-        } else {
-          return tracklist.add({ uris, at_position: index + 1 });
-        }
-      });
+  if (!tracklist) {
+    return Promise.reject(MOPIDY_DISCONNECTED_ERROR);
+  }
+  return tracklist.index({ tlid: afterTlid })?.then((index) => {
+    if (index == null) {
+      return addUris(mopidy, ...uris);
+    } else {
+      return tracklistAdd(tracklist, uris, index + 1);
+    }
+  });
 }
 
 export function addUris(mopidy: Mopidy | undefined, ...uris: string[]) {
   if (!uris.length) {
     return Promise.reject("Can't add an empty uri list to the playlist!");
-  } else if (!mopidy?.tracklist) {
+  }
+  const tracklist = mopidy?.tracklist;
+  if (!tracklist) {
     return Promise.reject(MOPIDY_DISCONNECTED_ERROR);
   } else {
     // console.log(`[addUris] uris:`, uris);
     // return mopidy.tracklist.add({ uris });
-    return addUrisInTwoSteps(mopidy, uris);
+    return addUrisInTwoSteps(tracklist, uris);
   }
 }
 
-async function addUrisInTwoSteps(mopidy: Mopidy, uris: string[]): Promise<models.TlTrack[]> {
+async function addUrisInTwoSteps(
+  tracklist: Mopidy.core.TracklistController,
+  uris: string[]
+): Promise<models.TlTrack[]> {
   if (uris.length === 0) return [];
+  /* const resolvedLists = await Promise.all(uris.map(resolvePlaylistUri));
+  uris = resolvedLists.flat();
+  if (uris.length === 0) return []; */
   const [firstUri, ...restUris] = uris;
-  const firstTracks = await mopidy!.tracklist!.add({ uris: [firstUri] });
-  const restTracks = restUris.length > 0 ? await mopidy!.tracklist!.add({ uris: restUris }) : [];
+  const firstTracks = await tracklistAdd(tracklist, [firstUri]);
+  const restTracks = restUris.length > 0 ? await tracklistAdd(tracklist, uris) : [];
   return [...firstTracks, ...restTracks];
 }
+
+function tracklistAdd(
+  tracklist: Mopidy.core.TracklistController,
+  uris: string[],
+  position?: number | null
+): Promise<models.TlTrack[]> {
+  uris = uris.filter(isSupportedUri);
+  if (!uris.length) return Promise.resolve([]);
+  if (position != null) {
+    return tracklist.add({ uris, at_position: position });
+  } else {
+    return tracklist.add({ uris });
+  }
+}
+
+/**
+ * curl -s http://stream2.srr.ro:8002/listen.pls
+ * gst-play-1.0 http://stream2.srr.ro:8002/listen.pls
+ * 
+ * curl -s https://www.itsybitsy.ro/itsybitsy.m3u
+ * gst-play-1.0 https://www.itsybitsy.ro/itsybitsy.m3u
+ */
+function isSupportedUri(uri: string | null): boolean {
+  return (
+    uri != null &&
+    (!uri.startsWith('http') || (!uri.endsWith('.pls') && !uri.endsWith('.m3u') && !uri.endsWith('.m3u8')))
+  );
+}
+
+/* export async function resolvePlaylistUri(uri: string): Promise<string[]> {
+  if (!uri.startsWith('http')) {
+    return [uri]; // Not a remote playlist — return as-is
+  }
+
+  if (!uri.endsWith('.pls') && !uri.endsWith('.m3u') && !uri.endsWith('.m3u8')) {
+    return [uri]; // Not a recognized playlist format
+  }
+
+  console.log('[resolvePlaylistUri] uri = ', uri);
+  const response = await fetch(uri);
+  const text = await response.text();
+
+  if (uri.endsWith('.pls')) {
+    const newUrl = [...text.matchAll(/^File\d+=(.+)$/gm)].map((match) => match[1].trim());
+    console.log(`${uri} - ${newUrl}`);
+    return newUrl;
+  }
+
+  if (uri.endsWith('.m3u') || uri.endsWith('.m3u8')) {
+    const newUrl = text
+      .split('\n')
+      .map((line) => line.trim())
+      .filter((line) => line && !line.startsWith('#'));
+    console.log(`${uri} - ${newUrl}`);
+    return newUrl;
+  }
+
+  return [uri];
+} */
