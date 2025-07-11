@@ -5,9 +5,9 @@ import * as hst from './types';
 
 const HISTORY = '/audio-ui/db-api/history';
 
-export function addToHistory(tlTrack: models.TlTrack[]) {
+export function addToHistory(tlTrack: models.TlTrack[]): Promise<void> {
   if (tlTrack.length == 0) {
-    return Promise.reject("Can't add an empty track list to the history!");
+    return Promise.reject("Can't add to the history!");
   } else {
     return postVoid(HISTORY, JSON.stringify(tlTrack.map((it) => it.track)));
   }
