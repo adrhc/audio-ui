@@ -7,6 +7,8 @@ import * as db from '../types';
 import * as dbpl from './types';
 
 export function getYTPlContent(imgMaxEdge: number, ytUri: string): Promise<Song[]> {
+  // console.log('ytUri:', ytUri);
+  // console.log('encodeURIComponent(ytUri):', encodeURIComponent(ytUri));
   return get<db.SongsPage>(`${db.YOUTUBE_PLAYLIST}/${encodeURIComponent(ytUri)}`).then((pg) =>
     toSongsWithImgUri(imgMaxEdge, pg.entries)
   );
