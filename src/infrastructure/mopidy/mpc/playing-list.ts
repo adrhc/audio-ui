@@ -38,12 +38,21 @@ export function addUrisAfter(mopidy: Mopidy | undefined, afterTlid: number, ...u
 }
 
 export function addUris(mopidy: Mopidy | undefined, ...uris: string[]) {
-  if (uris.length == 0) {
+  if (!uris.length) {
     return Promise.reject("Can't add an empty uri list to the playlist!");
-  } else if (mopidy?.tracklist == null) {
+  } else if (!mopidy?.tracklist) {
     return Promise.reject(MOPIDY_DISCONNECTED_ERROR);
   } else {
     // console.log(`[addUris] uris:`, uris);
-    return mopidy.tracklist.add({ uris });
+    // return mopidy.tracklist.add({ uris });
+    return addUrisInTwoSteps(mopidy, uris);
   }
+}
+
+async function addUrisInTwoSteps(mopidy: Mopidy, uris: string[]): Promise<models.TlTrack[]> {
+  if (uris.length === 0) return [];
+  const [firstUri, ...restUris] = uris;
+  const firstTracks = await mopidy!.tracklist!.add({ uris: [firstUri] });
+  const restTracks = restUris.length > 0 ? await mopidy!.tracklist!.add({ uris: restUris }) : [];
+  return [...firstTracks, ...restTracks];
 }
