@@ -82,7 +82,7 @@ function PlaylistToSongAllocatorPage() {
     );
   }, [decodedTitle, decodedUri, handleChangeResult, selections, sustain]);
 
-  if (!decodedUri) {
+  if (!uri || !decodedUri) {
     return <PageTitle>The song to search the locations for is missing!</PageTitle>;
   }
 
@@ -96,7 +96,7 @@ function PlaylistToSongAllocatorPage() {
         <CreateConfirmButtonMenu
           addPage="/add-playlist"
           onAccept={allocate}
-          acceptDisabled={!decodedUri || !online || !selections.length}
+          acceptDisabled={!uri || !decodedUri || !online || !selections.length}
         />
       }
       disableSpinner={true}

@@ -30,7 +30,7 @@ export function updateManyLocalPlaylists(
 }
 
 /**
- * plUri e.g.: m3u/colinde.m3u8
+ * diskPlUri example: m3u/colinde.m3u8
  */
 export function updateLocalPlaylist(diskPlUri: string, selections: LocationSelection[]): Promise<void> {
   // console.log(`[updatePlContent] plUri = ${diskPlUri}, selections:`, selections);

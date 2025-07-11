@@ -1,7 +1,6 @@
-import { get, remove } from '../../../lib/rest';
+import { get, post, remove } from '../../../lib/rest';
 import { Song } from '../../../domain/song';
 import { LocationSelection, MediaLocation } from '../../../domain/location/types';
-import { toQueryParams } from '../../../lib/url-search-params';
 import { toSongsWithImgUri } from '../converters';
 import { toDiskPlaylistRemoveRequest, toPlSelections } from './types';
 import * as audiodb from '../types';
@@ -17,9 +16,16 @@ export function getYTLibrary(imgMaxEdge: number): Promise<Song[]> {
  * @returns the playlists containing songUris
  */
 export function getLocalLibrary(songUri: string): Promise<LocationSelection[]> {
-  // must use encodeURI!
-  return get<audiodb.LocationSelections>(
-    `${audiodb.DISK_PLAYLIST}?${toQueryParams(['uri', encodeURI(songUri)])}`
+  // console.log(`songUri: ${songUri}`)
+  // console.log(`encodeURI(songUri): ${encodeURI(songUri)}`)
+  // console.log(`encodeURIComponent(songUri): ${encodeURIComponent(songUri)}`)
+
+  // 2x encoding approach must be used!
+  // return get<audiodb.LocationSelections>(
+    // `${audiodb.DISK_PLAYLIST}?${toQueryParams(['uri', encodeURI(songUri)])}`
+
+  return post<audiodb.LocationSelections>(
+    `${audiodb.DISK_PLAYLIST}/all-containing-song`, JSON.stringify({uri: songUri})
   ).then(toPlSelections);
 }
 
