@@ -1,4 +1,4 @@
-import { get, post } from '../../../lib/rest';
+import { post } from '../../../lib/rest';
 import { SelectableSong, Song } from '../../../domain/song';
 import { RefWithImages, refWithImagesToSongs } from './types';
 import { toSelected } from '../../../domain/Selectable';
