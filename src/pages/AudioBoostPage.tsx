@@ -29,6 +29,8 @@ const AudioBoostPage = () => {
   } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<AudioBoostPageState>({});
   const { draftVolume } = state;
+  
+  // console.log(`[AudioBoostPage] currentSong:`, currentSong);
   // console.log(`[AudioBoostPage] oldBoost=${oldBoost}, volume=${volume}, draftVolume = ${draftVolume}`);
 
   // there's no chance for the baseVolume to be changed
@@ -78,7 +80,7 @@ const AudioBoostPage = () => {
     );
   }, [draftBoost, goBackFn, setBoost, sustain]);
 
-  const disabled = !currentSong?.title;
+  const disabled = !currentSong?.uri;
   return (
     <PageTemplate
       className="audio-boost-page"
@@ -86,9 +88,7 @@ const AudioBoostPage = () => {
       setState={setState as SetFeedbackState}
       title={
         <PageTitle>
-          {currentSong?.title}
-          <br />
-          (flat volume is {baseVolume})
+          {currentSong?.title} {!!currentSong?.title && <br />} (flat volume is {baseVolume})
         </PageTitle>
       }
       bottom={<ConfirmationButtonMenu goBack={goBack} onAccept={saveBoost} acceptDisabled={disabled} />}
