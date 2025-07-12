@@ -38,8 +38,18 @@ export function songEqual(song: Song, currentSong?: Song | null) {
   return song.uri == currentSong?.uri;
 }
 
-export function title(sa?: Track) {
-  return sa?.artists ? `${sa.title} - ${sa.artists}` : sa?.title;
+export function title(sa?: Track | null) {
+  if (sa == null) {
+    return '';
+  } else if (sa.title && sa.artists) {
+    return `${sa.title} - ${sa.artists}`;
+  } else if (sa.title) {
+    return sa.title;
+  } else if (sa.artists) {
+    return sa.artists;
+  } else if (sa.formattedUri) {
+    return sa.formattedUri;
+  }
 }
 
 export function toTrack(tlt: models.TlTrack | null): Track | null {

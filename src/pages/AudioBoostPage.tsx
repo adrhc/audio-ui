@@ -11,8 +11,9 @@ import ConfirmationButtonMenu from '../components/menu/ConfirmationButtonMenu';
 import { SetFeedbackState } from '../lib/sustain/types';
 import PageTitle from '../components/page-title/PageTitle';
 import { toVolumeBoost } from '../infrastructure/audio-ws/boost/types';
-import './AudioBoostPage.scss';
 import { truncateVolume } from '../domain/utils';
+import './AudioBoostPage.scss';
+import { title } from '../domain/track';
 
 type AudioBoostPageState = { draftVolume?: number };
 
@@ -29,8 +30,9 @@ const AudioBoostPage = () => {
   } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<AudioBoostPageState>({});
   const { draftVolume } = state;
-  
-  // console.log(`[AudioBoostPage] currentSong:`, currentSong);
+  const songTitle = title(currentSong);
+
+  console.log(`[AudioBoostPage] currentSong:`, currentSong);
   // console.log(`[AudioBoostPage] oldBoost=${oldBoost}, volume=${volume}, draftVolume = ${draftVolume}`);
 
   // there's no chance for the baseVolume to be changed
@@ -88,7 +90,7 @@ const AudioBoostPage = () => {
       setState={setState as SetFeedbackState}
       title={
         <PageTitle>
-          {currentSong?.title} {!!currentSong?.title && <br />} (flat volume is {baseVolume})
+          {songTitle} {!!songTitle && <br />} (flat volume is {baseVolume})
         </PageTitle>
       }
       bottom={<ConfirmationButtonMenu goBack={goBack} onAccept={saveBoost} acceptDisabled={disabled} />}
