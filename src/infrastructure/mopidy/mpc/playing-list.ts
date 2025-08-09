@@ -66,7 +66,7 @@ async function addUrisInTwoSteps(
   if (uris.length === 0) return []; */
   const [firstUri, ...restUris] = uris;
   const firstTracks = await tracklistAdd(tracklist, [firstUri]);
-  const restTracks = restUris.length > 0 ? await tracklistAdd(tracklist, uris) : [];
+  const restTracks = restUris.length > 0 ? await tracklistAdd(tracklist, restUris) : [];
   return [...firstTracks, ...restTracks];
 }
 
