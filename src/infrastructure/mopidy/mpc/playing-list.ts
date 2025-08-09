@@ -35,28 +35,30 @@ export function addUrisAfter(
   }
   return tracklist.index({ tlid: afterTlid })?.then((index) => {
     if (index == null) {
-      return addUris(mopidy, ...uris);
+      return addUrisToTrackList(mopidy, ...uris);
     } else {
-      return tracklistAdd(tracklist, uris, index + 1);
+      return addUrisToTrackListAtPosition(tracklist, uris, index + 1);
     }
   });
 }
 
-export function addUris(mopidy: Mopidy | undefined, ...uris: string[]) {
-  if (!uris.length) {
-    return Promise.reject("Can't add an empty uri list to the playlist!");
-  }
+/**
+ * This is the not-async version of addUrisToTrackListIn2Steps.
+ */
+export function addUrisToTrackList(mopidy: Mopidy | undefined, ...uris: string[]) : Promise<models.TlTrack[]> {
   const tracklist = mopidy?.tracklist;
   if (!tracklist) {
     return Promise.reject(MOPIDY_DISCONNECTED_ERROR);
+  } else if (!uris.length) {
+    return Promise.reject("Can't add an empty uri list!");
   } else {
     // console.log(`[addUris] uris:`, uris);
     // return mopidy.tracklist.add({ uris });
-    return addUrisInTwoSteps(tracklist, uris);
+    return addUrisToTrackListIn2Steps(tracklist, uris);
   }
 }
 
-async function addUrisInTwoSteps(
+async function addUrisToTrackListIn2Steps(
   tracklist: Mopidy.core.TracklistController,
   uris: string[]
 ): Promise<models.TlTrack[]> {
@@ -65,19 +67,20 @@ async function addUrisInTwoSteps(
   uris = resolvedLists.flat();
   if (uris.length === 0) return []; */
   const [firstUri, ...restUris] = uris;
-  const firstTracks = await tracklistAdd(tracklist, [firstUri]);
-  const restTracks = restUris.length > 0 ? await tracklistAdd(tracklist, restUris) : [];
+  const firstTracks = await addUrisToTrackListAtPosition(tracklist, [firstUri]);
+  const restTracks = restUris.length > 0 ? await addUrisToTrackListAtPosition(tracklist, restUris) : [];
   return [...firstTracks, ...restTracks];
 }
 
-function tracklistAdd(
+function addUrisToTrackListAtPosition(
   tracklist: Mopidy.core.TracklistController,
   uris: string[],
   position?: number | null
 ): Promise<models.TlTrack[]> {
   uris = uris.filter(isSupportedUri);
-  if (!uris.length) return Promise.resolve([]);
-  if (position != null) {
+  if (!uris.length) {
+    return Promise.reject("Can't add an empty uri list!");
+  } else if (position != null) {
     return tracklist.add({ uris, at_position: position });
   } else {
     return tracklist.add({ uris });

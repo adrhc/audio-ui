@@ -1,5 +1,5 @@
 import Mopidy from 'mopidy';
-import { addUris, addUrisAfter } from '../mpc/playing-list';
+import { addUrisToTrackList, addUrisAfter } from '../mpc/playing-list';
 import { addToHistory } from '../../audio-db/history/history';
 import { Track } from '../../../domain/track';
 import { Song } from '../../../domain/song';
@@ -24,7 +24,7 @@ export function addSongsAndRemember(mopidy: Mopidy | undefined, ...song: Song[])
 }
 
 export function addUrisAndRemember(mopidy: Mopidy | undefined, ...uris: string[]) {
-  return addUris(mopidy, ...uris)?.then(addToHistory);
+  return addUrisToTrackList(mopidy, ...uris)?.then(addToHistory);
 }
 
 export function addSongThenPlay(mopidy: Mopidy | undefined, song: Song) {
@@ -32,7 +32,7 @@ export function addSongThenPlay(mopidy: Mopidy | undefined, song: Song) {
 }
 
 export function addUrisThenPlay(mopidy: Mopidy | undefined, ...uris: string[]) {
-  return addUris(mopidy, ...uris)?.then((tk) => {
+  return addUrisToTrackList(mopidy, ...uris)?.then((tk) => {
     tk.length && play(mopidy, tk[0].tlid);
   });
 }
