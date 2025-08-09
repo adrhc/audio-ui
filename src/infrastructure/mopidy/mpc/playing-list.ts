@@ -45,7 +45,7 @@ export function addUrisAfter(
 /**
  * This is the not-async version of addUrisToTrackListIn2Steps.
  */
-export function addUrisToTrackList(mopidy: Mopidy | undefined, ...uris: string[]) : Promise<models.TlTrack[]> {
+export function addUrisToTrackList(mopidy: Mopidy | undefined, ...uris: string[]): Promise<models.TlTrack[]> {
   const tracklist = mopidy?.tracklist;
   if (!tracklist) {
     return Promise.reject(MOPIDY_DISCONNECTED_ERROR);
@@ -90,7 +90,7 @@ function addUrisToTrackListAtPosition(
 /**
  * curl -s http://stream2.srr.ro:8002/listen.pls
  * gst-play-1.0 http://stream2.srr.ro:8002/listen.pls
- * 
+ *
  * curl -s https://www.itsybitsy.ro/itsybitsy.m3u
  * gst-play-1.0 https://www.itsybitsy.ro/itsybitsy.m3u
  */
