@@ -1,5 +1,5 @@
 import Mopidy from 'mopidy';
-import { addUrisToTrackList, addUrisAfter } from '../mpc/playing-list';
+import { addUrisToTrackList, addUrisToTrackListAfter } from '../mpc/playing-list';
 import { addToHistory } from '../../audio-db/history/history';
 import { Track } from '../../../domain/track';
 import { Song } from '../../../domain/song';
@@ -14,7 +14,7 @@ export function addSongsAfterAndRemember(
     return addSongsAndRemember(mopidy, ...song);
   } else {
     const uris = song.map((it) => it.uri);
-    return addUrisAfter(mopidy, after.tlid, ...uris)?.then(addToHistory);
+    return addUrisToTrackListAfter(mopidy, after.tlid, ...uris)?.then(addToHistory);
   }
 }
 
