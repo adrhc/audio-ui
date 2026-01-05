@@ -215,10 +215,13 @@ export default function App() {
   // events: state:online
   useEffect(() => {
     console.log(`[App:useEffect:state:online] init`);
+
+    // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push(['state:online', handleStateOnline]);
 
+    // register the event handlers to mopidy 
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
@@ -230,6 +233,8 @@ export default function App() {
   // events: websocket:error, websocket:close, state:offline, event:muteChanged, event:volumeChanged
   useEffect(() => {
     console.log(`[App:useEffect:events] init`);
+    
+    // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push(['websocket:error', handleWebsocketError]);
@@ -267,6 +272,7 @@ export default function App() {
       console.log(`[App:state] args:`, args);
     }]); */
 
+    // register the event handlers to mopidy 
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
