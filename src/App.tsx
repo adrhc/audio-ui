@@ -350,8 +350,9 @@ export default function App() {
       .catch(console.error);
   }, [playingSongUri, setState]);
 
-  // mopidy WS connection
+  // credentials change event
   useEffect(() => {
+    console.log(`[App:useEffect] credentials changed:`, credentials);
     let webSocketUrl: string | undefined;
     const securedProtocol = window.location.protocol == 'https:';
     if (securedProtocol && credentials.isValid()) {
