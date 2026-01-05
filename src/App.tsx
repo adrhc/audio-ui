@@ -11,10 +11,7 @@ import CloseableAlert from './components/feedback/CloseableAlert';
 import { AppContext } from './hooks/AppContext';
 import { useBaseVolume } from './hooks/useBaseVolume';
 import useAppState, { AppState } from './hooks/useAppState';
-import {
-  refreshSharedStateAndGet,
-  reloadServerState,
-} from './infrastructure/audio-ws/server/server';
+import { refreshSharedStateAndGet, reloadServerState } from './infrastructure/audio-ws/server/server';
 import CloseIcon from '@mui/icons-material/Close';
 import { LoadingState } from './lib/sustain/types';
 import { useCache } from './hooks/cache/useCache';
@@ -214,26 +211,26 @@ export default function App() {
 
   // events: state:online
   useEffect(() => {
-    console.log(`[App:useEffect:state:online] init, mopidy is `, mopidy == null ? "null" : "not null");
+    console.log(`[App:useEffect:state:online] init, mopidy is `, mopidy == null ? 'null' : 'not null');
 
     // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push(['state:online', handleStateOnline]);
 
-    // register the event handlers to mopidy 
+    // register the event handlers to mopidy
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:state:online] destroy, mopidy is `, mopidy == null ? "null" : "not null");
+      console.log(`[App:useEffect:state:online] destroy, mopidy is `, mopidy == null ? 'null' : 'not null');
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [mopidy, handleStateOnline]);
 
   // events: websocket:error, websocket:close, state:offline, event:muteChanged, event:volumeChanged
   useEffect(() => {
-    console.log(`[App:useEffect:events] init, mopidy is `, mopidy == null ? "null" : "not null");
-    
+    console.log(`[App:useEffect:events] init, mopidy is `, mopidy == null ? 'null' : 'not null');
+
     // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
@@ -272,11 +269,11 @@ export default function App() {
       console.log(`[App:state] args:`, args);
     }]); */
 
-    // register the event handlers to mopidy 
+    // register the event handlers to mopidy
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:events] destroy, mopidy is `, mopidy == null ? "null" : "not null");
+      console.log(`[App:useEffect:events] destroy, mopidy is `, mopidy == null ? 'null' : 'not null');
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [
@@ -290,7 +287,7 @@ export default function App() {
 
   // events: event:playbackStateChanged, event:trackPlaybackStarted, event:trackPlaybackResumed, event:streamTitleChanged
   useEffect(() => {
-    console.log(`[App:useEffect:songSelection] init, mopidy is `, mopidy == null ? "null" : "not null");
+    console.log(`[App:useEffect:songSelection] init, mopidy is `, mopidy == null ? 'null' : 'not null');
 
     // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
@@ -306,7 +303,7 @@ export default function App() {
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:songSelection] destroy, mopidy is `, mopidy == null ? "null" : "not null");
+      console.log(`[App:useEffect:songSelection] destroy, mopidy is `, mopidy == null ? 'null' : 'not null');
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [
@@ -363,12 +360,21 @@ export default function App() {
       setGlobalAuthorization(undefined);
     }
     setState((old) => {
+      if (
+        (!old.credentials || old.credentials.isIncomplete()) &&
+        (!credentials || credentials.isIncomplete())
+      ) {
+        console.log(
+          `[App:login] credentials is still empty or incomplete! Not (re)connecting to Mopidy yet.`
+        );
+        return old;
+      }
       if (old.mopidy) {
         console.log(`[App:login] closing previous Mopidy connection`);
         old.mopidy.close();
         old.mopidy.off();
       }
-      console.log(`[App:login] connecting to: ${webSocketUrl??'""'}`);
+      console.log(`[App:login] connecting to: ${webSocketUrl ?? '""'}`);
       // console.log(`[App:login] connecting to ${webSocketUrl == null ? 'public Mopidy' : 'secured Mopidy'}`);
       if (webSocketUrl) {
         // https://ably.com/blog/websocket-authentication
