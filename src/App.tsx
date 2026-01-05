@@ -352,8 +352,8 @@ export default function App() {
 
   // mopidy WS connection
   useEffect(() => {
-    const securedProtocol = window.location.protocol == 'https:';
     let webSocketUrl: string | undefined;
+    const securedProtocol = window.location.protocol == 'https:';
     if (securedProtocol && credentials.isValid()) {
       console.log(
         `[App.useEffect] wss://${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`
