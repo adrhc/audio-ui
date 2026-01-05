@@ -359,6 +359,7 @@ export default function App() {
     } else {
       setGlobalAuthorization(undefined);
     }
+    // webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@adrhc.go.ro/mopidy/ws`;
     setState((old) => {
       if (
         old.mopidy &&
