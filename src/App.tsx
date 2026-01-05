@@ -351,8 +351,8 @@ export default function App() {
   useEffect(() => {
     console.log(`[App:login] credentials changed:`, credentials);
     let webSocketUrl: string | undefined;
-    // const securedProtocol = window.location.protocol == 'https:';
-    if (credentials.isValid()) {
+    const isHttps = window.location.protocol == 'https:';
+    if (isHttps && credentials.isValid()) {
       // webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@adrhc.go.ro/mopidy/ws`;
       webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`;
       setGlobalAuthorization(credentials.token());
