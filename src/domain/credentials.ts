@@ -20,9 +20,9 @@ export class Credentials {
 
   encodedPassword() {
     if (this.password) {
-      // return encodeURIComponent(this.password);
+      return encodeURIComponent(this.password);
       // return btoa(this.password);
-      return this.password;
+      // return this.password;
     }
   }
 

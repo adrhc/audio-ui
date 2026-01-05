@@ -351,15 +351,15 @@ export default function App() {
   useEffect(() => {
     console.log(`[App:login] credentials changed:`, credentials);
     let webSocketUrl: string | undefined;
-    const securedProtocol = window.location.protocol == 'https:';
-    if (securedProtocol && credentials.isValid()) {
+    // const securedProtocol = window.location.protocol == 'https:';
+    if (credentials.isValid()) {
+      // webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@adrhc.go.ro/mopidy/ws`;
       webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`;
-      console.log(`[App:login] webSocketUrl: ${webSocketUrl}`);
       setGlobalAuthorization(credentials.token());
+      console.log(`[App:login] webSocketUrl: ${webSocketUrl ?? '""'}`);
     } else {
       setGlobalAuthorization(undefined);
     }
-    // webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@adrhc.go.ro/mopidy/ws`;
     setState((old) => {
       if (
         old.mopidy &&
