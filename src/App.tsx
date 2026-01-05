@@ -225,7 +225,7 @@ export default function App() {
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:state:online] destroy`);
+      console.log(`[App:useEffect:state:online] destroy, mopidy is `, mopidy == null ? "null" : "not null");
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [mopidy, handleStateOnline]);
@@ -276,7 +276,7 @@ export default function App() {
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:events] destroy`);
+      console.log(`[App:useEffect:events] destroy, mopidy is `, mopidy == null ? "null" : "not null");
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [
@@ -306,7 +306,7 @@ export default function App() {
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:songSelection] destroy`);
+      console.log(`[App:useEffect:songSelection] destroy, mopidy is `, mopidy == null ? "null" : "not null");
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [
@@ -350,6 +350,7 @@ export default function App() {
       .catch(console.error);
   }, [playingSongUri, setState]);
 
+  // mopidy WS connection
   useEffect(() => {
     const securedProtocol = window.location.protocol == 'https:';
     let webSocketUrl: string | undefined;
