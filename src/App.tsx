@@ -232,7 +232,7 @@ export default function App() {
 
   // events: websocket:error, websocket:close, state:offline, event:muteChanged, event:volumeChanged
   useEffect(() => {
-    console.log(`[App:useEffect:events] init`);
+    console.log(`[App:useEffect:events] init, mopidy is `, mopidy == null ? "null" : "not null");
     
     // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
@@ -290,7 +290,9 @@ export default function App() {
 
   // events: event:playbackStateChanged, event:trackPlaybackStarted, event:trackPlaybackResumed, event:streamTitleChanged
   useEffect(() => {
-    console.log(`[App:useEffect:songSelection] init`);
+    console.log(`[App:useEffect:songSelection] init, mopidy is `, mopidy == null ? "null" : "not null");
+
+    // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
 
     events.push(['event:playbackStateChanged', handlePlaybackStateChanged]);
