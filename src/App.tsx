@@ -356,7 +356,6 @@ export default function App() {
       // webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@adrhc.go.ro/mopidy/ws`;
       webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`;
       setGlobalAuthorization(credentials.token());
-      console.log(`[App:login] webSocketUrl: ${webSocketUrl ?? '""'}`);
     } else {
       setGlobalAuthorization(undefined);
     }
