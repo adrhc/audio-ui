@@ -32,6 +32,10 @@ export class Credentials {
   isValid() {
     return !_.isEmpty(this.user) && !_.isEmpty(this.password);
   }
+
+  eq(other?: Credentials | null) {
+    return !other || other.user != this.user || other.password != this.password;
+  }
 }
 
 export function credentialsOf(record: Record<string, string | null>) {

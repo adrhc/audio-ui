@@ -214,7 +214,7 @@ export default function App() {
 
   // events: state:online
   useEffect(() => {
-    console.log(`[App:useEffect:state:online] init`);
+    console.log(`[App:useEffect:state:online] init, mopidy is `, mopidy == null ? "null" : "not null");
 
     // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
@@ -361,10 +361,16 @@ export default function App() {
       setGlobalAuthorization(undefined);
     }
     setState((old) => {
-      if (old.mopidy) {
-        console.log(`[App:login] closing current Mopidy`);
+      const credentailsChanged = credentials.eq(old.credentials);
+      if (old.mopidy && !credentailsChanged) {
+        console.log(`[App:login] Mopidy is already connected!`);
+        return;
+      } else if (old.mopidy && credentailsChanged) {
+        console.log(`[App:login] reconnecting to Mopidy with new credentials`);
         old.mopidy.close();
         old.mopidy.off();
+      } else {
+        console.log(`[App:login] creating a first Mopidy connection`);
       }
       // console.log(`[App:login] connecting to ${webSocketUrl??''}`);
       console.log(`[App:login] connecting to ${webSocketUrl == null ? 'public Mopidy' : 'secured Mopidy'}`);
