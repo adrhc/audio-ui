@@ -364,7 +364,7 @@ export default function App() {
       const credentailsChanged = credentials.eq(old.credentials);
       if (old.mopidy && !credentailsChanged) {
         console.log(`[App:login] Mopidy is already connected!`);
-        return;
+        return old;
       } else if (old.mopidy && credentailsChanged) {
         console.log(`[App:login] reconnecting to Mopidy with new credentials`);
         old.mopidy.close();
