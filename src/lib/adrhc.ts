@@ -6,7 +6,7 @@ export function isAdrhc(includePi?: boolean) {
 }
 
 function isLocalAdrhc(includePi?: boolean) {
-  console.log(`[isLocalAdrhc] hostname = ${window.location.hostname}, port = ${window.location.port}`);
+  // console.log(`[isLocalAdrhc] hostname = ${window.location.hostname}, port = ${window.location.port}`);
   return (
     window.location.hostname == 'localhost' ||
     window.location.hostname == '127.0.0.1' ||

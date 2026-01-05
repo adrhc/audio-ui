@@ -29,7 +29,7 @@ export default function App() {
     useAppState();
 
   const { mopidy, loading, currentSong, pbStatus, notification, severity, credentials } = state;
-  // console.log(`[App] iPhone = ${isIPhone()}, state:`, state);
+  console.log(`[App] iPhone = ${isIPhone()}, state:`, state);
 
   const handleServerState = useCallback(
     (notification: string, serverState: AudioServerState) => {
