@@ -352,32 +352,24 @@ export default function App() {
 
   // credentials change event
   useEffect(() => {
-    console.log(`[App:useEffect] credentials changed:`, credentials);
+    console.log(`[App:login] credentials changed:`, credentials);
     let webSocketUrl: string | undefined;
     const securedProtocol = window.location.protocol == 'https:';
     if (securedProtocol && credentials.isValid()) {
-      console.log(
-        `[App.useEffect] wss://${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`
-      );
       webSocketUrl = `wss://${credentials.user}:${credentials.encodedPassword()}@${window.location.host}/mopidy/ws`;
+      console.log(`[App:login] webSocketUrl: ${webSocketUrl}`);
       setGlobalAuthorization(credentials.token());
     } else {
       setGlobalAuthorization(undefined);
     }
     setState((old) => {
-      const credentailsChanged = credentials.eq(old.credentials);
-      if (old.mopidy && !credentailsChanged) {
-        console.log(`[App:login] Mopidy is already connected!`);
-        return old;
-      } else if (old.mopidy && credentailsChanged) {
-        console.log(`[App:login] reconnecting to Mopidy with new credentials`);
+      if (old.mopidy) {
+        console.log(`[App:login] closing previous Mopidy connection`);
         old.mopidy.close();
         old.mopidy.off();
-      } else {
-        console.log(`[App:login] creating a first Mopidy connection`);
       }
-      // console.log(`[App:login] connecting to ${webSocketUrl??''}`);
-      console.log(`[App:login] connecting to ${webSocketUrl == null ? 'public Mopidy' : 'secured Mopidy'}`);
+      console.log(`[App:login] connecting to: ${webSocketUrl??''}`);
+      // console.log(`[App:login] connecting to ${webSocketUrl == null ? 'public Mopidy' : 'secured Mopidy'}`);
       if (webSocketUrl) {
         // https://ably.com/blog/websocket-authentication
         // const webSocket = new WebSocket(webSocketUrl, ['Authorization', credentials.token()!]);
