@@ -368,7 +368,7 @@ export default function App() {
         old.mopidy.close();
         old.mopidy.off();
       }
-      console.log(`[App:login] connecting to: ${webSocketUrl??''}`);
+      console.log(`[App:login] connecting to: ${webSocketUrl??'""'}`);
       // console.log(`[App:login] connecting to ${webSocketUrl == null ? 'public Mopidy' : 'secured Mopidy'}`);
       if (webSocketUrl) {
         // https://ably.com/blog/websocket-authentication
