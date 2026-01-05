@@ -361,6 +361,7 @@ export default function App() {
     }
     setState((old) => {
       if (
+        old.mopidy &&
         (!old.credentials || old.credentials.isIncomplete()) &&
         (!credentials || credentials.isIncomplete())
       ) {
