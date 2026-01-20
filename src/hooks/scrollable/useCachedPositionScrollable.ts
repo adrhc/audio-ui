@@ -8,7 +8,7 @@ export interface ScrollPosition {
 }
 
 export interface UseCachedPositionScrollable {
-  listRef: RefObject<HTMLUListElement>;
+  listRef: RefObject<HTMLUListElement | null>;
   scrollObserver: (e: React.UIEvent<HTMLUListElement>) => void;
   scrollTo: ScrollToFn;
   getScrollPosition(): number;

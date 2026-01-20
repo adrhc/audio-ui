@@ -11,7 +11,7 @@ interface LoadingListParam {
   empty?: boolean | null;
   children: ReactNode;
   className?: string;
-  listRef?: React.RefObject<HTMLUListElement>;
+  listRef?: React.RefObject<HTMLUListElement | null>;
   onScroll?: (e: React.UIEvent<HTMLUListElement>) => void;
 }
 

@@ -16,7 +16,7 @@ type TextSearchButtonParam = {
   onChange: (text?: string) => void;
   onSearch: () => void;
   autoFocus?: boolean;
-  searchRef?: RefObject<HTMLInputElement>;
+  searchRef?: RefObject<HTMLInputElement | null>;
 };
 
 function TextSearchButton({

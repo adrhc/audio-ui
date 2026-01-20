@@ -1,6 +1,6 @@
 import { ScrollPosition } from "../hooks/scrollable/useCachedPositionScrollable";
 
-export type ListRef = React.RefObject<HTMLUListElement>;
+export type ListRef = React.RefObject<HTMLUListElement | null>;
 export type ScrollToFn = (top?: number) => void;
 export type OnScrollFn = (e: React.UIEvent<HTMLUListElement>) => void;
 

@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 interface PresetEditFormParam {
   state: LoadingState<EEPreset>;
   setState: SetLoadingState<EEPreset>;
-  submitBtnRef: React.RefObject<HTMLButtonElement>;
+  submitBtnRef: React.RefObject<HTMLButtonElement | null>;
   onSubmit: NoArgsProc;
 }
 
