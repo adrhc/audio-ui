@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import autoprefixer from "autoprefixer";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,9 +25,10 @@ export default defineConfig({
         target: 'http://192.168.0.1:8083', // Raspberry Pi
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/audio-ui/, ''),
-        configure: (proxy) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        configure: (proxy: any) => {
           // Custom middleware to log requests
-          proxy.on('proxyReq', (_proxyReq, req) => {
+          proxy.on('proxyReq', (_proxyReq: any, req: any) => {
             console.log(`Proxying request to upstream: ${req.method} ${req.originalUrl}`);
             // console.log(`Request headers sent to upstream:`);
             // console.log(proxyReq.getHeaders()); // Log the headers sent to the upstream
@@ -52,6 +54,11 @@ export default defineConfig({
   css: {
     modules: {
       localsConvention: 'camelCaseOnly',
+    },
+    postcss: {
+      plugins: [
+        autoprefixer({}), // add options if needed
+      ],
     },
   },
 });
