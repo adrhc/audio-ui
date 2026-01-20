@@ -32,15 +32,16 @@ const tuneStyle: Styles = {
 export default function PrevNextPanel({ disabled, previous, next, toggleTune, sx }: PrevNextPanelParam) {
   const { online } = useContext(AppContext);
   const fontSize = iconFontSize((fs) => fs.map((n) => n + 1));
+  const freeze = disabled ?? !online;
   return (
-    <ButtonGroup className="prev-next-panel" disabled={disabled ?? !online} sx={sx}>
+    <ButtonGroup className="prev-next-panel" sx={sx}>
       <Button variant="outlined" component={Link} to="/trackList">
         <SubjectIcon sx={{ fontSize }} />
       </Button>
-      <Button variant="outlined" onClick={() => previous()}>
+      <Button variant="outlined" onClick={() => previous()} disabled={freeze}>
         <NavigateBeforeIcon sx={{ fontSize }} />
       </Button>
-      <Button variant="outlined" onClick={() => next()}>
+      <Button variant="outlined" onClick={() => next()} disabled={freeze}>
         <NavigateNextIcon sx={{ fontSize }} />
       </Button>
       <Button variant="outlined" onClick={toggleTune}>
