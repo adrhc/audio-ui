@@ -13,5 +13,5 @@ function imgAreaDistance(imgMaxArea: number, img: models.Image) {
 }
 
 function imgArea(img: models.Image) {
-  return img.height ?? 0 * img.width ?? 0;
+  return (img.height ?? 0) * (img.width ?? 0);
 }
