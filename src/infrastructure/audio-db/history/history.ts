@@ -1,6 +1,9 @@
+import { toSongUris } from '../../../domain/song';
 import Mopidy, { models } from 'mopidy';
 import { get, post, postVoid } from '../../../lib/rest';
 import { HistoryPosition, HistoryPage } from '../../../domain/history';
+import { getImages } from '../../mopidy/mpc/mpc';
+import { addImgUriToSongs } from '../../mopidy/types';
 import * as hst from './types';
 
 const HISTORY = '/audio-ui/db-api/history';
@@ -20,7 +23,7 @@ export async function getHistoryBefore(
 ): Promise<HistoryPage> {
   const audioDbHistoryPage = await post<hst.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before));
   const hp = hst.toHistoryPage(audioDbHistoryPage);
-  return await hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp);
+  return mopidy == null ? hp : await addImgUriToHistoryPage(mopidy, imgMaxEdge, hp);
 }
 
 export async function getHistoryAfter(
@@ -30,11 +33,21 @@ export async function getHistoryAfter(
 ): Promise<HistoryPage> {
   const audioDbHistoryPage = await post<hst.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after));
   const hp = hst.toHistoryPage(audioDbHistoryPage);
-  return await hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp);
+  return mopidy == null ? hp : await addImgUriToHistoryPage(mopidy, imgMaxEdge, hp);
 }
 
 export async function getHistory(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<HistoryPage> {
   const audioDbHistoryPage = await get<hst.HistoryPage>(HISTORY);
   const hp = hst.toHistoryPage(audioDbHistoryPage);
-  return await hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp);
+  return mopidy == null ? hp : await addImgUriToHistoryPage(mopidy, imgMaxEdge, hp);
+}
+
+async function addImgUriToHistoryPage(
+  mopidy: Mopidy | undefined,
+  imgMaxEdge: number,
+  hp: HistoryPage
+): Promise<HistoryPage> {
+  const imagesMap = await getImages(mopidy, toSongUris(hp.entries));
+  const entries = addImgUriToSongs(imgMaxEdge, imagesMap, hp.entries);
+  return { ...hp, entries };
 }

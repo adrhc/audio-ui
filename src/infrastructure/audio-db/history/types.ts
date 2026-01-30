@@ -1,11 +1,7 @@
-import Mopidy from 'mopidy';
-import { toSongUris } from '../../../domain/song';
 import { HistoryPosition } from '../../../domain/history';
-import { getImages } from '../../mopidy/mpc/mpc';
 import { SongsPage } from '../types';
 import { toNoImgSongs } from '../converters';
-import { addImgUriToMany } from '../../mopidy/types';
-import * as app from '../../../domain/history';
+import * as hst from '../../../domain/history';
 
 export interface HistoryPage extends SongsPage {
   first: HistoryPosition;
@@ -15,20 +11,10 @@ export interface HistoryPage extends SongsPage {
   completePageSize: number;
 }
 
-export async function toHistoryPageWithImages(
-  mopidy: Mopidy | undefined,
-  imgMaxEdge: number,
-  hp: app.HistoryPage
-): Promise<app.HistoryPage> {
-  const imagesMap = await getImages(mopidy, toSongUris(hp.entries));
-  const entries = addImgUriToMany(imgMaxEdge, hp.entries, imagesMap);
-  return { ...hp, entries };
-}
-
 /**
  * DB/HistoryPage -> HistoryPage
  */
-export function toHistoryPage(audioDbHistoryPage: HistoryPage): app.HistoryPage {
+export function toHistoryPage(audioDbHistoryPage: HistoryPage): hst.HistoryPage {
   const { entries, ...dbHistoryPageRest } = audioDbHistoryPage;
   // return { ...dbHistoryPageRest, entries: toSongsWithImgUri(imgMaxArea, entries) };
   return { ...dbHistoryPageRest, entries: toNoImgSongs(entries) };
