@@ -72,7 +72,7 @@ export default function App() {
 
   const handleWebsocketError = useCallback(
     (e: object | string) => {
-      console.error(`[App:websocket:error]`, e);
+      console.error(`[App.handleWebsocketError]`, e);
       setState((old) => ({
         ...old,
         severity: 'error',
@@ -83,7 +83,7 @@ export default function App() {
   );
 
   const handleWebsocketClose = useCallback(() => {
-    console.warn(`[App:websocket:close]`);
+    console.warn(`[App.handleWebsocketClose]`);
     setState((old) => ({
       ...old,
       severity: 'error',
@@ -98,7 +98,7 @@ export default function App() {
 
   const handleVolumeChanged = useCallback(
     ({ volume }: { volume: number }) => {
-      console.log(`[App:event:volumeChanged] volume = ${volume}`);
+      console.log(`[App.handleVolumeChanged] volume = ${volume}`);
       if (!mopidy) {
         return;
       }
@@ -107,13 +107,13 @@ export default function App() {
           stateAtVolChgEvent.volume == volume &&
           (stateAtVolChgEvent.pbStatus == 'paused' || stateAtVolChgEvent.pbStatus == 'stopped')
         ) {
-          console.log(`[App:event:volumeChanged] loading the current Mopidy track ...`);
+          console.log(`[App.handleVolumeChanged] loading the current Mopidy track ...`);
           // prev/next navigation when nothing plays
           getSongAndBoost(mopidy)?.then((sab) => {
             // stateAtVolumeChangedEvent.currentSong should differ
             // than the one from Mopidy hence resetting streamTitle
             if (stateAtVolChgEvent.currentSong?.uri != sab.currentSong?.uri) {
-              console.log(`[App:event:volumeChanged] switched to:`, {
+              console.log(`[App.handleVolumeChanged] switched to:`, {
                 mopidyTrack: sab.currentSong,
                 newBoost: sab.boost,
                 stateAtVolChgEvent,
@@ -125,7 +125,7 @@ export default function App() {
                 streamTitle: null,
               }));
             } else {
-              console.warn(`[App:event:volumeChanged] current Mopidy track didn't change:`, {
+              console.warn(`[App.handleVolumeChanged] current Mopidy track didn't change:`, {
                 newBoost: sab.boost, // most probably the boost didn't change too!
                 stateAtVolChgEvent,
               });
@@ -140,7 +140,7 @@ export default function App() {
 
   const handlePlaybackStateChanged = useCallback(
     ({ old_state, new_state: pbStatus }: { old_state: PlaybackState; new_state: PlaybackState }) => {
-      console.log(`[App:event:playbackStateChanged] pbStatus = ${pbStatus}, oldState = ${old_state}`);
+      console.log(`[App.handlePlaybackStateChanged] pbStatus = ${pbStatus}, oldState = ${old_state}`);
       setState((old) => ({
         ...old,
         pbStatus,
@@ -153,7 +153,7 @@ export default function App() {
 
   const handleTrackPlaybackStarted = useCallback(
     (params: { tl_track: models.TlTrack }) => {
-      // console.log(`[App:event:trackPlaybackStarted] ${Date.now()}, TlTrack:`);
+      // console.log(`[App.handleTrackPlaybackStarted] ${Date.now()}, TlTrack:`);
       // logTlTrack(params.tl_track);
       const currentSong = toTrack(params.tl_track);
       if (currentSong) {
@@ -164,7 +164,7 @@ export default function App() {
             return old;
           } else {
             console.log(
-              `[App:event:trackPlaybackStarted] boost was set to 0 while switching to:`,
+              `[App.handleTrackPlaybackStarted] boost was set to 0 while switching to:`,
               currentSong
             );
             return {
@@ -178,7 +178,7 @@ export default function App() {
           }
         });
       } else {
-        console.log(`[App:event:trackPlaybackStarted] can't switch to:`, currentSong);
+        console.log(`[App.handleTrackPlaybackStarted] can't switch to:`, currentSong);
         setState((old) => ({ ...old, error: 'The current song has no uri!' }));
       }
     },
@@ -187,11 +187,11 @@ export default function App() {
 
   const handleTrackPlaybackResumed = useCallback(
     (params: { tl_track: models.TlTrack }) => {
-      // console.log(`[App:event:trackPlaybackResumed] ${Date.now()}, TlTrack:`);
+      // console.log(`[App.handleTrackPlaybackResumed] ${Date.now()}, TlTrack:`);
       // logTlTrack(params.tl_track);
       const currentSong = toTrack(params.tl_track);
       if (!currentSong) {
-        console.log(`[App:event:trackPlaybackResumed] can't switch to:`, currentSong);
+        console.log(`[App.handleTrackPlaybackResumed] can't switch to:`, currentSong);
         setState((old) => ({ ...old, error: 'The current song has no uri!' }));
       }
     },
