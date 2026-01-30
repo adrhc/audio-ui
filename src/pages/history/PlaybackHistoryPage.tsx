@@ -81,7 +81,7 @@ function PlaybackHistoryPage() {
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
           setState((old) => ({ ...old, ...toRawPlaybackHistoryPageState(0, hp) }));
         }),
-        `Failed to load the history!`
+        `Failed to load the next history page!`
       );
     } else if (state.after) {
       sustain(
@@ -94,7 +94,7 @@ function PlaybackHistoryPage() {
             ...toRawPlaybackHistoryPageState(old.prevSongsCount + old.completePageSize, hp),
           }));
         }),
-        `Failed to load the history!`
+        `Failed to load the next history page!`
       );
     }
   }, [
@@ -122,7 +122,7 @@ function PlaybackHistoryPage() {
           ...toRawPlaybackHistoryPageState(Math.max(0, old.prevSongsCount - old.completePageSize), hp),
         }));
       }),
-      `Failed to load the history!`
+      `Failed to load the previous history page!`
     );
   }, [imgMaxEdge, mergeCache, mopidy, setState, state.before, sustain]);
 
