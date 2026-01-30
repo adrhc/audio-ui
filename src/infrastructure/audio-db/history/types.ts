@@ -15,15 +15,14 @@ export interface HistoryPage extends SongsPage {
   completePageSize: number;
 }
 
-export function toHistoryPageWithImages(
+export async function toHistoryPageWithImages(
   mopidy: Mopidy | undefined,
   imgMaxEdge: number,
   hp: app.HistoryPage
 ): Promise<app.HistoryPage> {
-  return getImages(mopidy, toSongUris(hp.entries))?.then((imagesMap) => {
-    const entries = addImgUriToMany(imgMaxEdge, hp.entries, imagesMap);
-    return { ...hp, entries };
-  });
+  const imagesMap = await getImages(mopidy, toSongUris(hp.entries));
+  const entries = addImgUriToMany(imgMaxEdge, hp.entries, imagesMap);
+  return { ...hp, entries };
 }
 
 /**

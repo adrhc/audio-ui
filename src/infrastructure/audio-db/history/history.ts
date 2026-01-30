@@ -23,18 +23,18 @@ export function getHistoryBefore(
     .then((hp) => hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
 }
 
-export function getHistoryAfter(
+export async function getHistoryAfter(
   mopidy: Mopidy | undefined,
   imgMaxEdge: number,
   after: HistoryPosition
 ): Promise<HistoryPage> {
-  return post<hst.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after))
-    .then(hst.toHistoryPage)
-    .then((hp) => hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
+  const audioDbHistoryPage = await post<hst.HistoryPage>(`${HISTORY}/after`, JSON.stringify(after));
+  const hp = hst.toHistoryPage(audioDbHistoryPage);
+  return await hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp);
 }
 
-export function getHistory(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<HistoryPage> {
-  return get<hst.HistoryPage>(HISTORY)
-    .then(hst.toHistoryPage)
-    .then((hp) => hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
+export async function getHistory(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<HistoryPage> {
+  const audioDbHistoryPage = await get<hst.HistoryPage>(HISTORY);
+  const hp = hst.toHistoryPage(audioDbHistoryPage);
+  return await hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp);
 }
