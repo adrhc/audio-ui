@@ -13,14 +13,14 @@ export function addToHistory(tlTrack: models.TlTrack[]): Promise<void> {
   }
 }
 
-export function getHistoryBefore(
+export async function getHistoryBefore(
   mopidy: Mopidy | undefined,
   imgMaxEdge: number,
   before: HistoryPosition
 ): Promise<HistoryPage> {
-  return post<hst.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before))
-    .then(hst.toHistoryPage)
-    .then((hp) => hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp));
+  const audioDbHistoryPage = await post<hst.HistoryPage>(`${HISTORY}/before`, JSON.stringify(before));
+  const hp = hst.toHistoryPage(audioDbHistoryPage);
+  return await hst.toHistoryPageWithImages(mopidy, imgMaxEdge, hp);
 }
 
 export async function getHistoryAfter(
