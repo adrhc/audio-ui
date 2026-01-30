@@ -211,7 +211,7 @@ export default function App() {
 
   // events: state:online
   useEffect(() => {
-    console.log(`[App:useEffect:state:online] init, mopidy is `, mopidy == null ? 'null' : 'not null');
+    console.log(`[App:useEffect:state:online] init, mopidy is `, mopidy == null ? 'null' : mopidy);
 
     // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
@@ -222,14 +222,14 @@ export default function App() {
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:state:online] destroy, mopidy is `, mopidy == null ? 'null' : 'not null');
+      console.log(`[App:useEffect:state:online] destroy, mopidy is `, mopidy == null ? 'null' : mopidy);
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [mopidy, handleStateOnline]);
 
   // events: websocket:error, websocket:close, state:offline, event:muteChanged, event:volumeChanged
   useEffect(() => {
-    console.log(`[App:useEffect:events] init, mopidy is `, mopidy == null ? 'null' : 'not null');
+    console.log(`[App:useEffect:events] init, mopidy is `, mopidy == null ? 'null' : mopidy);
 
     // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
@@ -273,7 +273,7 @@ export default function App() {
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:events] destroy, mopidy is `, mopidy == null ? 'null' : 'not null');
+      console.log(`[App:useEffect:events] destroy, mopidy is `, mopidy == null ? 'null' : mopidy);
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [
@@ -287,7 +287,7 @@ export default function App() {
 
   // events: event:playbackStateChanged, event:trackPlaybackStarted, event:trackPlaybackResumed, event:streamTitleChanged
   useEffect(() => {
-    console.log(`[App:useEffect:songSelection] init, mopidy is `, mopidy == null ? 'null' : 'not null');
+    console.log(`[App:useEffect:songSelection] init, mopidy is `, mopidy == null ? 'null' : mopidy);
 
     // store the event handlers to register
     const events: MopidyEvent<keyof Mopidy.StrictEvents>[] = [];
@@ -303,7 +303,7 @@ export default function App() {
     events.forEach((e) => mopidy?.on(...e));
 
     return () => {
-      console.log(`[App:useEffect:songSelection] destroy, mopidy is `, mopidy == null ? 'null' : 'not null');
+      console.log(`[App:useEffect:songSelection] destroy, mopidy is `, mopidy == null ? 'null' : mopidy);
       events.forEach((e) => mopidy?.off(...e));
     };
   }, [
