@@ -58,7 +58,7 @@ export default function TrackListPage() {
       // console.log(`[TrackListPage:handleDownload] song:\n`, song);
       sustain(
         downloadTrack(song.uri).then((response) => {
-          const formattedPath = formatFilePath(response.filePath);
+          const formattedPath = formatFilePath(response.fileURI);
           setNotification(
             response.alreadyDownloaded
               ? `Already downloaded ${song.title} at ${formattedPath}`
