@@ -40,6 +40,7 @@ export default function TrackListPage() {
   const handleSelection = useCallback(
     (song: Track) => {
       if (song.tlid) {
+      // console.log(`[TrackListPage:handleSelection] song:\n`, song);
         sustain(play(mopidy, song.tlid), `Failed to play ${song.title}!`);
       } else {
         setState((old) => ({ ...old, error: 'Something is wrong with the selected song!' }));
@@ -49,6 +50,7 @@ export default function TrackListPage() {
   );
 
   const handleDownload = useCallback((song: Track) => {
+    // console.log(`[TrackListPage:handleDownload] song:\n`, song);
     void song;
   }, []);
 

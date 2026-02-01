@@ -23,14 +23,12 @@ $liPX: spacing(0.5);
       @include tracksListItem($liPX, 1rem, 2.75);
     }
   }
-  &.has-download {
-    > li {
-      @media (max-width: $tablet) {
-        @include tracksListItem($liPX, 1.15rem, 3.5, 3);
-      }
-      @media (min-width: $tablet) {
-        @include tracksListItem($liPX, 1rem, 2.75, 3);
-      }
+  > li.has-download {
+    @media (max-width: $tablet) {
+      @include tracksListItem($liPX, 1.15rem, 3.5, 3);
+    }
+    @media (min-width: $tablet) {
+      @include tracksListItem($liPX, 1rem, 2.75, 3);
     }
   }
   @include liMenuMedia;

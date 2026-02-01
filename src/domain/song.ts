@@ -81,6 +81,14 @@ export function isYtMusicPl(song: Song | string) {
   }
 }
 
+export function isYtVideo(song: Song | string) {
+  if (typeof song == 'string') {
+    return song.startsWith('youtube:video:');
+  } else {
+    return song.uri.startsWith('youtube:video:');
+  }
+}
+
 export function isLocalPl(song: Song | string) {
   if (typeof song == 'string') {
     // return song.endsWith('.m3u8');

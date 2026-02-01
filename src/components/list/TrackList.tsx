@@ -1,6 +1,7 @@
 import { IconButton, ListItem, ListItemButton, Stack } from '@mui/material';
 import { ReactNode, useCallback, useContext } from 'react';
 import { SelectableTrack, Track } from '../../domain/track';
+import { isYtVideo } from '../../domain/song';
 import TrackListItemText from './TrackListItemText';
 import SongListItemAvatar from './SongListItemAvatar';
 import { Link } from 'react-router-dom';
@@ -38,7 +39,7 @@ function TrackList({
 }: LoadingState<TrackListParam>) {
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
   const { currentSong } = useContext(AppContext);
-  const listClassName = `${className ?? ''} track-list${onDownload ? ' has-download' : ''}`;
+  const listClassName = `${className ?? ''} track-list`;
   const tlid = currentSong?.tlid;
   const shouldAutoFocus = useCallback(
     (sa: Track) => {
@@ -64,6 +65,7 @@ function TrackList({
         <ListItem
           disablePadding
           key={track.tlid}
+          className={onDownload && isYtVideo(track) ? 'has-download' : undefined}
           secondaryAction={
             <Stack className="action">
               {!onSelect && (
@@ -75,7 +77,7 @@ function TrackList({
                   <img src="btn/audio-playlist-icon-70.svg" />
                 </IconButton>
               )}
-              {onDownload && (
+              {onDownload && isYtVideo(track) && (
                 <IconButton className="download-btn" onClick={() => onDownload(track)}>
                   <img src="btn/download-file-square-line-icon.svg" />
                 </IconButton>
