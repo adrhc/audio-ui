@@ -11,7 +11,7 @@ import { Track, removeTrack } from '../../domain/track';
 import TrackListMenu from '../menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain/types';
 import { downloadTrack } from '../../infrastructure/audio-db/download';
-import { formatFilePath } from '../../domain/song';
+import { formatFileURI } from '../../domain/song';
 
 type TrackListPageState = {
   songs: Track[];
@@ -58,7 +58,7 @@ export default function TrackListPage() {
       // console.log(`[TrackListPage:handleDownload] song:\n`, song);
       sustain(
         downloadTrack(song.uri).then((response) => {
-          const formattedURI = formatFilePath(response.fileURI);
+          const formattedURI = formatFileURI(response.fileURI);
           setNotification(
             response.alreadyDownloaded
               ? `Already downloaded ${song.title} at ${formattedURI}`
