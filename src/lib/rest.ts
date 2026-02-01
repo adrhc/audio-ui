@@ -1,19 +1,32 @@
 import { AUTHORIZATION } from '../domain/credentials';
 
-export function get<T>(url: string): Promise<T> {
-  return fetch(url, { headers: headers() }).then((response) => toTypedResponse(response));
+export async function get<T>(url: string): Promise<T> {
+  const response = await fetch(url, { headers: headers() });
+  return await toTypedResponse(response);
 }
 
-export function remove<T>(url: string, body?: BodyInit | null): Promise<T> {
-  return fetch(url, { method: 'DELETE', headers: headers(), body }).then((response) =>
-    toTypedResponse(response)
-  );
+export async function remove<T>(url: string, body?: BodyInit | null): Promise<T> {
+  const response = await fetch(url, { method: 'DELETE', headers: headers(), body });
+  return await toTypedResponse(response);
 }
 
-export function post<T>(url: string, body?: BodyInit | null): Promise<T> {
-  return fetch(url, { method: 'POST', headers: headers(), body }).then((response) =>
-    toTypedResponse(response)
-  );
+export async function post<T>(url: string, body?: BodyInit | null): Promise<T> {
+  const response = await fetch(url, { method: 'POST', headers: headers(), body });
+  return await toTypedResponse(response);
+}
+
+export async function removeVoid(url: string, body?: BodyInit | null): Promise<void> {
+  const response = await fetch(url, { method: 'DELETE', headers: headers(), body });
+  if (!response.ok) {
+    return Promise.reject(new Error(response.statusText));
+  }
+}
+
+export async function postVoid(url: string, body?: BodyInit | null): Promise<void> {
+  const response = await fetch(url, { method: 'POST', headers: headers(), body });
+  if (!response.ok) {
+    return Promise.reject(new Error(response.statusText));
+  }
 }
 
 function toTypedResponse<T>(response: Response): Promise<T> {
@@ -22,26 +35,6 @@ function toTypedResponse<T>(response: Response): Promise<T> {
   } else {
     return Promise.reject(new Error(response.statusText));
   }
-}
-
-export function removeVoid(url: string, body?: BodyInit | null): Promise<void> {
-  return fetch(url, { method: 'DELETE', headers: headers(), body }).then((response) => {
-    if (!response.ok) {
-      return Promise.reject(new Error(response.statusText));
-    }
-  });
-}
-
-export function postVoid(url: string, body?: BodyInit | null): Promise<void> {
-  return fetch(url, {
-    method: 'POST',
-    headers: headers(),
-    body,
-  }).then((response) => {
-    if (!response.ok) {
-      return Promise.reject(new Error(response.statusText));
-    }
-  });
 }
 
 function headers() {

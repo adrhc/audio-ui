@@ -10,6 +10,7 @@ import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { Track, removeTrack } from '../../domain/track';
 import TrackListMenu from '../menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain/types';
+import { downloadTrack } from '../../infrastructure/audio-db/download';
 
 type TrackListPageState = {
   songs: Track[];
@@ -49,10 +50,13 @@ export default function TrackListPage() {
     [mopidy, setState, sustain]
   );
 
-  const handleDownload = useCallback((song: Track) => {
-    // console.log(`[TrackListPage:handleDownload] song:\n`, song);
-    void song;
-  }, []);
+  const handleDownload = useCallback(
+    (song: Track) => {
+      // console.log(`[TrackListPage:handleDownload] song:\n`, song);
+      sustain(downloadTrack(song.uri).then(() => undefined), `Failed to download ${song.title}!`);
+    },
+    [sustain]
+  );
 
   useEffect(() => {
     if (online) {
