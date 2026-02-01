@@ -15,13 +15,15 @@ import { downloadTrack } from '../../infrastructure/audio-db/download';
 type TrackListPageState = {
   songs: Track[];
   songCloseToLastRemoved?: Track;
+  downloadedUris?: string[];
 };
 
 export default function TrackListPage() {
-  const { mopidy, online } = useContext(AppContext);
+  const { mopidy, online, setNotification } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<TrackListPageState>({ songs: [] });
-  // console.log(`[TrackListPage] online = ${online}, state:`, state);
   const imgMaxEdge = useMaxEdge();
+
+  console.log(`[TrackListPage] online = ${online}:`, state.songs);
 
   const handleRemove = useCallback(
     (song: Track) => {
@@ -41,7 +43,7 @@ export default function TrackListPage() {
   const handleSelection = useCallback(
     (song: Track) => {
       if (song.tlid) {
-      // console.log(`[TrackListPage:handleSelection] song:\n`, song);
+        // console.log(`[TrackListPage:handleSelection] song:\n`, song);
         sustain(play(mopidy, song.tlid), `Failed to play ${song.title}!`);
       } else {
         setState((old) => ({ ...old, error: 'Something is wrong with the selected song!' }));
@@ -53,9 +55,24 @@ export default function TrackListPage() {
   const handleDownload = useCallback(
     (song: Track) => {
       // console.log(`[TrackListPage:handleDownload] song:\n`, song);
-      sustain(downloadTrack(song.uri).then(() => undefined), `Failed to download ${song.title}!`);
+      sustain(
+        downloadTrack(song.uri).then((response) => {
+          setNotification(
+            response.alreadyDownloaded
+              ? `Already downloaded ${song.title} at ${response.formattedUri}`
+              : `Downloaded ${song.title} to ${response.formattedUri}`
+          );
+          return {
+            downloadedUris: [
+              ...(state.downloadedUris ?? []),
+              ...(state.downloadedUris?.includes(song.uri) ? [] : [song.uri]),
+            ],
+          };
+        }),
+        `Failed to download ${song.title}!`
+      );
     },
-    [sustain]
+    [setNotification, state.downloadedUris, sustain]
   );
 
   useEffect(() => {
@@ -87,6 +104,7 @@ export default function TrackListPage() {
         onDownload={handleDownload}
         onClick={handleSelection}
         songCloseToLastRemoved={state.songCloseToLastRemoved}
+        downloadedUris={state.downloadedUris}
       />
     </PageTemplate>
   );

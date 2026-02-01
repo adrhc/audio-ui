@@ -17,6 +17,7 @@ interface TrackListParam extends ScrollableList {
   songs: SelectableTrack[];
   onRemove?: (song: Track) => void;
   onDownload?: (song: Track) => void;
+  downloadedUris?: string[];
   onClick?: (song: Track) => void;
   onSelect?: (song: SelectableTrack) => void;
   songCloseToLastRemoved?: Track;
@@ -29,6 +30,7 @@ function TrackList({
   loading,
   onRemove,
   onDownload,
+  downloadedUris,
   onClick,
   onSelect,
   songCloseToLastRemoved,
@@ -40,6 +42,10 @@ function TrackList({
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
   const { currentSong } = useContext(AppContext);
   const listClassName = `${className ?? ''} track-list`;
+  const canDownload = useCallback(
+    (track: Track) => isYtVideo(track) && !downloadedUris?.includes(track.uri),
+    [downloadedUris]
+  );
   const tlid = currentSong?.tlid;
   const shouldAutoFocus = useCallback(
     (sa: Track) => {
@@ -65,7 +71,7 @@ function TrackList({
         <ListItem
           disablePadding
           key={track.tlid}
-          className={onDownload && isYtVideo(track) ? 'has-download' : undefined}
+          className={onDownload && canDownload(track) ? 'has-download' : undefined}
           secondaryAction={
             <Stack className="action">
               {!onSelect && (
@@ -77,7 +83,7 @@ function TrackList({
                   <img src="btn/audio-playlist-icon-70.svg" />
                 </IconButton>
               )}
-              {onDownload && isYtVideo(track) && (
+              {onDownload && canDownload(track) && (
                 <IconButton className="download-btn" onClick={() => onDownload(track)}>
                   <img src="btn/download-file-square-line-icon.svg" />
                 </IconButton>

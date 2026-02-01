@@ -4,6 +4,7 @@ const DOWNLOAD = '/audio-ui/db-api/download';
 
 export interface DownloadResponse {
   alreadyDownloaded: boolean;
+  formattedUri: string;
 }
 
 export function downloadTrack(uri: string): Promise<DownloadResponse> {
