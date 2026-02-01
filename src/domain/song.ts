@@ -32,16 +32,20 @@ export interface SongsAware {
  */
 export interface ThinSongListState extends SongsAware, LastUsedMediaAware {}
 
+export function formatFilePath(filePath: string) {
+  const parts = decodeURIComponent(filePath).split('/');
+  if (parts.length > 1) {
+    return parts.slice(parts.length - 2).join('/');
+  } else {
+    return filePath;
+  }
+}
+
 export function formatUri(uri: string | null | undefined) {
   if (!uri) {
     return uri;
   } else if (uri.startsWith('file:///')) {
-    const parts = decodeURIComponent(uri).split('/');
-    if (parts.length > 1) {
-      return parts.slice(parts.length - 2).join('/');
-    } else {
-      return uri;
-    }
+    return formatFilePath(uri);
   } else if (isM3uMpcRefUri(uri)) {
     return m3uMpcRefUriToDecodedFileName(uri);
   } else {
