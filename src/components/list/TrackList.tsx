@@ -15,6 +15,7 @@ import './TrackList.scss';
 interface TrackListParam extends ScrollableList {
   songs: SelectableTrack[];
   onRemove?: (song: Track) => void;
+  onDownload?: (song: Track) => void;
   onClick?: (song: Track) => void;
   onSelect?: (song: SelectableTrack) => void;
   songCloseToLastRemoved?: Track;
@@ -26,6 +27,7 @@ function TrackList({
   songs,
   loading,
   onRemove,
+  onDownload,
   onClick,
   onSelect,
   songCloseToLastRemoved,
@@ -36,6 +38,7 @@ function TrackList({
 }: LoadingState<TrackListParam>) {
   // console.log(`[TrackList] songCloseToLastRemoved:`, songCloseToLastRemoved);
   const { currentSong } = useContext(AppContext);
+  const listClassName = `${className ?? ''} track-list${onDownload ? ' has-download' : ''}`;
   const tlid = currentSong?.tlid;
   const shouldAutoFocus = useCallback(
     (sa: Track) => {
@@ -46,7 +49,7 @@ function TrackList({
 
   return (
     <LoadingList
-      className={`${className} track-list`}
+      className={listClassName}
       loading={loading}
       length={songs.length}
       onScroll={onScroll}
@@ -70,6 +73,11 @@ function TrackList({
                   to={`/song-playlists-editor/${encodeURIComponent(track.uri)}?${toQueryParams(['title', encodeURIComponent(track.title)])}`}
                 >
                   <img src="btn/audio-playlist-icon-70.svg" />
+                </IconButton>
+              )}
+              {onDownload && (
+                <IconButton className="download-btn" onClick={() => onDownload(track)}>
+                  <img src="btn/download-file-square-line-icon.svg" />
                 </IconButton>
               )}
               {onRemove && (

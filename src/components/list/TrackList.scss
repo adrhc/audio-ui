@@ -2,9 +2,9 @@
 @use '/src/styles/functions.scss' as *;
 @use '/src/styles/list/list-mixins.scss' as *;
 
-@mixin tracksListItem($btnPX, $fontSize, $iconSize) {
+@mixin tracksListItem($btnPX, $fontSize, $iconSize, $actionCount: 2) {
   @include liButton($btnPX, $fontSize);
-  @include liAction($iconSize, 2);
+  @include liAction($iconSize, $actionCount);
   @include liAvatarAtLeft(25%, $btnPX);
 }
 
@@ -21,6 +21,16 @@ $liPX: spacing(0.5);
     }
     @media (min-width: $tablet) {
       @include tracksListItem($liPX, 1rem, 2.75);
+    }
+  }
+  &.has-download {
+    > li {
+      @media (max-width: $tablet) {
+        @include tracksListItem($liPX, 1.15rem, 3.5, 3);
+      }
+      @media (min-width: $tablet) {
+        @include tracksListItem($liPX, 1rem, 2.75, 3);
+      }
     }
   }
   @include liMenuMedia;

@@ -48,6 +48,10 @@ export default function TrackListPage() {
     [mopidy, setState, sustain]
   );
 
+  const handleDownload = useCallback((song: Track) => {
+    void song;
+  }, []);
+
   useEffect(() => {
     if (online) {
       console.log(`[TrackListPage:online] loading the track list`);
@@ -74,6 +78,7 @@ export default function TrackListPage() {
         songs={state.songs}
         loading={state.loading}
         onRemove={handleRemove}
+        onDownload={handleDownload}
         onClick={handleSelection}
         songCloseToLastRemoved={state.songCloseToLastRemoved}
       />
