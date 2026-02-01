@@ -23,7 +23,7 @@ export default function TrackListPage() {
   const [state, sustain, setState] = useSustainableState<TrackListPageState>({ songs: [] });
   const imgMaxEdge = useMaxEdge();
 
-  console.log(`[TrackListPage] online = ${online}:`, state.songs);
+  // console.log(`[TrackListPage] online = ${online}:`, state.songs);
 
   const handleRemove = useCallback(
     (song: Track) => {
