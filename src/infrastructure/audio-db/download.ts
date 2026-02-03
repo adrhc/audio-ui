@@ -10,3 +10,7 @@ export interface DownloadResponse {
 export function downloadTrack(urn: string): Promise<DownloadResponse> {
   return post<DownloadResponse>(DOWNLOAD, JSON.stringify({ urn }));
 }
+
+export function filterDownloaded(urns: string[]): Promise<string[]> {
+  return post<string[]>(`${DOWNLOAD}/filter`, JSON.stringify({ urns }));
+}
