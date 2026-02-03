@@ -17,7 +17,7 @@ interface TrackListParam extends ScrollableList {
   songs: SelectableTrack[];
   onRemove?: (song: Track) => void;
   onDownload?: (song: Track) => void;
-  downloadedUris: string[];
+  downloadedUris?: string[];
   onClick?: (song: Track) => void;
   onSelect?: (song: SelectableTrack) => void;
   songCloseToLastRemoved?: Track;
@@ -43,7 +43,7 @@ function TrackList({
   const { currentSong } = useContext(AppContext);
   const listClassName = `${className ?? ''} track-list`;
   const canDownload = useCallback(
-    (track: Track) => isYtVideo(track) && !downloadedUris.includes(track.uri),
+    (track: Track) => isYtVideo(track) && !downloadedUris?.includes(track.uri),
     [downloadedUris]
   );
   const tlid = currentSong?.tlid;
