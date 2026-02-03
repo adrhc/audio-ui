@@ -10,7 +10,7 @@ import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { Track, removeTrack } from '../../domain/track';
 import TrackListMenu from '../menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../../lib/sustain/types';
-import { downloadTrack } from '../../infrastructure/audio-db/download';
+import { downloadTrack, filterDownloaded } from '../../infrastructure/audio-db/download';
 import { formatFileURI } from '../../domain/song';
 
 type TrackListPageState = {
@@ -86,6 +86,19 @@ export default function TrackListPage() {
       );
     }
   }, [imgMaxEdge, mopidy, online, sustain]);
+
+  useEffect(() => {
+    if (state.songs.length === 0) {
+      setState((old) => ({ ...old, downloadedUris: [] }));
+      return;
+    }
+
+    const urns = state.songs.map((song) => song.uri);
+    sustain(
+      filterDownloaded(urns).then((downloadedUris) => ({ downloadedUris })),
+      "Can't determine downloaded tracks!"
+    );
+  }, [setState, state.songs, sustain]);
 
   // console.log(`[TrackListPage] getUA:\n`, getUA);
   // console.log(`[TrackListPage] agent:\n`, agent);
