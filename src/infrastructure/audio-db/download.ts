@@ -7,6 +7,6 @@ export interface DownloadResponse {
   fileURI: string;
 }
 
-export function downloadTrack(uri: string): Promise<DownloadResponse> {
-  return post<DownloadResponse>(DOWNLOAD, JSON.stringify({ uri }));
+export function downloadTrack(urn: string): Promise<DownloadResponse> {
+  return post<DownloadResponse>(DOWNLOAD, JSON.stringify({ urn }));
 }
