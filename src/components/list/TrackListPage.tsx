@@ -16,12 +16,12 @@ import { formatFileURI } from '../../domain/song';
 type TrackListPageState = {
   songs: Track[];
   songCloseToLastRemoved?: Track;
-  downloadedUris?: string[];
+  downloadedUris: string[];
 };
 
 export default function TrackListPage() {
   const { mopidy, online, setNotification } = useContext(AppContext);
-  const [state, sustain, setState] = useSustainableState<TrackListPageState>({ songs: [] });
+  const [state, sustain, setState] = useSustainableState<TrackListPageState>({ songs: [], downloadedUris: [] });
   const imgMaxEdge = useMaxEdge();
 
   // console.log(`[TrackListPage] online = ${online}:`, state.songs);
@@ -66,8 +66,8 @@ export default function TrackListPage() {
           );
           return {
             downloadedUris: [
-              ...(state.downloadedUris ?? []),
-              ...(state.downloadedUris?.includes(song.uri) ? [] : [song.uri]),
+              ...state.downloadedUris,
+              ...(state.downloadedUris.includes(song.uri) ? [] : [song.uri]),
             ],
           };
         }),
