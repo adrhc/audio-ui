@@ -11,6 +11,6 @@ export function downloadTrack(urn: string): Promise<DownloadResponse> {
   return post<DownloadResponse>(DOWNLOAD, JSON.stringify({ urn }));
 }
 
-export function filterDownloaded(urns: string[]): Promise<string[]> {
-  return post<string[]>(`${DOWNLOAD}/filter`, JSON.stringify({ urns }));
+export function filterDownloaded(uris: string[]): Promise<string[]> {
+  return post<string[]>(`${DOWNLOAD}/filter`, JSON.stringify({ uris }));
 }
