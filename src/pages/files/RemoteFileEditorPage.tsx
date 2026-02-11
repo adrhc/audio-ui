@@ -5,7 +5,7 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import PageTemplate from '../../templates/PageTemplate';
 import { useGoBack } from '../../hooks/useGoBack';
 import useButtonRef from '../../hooks/useButtonRef';
-import { useCallback, useEffect } from 'react';
+import { FormEvent, useCallback, useEffect } from 'react';
 import { FileNameAndContent, getByFileName, updateContent } from '../../infrastructure/files/files';
 import { useParams } from 'react-router-dom';
 import useFormEditor from '../../hooks/useFormEditor';
@@ -26,7 +26,8 @@ export default function RemoteFileEditorPage() {
 
   const { handleTextElementChange } = useFormEditor(setState);
 
-  const handleSubmit = useCallback(() => {
+  const handleSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     // setState((old) => ({ ...old, error: '' }));
     sustain(updateContent(state).then(goBack), { ...state, error: 'Update failed!' });
   }, [goBack, state, sustain]);
