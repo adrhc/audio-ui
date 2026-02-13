@@ -69,6 +69,7 @@ async function addUrisToTrackListIn2Steps(
   if (uris.length === 0) return []; */
   const [firstUri, ...restUris] = uris;
   const firstTracks = await addUrisToTrackListAtPosition(tracklist, [firstUri]);
+  console.log(`[addUrisToTrackListIn2Steps] restUris:`, restUris);
   if (restUris.length > 0) {
     const restTracks = await addUrisToTrackListAtPosition(tracklist, restUris);
     return [...firstTracks, ...restTracks];
@@ -82,10 +83,13 @@ function addUrisToTrackListAtPosition(
   uris: string[],
   position?: number | null
 ): Promise<models.TlTrack[]> {
-  uris = uris.filter(isSupportedUri);
   if (!uris.length) {
     // console.log(`[addUrisToTrackListAtPosition] uris:`, uris);
     return Promise.reject("Can't add an empty uri list!");
+  }
+  uris = uris.filter(isSupportedUri);
+  if (!uris.length) {
+    return Promise.reject("No supported URIs!");
   } else if (position != null) {
     return tracklist.add({ uris, at_position: position });
   } else {
