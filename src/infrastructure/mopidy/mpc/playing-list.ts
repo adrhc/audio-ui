@@ -50,6 +50,7 @@ export function addUrisToTrackList(mopidy: Mopidy | undefined, ...uris: string[]
   if (!tracklist) {
     return Promise.reject(MOPIDY_DISCONNECTED_ERROR);
   } else if (!uris.length) {
+    // console.log(`[addUrisToTrackList] uris:`, uris);
     return Promise.reject("Can't add an empty uri list!");
   } else {
     // console.log(`[addUris] uris:`, uris);
@@ -68,8 +69,12 @@ async function addUrisToTrackListIn2Steps(
   if (uris.length === 0) return []; */
   const [firstUri, ...restUris] = uris;
   const firstTracks = await addUrisToTrackListAtPosition(tracklist, [firstUri]);
-  const restTracks = restUris.length > 0 ? await addUrisToTrackListAtPosition(tracklist, restUris) : [];
-  return [...firstTracks, ...restTracks];
+  if (restUris.length > 0) {
+    const restTracks = await addUrisToTrackListAtPosition(tracklist, restUris);
+    return [...firstTracks, ...restTracks];
+  } else {
+    return firstTracks;
+  }
 }
 
 function addUrisToTrackListAtPosition(
@@ -79,6 +84,7 @@ function addUrisToTrackListAtPosition(
 ): Promise<models.TlTrack[]> {
   uris = uris.filter(isSupportedUri);
   if (!uris.length) {
+    // console.log(`[addUrisToTrackListAtPosition] uris:`, uris);
     return Promise.reject("Can't add an empty uri list!");
   } else if (position != null) {
     return tracklist.add({ uris, at_position: position });
