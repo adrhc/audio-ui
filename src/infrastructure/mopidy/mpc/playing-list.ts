@@ -89,7 +89,7 @@ function addUrisToTrackListAtPosition(
   }
   uris = uris.filter(isSupportedUri);
   if (!uris.length) {
-    return Promise.reject("No supported URIs!");
+    return Promise.reject('No supported URIs!');
   } else if (position != null) {
     return tracklist.add({ uris, at_position: position });
   } else {
@@ -105,10 +105,8 @@ function addUrisToTrackListAtPosition(
  * gst-play-1.0 https://www.itsybitsy.ro/itsybitsy.m3u
  */
 function isSupportedUri(uri: string | null): boolean {
-  return (
-    uri != null &&
-    (!uri.startsWith('http') || (!uri.endsWith('.pls') && !uri.endsWith('.m3u') && !uri.endsWith('.m3u8')))
-  );
+  return uri != null && !uri.endsWith('.pls');
+  // (!uri.startsWith('http') || (!uri.endsWith('.pls') && !uri.endsWith('.m3u') && !uri.endsWith('.m3u8')))
 }
 
 /* export async function resolvePlaylistUri(uri: string): Promise<string[]> {
