@@ -24,7 +24,7 @@ export function getCurrentTlTrack(mopidy?: Mopidy): Promise<models.TlTrack | nul
     : mopidy.playback.getCurrentTlTrack();
 }
 
-export function addUrisToTrackListAfter(
+export function addUrisToTrackListIn2StepsAfter(
   mopidy: Mopidy | undefined,
   afterTlid: number,
   ...uris: string[]

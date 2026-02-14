@@ -50,6 +50,7 @@ function SongList({
       length={songs.length}
       empty={!showListItemMenu && !songs.length}
     >
+      {/* top list menu */}
       {showListItemMenu && (
         <ListItem key="SongListItemTopMenu" className="MENU" disablePadding>
           <SongListItemMenu {...navParam} />
@@ -83,6 +84,7 @@ function SongList({
         </ListItem>
       )}
 
+      {/* bottom list menu */}
       {showListItemMenu && !!songs.length && (
         <ListItem key="SongListItemBottomMenu" className="MENU" disablePadding>
           <SongListItemMenu {...navParam} bottom={true} />

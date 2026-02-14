@@ -8,8 +8,8 @@ import {
   addSongThenPlay as remotelyAddSongThenPlay,
 } from '../infrastructure/mopidy/playing-list/add-song';
 import { CurrentSongAware } from '../domain/track';
-import { addMopidyPlAndRemember, addMopidyPlAfterAndRemember } from '../infrastructure/mopidy/playing-list/add-mopidy-pl';
-import { addYtMusicPlAndRemember, addYtMusicPlAfterAndRemember } from '../infrastructure/mopidy/playing-list/add-yt-pl';
+import { addMopidyPl, addMopidyPlAfter } from '../infrastructure/mopidy/playing-list/add-mopidy-pl';
+import { addYtMusicPl, addYtMusicPlAfter } from '../infrastructure/mopidy/playing-list/add-yt-pl';
 
 export type AddManySongsFn = (songs: Song[]) => void;
 
@@ -45,10 +45,10 @@ export function usePlayingList<S extends LastUsedMediaAware>(sustain: SustainVoi
   const addSongOrPlaylist = useCallback(
     (song: Song) => {
       // console.log(`[usePlayingList:addSongOrPlaylist] song:\n`, song);
-      // addYTMPlAndRemember uses /playlist/content instead of Mopidy to replace "ytmusic:" with "youtube:"
+      // addYtMusicPl uses /playlist/content instead of Mopidy to replace "ytmusic:" with "youtube:"
       let addFn;
       if (isPlaylist(song)) {
-        addFn = isYtMusicPl(song) ? addYtMusicPlAndRemember : addMopidyPlAndRemember;
+        addFn = isYtMusicPl(song) ? addYtMusicPl : addMopidyPl;
       } else {
         addFn = addSongsAndRemember;
       }
@@ -65,7 +65,7 @@ export function usePlayingList<S extends LastUsedMediaAware>(sustain: SustainVoi
       //   console.log(`[usePlayingList.insertSongOrPlaylist] song:\n`, song);
       let insertFn;
       if (isPlaylist(song)) {
-        insertFn = isYtMusicPl(song) ? addYtMusicPlAfterAndRemember : addMopidyPlAfterAndRemember;
+        insertFn = isYtMusicPl(song) ? addYtMusicPlAfter : addMopidyPlAfter;
       } else {
         insertFn = addSongsAfterAndRemember;
       }

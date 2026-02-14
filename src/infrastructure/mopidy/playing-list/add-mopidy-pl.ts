@@ -1,21 +1,21 @@
 import Mopidy from 'mopidy';
 import { getMpcSortedNoImgPlContent } from '../../playlist';
-import { addSongsAfterAndRemember, addSongsAndRemember } from './add-song';
+import { addSongsAfter, addSongs } from './add-song';
 import { Track } from '../../../domain/track';
 import { Song } from '../../../domain/song';
 
 /**
  * Get the playlist content from Mopidy WebSocket.
  */
-export function addMopidyPlAfterAndRemember(
+export function addMopidyPlAfter(
   mopidy: Mopidy | undefined,
   after: Track | undefined | null,
   playlist: Song
 ) {
-  console.log(`[addMopidyPlAfterAndRemember] playlist:`, playlist);
+  console.log(`[addMopidyPlAfter] playlist:`, playlist);
   return getMpcSortedNoImgPlContent(mopidy, playlist.uri).then((songs) => {
     if (songs.length) {
-      addSongsAfterAndRemember(mopidy, after, ...songs);
+      addSongsAfter(mopidy, after, ...songs);
     } else {
       return Promise.reject(`The playlist ${playlist.title} is empty!`);
     }
@@ -25,11 +25,11 @@ export function addMopidyPlAfterAndRemember(
 /**
  * Get the playlist content from Mopidy WebSocket.
  */
-export function addMopidyPlAndRemember(mopidy: Mopidy | undefined, playlist: Song) {
-  console.log(`[addMopidyPlAndRemember] playlist:`, playlist);
+export function addMopidyPl(mopidy: Mopidy | undefined, playlist: Song) {
+  console.log(`[addMopidyPl] playlist:`, playlist);
   return getMpcSortedNoImgPlContent(mopidy, playlist.uri).then((songs) => {
     if (songs.length) {
-      addSongsAndRemember(mopidy, ...songs);
+      addSongs(mopidy, ...songs);
     } else {
       return Promise.reject(`The playlist ${playlist.title} is empty!`);
     }
