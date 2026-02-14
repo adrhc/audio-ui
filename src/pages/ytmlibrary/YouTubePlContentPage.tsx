@@ -96,7 +96,7 @@ function YouTubePlContentPage() {
         listRef={listRef}
         scrollTo={scrollTo}
         onReloadList={handleReaload}
-        addManySongs={addManySongs}
+        onAddMany={addManySongs}
       />
     </PageTemplate>
   );

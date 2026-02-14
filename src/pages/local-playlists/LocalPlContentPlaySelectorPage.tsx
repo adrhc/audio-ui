@@ -95,7 +95,7 @@ function LocalPlContentPlaySelectorPage() {
         listRef={listRef}
         scrollTo={scrollTo}
         onReloadList={loadPlContent}
-        addManySongs={addManySongs}
+        onAddMany={addManySongs}
       />
     </PageTemplate>
   );

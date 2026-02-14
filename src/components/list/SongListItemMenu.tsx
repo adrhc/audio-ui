@@ -18,7 +18,7 @@ function SongListItemMenu({
   goToPreviousPage,
   goToNextPage,
   onReloadList: onRealoadList,
-  addManySongs,
+  onAddMany,
   addManyDisabled,
   onMinus,
   onPlus,
@@ -47,8 +47,8 @@ function SongListItemMenu({
           <CachedOutlinedIcon />
         </Button>
       )}
-      {showAddMany({ songs, addManySongs, addManyDisabled }) && (
-        <Button variant="outlined" onClick={() => addManySongs!(songs)}>
+      {showAddMany({ songs, onAddMany, addManyDisabled }) && (
+        <Button variant="outlined" onClick={() => onAddMany!(songs)}>
           <AddBoxOutlinedIcon />
         </Button>
       )}

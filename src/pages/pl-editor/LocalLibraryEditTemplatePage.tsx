@@ -11,7 +11,7 @@ import { LOCAL_LIBRARY_EDIT_CACHE } from '../../hooks/cache/cache-names';
 import { useNavigate } from 'react-router-dom';
 import { toQueryParams } from '../../lib/url-search-params';
 import '/src/styles/list/list-with-1x-secondary-action.scss';
-import { AddManySongsFn } from '../../hooks/usePlayingList';
+import { AddManyFn } from '../../components/list/SongListItemMenuParam';
 
 export interface LocalLibraryEditTemplatePageParams {
   playlistEditorPath: string;
@@ -87,7 +87,7 @@ function LocalLibraryEditTemplatePage({ playlistEditorPath }: LocalLibraryEditTe
         loading={state.loading}
         onClick={goToPlaylistEditor}
         onDelete={credentials.isValid() ? removePlaylist : undefined}
-        addManySongs={goToPlAdd as AddManySongsFn}
+        onAddMany={goToPlAdd as AddManyFn}
         onReloadList={loadLocalLibrary}
         lastUsed={state.lastUsed}
         listRef={listRef}

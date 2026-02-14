@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingProps } from '../../lib/sustain/types';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
-import { AddManySongsFn } from '../../hooks/usePlayingList';
+import { AddManyFn } from '../../components/list/SongListItemMenuParam';
 
 function LocalLibraryPlaySelectorPage() {
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ function LocalLibraryPlaySelectorPage() {
         songs={state.songs}
         loading={state.loading}
         onAdd={addSongOrPlaylist}
-        addManySongs={goToPlAdd as AddManySongsFn}
+        onAddMany={goToPlAdd as AddManyFn}
         onInsert={insertSongOrPlaylist}
         onClick={handlePlSelection}
         onReloadList={loadLocalLibrary}

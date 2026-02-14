@@ -1,7 +1,8 @@
-import { AddManySongsFn } from '../../hooks/usePlayingList';
 import { ListRef, ScrollToFn } from '../../domain/scroll';
-import { SelectableSong } from '../../domain/song';
+import { SelectableSong, Song } from '../../domain/song';
 import { NoArgsProc } from '../../domain/types';
+
+export type AddManyFn = (songs: Song[]) => Promise<void>;
 
 export interface SongListItemMenuParam {
   songs: SelectableSong[];
@@ -11,7 +12,7 @@ export interface SongListItemMenuParam {
   pageAfterExists?: boolean | null;
   goToPreviousPage?: NoArgsProc;
   goToNextPage?: NoArgsProc;
-  addManySongs?: AddManySongsFn;
+  onAddMany?: AddManyFn;
   onReloadList?: NoArgsProc;
   onMinus?: NoArgsProc;
   onPlus?: NoArgsProc;
@@ -40,8 +41,8 @@ export function shouldShowListItemMenu({
   );
 }
 
-export function showAddMany({ addManyDisabled, addManySongs, songs }: SongListItemMenuParam) {
-  return !addManyDisabled && addManySongs && songs.length;
+export function showAddMany({ addManyDisabled, onAddMany, songs }: SongListItemMenuParam) {
+  return !addManyDisabled && onAddMany && songs.length;
 }
 
 export function showScrollTo({ songs, listRef, scrollTo, bottom }: SongListItemMenuParam) {
