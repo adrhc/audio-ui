@@ -1,17 +1,17 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { getTracks } from '../../infrastructure/mopidy/playing-list/read';
-import { play } from '../../infrastructure/mopidy/player';
-import PageTemplate from '../../templates/PageTemplate';
-import { useSustainableState } from '../../hooks/useSustainableState';
-import { AppContext } from '../../hooks/AppContext';
-import { removeTlid } from '../../infrastructure/mopidy/mpc/playing-list';
-import TrackList from './TrackList';
-import { useMaxEdge } from '../../hooks/useMaxEdge';
-import { Track, removeTrack } from '../../domain/track';
-import TrackListMenu from '../menu/TrackListBottomPageMenu';
-import { SetFeedbackState } from '../../lib/sustain/types';
-import { downloadTrack, filterDownloaded } from '../../infrastructure/audio-db/download';
-import { formatFileURI } from '../../domain/song';
+import { getTracks } from '../infrastructure/mopidy/playing-list/read';
+import { play } from '../infrastructure/mopidy/player';
+import PageTemplate from '../templates/PageTemplate';
+import { useSustainableState } from '../hooks/useSustainableState';
+import { AppContext } from '../hooks/AppContext';
+import { removeTlid } from '../infrastructure/mopidy/mpc/playing-list';
+import TrackList from '../components/list/TrackList';
+import { useMaxEdge } from '../hooks/useMaxEdge';
+import { Track, removeTrack } from '../domain/track';
+import TrackListMenu from '../components/menu/TrackListBottomPageMenu';
+import { SetFeedbackState } from '../lib/sustain/types';
+import { downloadTrack, filterDownloaded } from '../infrastructure/audio-db/download';
+import { formatFileURI } from '../domain/song';
 
 type TrackListPageState = {
   songs: Track[];
