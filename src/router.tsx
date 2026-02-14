@@ -15,8 +15,8 @@ import PlaybackHistoryPage from './pages/history/PlaybackHistoryPage';
 import LoginPage from './pages/login/LoginPage';
 import YouTubePlContentPage from './pages/ytmlibrary/YouTubePlContentPage';
 import YTMusicLibraryPage from './pages/ytmlibrary/YTMusicLibraryPage';
-import LocalLibraryToPlaySelectorPage from './pages/local-playlists/LocalLibraryToPlaySelectorPage';
-import LocalPlaylistItemToPlaySelectorPage from './pages/local-playlists/LocalPlaylistItemToPlaySelectorPage';
+import LocalLibraryPlaySelectorPage from './pages/local-playlists/LocalLibraryPlaySelectorPage';
+import LocalPlaylistPlaySelectorPage from './pages/local-playlists/LocalPlaylistPlaySelectorPage';
 import PlaylistToSongAllocatorPage from './pages/pl-editor/PlaylistToSongAllocatorPage';
 import AddPlaylistPage from './pages/AddPlaylistPage';
 import AddTrackPage from './pages/AddTrackPage';
@@ -69,11 +69,11 @@ const ROUTER = createHashRouter([
       },
       {
         path: 'local-playlist-content/:uri',
-        element: <LocalPlaylistItemToPlaySelectorPage />,
+        element: <LocalPlaylistPlaySelectorPage />,
       },
       {
         path: 'local-playlists',
-        element: <LocalLibraryToPlaySelectorPage />,
+        element: <LocalLibraryPlaySelectorPage />,
       },
       {
         path: 'local-library-edit-from-playing',

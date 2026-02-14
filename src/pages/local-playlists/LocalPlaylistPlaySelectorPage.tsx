@@ -11,7 +11,7 @@ import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { plCacheName } from '../../hooks/cache/cache-names';
 import { ThinSongListState } from '../../domain/song';
 
-function LocalPlaylistItemToPlaySelectorPage() {
+function LocalPlaylistPlaySelectorPage() {
   const { uri } = useParams();
   const cacheName = plCacheName(uri);
   const {
@@ -101,4 +101,4 @@ function LocalPlaylistItemToPlaySelectorPage() {
   );
 }
 
-export default LocalPlaylistItemToPlaySelectorPage;
+export default LocalPlaylistPlaySelectorPage;
