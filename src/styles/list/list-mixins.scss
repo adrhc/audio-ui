@@ -21,8 +21,21 @@
 
 @mixin liAction($iconSize, $actBtnCount) {
   $iconSizePx: spacing($iconSize);
+  // this is the *entire* visible & pressable list item button
+  .MuiListItemButton-root {
+    // each action btn has a height of $iconSize + 2 (i.e. padding top + bottom)
+    // also adding some overall padding top & bottom
+    min-height: spacing($actBtnCount * ($iconSize + 2) + 1);
+    // this is the text part of the list item button (the image/avatar is outside of this)
+    .MuiListItemText-root {
+      // this creates the space for the action buttons, otherwise they would overlap
+      padding-right: spacing($iconSize + 1);
+    }
+  }
+  // this is the container of the secondary action buttons
   .MuiListItemSecondaryAction-root {
     right: 0;
+    // this is one action button (e.g. delete, select, insert, add)
     .MuiButtonBase-root {
       img {
         width: $iconSizePx;
@@ -33,14 +46,6 @@
       margin: spacing(1);
       cursor: pointer;
     } */
-  }
-  .MuiListItemButton-root {
-    // each action btn has a height of $iconSize + 2 (i.e. padding top + bottom)
-    // also adding some overall padding top & bottom
-    min-height: spacing($actBtnCount * ($iconSize + 2) + 1);
-    .MuiListItemText-root {
-      padding-right: spacing($iconSize + 1);
-    }
   }
 }
 

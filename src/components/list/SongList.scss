@@ -59,13 +59,17 @@ $songListMaxSecondaryActionColumns: 2;
 @mixin songListSecondaryActionColumns($count) {
   > li {
     @media (max-width: $tablet) {
+      // this is the text part of the list item button (the image/avatar is outside of this)
       .MuiListItemButton-root .MuiListItemText-root {
-        padding-right: spacing((4 + 1) * $count);
+        // this creates the space for the action buttons, otherwise they would overlap
+        padding-right: spacing((4 + 2) * $count - 1);
       }
     }
     @media (min-width: $tablet) {
+      // this is the text part of the list item button (the image/avatar is outside of this)
       .MuiListItemButton-root .MuiListItemText-root {
-        padding-right: spacing((3 + 1) * $count);
+        // this creates the space for the action buttons, otherwise they would overlap
+        padding-right: spacing((3 + 2) * $count - 1);
       }
     }
   }
