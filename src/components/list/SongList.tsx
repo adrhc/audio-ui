@@ -40,10 +40,16 @@ function SongList({
 
   const navParam = { songs, listRef, ...partialNavParam };
   const showListItemMenu = shouldShowListItemMenu(navParam);
+  const selectableActionCount = onSelect && songs.some((song) => !!song.selected) ? 1 : 0;
+  const secondaryActionCount =
+    Number(!!onInsert) + Number(!!onAdd) + Number(!!onDelete) + selectableActionCount;
+  const loadingListClassName = [className, 'song-list', `song-list-${secondaryActionCount}`]
+    .filter(Boolean)
+    .join(' ');
 
   return (
     <LoadingList
-      className={`${className} song-list`}
+      className={loadingListClassName}
       onScroll={onScroll}
       listRef={listRef}
       loading={loading}

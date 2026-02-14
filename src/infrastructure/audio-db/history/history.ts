@@ -1,6 +1,6 @@
 import { toSongUris } from '../../../domain/song';
 import Mopidy, { models } from 'mopidy';
-import { get, post, postVoid } from '../../../lib/rest';
+import { get, post, postVoid, removeVoid } from '../../../lib/rest';
 import { HistoryPosition, HistoryPage } from '../../../domain/history';
 import { getImages } from '../../mopidy/mpc/mpc';
 import { addImgUriToSongs } from '../../mopidy/types';
@@ -13,6 +13,14 @@ export function addToHistory(tlTrack: models.TlTrack[]): Promise<void> {
     return Promise.reject("Can't add to the history!");
   } else {
     return postVoid(HISTORY, JSON.stringify(tlTrack.map((it) => it.track)));
+  }
+}
+
+export function removeFromHistory(uri: string): Promise<void> {
+  if (!uri) {
+    return Promise.reject("Can't remove an empty history uri!");
+  } else {
+    return removeVoid(HISTORY, JSON.stringify({ uri }));
   }
 }
 

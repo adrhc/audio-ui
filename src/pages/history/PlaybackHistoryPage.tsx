@@ -1,6 +1,11 @@
 import { useCallback, useContext, useEffect } from 'react';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
-import { getHistory, getHistoryAfter, getHistoryBefore } from '../../infrastructure/audio-db/history/history';
+import {
+  getHistory,
+  getHistoryAfter,
+  getHistoryBefore,
+  removeFromHistory,
+} from '../../infrastructure/audio-db/history/history';
 import PageTemplate from '../../templates/PageTemplate';
 import SongList from '../../components/list/SongList';
 import TracksAccessMenu from '../../components/menu/TracksAccessMenu';
@@ -10,6 +15,7 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingProps } from '../../lib/sustain/types';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { PLAYLIST_HISTORY } from '../../hooks/cache/cache-names';
+import { Song } from '../../domain/song';
 
 function PlaybackHistoryPage() {
   const { mopidy } = useContext(AppContext);
@@ -136,6 +142,23 @@ function PlaybackHistoryPage() {
     }
   }, [imgMaxEdge, mergeCache, mopidy, setState, state.before, sustain]);
 
+  const onDelete = useCallback(
+    (song: Song) => {
+      sustain(
+        removeFromHistory(song.uri).then(() =>
+          setState((old) => ({
+            ...old,
+            songs: old.songs.filter((s) => s.uri !== song.uri),
+            lastUsed: old.lastUsed?.uri === song.uri ? null : old.lastUsed,
+          }))
+        ),
+        `Failed to remove ${song.title} from history!`,
+        true
+      );
+    },
+    [setState, sustain]
+  );
+
   return (
     <PageTemplate
       widePage={true}
@@ -150,6 +173,7 @@ function PlaybackHistoryPage() {
         loading={state.loading}
         onAdd={addSongOrPlaylist}
         onInsert={insertSongOrPlaylist}
+        onDelete={onDelete}
         onClick={addSongThenPlay}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}

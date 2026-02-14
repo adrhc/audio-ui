@@ -19,15 +19,30 @@ $liPX: spacing(0.5);
   > li {
     @media (max-width: $tablet) {
       @include liButton($liPX, 1.1rem);
-      @include liAction(4, 2);
       @include liAvatarAtLeft(25%, $liPX);
       // @include liAvatarOnTop(60%);
     }
     @media (min-width: $tablet) {
       @include liButton($liPX, 0.95rem);
-      @include liAction(3, 2);
       @include liAvatarAtLeft(25%, $liPX);
     }
   }
   @include liMenuMedia;
+}
+
+@mixin songListSecondaryAction($count) {
+  > li {
+    @media (max-width: $tablet) {
+      @include liAction(4, $count);
+    }
+    @media (min-width: $tablet) {
+      @include liAction(3, $count);
+    }
+  }
+}
+
+@for $i from 1 through 5 {
+  .song-list-#{$i} {
+    @include songListSecondaryAction($i);
+  }
 }
