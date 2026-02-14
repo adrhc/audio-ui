@@ -37,6 +37,9 @@ export function addSongThenPlay(mopidy: Mopidy | undefined, song: Song) {
   return addUrisThenPlay(mopidy, song.uri);
 }
 
+/**
+ * Added to history by audio-web-services when the song is played!
+ */
 export function addUrisThenPlay(mopidy: Mopidy | undefined, ...uris: string[]) {
   return addUrisToTrackListIn2Steps(mopidy?.tracklist, uris)?.then((tk) => {
     tk.length && play(mopidy, tk[0].tlid);
