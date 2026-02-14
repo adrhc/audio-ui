@@ -11,7 +11,7 @@ import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { plCacheName } from '../../hooks/cache/cache-names';
 import { ThinSongListState } from '../../domain/song';
 
-function LocalPlaylistPlaySelectorPage() {
+function LocalPlContentPlaySelectorPage() {
   const { uri } = useParams();
   const cacheName = plCacheName(uri);
   const {
@@ -30,7 +30,7 @@ function LocalPlaylistPlaySelectorPage() {
     clearCache,
   } = useCachedSongsScrollable<ThinSongListState>(cacheName);
   const cache = getCache();
-  console.log(`[LocalPlaylistPlaySelectorPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
+  console.log(`[LocalPlContentPlaySelectorPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
     state,
     cache,
   });
@@ -42,13 +42,13 @@ function LocalPlaylistPlaySelectorPage() {
 
   const loadPlContent = useCallback(() => {
     if (uri) {
-      console.log(`[LocalPlaylistPlaySelectorPage.loadPlContent] loading ${uri}`);
+      console.log(`[LocalPlContentPlaySelectorPage.loadPlContent] loading ${uri}`);
       sustain(
         getPlContent(imgMaxEdge, uri).then((songs) => ({ songs })),
         `Failed to load the playlist!`
       );
     } else {
-      console.log(`[LocalPlaylistPlaySelectorPage.loadPlContent] "uri" is empty!`);
+      console.log(`[LocalPlContentPlaySelectorPage.loadPlContent] "uri" is empty!`);
     }
   }, [imgMaxEdge, sustain, uri]);
 
@@ -63,10 +63,10 @@ function LocalPlaylistPlaySelectorPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[LocalPlaylistPlaySelectorPage.useEffect] ${uri} isn't loaded yet or is empty!`);
+      console.log(`[LocalPlContentPlaySelectorPage.useEffect] ${uri} isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[LocalPlaylistPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
+    console.log(`[LocalPlContentPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty, uri]);
@@ -101,4 +101,4 @@ function LocalPlaylistPlaySelectorPage() {
   );
 }
 
-export default LocalPlaylistPlaySelectorPage;
+export default LocalPlContentPlaySelectorPage;
