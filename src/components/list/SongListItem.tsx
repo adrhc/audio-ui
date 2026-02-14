@@ -77,14 +77,14 @@ function SongListItem({
             )}
             {showRightColumn && (
               <Stack className="action-column action-column-right">
-                {onInsert && (
-                  <IconButton className="add-btn" onClick={() => onInsert(song)}>
-                    <img src="btn/four-arrows-inside-line-icon.svg" />
-                  </IconButton>
-                )}
                 {onAdd && (
                   <IconButton className="insert-btn" onClick={() => onAdd(song)}>
                     <img src="btn/plus-square-line-icon.svg" />
+                  </IconButton>
+                )}
+                {onInsert && (
+                  <IconButton className="add-btn" onClick={() => onInsert(song)}>
+                    <img src="btn/four-arrows-inside-line-icon.svg" />
                   </IconButton>
                 )}
               </Stack>

@@ -39,13 +39,16 @@ $songListMaxSecondaryActionColumns: 2;
   @include liMenuMedia;
 }
 
+$smallerThanTabletIconSize: 4;
+$largerThanTabletIconSize: 3;
+
 @mixin songListSecondaryAction($count) {
   > li {
     @media (max-width: $tablet) {
-      @include liAction(4, $count);
+      @include liAction($smallerThanTabletIconSize, $count);
     }
     @media (min-width: $tablet) {
-      @include liAction(3, $count);
+      @include liAction($largerThanTabletIconSize, $count);
     }
   }
 }
@@ -62,14 +65,14 @@ $songListMaxSecondaryActionColumns: 2;
       // this is the text part of the list item button (the image/avatar is outside of this)
       .MuiListItemButton-root .MuiListItemText-root {
         // this creates the space for the action buttons, otherwise they would overlap
-        padding-right: spacing((4 + 2) * $count - 1);
+        padding-right: spacing(($smallerThanTabletIconSize + 2) * $count - 1);
       }
     }
     @media (min-width: $tablet) {
       // this is the text part of the list item button (the image/avatar is outside of this)
       .MuiListItemButton-root .MuiListItemText-root {
         // this creates the space for the action buttons, otherwise they would overlap
-        padding-right: spacing((3 + 2) * $count - 1);
+        padding-right: spacing(($largerThanTabletIconSize + 2) * $count - 1);
       }
     }
   }
