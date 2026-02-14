@@ -4,6 +4,8 @@
 @use 'EmptyList.scss' as *;
 
 $liPX: spacing(0.5);
+$songListMaxSecondaryActionRows: 4;
+$songListMaxSecondaryActionColumns: 2;
 
 .song-list.zero-length {
   @include emptyMessage2ndItem;
@@ -15,6 +17,13 @@ $liPX: spacing(0.5);
   }
   > li.YOUTUBE:not(.Mui-selected, .Mui-focusVisible) {
     background-color: #f1e38236;
+  }
+  .MuiListItemSecondaryAction-root {
+    .action {
+      .action-column {
+        align-items: center;
+      }
+    }
   }
   > li {
     @media (max-width: $tablet) {
@@ -41,8 +50,29 @@ $liPX: spacing(0.5);
   }
 }
 
-@for $i from 1 through 5 {
-  .song-list-#{$i} {
+@for $i from 1 through $songListMaxSecondaryActionRows {
+  .song-list-rows-#{$i} {
     @include songListSecondaryAction($i);
+  }
+}
+
+@mixin songListSecondaryActionColumns($count) {
+  > li {
+    @media (max-width: $tablet) {
+      .MuiListItemButton-root .MuiListItemText-root {
+        padding-right: spacing((4 + 1) * $count);
+      }
+    }
+    @media (min-width: $tablet) {
+      .MuiListItemButton-root .MuiListItemText-root {
+        padding-right: spacing((3 + 1) * $count);
+      }
+    }
+  }
+}
+
+@for $i from 1 through $songListMaxSecondaryActionColumns {
+  .song-list-cols-#{$i} {
+    @include songListSecondaryActionColumns($i);
   }
 }

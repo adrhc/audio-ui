@@ -41,9 +41,17 @@ function SongList({
   const navParam = { songs, listRef, ...partialNavParam };
   const showListItemMenu = shouldShowListItemMenu(navParam);
   const selectableActionCount = onSelect && songs.some((song) => !!song.selected) ? 1 : 0;
-  const secondaryActionCount =
-    Number(!!onInsert) + Number(!!onAdd) + Number(!!onDelete) + selectableActionCount;
-  const loadingListClassName = [className, 'song-list', `song-list-${secondaryActionCount}`]
+  const leftColumnActionCount = Number(!!onDelete) + selectableActionCount;
+  const rightColumnActionCount = Number(!!onInsert) + Number(!!onAdd);
+  const secondaryActionRows = Math.max(leftColumnActionCount, rightColumnActionCount);
+  const secondaryActionColumns =
+    Number(leftColumnActionCount > 0) + Number(rightColumnActionCount > 0);
+  const loadingListClassName = [
+    className,
+    'song-list',
+    `song-list-rows-${secondaryActionRows}`,
+    `song-list-cols-${secondaryActionColumns}`,
+  ]
     .filter(Boolean)
     .join(' ');
 

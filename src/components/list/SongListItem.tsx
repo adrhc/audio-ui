@@ -41,7 +41,10 @@ function SongListItem({
   );
 
   const songCount = 1 + prevSongsCount + index;
-  const showActions = onInsert || onAdd || onDelete || (song.selected && onSelect);
+  const showSelectAction = !!(song.selected && onSelect);
+  const showLeftColumn = !!onDelete || showSelectAction;
+  const showRightColumn = !!onInsert || !!onAdd;
+  const showActions = showLeftColumn || showRightColumn;
   return (
     <ListItem
       disablePadding
@@ -56,27 +59,35 @@ function SongListItem({
       // key={`${songCount}/${song.uri}`}
       secondaryAction={
         showActions && (
-          <Stack className="action">
-            {onInsert && (
-              <IconButton className="add-btn" onClick={() => onInsert(song)}>
-                <img src="btn/four-arrows-inside-line-icon.svg" />
-              </IconButton>
+          <Stack className="action" direction="row">
+            {showLeftColumn && (
+              <Stack className="action-column action-column-left">
+                {onDelete && (
+                  <IconButton className="del-btn" onClick={() => onDelete(song)}>
+                    <img src="btn/recycle-bin-line-icon.svg" />
+                  </IconButton>
+                )}
+                {showSelectAction && (
+                  // <CheckBoxOutlinedIcon className="secondary-action-btn" onClick={() => onSelect(song)} />
+                  <IconButton className="select-btn" onClick={() => onSelect(song)}>
+                    <CheckBoxOutlinedIcon />
+                  </IconButton>
+                )}
+              </Stack>
             )}
-            {onAdd && (
-              <IconButton className="insert-btn" onClick={() => onAdd(song)}>
-                <img src="btn/plus-square-line-icon.svg" />
-              </IconButton>
-            )}
-            {onDelete && (
-              <IconButton className="del-btn" onClick={() => onDelete(song)}>
-                <img src="btn/recycle-bin-line-icon.svg" />
-              </IconButton>
-            )}
-            {song.selected && onSelect && (
-              // <CheckBoxOutlinedIcon className="secondary-action-btn" onClick={() => onSelect(song)} />
-              <IconButton className="select-btn" onClick={() => onSelect(song)}>
-                <CheckBoxOutlinedIcon />
-              </IconButton>
+            {showRightColumn && (
+              <Stack className="action-column action-column-right">
+                {onInsert && (
+                  <IconButton className="add-btn" onClick={() => onInsert(song)}>
+                    <img src="btn/four-arrows-inside-line-icon.svg" />
+                  </IconButton>
+                )}
+                {onAdd && (
+                  <IconButton className="insert-btn" onClick={() => onAdd(song)}>
+                    <img src="btn/plus-square-line-icon.svg" />
+                  </IconButton>
+                )}
+              </Stack>
             )}
           </Stack>
         )
