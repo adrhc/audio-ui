@@ -16,6 +16,7 @@ type SongListItemParam = {
   onAdd?: SongHandler;
   onInsert?: SongHandler;
   onDelete?: SongHandler;
+  onDownload?: SongHandler;
   onClick?: SongHandler;
   onSelect?: (song: SelectableSong) => void;
 };
@@ -28,6 +29,7 @@ function SongListItem({
   onAdd,
   onInsert,
   onDelete,
+  onDownload,
   onClick,
   onSelect,
 }: SongListItemParam) {
@@ -42,7 +44,7 @@ function SongListItem({
 
   const songCount = 1 + prevSongsCount + index;
   const showSelectAction = !!(song.selected && onSelect);
-  const showLeftColumn = !!onDelete || showSelectAction;
+  const showLeftColumn = !!onDelete || showSelectAction || !!onDownload;
   const showRightColumn = !!onInsert || !!onAdd;
   const showActions = showLeftColumn || showRightColumn;
   return (
@@ -71,6 +73,11 @@ function SongListItem({
                   // <CheckBoxOutlinedIcon className="secondary-action-btn" onClick={() => onSelect(song)} />
                   <IconButton className="select-btn" onClick={() => onSelect(song)}>
                     <CheckBoxOutlinedIcon />
+                  </IconButton>
+                )}
+                {onDownload && (
+                  <IconButton className="download-btn" onClick={() => onDownload(song)}>
+                    <img src="btn/download-file-square-line-icon.svg" />
                   </IconButton>
                 )}
               </Stack>

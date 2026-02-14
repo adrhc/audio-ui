@@ -15,10 +15,12 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingProps } from '../../lib/sustain/types';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { PLAYLIST_HISTORY } from '../../hooks/cache/cache-names';
-import { Song } from '../../domain/song';
+import { formatFileURI, Song } from '../../domain/song';
+import { downloadTrack } from '../../infrastructure/audio-db/download';
+import { MediaLocation } from '../../domain/location/types';
 
 function PlaybackHistoryPage() {
-  const { mopidy } = useContext(AppContext);
+  const { mopidy, setNotification } = useContext(AppContext);
   const {
     state,
     sustain,
@@ -31,7 +33,7 @@ function PlaybackHistoryPage() {
     scrollTo,
     getCache,
     mergeCache,
-  } = useCachedSongsScrollable<RawPlaybackHistoryPageState>(PLAYLIST_HISTORY);
+  } = useCachedSongsScrollable<RawPlaybackHistoryPageState>(PLAYLIST_HISTORY, { downloadedUris: [] });
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
@@ -159,6 +161,30 @@ function PlaybackHistoryPage() {
     [setState, sustain]
   );
 
+  const handleDownload = useCallback(
+    (song: MediaLocation) => {
+      // console.log(`[TrackListPage:handleDownload] song:\n`, song);
+      sustain(
+        downloadTrack(song.uri).then((response) => {
+          const formattedURI = formatFileURI(response.fileURI);
+          setNotification(
+            response.alreadyDownloaded
+              ? `Already downloaded ${song.title} at ${formattedURI}`
+              : `Downloaded ${song.title} to ${formattedURI}`
+          );
+          return {
+            downloadedUris: [
+              ...state.downloadedUris,
+              ...(state.downloadedUris.includes(song.uri) ? [] : [song.uri]),
+            ],
+          };
+        }),
+        `Failed to download ${song.title}!`
+      );
+    },
+    [setNotification, state.downloadedUris, sustain]
+  );
+
   return (
     <PageTemplate
       widePage={true}
@@ -174,6 +200,7 @@ function PlaybackHistoryPage() {
         onAdd={addSongOrPlaylist}
         onInsert={insertSongOrPlaylist}
         onDelete={onDelete}
+        onDownload={handleDownload}
         onClick={addSongThenPlay}
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}

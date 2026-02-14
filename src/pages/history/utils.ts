@@ -8,12 +8,13 @@ export interface RawPlaybackHistoryPageState extends ThinSongListState {
   after?: HistoryPosition;
   pageBeforeExists?: boolean;
   pageAfterExists?: boolean;
+  downloadedUris: string[];
 }
 
 export function toRawPlaybackHistoryPageState(
   prevSongsCount: number,
   page: HistoryPage
-): RawPlaybackHistoryPageState {
+): Partial<RawPlaybackHistoryPageState> {
   return {
     songs: page.entries,
     before: page.first,

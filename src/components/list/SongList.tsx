@@ -1,7 +1,8 @@
 import { ListItem, ListItemText } from '@mui/material';
+import { useCallback } from 'react';
 import SongListItemMenu from './SongListItemMenu.tsx';
 import SongListItem from './SongListItem';
-import { SelectableSong, Song } from '../../domain/song';
+import { isYtVideo, SelectableSong, Song } from '../../domain/song';
 import { SongListItemMenuParam, shouldShowListItemMenu } from './SongListItemMenuParam';
 import { LoadingState } from '../../lib/sustain/types';
 import LoadingList from './LoadingList.tsx';
@@ -15,6 +16,8 @@ interface SongsListParam extends ScrollableList, SongListItemMenuParam {
   onAdd?: SongHandler;
   onInsert?: SongHandler;
   onDelete?: SongHandler;
+  onDownload?: SongHandler;
+  downloadedUris?: string[];
   onClick?: SongHandler;
   onSelect?: (song: SelectableSong) => void;
   lastUsed?: Song | null;
@@ -28,6 +31,8 @@ function SongList({
   onAdd,
   onInsert,
   onDelete,
+  onDownload,
+  downloadedUris,
   onClick,
   onSelect,
   lastUsed,
@@ -38,10 +43,16 @@ function SongList({
 }: LoadingState<SongsListParam>) {
   // console.log(`[SongsList] lastUsed:`, lastUsed);
 
+  const canDownload = useCallback(
+    (song: Song) => isYtVideo(song) && !downloadedUris?.includes(song.uri),
+    [downloadedUris]
+  );
+  
   const navParam = { songs, listRef, ...partialNavParam };
   const showListItemMenu = shouldShowListItemMenu(navParam);
   const selectableActionCount = onSelect && songs.some((song) => !!song.selected) ? 1 : 0;
-  const leftColumnActionCount = Number(!!onDelete) + selectableActionCount;
+  const hasDownloadAction = !!onDownload && songs.some(canDownload);
+  const leftColumnActionCount = Number(!!onDelete) + selectableActionCount + Number(hasDownloadAction);
   const rightColumnActionCount = Number(!!onInsert) + Number(!!onAdd);
   const secondaryActionRows = Math.max(leftColumnActionCount, rightColumnActionCount);
   const secondaryActionColumns =
@@ -87,6 +98,7 @@ function SongList({
           onAdd={onAdd}
           onInsert={onInsert}
           onDelete={onDelete}
+          onDownload={onDownload && canDownload(song) ? onDownload : undefined}
           onClick={onClick}
           onSelect={onSelect}
         />

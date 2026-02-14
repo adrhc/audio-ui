@@ -12,6 +12,7 @@ import TrackListMenu from '../components/menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../lib/sustain/types';
 import { downloadTrack, filterDownloaded } from '../infrastructure/audio-db/download';
 import { formatFileURI } from '../domain/song';
+import { MediaLocation } from '../domain/location/types';
 
 type TrackListPageState = {
   songs: Track[];
@@ -54,7 +55,7 @@ export default function TrackListPage() {
   );
 
   const handleDownload = useCallback(
-    (song: Track) => {
+    (song: MediaLocation) => {
       // console.log(`[TrackListPage:handleDownload] song:\n`, song);
       sustain(
         downloadTrack(song.uri).then((response) => {
