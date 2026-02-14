@@ -61,13 +61,13 @@ function PlaybackHistoryPage() {
   // scroll after loading the history
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
-    if (songsIsEmpty || state.pageBeforeExists) {
+    if (songsIsEmpty) {
       return;
     }
     console.log(`[PlaybackHistoryPage.useEffect] scrolling to ${cachedScrollTop} after loading the history`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
-  }, [cachedScrollTop, scrollTo, songsIsEmpty, state.pageBeforeExists]);
+  }, [cachedScrollTop, scrollTo, songsIsEmpty]);
 
   // cache the current state
   useEffect(() => {
