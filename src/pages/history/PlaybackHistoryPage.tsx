@@ -40,13 +40,6 @@ function PlaybackHistoryPage() {
 
   const imgMaxEdge = useMaxEdge();
 
-  // scroll position restoration at 1st page load
-  useEffect(() => {
-    console.log(`[PlaybackHistoryPage.useEffect] scrolling to ${cachedScrollTop} at page load`);
-    // setTimeout(scrollTo, 0, cachedScrollTop);
-    scrollTo(cachedScrollTop);
-  }, [cachedScrollTop, scrollTo]);
-
   // loading the history if not already loaded
   useEffect(() => {
     if (songsIsEmpty) {
