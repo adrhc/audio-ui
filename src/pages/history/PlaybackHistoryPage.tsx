@@ -43,7 +43,7 @@ function PlaybackHistoryPage() {
   // loading the history if not already loaded
   useEffect(() => {
     if (songsIsEmpty) {
-      console.log(`[PlaybackHistoryPage.useEffect] loading the history`);
+      console.log(`[PlaybackHistoryPage.useEffect] loading 1st history page`);
       sustain(
         getHistory(mopidy, imgMaxEdge).then((hp) => toRawPlaybackHistoryPageState(0, hp)),
         `Failed to load the history!`
