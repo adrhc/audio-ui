@@ -35,65 +35,68 @@ export function addUrisToTrackListAfter(
   }
   return tracklist.index({ tlid: afterTlid })?.then((index) => {
     if (index == null) {
-      return addUrisToTrackList(mopidy, ...uris);
+      return addUrisToTrackListIn2Steps(tracklist, uris);
     } else {
-      return addUrisToTrackListAtPosition(tracklist, uris, index + 1);
+      return addUrisToTrackListIn2Steps(tracklist, uris, index + 1);
     }
   });
 }
 
 /**
- * This is the not-async version of addUrisToTrackListIn2Steps.
+ * It rejects if all URIs are unsupported or if the list is empty!
  */
-export function addUrisToTrackList(mopidy: Mopidy | undefined, ...uris: string[]): Promise<models.TlTrack[]> {
-  const tracklist = mopidy?.tracklist;
+export async function addUrisToTrackListIn2Steps(
+  tracklist: Mopidy.core.TracklistController | undefined,
+  uris: string[],
+  position?: number | null
+): Promise<models.TlTrack[]> {
   if (!tracklist) {
     return Promise.reject(MOPIDY_DISCONNECTED_ERROR);
-  } else if (!uris.length) {
-    // console.log(`[addUrisToTrackList] uris:`, uris);
-    return Promise.reject("Can't add an empty uri list!");
-  } else {
-    // console.log(`[addUris] uris:`, uris);
-    // return mopidy.tracklist.add({ uris });
-    return addUrisToTrackListIn2Steps(tracklist, uris);
   }
-}
-
-async function addUrisToTrackListIn2Steps(
-  tracklist: Mopidy.core.TracklistController,
-  uris: string[]
-): Promise<models.TlTrack[]> {
-  if (uris.length === 0) return [];
-  /* const resolvedLists = await Promise.all(uris.map(resolvePlaylistUri));
-  uris = resolvedLists.flat();
-  if (uris.length === 0) return []; */
-  const [firstUri, ...restUris] = uris;
-  const firstTracks = await addUrisToTrackListAtPosition(tracklist, [firstUri]);
-  console.log(`[addUrisToTrackListIn2Steps] restUris:`, restUris);
+  const supportedUris = uris.filter(isSupportedUri);
+  if (!supportedUris.length) {
+    if (uris.length > 0) {
+      return Promise.reject('The provided URIs are not supported!');
+    } else {
+      return Promise.reject("Can't add an empty uri list!");
+    }
+  }
+  const [firstUri, ...restUris] = supportedUris;
+  const firstTracks = await addUrisToTrackListAtPosition(tracklist, [firstUri], position);
+  // console.log(`[addUrisToTrackListIn2Steps] restUris:`, restUris);
   if (restUris.length > 0) {
-    const restTracks = await addUrisToTrackListAtPosition(tracklist, restUris);
+    const restTracks = await addUrisToTrackListAtPosition(
+      tracklist,
+      restUris,
+      position != null ? position + 1 : undefined
+    );
     return [...firstTracks, ...restTracks];
   } else {
     return firstTracks;
   }
 }
 
+/**
+ * It rejects if all URIs are unsupported or if the list is empty!
+ */
 function addUrisToTrackListAtPosition(
   tracklist: Mopidy.core.TracklistController,
   uris: string[],
   position?: number | null
 ): Promise<models.TlTrack[]> {
-  if (!uris.length) {
-    // console.log(`[addUrisToTrackListAtPosition] uris:`, uris);
-    return Promise.reject("Can't add an empty uri list!");
-  }
-  uris = uris.filter(isSupportedUri);
-  if (!uris.length) {
-    return Promise.reject('No supported URIs!');
+  const supportedUris = uris.filter(isSupportedUri);
+  if (!supportedUris.length) {
+    if (uris.length > 0) {
+      // console.log(`[addUrisToTrackListAtPosition] the provided URIs are not supported, uris:`, uris);
+      return Promise.reject('The provided URIs are not supported!');
+    } else {
+      // console.log(`[addUrisToTrackListAtPosition] Can't add an empty uri list!`);
+      return Promise.reject("Can't add an empty uri list!");
+    }
   } else if (position != null) {
-    return tracklist.add({ uris, at_position: position });
+    return tracklist.add({ uris: supportedUris, at_position: position });
   } else {
-    return tracklist.add({ uris });
+    return tracklist.add({ uris: supportedUris });
   }
 }
 
