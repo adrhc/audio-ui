@@ -15,12 +15,11 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingProps } from '../../lib/sustain/types';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { PLAYLIST_HISTORY } from '../../hooks/cache/cache-names';
-import { formatFileURI, Song } from '../../domain/song';
-import { downloadTrack } from '../../infrastructure/audio-db/download';
-import { MediaLocation } from '../../domain/location/types';
+import { Song } from '../../domain/song';
+import useHandleDownload from '../../hooks/useHandleDownload';
 
 function PlaybackHistoryPage() {
-  const { mopidy, setNotification } = useContext(AppContext);
+  const { mopidy } = useContext(AppContext);
   const {
     state,
     sustain,
@@ -54,7 +53,7 @@ function PlaybackHistoryPage() {
       console.log(`[PlaybackHistoryPage.useEffect] loading 1st history page`);
       sustain(
         getHistory(mopidy, imgMaxEdge).then((hp) => toRawPlaybackHistoryPageState(0, hp)),
-        `Failed to load the history!`
+        `Failed to load the 1st history page!`
       );
     }
   }, [imgMaxEdge, mopidy, songsIsEmpty, sustain]);
@@ -89,7 +88,7 @@ function PlaybackHistoryPage() {
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
           setState((old) => ({ ...old, ...toRawPlaybackHistoryPageState(0, hp) }));
         }),
-        `Failed to load the next history page!`
+        `Failed to load the 1st history page!`
       );
     } else if (state.after) {
       sustain(
@@ -121,14 +120,20 @@ function PlaybackHistoryPage() {
     console.log(`[PlaybackHistoryPage.goToPreviousPage] before:`, state.before);
     if (state.before) {
       sustain(
-        getHistoryBefore(mopidy, imgMaxEdge, state.before).then((hp) => {
-          console.log(`[PlaybackHistoryPage.goToPreviousPage/getHistoryBefore] before:`, state.before);
-          mergeCache((old) => ({ ...old, scrollTop: 0 }));
-          setState((old) => ({
-            ...old,
-            ...toRawPlaybackHistoryPageState(Math.max(0, old.prevSongsCount - old.completePageSize), hp),
-          }));
-        }),
+        getHistoryBefore(mopidy, imgMaxEdge, state.before)
+          .catch((e) => {
+            console.error(`[PlaybackHistoryPage.goToPreviousPage/getHistoryBefore]`, e);
+            setState((old) => ({ ...old, before: undefined, pageBeforeExists: false }));
+            throw e;
+          })
+          .then((hp) => {
+            console.log(`[PlaybackHistoryPage.goToPreviousPage/getHistoryBefore] before:`, state.before);
+            mergeCache((old) => ({ ...old, scrollTop: 0 }));
+            setState((old) => ({
+              ...old,
+              ...toRawPlaybackHistoryPageState(Math.max(0, old.prevSongsCount - old.completePageSize), hp),
+            }));
+          }),
         `Failed to load the previous history page!`
       );
     } else {
@@ -139,7 +144,7 @@ function PlaybackHistoryPage() {
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
           setState((old) => ({ ...old, ...toRawPlaybackHistoryPageState(0, hp) }));
         }),
-        `Failed to load the next history page!`
+        `Failed to load the 1st history page!`
       );
     }
   }, [imgMaxEdge, mergeCache, mopidy, setState, state.before, sustain]);
@@ -161,29 +166,7 @@ function PlaybackHistoryPage() {
     [setState, sustain]
   );
 
-  const handleDownload = useCallback(
-    (song: MediaLocation) => {
-      // console.log(`[TrackListPage:handleDownload] song:\n`, song);
-      sustain(
-        downloadTrack(song.uri).then((response) => {
-          const formattedURI = formatFileURI(response.fileURI);
-          setNotification(
-            response.alreadyDownloaded
-              ? `Already downloaded ${song.title} at ${formattedURI}`
-              : `Downloaded ${song.title} to ${formattedURI}`
-          );
-          return {
-            downloadedUris: [
-              ...state.downloadedUris,
-              ...(state.downloadedUris.includes(song.uri) ? [] : [song.uri]),
-            ],
-          };
-        }),
-        `Failed to download ${song.title}!`
-      );
-    },
-    [setNotification, state.downloadedUris, sustain]
-  );
+  const handleDownload = useHandleDownload<RawPlaybackHistoryPageState>(sustain, state.downloadedUris);
 
   return (
     <PageTemplate

@@ -10,9 +10,8 @@ import { useMaxEdge } from '../hooks/useMaxEdge';
 import { Track, removeTrack } from '../domain/track';
 import TrackListMenu from '../components/menu/TrackListBottomPageMenu';
 import { SetFeedbackState } from '../lib/sustain/types';
-import { downloadTrack, filterDownloaded } from '../infrastructure/audio-db/download';
-import { formatFileURI } from '../domain/song';
-import { MediaLocation } from '../domain/location/types';
+import { filterDownloaded } from '../infrastructure/audio-db/download';
+import useHandleDownload from '../hooks/useHandleDownload';
 
 type TrackListPageState = {
   songs: Track[];
@@ -21,7 +20,7 @@ type TrackListPageState = {
 };
 
 export default function TrackListPage() {
-  const { mopidy, online, setNotification } = useContext(AppContext);
+  const { mopidy, online } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<TrackListPageState>({ songs: [], downloadedUris: [] });
   const imgMaxEdge = useMaxEdge();
 
@@ -54,29 +53,7 @@ export default function TrackListPage() {
     [mopidy, setState, sustain]
   );
 
-  const handleDownload = useCallback(
-    (song: MediaLocation) => {
-      // console.log(`[TrackListPage:handleDownload] song:\n`, song);
-      sustain(
-        downloadTrack(song.uri).then((response) => {
-          const formattedURI = formatFileURI(response.fileURI);
-          setNotification(
-            response.alreadyDownloaded
-              ? `Already downloaded ${song.title} at ${formattedURI}`
-              : `Downloaded ${song.title} to ${formattedURI}`
-          );
-          return {
-            downloadedUris: [
-              ...state.downloadedUris,
-              ...(state.downloadedUris.includes(song.uri) ? [] : [song.uri]),
-            ],
-          };
-        }),
-        `Failed to download ${song.title}!`
-      );
-    },
-    [setNotification, state.downloadedUris, sustain]
-  );
+  const handleDownload = useHandleDownload<TrackListPageState>(sustain, state.downloadedUris);
 
   useEffect(() => {
     if (online) {
