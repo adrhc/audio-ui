@@ -11,7 +11,7 @@ import { removeLoadingProps } from '../../lib/sustain/types';
 import { LOCAL_LIBRARY_PLAY_CACHE } from '../../hooks/cache/cache-names';
 import { AddManyFn } from '../../components/list/SongListItemMenuParam';
 
-function LocalLibraryPlaySelectorPage() {
+function LocalLibraryPage() {
   const navigate = useNavigate();
   const { online } = useContext(AppContext);
   const {
@@ -102,4 +102,4 @@ function LocalLibraryPlaySelectorPage() {
   );
 }
 
-export default LocalLibraryPlaySelectorPage;
+export default LocalLibraryPage;

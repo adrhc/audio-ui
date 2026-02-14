@@ -6,7 +6,7 @@ import {
   addSongs,
   addSongsAfterAndRemember,
   addSongsAndRemember,
-  addSongThenPlay as remotelyAddSongThenPlay,
+  addSongThenPlay as addSongThenPlayImpl,
 } from '../infrastructure/mopidy/playing-list/add-song';
 import { CurrentSongAware } from '../domain/track';
 import { addMopidyPl, addMopidyPlAfter } from '../infrastructure/mopidy/playing-list/add-mopidy-pl';
@@ -28,7 +28,7 @@ export function usePlayingList<S extends LastUsedMediaAware>(sustain: SustainVoi
     (song: Song) => {
       // console.log(`[useSongsList:addSongThenPlay] song:\n`, song);
       sustain(
-        remotelyAddSongThenPlay(mopidy, song)?.then(() => ({ lastUsed: song }) as Partial<S>),
+        addSongThenPlayImpl(mopidy, song)?.then(() => ({ lastUsed: song }) as Partial<S>),
         { error: `Failed to start ${song.title}!`, lastUsed: song }
       );
     },
