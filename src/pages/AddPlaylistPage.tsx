@@ -18,6 +18,8 @@ function AddPlaylistPage() {
   const [state, sustain, setState] = useSustainableState<NewPlaylistPageState>({ name: '' });
   const { createPlaylist } = useLibrary(sustain);
 
+  console.log(`[AddPlaylistPage] state:\n`, state);
+
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const { name, value } = event.target;

@@ -1,6 +1,6 @@
 import { LoadingState, SetLoadingState } from '../lib/sustain/types';
 import { Song, SongsAware, ThinSongListState } from '../domain/song';
-import { NoArgsProc } from '../domain/types';
+import { NavigateToProc } from '../domain/types';
 import useCachedPositionScrollable, {
   ScrollPosition,
   UseCachedPositionScrollable,
@@ -12,12 +12,13 @@ import useAppNavigator from './useAppNavigator';
 import useLibraryAwareState, { UseSongsAwareState } from './useLibraryAwareState';
 
 export interface UseSongList<S extends ThinSongListState>
-  extends UsePlayingList,
+  extends
+    UsePlayingList,
     UseSongsAwareState,
     NamedTypedCacheOperations<S & ScrollPosition>,
     UseCachedPositionScrollable {
   addSongThenPlay: (song: Song) => void;
-  goToPlAdd: NoArgsProc;
+  goToPlAdd: NavigateToProc;
   state: LoadingState<S>;
   sustain: SustainVoidFn<S>;
   setState: SetLoadingState<S>;

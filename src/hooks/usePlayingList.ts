@@ -3,6 +3,7 @@ import { isPlaylist, isYtMusicPl, Song, LastUsedMediaAware } from '../domain/son
 import { SustainVoidFn } from './useSustainableState';
 import { AppContext } from './AppContext';
 import {
+  addSongs,
   addSongsAfterAndRemember,
   addSongsAndRemember,
   addSongThenPlay as remotelyAddSongThenPlay,
@@ -11,7 +12,7 @@ import { CurrentSongAware } from '../domain/track';
 import { addMopidyPl, addMopidyPlAfter } from '../infrastructure/mopidy/playing-list/add-mopidy-pl';
 import { addYtMusicPl, addYtMusicPlAfter } from '../infrastructure/mopidy/playing-list/add-yt-pl';
 
-export type AddManySongsFn = (songs: Song[]) => void;
+export type AddManySongsFn = (songs: Song[], addToHistory?: boolean) => Promise<void>;
 
 export interface UsePlayingList extends CurrentSongAware {
   addSongThenPlay: (song: Song) => void;
@@ -35,9 +36,13 @@ export function usePlayingList<S extends LastUsedMediaAware>(sustain: SustainVoi
   );
 
   const addManySongs = useCallback(
-    (songs: Song[]) => {
-      // console.log(`[usePlayingList:addManySongs] songs:\n`, songs);
-      sustain(addSongsAndRemember(mopidy, ...songs), `Failed to add!`);
+    (songs: Song[], addToHistory?: boolean) => {
+      console.log(`[usePlayingList:addManySongs] addToHistory: ${addToHistory}, songs:\n`, songs);
+      if (addToHistory) {
+        return sustain(addSongsAndRemember(mopidy, ...songs), `Failed to add!`);
+      } else {
+        return sustain(addSongs(mopidy, ...songs).then(() => undefined), `Failed to add!`);
+      }
     },
     [mopidy, sustain]
   );

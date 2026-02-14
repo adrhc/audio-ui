@@ -16,8 +16,10 @@ function AddTrackPage() {
   const goBack = useGoBack();
   const { mopidy, online } = useContext(AppContext);
   const [state, sustain, setState] = useSustainableState<AddTrackPageState>({ uri: '' });
-
   const trimmedUri = state.uri.trim();
+
+  console.log(`[AddTrackPage] state:\n`, state);
+
   const addTrack = useCallback(() => {
     sustain(addUrisThenPlay(mopidy, trimmedUri).then(goBack), `Failed to add ${trimmedUri}!`);
   }, [goBack, mopidy, sustain, trimmedUri]);
