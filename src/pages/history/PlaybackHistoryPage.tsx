@@ -110,20 +110,30 @@ function PlaybackHistoryPage() {
   ]);
 
   const goToPreviousPage = useCallback(() => {
-    if (!state.before) {
-      return;
+    console.log(`[PlaybackHistoryPage.goToPreviousPage] before:`, state.before);
+    if (state.before) {
+      sustain(
+        getHistoryBefore(mopidy, imgMaxEdge, state.before).then((hp) => {
+          console.log(`[PlaybackHistoryPage.goToPreviousPage/getHistoryBefore] before:`, state.before);
+          mergeCache((old) => ({ ...old, scrollTop: 0 }));
+          setState((old) => ({
+            ...old,
+            ...toRawPlaybackHistoryPageState(Math.max(0, old.prevSongsCount - old.completePageSize), hp),
+          }));
+        }),
+        `Failed to load the previous history page!`
+      );
+    } else {
+      sustain(
+        getHistory(mopidy, imgMaxEdge).then((hp) => {
+          console.log(`[PlaybackHistoryPage.goToPreviousPage/getHistory] scrollTo set to zero`);
+          mergeCache((old) => ({ ...old, scrollTop: 0 }));
+          scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
+          setState((old) => ({ ...old, ...toRawPlaybackHistoryPageState(0, hp) }));
+        }),
+        `Failed to load the next history page!`
+      );
     }
-    // console.log(`[PlaybackHistoryPage.goToPreviousPage]`);
-    sustain(
-      getHistoryBefore(mopidy, imgMaxEdge, state.before).then((hp) => {
-        mergeCache((old) => ({ ...old, scrollTop: 0 }));
-        setState((old) => ({
-          ...old,
-          ...toRawPlaybackHistoryPageState(Math.max(0, old.prevSongsCount - old.completePageSize), hp),
-        }));
-      }),
-      `Failed to load the previous history page!`
-    );
   }, [imgMaxEdge, mergeCache, mopidy, setState, state.before, sustain]);
 
   return (
@@ -144,7 +154,7 @@ function PlaybackHistoryPage() {
         lastUsed={state.lastUsed}
         onScroll={scrollObserver}
         listRef={listRef}
-        pageBeforeExists={state.pageBeforeExists}
+        pageBeforeExists={true}
         pageAfterExists={state.pageAfterExists}
         goToPreviousPage={goToPreviousPage}
         goToNextPage={goToNextPage}
