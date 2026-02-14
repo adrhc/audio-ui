@@ -30,7 +30,7 @@ function LocalPlaylistPlaySelectorPage() {
     clearCache,
   } = useCachedSongsScrollable<ThinSongListState>(cacheName);
   const cache = getCache();
-  console.log(`[LocalPlaylistItemToPlaySelectorPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
+  console.log(`[LocalPlaylistPlaySelectorPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
     state,
     cache,
   });
@@ -42,13 +42,13 @@ function LocalPlaylistPlaySelectorPage() {
 
   const loadPlContent = useCallback(() => {
     if (uri) {
-      console.log(`[LocalPlaylistItemToPlaySelectorPage.loadPlContent] loading ${uri}`);
+      console.log(`[LocalPlaylistPlaySelectorPage.loadPlContent] loading ${uri}`);
       sustain(
         getPlContent(imgMaxEdge, uri).then((songs) => ({ songs })),
         `Failed to load the playlist!`
       );
     } else {
-      console.log(`[LocalPlaylistItemToPlaySelectorPage.loadPlContent] "uri" is empty!`);
+      console.log(`[LocalPlaylistPlaySelectorPage.loadPlContent] "uri" is empty!`);
     }
   }, [imgMaxEdge, sustain, uri]);
 
@@ -63,10 +63,10 @@ function LocalPlaylistPlaySelectorPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[LocalPlaylistItemToPlaySelectorPage.useEffect] ${uri} isn't loaded yet or is empty!`);
+      console.log(`[LocalPlaylistPlaySelectorPage.useEffect] ${uri} isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[LocalPlaylistItemToPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
+    console.log(`[LocalPlaylistPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty, uri]);
