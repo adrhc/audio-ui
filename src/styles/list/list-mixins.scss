@@ -1,6 +1,7 @@
 @use '/src/styles/vars.scss' as *;
 @use '/src/styles/functions.scss' as *;
 
+// "generic" properties for the list-item button
 @mixin liButton($btnPX, $fontSize) {
   .MuiListItemButton-root {
     padding-left: $btnPX;
@@ -20,18 +21,33 @@
 }
 
 @mixin liAction($iconSize, $actBtnCount) {
-  $iconSizePx: spacing($iconSize);
-  // this is the *entire* visible & pressable list item button
+  @include liActionButton($iconSize, $actBtnCount);
+  @include liLeftOf2ActionText($iconSize);
+  @include li2ActionElem($iconSize);
+}
+
+/**
+ * This is the *entire* visible & pressable list-item button.
+ * Here are the properties that are specific to the situation where the secondary actions exist.
+ */
+@mixin liActionButton($iconSize, $actBtnCount) {
   .MuiListItemButton-root {
     // each action btn has a height of $iconSize + 2 (i.e. padding top + bottom)
     // also adding some overall padding top & bottom
     min-height: spacing($actBtnCount * ($iconSize + 2) + 1);
-    // this is the text part of the list item button (the image/avatar is outside of this)
-    .MuiListItemText-root {
-      // this creates the space for the action buttons, otherwise they would overlap
-      padding-right: spacing($iconSize + 1);
-    }
   }
+}
+
+// this is the text part of the list-item button (the image/avatar is outside of this)
+@mixin liLeftOf2ActionText($iconSize) {
+  .MuiListItemButton-root .MuiListItemText-root {
+    // this creates the space for the action buttons, otherwise they would overlap
+    padding-right: spacing($iconSize + 1);
+  }
+}
+
+@mixin li2ActionElem($iconSize) {
+  $iconSizePx: spacing($iconSize);
   // this is the container of the secondary action buttons
   .MuiListItemSecondaryAction-root {
     right: 0;
