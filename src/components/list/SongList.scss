@@ -42,7 +42,7 @@ $largerThanTabletIconSize: 3;
       @include liAvatarAtLeft(25%, $liPX);
       @include li2ActionElem($largerThanTabletIconSize);
       .action-column-right {
-        margin-left: spacing(-0.5);
+        margin-left: spacing(-0.75);
       }
     }
   }
