@@ -6,6 +6,8 @@
 $liPX: spacing(0.5);
 $songListMaxSecondaryActionRows: 4;
 $songListMaxSecondaryActionColumns: 2;
+$smallerThanTabletIconSize: 4;
+$largerThanTabletIconSize: 3;
 
 .song-list.zero-length {
   @include emptyMessage2ndItem;
@@ -30,56 +32,51 @@ $songListMaxSecondaryActionColumns: 2;
       @include liButton($liPX, 1.1rem);
       @include liAvatarAtLeft(25%, $liPX);
       // @include liAvatarOnTop(60%);
+      @include liTextWhen2Action($smallerThanTabletIconSize);
+      @include li2ActionElem($smallerThanTabletIconSize);
     }
     @media (min-width: $tablet) {
       @include liButton($liPX, 0.95rem);
       @include liAvatarAtLeft(25%, $liPX);
+      @include liTextWhen2Action($largerThanTabletIconSize);
+      @include li2ActionElem($largerThanTabletIconSize);
     }
   }
   @include liMenuMedia;
 }
 
-$smallerThanTabletIconSize: 4;
-$largerThanTabletIconSize: 3;
-
-@mixin songListSecondaryAction($count) {
+// this determines the height of the list-item button
+@mixin songListSecondaryActionRow($count) {
   > li {
     @media (max-width: $tablet) {
-      @include liAction($smallerThanTabletIconSize, $count);
+      @include liButtonWhen2Action($smallerThanTabletIconSize, $count);
     }
     @media (min-width: $tablet) {
-      @include liAction($largerThanTabletIconSize, $count);
+      @include liButtonWhen2Action($largerThanTabletIconSize, $count);
     }
   }
 }
 
 @for $i from 1 through $songListMaxSecondaryActionRows {
   .song-list-rows-#{$i} {
-    @include songListSecondaryAction($i);
+    @include songListSecondaryActionRow($i);
   }
 }
 
-@mixin songListSecondaryActionColumns($count) {
+// this determines the text right-padding of the li element
+@mixin songListSecondaryActionColumn($count) {
   > li {
     @media (max-width: $tablet) {
-      // this is the text part of the list item button (the image/avatar is outside of this)
-      .MuiListItemButton-root .MuiListItemText-root {
-        // this creates the space for the action buttons, otherwise they would overlap
-        padding-right: spacing(($smallerThanTabletIconSize + 2) * $count - 1);
-      }
+      @include liTextWhen2Action($smallerThanTabletIconSize, $count);
     }
     @media (min-width: $tablet) {
-      // this is the text part of the list item button (the image/avatar is outside of this)
-      .MuiListItemButton-root .MuiListItemText-root {
-        // this creates the space for the action buttons, otherwise they would overlap
-        padding-right: spacing(($largerThanTabletIconSize + 2) * $count - 1);
-      }
+      @include liTextWhen2Action($largerThanTabletIconSize, $count);
     }
   }
 }
 
 @for $i from 1 through $songListMaxSecondaryActionColumns {
   .song-list-cols-#{$i} {
-    @include songListSecondaryActionColumns($i);
+    @include songListSecondaryActionColumn($i);
   }
 }
