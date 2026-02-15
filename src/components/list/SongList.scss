@@ -32,14 +32,18 @@ $largerThanTabletIconSize: 3;
       @include liButton($liPX, 1.1rem);
       @include liAvatarAtLeft(25%, $liPX);
       // @include liAvatarOnTop(60%);
-      @include liTextWhen2Action($smallerThanTabletIconSize);
       @include li2ActionElem($smallerThanTabletIconSize);
+      .action-column-right {
+        margin-left: spacing(-0.75);
+      }
     }
     @media (min-width: $tablet) {
       @include liButton($liPX, 0.95rem);
       @include liAvatarAtLeft(25%, $liPX);
-      @include liTextWhen2Action($largerThanTabletIconSize);
       @include li2ActionElem($largerThanTabletIconSize);
+      .action-column-right {
+        margin-left: spacing(-0.5);
+      }
     }
   }
   @include liMenuMedia;
