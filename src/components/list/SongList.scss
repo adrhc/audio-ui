@@ -71,7 +71,7 @@ $largerThanTabletIconSize: 3;
 @mixin songListSecondaryActionColumn($count) {
   > li {
     @media (max-width: $tablet) {
-      @include liTextWhen2Action($smallerThanTabletIconSize, $count);
+      @include liTextWhen2Action($smallerThanTabletIconSize, $count, -1.75);
     }
     @media (min-width: $tablet) {
       @include liTextWhen2Action($largerThanTabletIconSize, $count);
