@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
@@ -28,10 +28,9 @@ function LocalPlContentPage() {
     scrollObserver,
     getCache,
     mergeCache,
-    clearCache,
   } = useCachedSongsScrollable<ThinSongListState>(cacheName);
   const cache = getCache();
-  console.log(`[LocalPlContentPlaySelectorPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
+  console.log(`[LocalPlContentPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
     state,
     cache,
   });
@@ -43,13 +42,13 @@ function LocalPlContentPage() {
 
   const loadPlContent = useCallback(() => {
     if (uri) {
-      console.log(`[LocalPlContentPlaySelectorPage.loadPlContent] loading ${uri}`);
+      console.log(`[LocalPlContentPage.loadPlContent] loading ${uri}`);
       sustain(
         getPlContent(imgMaxEdge, uri).then((songs) => ({ songs })),
         `Failed to load the playlist!`
       );
     } else {
-      console.log(`[LocalPlContentPlaySelectorPage.loadPlContent] "uri" is empty!`);
+      console.log(`[LocalPlContentPage.loadPlContent] "uri" is empty!`);
     }
   }, [imgMaxEdge, sustain, uri]);
 
@@ -64,11 +63,11 @@ function LocalPlContentPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[LocalPlContentPlaySelectorPage.useEffect] ${uri} isn't loaded yet or is empty!`);
+      console.log(`[LocalPlContentPage.useEffect] ${uri} isn't loaded yet or is empty!`);
       return;
     }
     console.log(
-      `[LocalPlContentPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`
+      `[LocalPlContentPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`
     );
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
@@ -76,8 +75,9 @@ function LocalPlContentPage() {
 
   // cache the current state
   useEffect(() => {
+    console.log(`[LocalPlContent.useEffect] caching state for ${uri}`);
     mergeCache((old) => ({ ...old, ...removeLoadingProps(state) }));
-  }, [mergeCache, state, uri, clearCache]);
+  }, [mergeCache, state, uri]);
 
   const onDelete = useCallback(
     (song: Song) => {
