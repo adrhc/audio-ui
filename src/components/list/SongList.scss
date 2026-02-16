@@ -4,8 +4,8 @@
 @use 'EmptyList.scss' as *;
 
 $liPX: spacing(0.5);
-$songListMaxSecondaryActionRows: 4;
-$songListMaxSecondaryActionColumns: 2;
+$songListMax2ActionRows: 3;
+$songListMax2ActionColumns: 2;
 $smallerThanTabletIconSize: 4;
 $largerThanTabletIconSize: 3;
 
@@ -49,38 +49,14 @@ $largerThanTabletIconSize: 3;
   @include liMenuMedia;
 }
 
-// this determines the height of the list-item button
-@mixin songList2ActionRow($vActBtnCount) {
-  > li {
-    @media (max-width: $tablet) {
-      @include liButtonWhen2Action($smallerThanTabletIconSize, $vActBtnCount);
-    }
-    @media (min-width: $tablet) {
-      @include liButtonWhen2Action($largerThanTabletIconSize, $vActBtnCount);
-    }
-  }
-}
-
-// this determines the text right-padding of the li element
-@mixin songList2ActionColumn($hActBtnCount) {
-  > li {
-    @media (max-width: $tablet) {
-      @include liTextWhen2Action($smallerThanTabletIconSize, $hActBtnCount, -1.75);
-    }
-    @media (min-width: $tablet) {
-      @include liTextWhen2Action($largerThanTabletIconSize, $hActBtnCount);
-    }
-  }
-}
-
-@for $i from 1 through $songListMaxSecondaryActionRows {
+@for $i from 1 through $songListMax2ActionRows {
   .song-list-rows-#{$i} {
-    @include songList2ActionRow($i);
+    @include li2ActionRow($smallerThanTabletIconSize, $largerThanTabletIconSize, $i);
   }
 }
 
-@for $i from 1 through $songListMaxSecondaryActionColumns {
+@for $i from 1 through $songListMax2ActionColumns {
   .song-list-cols-#{$i} {
-    @include songList2ActionColumn($i);
+    @include li2ActionColumn($smallerThanTabletIconSize, $largerThanTabletIconSize, $i);
   }
 }
