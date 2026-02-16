@@ -10,7 +10,7 @@ import { removeLoadingProps } from '../../lib/sustain/types';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { plCacheName } from '../../hooks/cache/cache-names';
 import { Song, ThinSongListState } from '../../domain/song';
-import { removeFromLocalPl } from '../../infrastructure/audio-db/playlist/playlist';
+import { removeFromLocalPl } from '../../infrastructure/audio-db/plentry';
 
 function LocalPlContentPage() {
   const { uri } = useParams();
