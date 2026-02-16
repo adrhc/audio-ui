@@ -85,7 +85,7 @@ function LocalPlContentPage() {
         return setState((old) => ({ ...old, error: 'The playlist to remove from is not specified!' }));
       }
       sustain(
-        removeFromLocalPl(uri, song.uri).then(() =>
+        removeFromLocalPl(uri, song.uri, song.title).then(() =>
           setState((old) => ({
             ...old,
             songs: old.songs.filter((s) => s.uri !== song.uri),

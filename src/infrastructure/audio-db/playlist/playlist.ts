@@ -1,4 +1,4 @@
-import { get, post, postVoid, removeVoid } from '../../../lib/rest';
+import { get, post, postVoid } from '../../../lib/rest';
 import { Song } from '../../../domain/song';
 import { LocationSelection } from '../../../domain/location/types';
 import { UriPlAllocationResult } from '../../../domain/UriPlAllocationResult';
@@ -29,10 +29,6 @@ export function updateManyLocalPlaylists(
     `${db.DISK_PLAYLIST}/add-song-to-playlists`,
     JSON.stringify(dbpl.toAudioDbLocationSelections(songUri, songTitle, playlists))
   ).then(dbpl.toUriPlAllocationResult);
-}
-
-export function removeFromLocalPl(plUri: string, songUri: string): Promise<void> {
-  return removeVoid(db.DISK_PLAYLIST, JSON.stringify({plUri, songUri}));
 }
 
 /**
