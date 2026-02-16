@@ -32,7 +32,7 @@ function LocalPlContentPage() {
     mergeCache,
   } = useCachedSongsScrollable<ThinSongListState>(cacheName);
   const cache = getCache();
-  console.log(`[LocalPlContentPage] uri = ${uri}, plFileName = ${plFileName}, cacheName = ${cacheName}\n`, {
+  console.log(`[LocalPlContentPage] uri = ${uri}, plFileName = ${plFileName}, cacheName = ${cacheName}`, {
     state,
     cache,
   });
