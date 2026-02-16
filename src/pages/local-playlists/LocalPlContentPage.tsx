@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import { useParams } from 'react-router-dom';
 import PageTemplate from '../../templates/PageTemplate';
@@ -11,9 +11,11 @@ import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { plCacheName } from '../../hooks/cache/cache-names';
 import { Song, ThinSongListState } from '../../domain/song';
 import { removeFromLocalPl } from '../../infrastructure/audio-db/plentry';
+import { m3uMpcRefUriToDecodedFileName } from '../../infrastructure/mopidy/utils';
 
 function LocalPlContentPage() {
   const { uri } = useParams();
+  const plFileName = uri ? m3uMpcRefUriToDecodedFileName(uri) : null;
   const cacheName = plCacheName(uri);
   const {
     state,
@@ -30,7 +32,7 @@ function LocalPlContentPage() {
     mergeCache,
   } = useCachedSongsScrollable<ThinSongListState>(cacheName);
   const cache = getCache();
-  console.log(`[LocalPlContentPage] uri = ${uri}, cacheName = ${cacheName}\n`, {
+  console.log(`[LocalPlContentPage] uri = ${uri}, plFileName = ${plFileName}, cacheName = ${cacheName}\n`, {
     state,
     cache,
   });
@@ -81,22 +83,21 @@ function LocalPlContentPage() {
 
   const onDelete = useCallback(
     (song: Song) => {
-      if (!uri) {
+      if (!plFileName) {
         return setState((old) => ({ ...old, error: 'The playlist to remove from is not specified!' }));
       }
       sustain(
-        removeFromLocalPl(uri, song.uri, song.title).then(() =>
+        removeFromLocalPl(plFileName, song.uri, song.title).then(() =>
           setState((old) => ({
             ...old,
             songs: old.songs.filter((s) => s.uri !== song.uri),
             lastUsed: old.lastUsed?.uri === song.uri ? null : old.lastUsed,
           }))
         ),
-        `Failed to remove ${song.title}!`,
-        false
+        `Failed to remove ${song.title} from ${plFileName}!`,
       );
     },
-    [setState, sustain, uri]
+    [setState, sustain, plFileName]
   );
 
   return (

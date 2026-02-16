@@ -153,7 +153,6 @@ function PlaybackHistoryPage() {
           }))
         ),
         `Failed to remove ${song.title} from history!`,
-        false
       );
     },
     [setState, sustain]
