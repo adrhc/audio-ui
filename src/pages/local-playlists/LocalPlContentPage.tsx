@@ -9,7 +9,8 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import { removeLoadingProps } from '../../lib/sustain/types';
 import { useMaxEdge } from '../../hooks/useMaxEdge';
 import { plCacheName } from '../../hooks/cache/cache-names';
-import { ThinSongListState } from '../../domain/song';
+import { Song, ThinSongListState } from '../../domain/song';
+import { removeFromLocalPl } from '../../infrastructure/audio-db/playlist/playlist';
 
 function LocalPlContentPage() {
   const { uri } = useParams();
@@ -66,7 +67,9 @@ function LocalPlContentPage() {
       console.log(`[LocalPlContentPlaySelectorPage.useEffect] ${uri} isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[LocalPlContentPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`);
+    console.log(
+      `[LocalPlContentPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop} after loading ${uri}`
+    );
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty, uri]);
@@ -75,6 +78,26 @@ function LocalPlContentPage() {
   useEffect(() => {
     mergeCache((old) => ({ ...old, ...removeLoadingProps(state) }));
   }, [mergeCache, state, uri, clearCache]);
+
+  const onDelete = useCallback(
+    (song: Song) => {
+      if (!uri) {
+        return;
+      }
+      sustain(
+        removeFromLocalPl(uri, song.uri).then(() =>
+          setState((old) => ({
+            ...old,
+            songs: old.songs.filter((s) => s.uri !== song.uri),
+            lastUsed: old.lastUsed?.uri === song.uri ? null : old.lastUsed,
+          }))
+        ),
+        `Failed to remove ${song.title}!`,
+        false
+      );
+    },
+    [setState, sustain, uri]
+  );
 
   return (
     <PageTemplate
@@ -87,6 +110,7 @@ function LocalPlContentPage() {
       <SongList
         songs={state.songs}
         loading={state.loading}
+        onDelete={uri ? onDelete : undefined}
         onAdd={addSongOrPlaylist}
         onInsert={insertSongOrPlaylist}
         onClick={addSongThenPlay}
