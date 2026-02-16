@@ -25,21 +25,20 @@ function LocalLibraryPage() {
     insertSongOrPlaylist,
     getCache,
     mergeCache,
-    clearCache,
     loadLocalLibrary
   } = useCachedSongsScrollable<ThinSongListState>(LOCAL_LIBRARY_PLAY_CACHE);
   const cache = getCache();
   const cachedScrollTop = cache?.scrollTop ?? 0;
   const songsIsEmpty = state.songs.length == 0;
-  console.log(`[LocalLibraryPlaySelectorPage]`, { cache, state });
+  console.log(`[LocalLibraryPage]`, { cache, state });
 
   // loading the library if not already loaded
   useEffect(() => {
     if (songsIsEmpty) {
-      console.log(`[LocalLibraryPlaySelectorPage.useEffect] online = ${online}`);
+      console.log(`[LocalLibraryPage.useEffect] online = ${online}`);
       online && loadLocalLibrary();
     } else {
-      console.log(`[LocalLibraryPlaySelectorPage.useEffect] the local playlists are already loaded!`);
+      console.log(`[LocalLibraryPage.useEffect] the local playlists are already loaded!`);
     }
   }, [loadLocalLibrary, online, songsIsEmpty]);
 
@@ -47,10 +46,10 @@ function LocalLibraryPage() {
   useEffect(() => {
     // this "if" is critical for correct scrolling position!
     if (songsIsEmpty) {
-      console.log(`[LocalLibraryPlaySelectorPage.useEffect] the library isn't loaded yet or is empty!`);
+      console.log(`[LocalLibraryPage.useEffect] the library isn't loaded yet or is empty!`);
       return;
     }
-    console.log(`[LocalLibraryPlaySelectorPage.useEffect] scrolling to ${cachedScrollTop}`);
+    console.log(`[LocalLibraryPage.useEffect] scrolling to ${cachedScrollTop}`);
     // setTimeout(scrollTo, 0, cachedScrollTop);
     scrollTo(cachedScrollTop);
   }, [cachedScrollTop, scrollTo, songsIsEmpty]);
@@ -60,16 +59,16 @@ function LocalLibraryPage() {
     mergeCache((old) => {
       // state doesn't contain scrollTop hence won't overwrite the cache!
       const backup = { ...old, ...removeLoadingProps(state) };
-      console.log(`[LocalLibraryPlaySelectorPage.useEffect/mergeCache] backup:`, { old, backup });
+      console.log(`[LocalLibraryPage.useEffect/mergeCache] backup:`, { old, backup });
       return backup;
     });
-  }, [clearCache, mergeCache, state]);
+  }, [mergeCache, state]);
 
   const handlePlSelection = useCallback(
     (song: Song) => {
       mergeCache((old) => {
         const backup = { ...old, lastUsed: song };
-        console.log(`[LocalLibraryPlaySelectorPage] stateBackup:`, backup);
+        console.log(`[LocalLibraryPage] stateBackup:`, backup);
         return backup;
       });
       navigate(`/local-playlist-content/${song.uri}`);
