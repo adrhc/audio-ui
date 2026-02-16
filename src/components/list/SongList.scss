@@ -61,12 +61,6 @@ $largerThanTabletIconSize: 3;
   }
 }
 
-@for $i from 1 through $songListMaxSecondaryActionRows {
-  .song-list-rows-#{$i} {
-    @include songListSecondaryActionRow($i);
-  }
-}
-
 // this determines the text right-padding of the li element
 @mixin songListSecondaryActionColumn($count) {
   > li {
@@ -76,6 +70,12 @@ $largerThanTabletIconSize: 3;
     @media (min-width: $tablet) {
       @include liTextWhen2Action($largerThanTabletIconSize, $count);
     }
+  }
+}
+
+@for $i from 1 through $songListMaxSecondaryActionRows {
+  .song-list-rows-#{$i} {
+    @include songListSecondaryActionRow($i);
   }
 }
 
