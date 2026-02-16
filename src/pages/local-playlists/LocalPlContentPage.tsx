@@ -82,7 +82,7 @@ function LocalPlContentPage() {
   const onDelete = useCallback(
     (song: Song) => {
       if (!uri) {
-        return;
+        return setState((old) => ({ ...old, error: 'The playlist to remove from is not specified!' }));
       }
       sustain(
         removeFromLocalPl(uri, song.uri).then(() =>
