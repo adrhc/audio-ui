@@ -19,6 +19,18 @@ export function plEditSearchCacheName(playlistUri?: string) {
   }
 }
 
+export function plCacheNameOfSelection(plSelection: LocationSelection) {
+  if (plSelection.type == 'DISK') {
+    // e.g. m3u/colinde.m3u8
+    // console.log(`[toLocalPlCacheName] plSelection.uri = ${plSelection.uri}`);
+    const parts = decodeURIComponent(plSelection.uri).split('/');
+    // has nothing to do with models.Ref.uri format (e.g. m3u:Marcin%20Patrzalek.m3u8)
+    return plCacheName(`m3u:${parts[parts.length - 1]}`);
+  } else {
+    return plCacheName(plSelection.uri);
+  }
+}
+
 /**
  * @param playlistUri e.g. m3u/colinde
  */
@@ -28,17 +40,5 @@ export function plCacheName(playlistUri?: string) {
     return `playlist/${playlistUri}`;
   } else {
     throw new Error('Empty uri is not allowed!');
-  }
-}
-
-export function toPlCacheName(plSelection: LocationSelection) {
-  if (plSelection.type == 'DISK') {
-    // e.g. m3u/colinde.m3u8
-    // console.log(`[toLocalPlCacheName] plSelection.uri = ${plSelection.uri}`);
-    const parts = decodeURIComponent(plSelection.uri).split('/');
-    // has nothing to do with models.Ref.uri format (e.g. m3u:Marcin%20Patrzalek.m3u8)
-    return plCacheName(`m3u:${parts[parts.length - 1]}`);
-  } else {
-    return plCacheName(plSelection.uri);
   }
 }

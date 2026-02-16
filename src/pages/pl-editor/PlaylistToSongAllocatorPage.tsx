@@ -15,7 +15,7 @@ import { SetFeedbackState } from '../../lib/sustain/types';
 import PageTitle from '../../components/page-title/PageTitle';
 import { filterSelected } from '../../domain/Selectable';
 import { toError } from './pl-editor-utils';
-import { toPlCacheName } from '../../hooks/cache/cache-names';
+import { plCacheNameOfSelection } from '../../hooks/cache/cache-names';
 import { updateManyLocalPlaylists } from '../../infrastructure/audio-db/playlist/playlist';
 
 interface PlaylistToEditSelectorPageState {
@@ -61,7 +61,7 @@ function PlaylistToSongAllocatorPage() {
   const handleChangeResult = useCallback(
     (selections: LocationSelection[], result: UriPlAllocationResult) => {
       filterSelectionsByMediaLocations(getChanged(result), selections)
-        .map(toPlCacheName)
+        .map(plCacheNameOfSelection)
         .forEach((cn) => clearCache(cn));
       if (result.failedToChange.length) {
         return toError<PlaylistToEditSelectorPageState>(result.failedToChange);
