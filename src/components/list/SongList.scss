@@ -50,37 +50,37 @@ $largerThanTabletIconSize: 3;
 }
 
 // this determines the height of the list-item button
-@mixin songListSecondaryActionRow($count) {
+@mixin songList2ActionRow($vActBtnCount) {
   > li {
     @media (max-width: $tablet) {
-      @include liButtonWhen2Action($smallerThanTabletIconSize, $count);
+      @include liButtonWhen2Action($smallerThanTabletIconSize, $vActBtnCount);
     }
     @media (min-width: $tablet) {
-      @include liButtonWhen2Action($largerThanTabletIconSize, $count);
+      @include liButtonWhen2Action($largerThanTabletIconSize, $vActBtnCount);
     }
   }
 }
 
 // this determines the text right-padding of the li element
-@mixin songListSecondaryActionColumn($count) {
+@mixin songList2ActionColumn($hActBtnCount) {
   > li {
     @media (max-width: $tablet) {
-      @include liTextWhen2Action($smallerThanTabletIconSize, $count, -1.75);
+      @include liTextWhen2Action($smallerThanTabletIconSize, $hActBtnCount, -1.75);
     }
     @media (min-width: $tablet) {
-      @include liTextWhen2Action($largerThanTabletIconSize, $count);
+      @include liTextWhen2Action($largerThanTabletIconSize, $hActBtnCount);
     }
   }
 }
 
 @for $i from 1 through $songListMaxSecondaryActionRows {
   .song-list-rows-#{$i} {
-    @include songListSecondaryActionRow($i);
+    @include songList2ActionRow($i);
   }
 }
 
 @for $i from 1 through $songListMaxSecondaryActionColumns {
   .song-list-cols-#{$i} {
-    @include songListSecondaryActionColumn($i);
+    @include songList2ActionColumn($i);
   }
 }

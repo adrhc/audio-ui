@@ -30,19 +30,19 @@
  * This is the *entire* visible & pressable list-item button.
  * Here are the properties that are specific to the situation where the secondary actions exist.
  */
-@mixin liButtonWhen2Action($iconSize, $actBtnCount) {
+@mixin liButtonWhen2Action($iconSize, $vActBtnCount) {
   .MuiListItemButton-root {
     // each action btn has a height of $iconSize + 2 (i.e. padding top + bottom)
     // also adding some overall padding top & bottom
-    min-height: spacing($actBtnCount * ($iconSize + 2) + 1);
+    min-height: spacing($vActBtnCount * ($iconSize + 2) + 1);
   }
 }
 
 // this is the text part of the list-item button (the image/avatar is outside of this)
-@mixin liTextWhen2Action($iconSize, $actBtnCount: 1, $additionalPadding: -1) {
+@mixin liTextWhen2Action($iconSize, $hActBtnCount: 1, $additionalPadding: -1) {
   .MuiListItemButton-root .MuiListItemText-root {
     // this creates the space for the action buttons, otherwise they would overlap
-    padding-right: spacing(($iconSize + 2) * $actBtnCount + $additionalPadding);
+    padding-right: spacing(($iconSize + 2) * $hActBtnCount + $additionalPadding);
   }
 }
 
