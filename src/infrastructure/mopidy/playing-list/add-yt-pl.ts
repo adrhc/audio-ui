@@ -17,6 +17,7 @@ export function addYtMusicPlAfter(
     if (songs.length) {
       addSongsAfter(mopidy, after, ...songs);
     } else {
+      console.log(`[addYtMusicPlAfter] the playlist ${ytm.title} is empty!`);
       return Promise.reject(`The playlist ${ytm.title} is empty!`);
     }
   });
@@ -31,6 +32,7 @@ export function addYtMusicPl(mopidy: Mopidy | undefined, ytm: Song) {
     if (songs.length) {
       addSongs(mopidy, ...songs);
     } else {
+      console.log(`[addYtMusicPl] the playlist ${ytm.title} is empty!`);
       return Promise.reject(`The playlist ${ytm.title} is empty!`);
     }
   });
