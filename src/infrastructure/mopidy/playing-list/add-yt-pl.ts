@@ -12,7 +12,7 @@ export function addYtMusicPlAfter(
   after: Track | undefined | null,
   ytm: Song
 ) {
-  // console.log(`[addYtMusicPlAfterAndRemember] playlist:`, ytm);
+  // console.log(`[addYtMusicPlAfter] playlist:`, ytm);
   return getYTPlContent(-1, ytm.uri).then((songs) => {
     if (songs.length) {
       addSongsAfter(mopidy, after, ...songs);
@@ -27,7 +27,7 @@ export function addYtMusicPlAfter(
  * Get the playlist content from audio-db.
  */
 export function addYtMusicPl(mopidy: Mopidy | undefined, ytm: Song) {
-  // console.log(`[addYtMusicPlAndRemember] playlist:`, ytm);
+  // console.log(`[addYtMusicPl] playlist:`, ytm);
   return getYTPlContent(-1, ytm.uri).then((songs) => {
     if (songs.length) {
       addSongs(mopidy, ...songs);

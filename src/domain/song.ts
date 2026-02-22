@@ -72,25 +72,21 @@ export function uriToSong(uri: string): Song {
 } */
 
 export function isPlaylist(song: Song) {
-  return song.type == 'playlist';
+  return song.type == 'playlist' || isYtMusicPl(song);
 }
 
 export function isYtMusicPl(song: Song | string) {
-  if (typeof song == 'string') {
-    return song.startsWith('ytmusic:playlist:');
-  } else {
-    return song.type == 'playlist' && song.uri.startsWith('ytmusic:playlist:');
-    // song.uri.startsWith('youtube:playlist:') ||
-    // song.uri.startsWith('yt:playlist:')
-  }
+  const uri = typeof song == 'string' ? song : song.uri;
+  return (
+    uri.startsWith('ytmusic:playlist:') ||
+    uri.startsWith('youtube:playlist:') ||
+    uri.startsWith('yt:playlist:')
+  );
 }
 
 export function isYtVideo(song: Song | string) {
-  if (typeof song == 'string') {
-    return song.startsWith('youtube:video:');
-  } else {
-    return song.uri.startsWith('youtube:video:');
-  }
+  const uri = typeof song == 'string' ? song : song.uri;
+  return uri.startsWith('youtube:video:') || uri.startsWith('yt:video:');
 }
 
 export function isLocalPl(song: Song | string) {
