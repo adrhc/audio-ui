@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
 import useCachedSongsScrollable from '../../hooks/useCachedSongsScrollable';
 import {
-  getHistory,
+  getFirstHistoryPage,
   getHistoryAfter,
   getHistoryBefore,
   removeFromHistory,
@@ -45,7 +45,7 @@ function PlaybackHistoryPage() {
     if (songsIsEmpty) {
       console.log(`[PlaybackHistoryPage.useEffect] loading 1st history page`);
       sustain(
-        getHistory(mopidy, imgMaxEdge).then((hp) => toRawPlaybackHistoryPageState(0, hp)),
+        getFirstHistoryPage(mopidy, imgMaxEdge).then((hp) => toRawPlaybackHistoryPageState(0, hp)),
         `Failed to load the 1st history page!`
       );
     }
@@ -75,7 +75,7 @@ function PlaybackHistoryPage() {
     // console.log(`[PlaybackHistoryPage.goToNextPage]`);
     if (state.songs.length < state.completePageSize) {
       sustain(
-        getHistory(mopidy, imgMaxEdge).then((hp) => {
+        getFirstHistoryPage(mopidy, imgMaxEdge).then((hp) => {
           console.log(`[PlaybackHistoryPage.goToNextPage/getHistory] scrollTo set to zero`);
           mergeCache((old) => ({ ...old, scrollTop: 0 }));
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0
@@ -131,7 +131,7 @@ function PlaybackHistoryPage() {
       );
     } else {
       sustain(
-        getHistory(mopidy, imgMaxEdge).then((hp) => {
+        getFirstHistoryPage(mopidy, imgMaxEdge).then((hp) => {
           console.log(`[PlaybackHistoryPage.goToPreviousPage/getHistory] scrollTo set to zero`);
           mergeCache((old) => ({ ...old, scrollTop: 0 }));
           scrollTo(0); // intended to reset the scroll position to "naturally" render it at 0

@@ -44,7 +44,7 @@ export async function getHistoryAfter(
   return mopidy == null ? hp : await addImgUriToHistoryPage(mopidy, imgMaxEdge, hp);
 }
 
-export async function getHistory(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<HistoryPage> {
+export async function getFirstHistoryPage(mopidy: Mopidy | undefined, imgMaxEdge: number): Promise<HistoryPage> {
   const audioDbHistoryPage = await get<hst.HistoryPage>(HISTORY);
   const hp = hst.toHistoryPage(audioDbHistoryPage);
   return mopidy == null ? hp : await addImgUriToHistoryPage(mopidy, imgMaxEdge, hp);
